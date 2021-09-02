@@ -1,7 +1,5 @@
 # fly.toml file generated for late-tree-2997 on 2021-09-02T12:28:39+05:30
 
-app = "late-tree-2997"
-
 kill_signal = "SIGTERM"
 kill_timeout = 5
 processes = []
