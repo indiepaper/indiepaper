@@ -1,5 +1,4 @@
-# fly.toml file generated for late-tree-2997 on 2021-09-02T12:28:39+05:30
-
+# fly.toml file generated for indiepaper-dev on 2021-09-02T14:43:54+05:30
 kill_signal = "SIGTERM"
 kill_timeout = 5
 
@@ -9,16 +8,12 @@ kill_timeout = 5
   release_command = "/app/bin/indie_paper eval IndiePaper.Release.migrate"
 
 [[services]]
-  http_checks = []
   internal_port = 4000
-  processes = ["app"]
   protocol = "tcp"
-  script_checks = []
 
   [services.concurrency]
     hard_limit = 25
     soft_limit = 20
-    type = "connections"
 
   [[services.ports]]
     handlers = ["http"]
