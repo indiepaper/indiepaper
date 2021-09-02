@@ -1,0 +1,27 @@
+ @font-face {
+   font-family: Good Sans;
+   font-weight: 400;
+   src: url(good-sans/good-sans-regular.otf) format("opentype");
+   font-display: fallback;
+ }
+
+ @font-face {
+   font-family: Good Sans;
+   font-weight: 500;
+   src: url(good-sans/good-sans-medium.otf) format("opentype");
+   font-display: fallback;
+ }
+
+ @font-face {
+   font-family: Good Sans;
+   font-weight: 700;
+   src: url(good-sans/good-sans-bold.otf) format("opentype");
+   font-display: fallback;
+ }
+
+ @font-face {
+   font-family: Good Sans;
+   font-weight: 900;
+   src: url(good-sans/good-sans-black.otf) format("opentype");
+   font-display: fallback;
+ }
