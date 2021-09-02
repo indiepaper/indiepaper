@@ -41,7 +41,8 @@ COPY assets assets
 COPY lib lib
 
 # build assets
-RUN mix assets.deploy
+RUN npm run --prefix ./assets deploy
+RUN mix phx.digest
 
 # copy source here if not using TailwindCSS
 COPY lib lib
