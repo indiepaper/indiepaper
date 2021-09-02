@@ -16,7 +16,7 @@ if config_env() == :prod do
 
   config :indie_paper, IndiePaper.Repo,
     # ssl: true,
-    # socket_options: [:inet6],
+    socket_options: [:inet6],
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
@@ -27,14 +27,20 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
+  app_name =
+    System.get_env("FLY_APP_NAME") ||
+      raise "FLY_APP_NAME not available"
+
   config :indie_paper, IndiePaperWeb.Endpoint,
     http: [
+      url: [host: "#{app_name}.fly.dev", port: 80],
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
       # See the documentation on https://hexdocs.pm/plug_cowboy/Plug.Cowboy.html
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: String.to_integer(System.get_env("PORT") || "4000")
+      port: String.to_integer(System.get_env("PORT") || "4000"),
+      transport_options: [socket_opts: [:inet6]]
     ],
     secret_key_base: secret_key_base
 
@@ -47,6 +53,7 @@ if config_env() == :prod do
   #
   # Then you can assemble a release by calling `mix release`.
   # See `mix help release` for more information.
+  config :indie_paper, IndiePaperWeb.Endpoint, server: true
 
   # ## Configuring the mailer
   #
