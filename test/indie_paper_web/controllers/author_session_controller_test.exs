@@ -35,6 +35,9 @@ defmodule IndiePaperWeb.AuthorSessionControllerTest do
       # Now do a logged in request and assert on the menu
       conn = get(conn, "/")
       response = html_response(conn, 200)
+
+      assert response =~ "Dashboard"
+      assert response =~ "Sign out"
     end
 
     test "logs the author in with remember me", %{conn: conn, author: author} do
