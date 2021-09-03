@@ -53,6 +53,7 @@ defmodule IndiePaperWeb.Router do
     pipe_through [:browser, :require_authenticated_author]
 
     resources "/drafts", DraftController, only: [:new, :create, :edit]
+    resources "/dashboard", DashboardController, only: [:index]
   end
 
   scope "/", IndiePaperWeb do
@@ -78,7 +79,7 @@ defmodule IndiePaperWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: IndiePaperWeb.Telemetry
+      live_dashboard "/live_dashboard", metrics: IndiePaperWeb.Telemetry
     end
   end
 

@@ -11,8 +11,9 @@ defmodule IndiePaperWeb.Feature.AuthorCanLoginTest do
     |> HomePage.visit()
     |> NavBar.click_login()
     |> LoginPage.login(author.email)
-    |> DashboardPage.is_here?()
+    |> DashboardPage.has_title?()
+    |> NavBar.has_dashboard_link?()
     |> NavBar.click_sign_out()
-    |> NavBar.has_log_in?()
+    |> NavBar.has_login_link?()
   end
 end

@@ -18,6 +18,7 @@
             <div class="container-box">
                 <%= link "IndiePaper", to: Routes.page_path(@conn, :index), class: "font-bold", "data-test": "title"  %>
                 <%= if @current_author do %>
+                    <%= link "Dashboard", to: Routes.dashboard_path(@conn, :index) %>
                     <%= link "Sign out", to: Routes.author_session_path(@conn, :delete), method: :delete %>
                 <% else %>
                     <%= link "Log in", to: Routes.author_session_path(@conn, :new) %>
