@@ -8,12 +8,16 @@ defmodule IndiePaperWeb.AuthorRegistrationControllerTest do
       conn = get(conn, Routes.author_registration_path(conn, :new))
       response = html_response(conn, 200)
       assert response =~ "<h1>Register</h1>"
-      assert response =~ "Log in</a>"
-      assert response =~ "Register</a>"
+      assert response =~ "Log in"
+      assert response =~ "Register"
     end
 
     test "redirects if already logged in", %{conn: conn} do
-      conn = conn |> log_in_author(author_fixture()) |> get(Routes.author_registration_path(conn, :new))
+      conn =
+        conn
+        |> log_in_author(author_fixture())
+        |> get(Routes.author_registration_path(conn, :new))
+
       assert redirected_to(conn) == "/"
     end
   end
@@ -34,9 +38,6 @@ defmodule IndiePaperWeb.AuthorRegistrationControllerTest do
       # Now do a logged in request and assert on the menu
       conn = get(conn, "/")
       response = html_response(conn, 200)
-      assert response =~ email
-      assert response =~ "Settings</a>"
-      assert response =~ "Log out</a>"
     end
 
     test "render errors for invalid data", %{conn: conn} do
