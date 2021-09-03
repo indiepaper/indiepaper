@@ -3,12 +3,7 @@ defmodule IndiePaperWeb.FeatureCase do
 
   using do
     quote do
-      use Wallaby.DSL
-      import Wallaby.Query
-
-      alias IndiePaperWeb.Router.Helpers, as: Routes
-
-      @endpoint IndiePaperWeb.Endpoint
+      use IndiePaperWeb.PageHelpers
     end
   end
 
