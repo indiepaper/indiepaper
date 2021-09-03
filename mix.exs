@@ -43,7 +43,7 @@ defmodule IndiePaper.MixProject do
       {:phoenix_live_view, "~> 0.16.0"},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.5"},
-      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
+      {:esbuild, git: "https://github.com/phoenixframework/esbuild", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.3"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
@@ -70,7 +70,7 @@ defmodule IndiePaper.MixProject do
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.deploy": [
         "cmd --cd assets npm run deploy",
-        "esbuild default --minify",
+        "esbuild --no-runtime-config default --minify",
         "phx.digest"
       ]
     ]
