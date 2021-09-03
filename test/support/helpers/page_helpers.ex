@@ -7,6 +7,7 @@ defmodule IndiePaperWeb.PageHelpers do
       alias IndiePaperWeb.Router.Helpers, as: Routes
 
       @endpoint IndiePaperWeb.Endpoint
+      import IndiePaper.Factory
     end
   end
 end

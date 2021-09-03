@@ -18,6 +18,7 @@ defmodule IndiePaperWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/drafts", DraftController, only: [:new]
   end
 
   # Other scopes may use custom stacks.

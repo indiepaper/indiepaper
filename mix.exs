@@ -50,7 +50,8 @@ defmodule IndiePaper.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:wallaby, "~> 0.28.0", [runtime: false, only: :test]},
-      {:tesla, "~> 1.4", override: true}
+      {:tesla, "~> 1.4", override: true},
+      {:ex_machina, "~> 2.7", only: :test}
     ]
   end
 
