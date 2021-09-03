@@ -1,4 +1,4 @@
-defmodule IndiePaperWeb.AuthorCanCreateDraftTest do
+defmodule IndiePaperWeb.Feature.AuthorCanCreateDraftTest do
   use IndiePaperWeb.FeatureCase, async: true
 
   alias IndiePaperWeb.Pages.DraftPage

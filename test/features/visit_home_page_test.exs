@@ -1,4 +1,4 @@
-defmodule IndiePaperWeb.VisitHomePageTest do
+defmodule IndiePaperWeb.Feature.VisitHomePageTest do
   use IndiePaperWeb.FeatureCase, async: true
 
   alias IndiePaperWeb.Pages.Page

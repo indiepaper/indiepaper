@@ -20,23 +20,23 @@
     @apply text-secondary-text;
   }
 
-  .primary-form-container {
+  .form-container {
     @apply flex flex-col space-y-6 md:items-start;
   }
 
-  .primary-input-container {
+  .input-container {
     @apply flex flex-col w-full;
   }
 
-  .primary-input {
+  .input {
     @apply border-primary-border focus:ring-0 w-full rounded-lg focus:outline-none focus:border-warm-gray-500;
   }
 
-  .primary-input-label {
+  .input-label {
     @apply mb-1;
   }
 
-  .primary-input-error {
+  .input-error {
     @apply text-sm text-primary-error block mt-1;
   }
 
@@ -48,12 +48,12 @@
     @apply bg-primary base-button text-gray-50;
   }
 
-  .primary-error-box {
+  .error-box {
     @apply text-red-500 bg-red-50 border-red-500 px-4 py-2 rounded-md;
   }
 
-  .primary-form-error-box {
-    @apply primary-error-box mb-8;
+  .form-error-box {
+    @apply error-box mb-8;
   }
 }
 
