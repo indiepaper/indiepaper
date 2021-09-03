@@ -53,7 +53,7 @@
   }
 
   .primary-form-error-box {
-    @apply primary-error-box mb-6;
+    @apply primary-error-box mb-8;
   }
 }
 
