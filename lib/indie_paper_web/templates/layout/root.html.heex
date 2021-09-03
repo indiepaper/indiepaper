@@ -16,9 +16,11 @@
     <body class="antialised text-primary-text">
         <header class="border-b-2 border-orange-400">
             <div class="container-box">
-                <%= link "IndiePaper", to: Routes.page_path(@conn, :index), class: "font-semibold", "data-test": "title"  %>
+                <%= link "IndiePaper", to: Routes.page_path(@conn, :index), class: "font-bold", "data-test": "title"  %>
             </div>
         </header>
-        <%= @inner_content %>
+        <main>
+            <%= @inner_content %>
+        </main>
     </body>
 </html>

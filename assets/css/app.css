@@ -11,40 +11,38 @@
   .page-box {
     @apply py-16 md:py-20;
   }
-}
 
-/* Alerts and form errors used by phx.new */
-.alert {
-  padding: 15px;
-  margin-bottom: 20px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-}
-.alert-info {
-  color: #31708f;
-  background-color: #d9edf7;
-  border-color: #bce8f1;
-}
-.alert-warning {
-  color: #8a6d3b;
-  background-color: #fcf8e3;
-  border-color: #faebcc;
-}
-.alert-danger {
-  color: #a94442;
-  background-color: #f2dede;
-  border-color: #ebccd1;
-}
-.alert p {
-  margin-bottom: 0;
-}
-.alert:empty {
-  display: none;
-}
-.invalid-feedback {
-  color: #a94442;
-  display: block;
-  margin: -1rem 0 2rem;
+  .page-heading {
+    @apply text-xl font-bold;
+  }
+
+  .page-description {
+    @apply text-secondary-text;
+  }
+
+  .primary-input-container {
+    @apply flex flex-col;
+  }
+
+  .primary-input {
+    @apply border-primary-border focus:ring-0 w-full rounded-lg focus:outline-none focus:border-warm-gray-500;
+  }
+
+  .primary-input-label {
+    @apply mb-1;
+  }
+
+  .primary-input-error {
+    @apply text-sm text-primary-error block mt-1;
+  }
+
+  .base-button {
+    @apply px-4 py-2 rounded-md;
+  }
+
+  .primary-button {
+    @apply bg-primary base-button text-gray-50;
+  }
 }
 
 /* LiveView specific classes for your customization */

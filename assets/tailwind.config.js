@@ -7,7 +7,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "primary-text": colors.gray[800],
+        background: colors.warmGray[50],
+        "primary-text": colors.gray[700],
+        "secondary-text": colors.gray[500],
+        "primary-border": colors.warmGray[300],
+        "primary-error": colors.red[500],
+        primary: colors.gray[900],
         "warm-gray": colors.warmGray,
         orange: colors.orange,
         amber: colors.amber,
@@ -20,5 +25,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };
