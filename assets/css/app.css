@@ -28,7 +28,7 @@
     @apply flex flex-col w-full;
   }
 
-  .input {
+  .form-input {
     @apply border-primary-border focus:ring-0 w-full rounded-lg focus:outline-none focus:border-warm-gray-500;
   }
 
@@ -41,7 +41,7 @@
   }
 
   .base-button {
-    @apply px-4 py-2 rounded-md;
+    @apply px-4 py-3 rounded-md;
   }
 
   .primary-button {

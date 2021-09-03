@@ -23,8 +23,8 @@ defmodule IndiePaperWeb.Router do
 
     get "/authors/register", AuthorRegistrationController, :new
     post "/authors/register", AuthorRegistrationController, :create
-    get "/authors/log_in", AuthorSessionController, :new
-    post "/authors/log_in", AuthorSessionController, :create
+    get "/authors/login", AuthorSessionController, :new
+    post "/authors/login", AuthorSessionController, :create
     get "/authors/reset_password", AuthorResetPasswordController, :new
     post "/authors/reset_password", AuthorResetPasswordController, :create
     get "/authors/reset_password/:token", AuthorResetPasswordController, :edit

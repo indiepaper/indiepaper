@@ -13,6 +13,7 @@ module.exports = {
         "primary-border": colors.warmGray[300],
         "primary-error": colors.red[500],
         primary: colors.gray[900],
+        accent: colors.orange[400],
         "warm-gray": colors.warmGray,
         orange: colors.orange,
         amber: colors.amber,
