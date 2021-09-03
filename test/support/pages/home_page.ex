@@ -10,9 +10,4 @@ defmodule IndiePaperWeb.Pages.HomePage do
     session
     |> assert_has(data("test", "title", text: "IndiePaper"))
   end
-
-  def click_login(session) do
-    session
-    |> click(link("Log in"))
-  end
 end

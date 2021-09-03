@@ -17,7 +17,11 @@
         <header class="border-b-2 border-orange-400">
             <div class="container-box">
                 <%= link "IndiePaper", to: Routes.page_path(@conn, :index), class: "font-bold", "data-test": "title"  %>
-                <%= link "Log in", to: Routes.author_session_path(@conn, :new) %>
+                <%= if @current_author do %>
+                    <%= link "Sign out", to: Routes.author_session_path(@conn, :delete), method: :delete %>
+                <% else %>
+                    <%= link "Log in", to: Routes.author_session_path(@conn, :new) %>
+                <% end %>
             </div>
         </header>
         <main>
