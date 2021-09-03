@@ -41,7 +41,7 @@
   }
 
   .base-button {
-    @apply px-4 py-3 rounded-md;
+    @apply px-4 py-3 rounded-lg;
   }
 
   .primary-button {
