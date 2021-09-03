@@ -13,6 +13,9 @@ defmodule IndiePaperWeb.DraftController do
       {:ok, draft} ->
         conn
         |> redirect(to: Routes.draft_path(conn, :edit, draft))
+
+      {:error, changeset} ->
+        conn |> render("new.html", changeset: changeset)
     end
   end
 

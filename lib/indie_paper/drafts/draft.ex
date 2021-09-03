@@ -13,5 +13,6 @@ defmodule IndiePaper.Drafts.Draft do
   def changeset(draft_or_changeset, attrs) do
     draft_or_changeset
     |> cast(attrs, [:title])
+    |> validate_required([:title])
   end
 end
