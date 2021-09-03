@@ -17,7 +17,10 @@ config :indie_paper, IndiePaper.Repo,
 # you can enable the server option below.
 config :indie_paper, IndiePaperWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  server: false
+  server: true
+
+# Setup Ecto Sandbox in tests
+config :indie_paper, :sql_sandbox, true
 
 # In test we don't send emails.
 config :indie_paper, IndiePaper.Mailer, adapter: Swoosh.Adapters.Test
@@ -27,3 +30,6 @@ config :logger, level: :warn
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# Setup Wallaby to use Chrome
+config :wallaby, driver: Wallaby.Chrome

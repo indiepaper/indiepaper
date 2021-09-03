@@ -28,6 +28,7 @@ defmodule IndiePaperWeb.ConnCase do
 
       # The default endpoint for testing
       @endpoint IndiePaperWeb.Endpoint
+      import IndiePaper.Factory
     end
   end
 

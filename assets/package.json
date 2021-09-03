@@ -10,6 +10,7 @@
     "tailwindcss": "^2.2.9"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.3.3",
     "alpinejs": "^3.2.4"
   }
 }

@@ -24,6 +24,7 @@ defmodule IndiePaper.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import IndiePaper.DataCase
+      import IndiePaper.Factory
     end
   end
 
