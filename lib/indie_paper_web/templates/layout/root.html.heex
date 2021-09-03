@@ -14,6 +14,10 @@
     </head>
 
     <body class="antialised text-primary-text">
+
+  <nav>
+    <%= render "_author_menu.html", assigns %>
+  </nav>
         <header class="border-b-2 border-orange-400">
             <div class="container-box">
                 <%= link "IndiePaper", to: Routes.page_path(@conn, :index), class: "font-bold", "data-test": "title"  %>
