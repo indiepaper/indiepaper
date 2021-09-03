@@ -2,7 +2,6 @@ defmodule IndiePaperWeb.Feature.AuthorCanCreateDraftTest do
   use IndiePaperWeb.FeatureCase, async: true
 
   alias IndiePaperWeb.Pages.{DraftPage, LoginPage}
-  alias IndiePaper.Authors
 
   test "author can create draft", %{session: session} do
     draft_params = params_for(:draft)

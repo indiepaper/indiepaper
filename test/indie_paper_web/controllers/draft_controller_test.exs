@@ -1,6 +1,8 @@
 defmodule IndiePaperWeb.DraftControllerTest do
   use IndiePaperWeb.ConnCase, async: true
 
+  setup :register_and_log_in_author
+
   describe "create/2" do
     test "displays error when invalid", %{conn: conn} do
       result =
