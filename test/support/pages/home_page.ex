@@ -1,4 +1,4 @@
-defmodule IndiePaperWeb.Pages.Page.Index do
+defmodule IndiePaperWeb.Pages.HomePage do
   use IndiePaperWeb.PageHelpers
 
   def visit(session) do
@@ -9,5 +9,10 @@ defmodule IndiePaperWeb.Pages.Page.Index do
   def has_title(session) do
     session
     |> assert_has(data("test", "title", text: "IndiePaper"))
+  end
+
+  def click_login(session) do
+    session
+    |> click(link("Log in"))
   end
 end
