@@ -6,11 +6,6 @@ defmodule IndiePaperWeb.Pages.DraftPage.New do
     |> visit(Routes.draft_path(@endpoint, :new))
   end
 
-  def has_title(session) do
-    session
-    |> assert_has(data("test", "title", text: "Create Draft"))
-  end
-
   def fill_form(session, params) do
     session
     |> fill_in(text_field("Title"), with: params[:title])

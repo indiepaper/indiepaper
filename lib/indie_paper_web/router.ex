@@ -17,11 +17,48 @@ defmodule IndiePaperWeb.Router do
     plug :accepts, ["json"]
   end
 
+  ## Authentication routes
+  scope "/", IndiePaperWeb do
+    pipe_through [:browser, :redirect_if_author_is_authenticated]
+
+    get "/authors/register", AuthorRegistrationController, :new
+    post "/authors/register", AuthorRegistrationController, :create
+    get "/authors/log_in", AuthorSessionController, :new
+    post "/authors/log_in", AuthorSessionController, :create
+    get "/authors/reset_password", AuthorResetPasswordController, :new
+    post "/authors/reset_password", AuthorResetPasswordController, :create
+    get "/authors/reset_password/:token", AuthorResetPasswordController, :edit
+    put "/authors/reset_password/:token", AuthorResetPasswordController, :update
+  end
+
+  scope "/", IndiePaperWeb do
+    pipe_through [:browser, :require_authenticated_author]
+
+    get "/authors/settings", AuthorSettingsController, :edit
+    put "/authors/settings", AuthorSettingsController, :update
+    get "/authors/settings/confirm_email/:token", AuthorSettingsController, :confirm_email
+  end
+
+  scope "/", IndiePaperWeb do
+    pipe_through [:browser]
+
+    delete "/authors/log_out", AuthorSessionController, :delete
+    get "/authors/confirm", AuthorConfirmationController, :new
+    post "/authors/confirm", AuthorConfirmationController, :create
+    get "/authors/confirm/:token", AuthorConfirmationController, :edit
+    post "/authors/confirm/:token", AuthorConfirmationController, :update
+  end
+
+  scope "/", IndiePaperWeb do
+    pipe_through [:browser, :require_authenticated_author]
+
+    resources "/drafts", DraftController, only: [:new, :create, :edit]
+  end
+
   scope "/", IndiePaperWeb do
     pipe_through :browser
 
     get "/", PageController, :index
-    resources "/drafts", DraftController, only: [:new, :create, :edit]
   end
 
   # Other scopes may use custom stacks.
@@ -55,38 +92,5 @@ defmodule IndiePaperWeb.Router do
 
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
-  end
-
-  ## Authentication routes
-
-  scope "/", IndiePaperWeb do
-    pipe_through [:browser, :redirect_if_author_is_authenticated]
-
-    get "/authors/register", AuthorRegistrationController, :new
-    post "/authors/register", AuthorRegistrationController, :create
-    get "/authors/log_in", AuthorSessionController, :new
-    post "/authors/log_in", AuthorSessionController, :create
-    get "/authors/reset_password", AuthorResetPasswordController, :new
-    post "/authors/reset_password", AuthorResetPasswordController, :create
-    get "/authors/reset_password/:token", AuthorResetPasswordController, :edit
-    put "/authors/reset_password/:token", AuthorResetPasswordController, :update
-  end
-
-  scope "/", IndiePaperWeb do
-    pipe_through [:browser, :require_authenticated_author]
-
-    get "/authors/settings", AuthorSettingsController, :edit
-    put "/authors/settings", AuthorSettingsController, :update
-    get "/authors/settings/confirm_email/:token", AuthorSettingsController, :confirm_email
-  end
-
-  scope "/", IndiePaperWeb do
-    pipe_through [:browser]
-
-    delete "/authors/log_out", AuthorSessionController, :delete
-    get "/authors/confirm", AuthorConfirmationController, :new
-    post "/authors/confirm", AuthorConfirmationController, :create
-    get "/authors/confirm/:token", AuthorConfirmationController, :edit
-    post "/authors/confirm/:token", AuthorConfirmationController, :update
   end
 end
