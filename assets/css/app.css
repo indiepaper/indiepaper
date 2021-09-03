@@ -20,8 +20,12 @@
     @apply text-secondary-text;
   }
 
+  .primary-form-container {
+    @apply flex flex-col space-y-6 md:items-start;
+  }
+
   .primary-input-container {
-    @apply flex flex-col;
+    @apply flex flex-col w-full;
   }
 
   .primary-input {
@@ -42,6 +46,14 @@
 
   .primary-button {
     @apply bg-primary base-button text-gray-50;
+  }
+
+  .primary-error-box {
+    @apply text-red-500 bg-red-50 border-red-500 px-4 py-2 rounded-md;
+  }
+
+  .primary-form-error-box {
+    @apply primary-error-box mb-6;
   }
 }
 

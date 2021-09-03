@@ -3,18 +3,23 @@
         <h1 class="page-heading" data-test="title">Create Draft</h1>
         <p class="page-description">Create a new draft with just a title, it's that simple.</p>
 
-        <div class="mt-12">
+        <div class="mt-8 max-w-xl">
             <%= form_for @changeset, Routes.draft_path(@conn, :create), fn f -> %>
+                <%= if @changeset.action do %>
+                    <div class="primary-form-error-box">
+                        <p>Oops, Something went wrong. Please check errors below</p>
+                    </div>
+                <% end %>
 
-                <div class="primary-input-container">
-                    <%= label f, :title, class: "primary-input-label"  %>
-                    <%= text_input f, :title, class: "primary-input"  %>
-                    <p class="primary-input-error">
-                        <%= error_tag f, :title %>
-                    </p>
-                </div>
+                <div class="primary-form-container">
+                    <div class="primary-input-container">
+                        <%= label f, :title, class: "primary-input-label"  %>
+                        <%= text_input f, :title, class: "primary-input"  %>
+                        <p class="primary-input-error">
+                            <%= error_tag f, :title %>
+                        </p>
+                    </div>
 
-                <div class="mt-8">
                     <%= submit "Create", class: "primary-button" %>
                 </div>
             <% end %>
