@@ -18,7 +18,7 @@ defmodule IndiePaperWeb.AuthorRegistrationControllerTest do
         |> log_in_author(author_fixture())
         |> get(Routes.author_registration_path(conn, :new))
 
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == Routes.dashboard_path(conn, :index)
     end
   end
 

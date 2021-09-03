@@ -18,7 +18,7 @@ defmodule IndiePaperWeb.AuthorSessionControllerTest do
 
     test "redirects if already logged in", %{conn: conn, author: author} do
       conn = conn |> log_in_author(author) |> get(Routes.author_session_path(conn, :new))
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == Routes.dashboard_path(conn, :index)
     end
   end
 

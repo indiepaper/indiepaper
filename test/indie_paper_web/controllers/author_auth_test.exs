@@ -21,7 +21,8 @@ defmodule IndiePaperWeb.AuthorAuthTest do
       conn = AuthorAuth.log_in_author(conn, author)
       assert token = get_session(conn, :author_token)
       assert get_session(conn, :live_socket_id) == "authors_sessions:#{Base.url_encode64(token)}"
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == Routes.dashboard_path(conn, :index)
+
       assert Authors.get_author_by_session_token(token)
     end
 
@@ -36,7 +37,9 @@ defmodule IndiePaperWeb.AuthorAuthTest do
     end
 
     test "writes a cookie if remember_me is configured", %{conn: conn, author: author} do
-      conn = conn |> fetch_cookies() |> AuthorAuth.log_in_author(author, %{"remember_me" => "true"})
+      conn =
+        conn |> fetch_cookies() |> AuthorAuth.log_in_author(author, %{"remember_me" => "true"})
+
       assert get_session(conn, :author_token) == conn.cookies[@remember_me_cookie]
 
       assert %{value: signed_token, max_age: max_age} = conn.resp_cookies[@remember_me_cookie]
@@ -88,7 +91,10 @@ defmodule IndiePaperWeb.AuthorAuthTest do
   describe "fetch_current_author/2" do
     test "authenticates author from session", %{conn: conn, author: author} do
       author_token = Authors.generate_author_session_token(author)
-      conn = conn |> put_session(:author_token, author_token) |> AuthorAuth.fetch_current_author([])
+
+      conn =
+        conn |> put_session(:author_token, author_token) |> AuthorAuth.fetch_current_author([])
+
       assert conn.assigns.current_author.id == author.id
     end
 
@@ -118,9 +124,13 @@ defmodule IndiePaperWeb.AuthorAuthTest do
 
   describe "redirect_if_author_is_authenticated/2" do
     test "redirects if author is authenticated", %{conn: conn, author: author} do
-      conn = conn |> assign(:current_author, author) |> AuthorAuth.redirect_if_author_is_authenticated([])
+      conn =
+        conn
+        |> assign(:current_author, author)
+        |> AuthorAuth.redirect_if_author_is_authenticated([])
+
       assert conn.halted
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == Routes.dashboard_path(conn, :index)
     end
 
     test "does not redirect if author is not authenticated", %{conn: conn} do
@@ -165,7 +175,9 @@ defmodule IndiePaperWeb.AuthorAuthTest do
     end
 
     test "does not redirect if author is authenticated", %{conn: conn, author: author} do
-      conn = conn |> assign(:current_author, author) |> AuthorAuth.require_authenticated_author([])
+      conn =
+        conn |> assign(:current_author, author) |> AuthorAuth.require_authenticated_author([])
+
       refute conn.halted
       refute conn.status
     end
