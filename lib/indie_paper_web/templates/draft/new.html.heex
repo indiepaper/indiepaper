@@ -1,2 +1,10 @@
 
 <h1 data-test="title">Create Draft</h1>
+
+<%= form_for @changeset, Routes.draft_path(@conn, :create), fn f -> %>
+    <%= label f, :title  %>
+    <%= text_input f, :title  %>
+    <%= error_tag f, :title %>
+
+    <%= submit "Create" %>
+<% end %>

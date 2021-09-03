@@ -18,6 +18,7 @@ defmodule IndiePaperWeb.Pages.DraftPage.New do
 
   def submit_form(session) do
     session
+    |> click(button("Create"))
   end
 end
 
@@ -31,5 +32,6 @@ defmodule IndiePaperWeb.Pages.DraftPage.Edit do
 
   def has_draft_title(session, title) do
     session
+    |> assert_has(data("test", "title", text: title))
   end
 end
