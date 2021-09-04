@@ -11,6 +11,7 @@ module.exports = {
         "primary-text": colors.gray[700],
         "secondary-text": colors.gray[500],
         "primary-border": colors.warmGray[300],
+        "primary-border-darker": colors.warmGray[400],
         "primary-error": colors.red[500],
         primary: colors.gray[900],
         accent: colors.orange[400],
