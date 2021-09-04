@@ -7,6 +7,7 @@ defmodule IndiePaper.Drafts.Draft do
   schema "drafts" do
     field :title, :string
     has_many :chapters, IndiePaper.Drafts.Chapter
+    belongs_to :author, IndiePaper.Authors.Author
 
     timestamps()
   end

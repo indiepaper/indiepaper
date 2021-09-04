@@ -6,7 +6,8 @@ defmodule IndiePaper.Factory do
   def draft_factory do
     %IndiePaper.Drafts.Draft{
       title: sequence(:title, &"Draft Title #{&1}"),
-      chapters: [build(:draft_chapter)]
+      chapters: [build(:draft_chapter)],
+      author: build(:author)
     }
   end
 

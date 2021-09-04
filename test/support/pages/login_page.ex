@@ -1,7 +1,7 @@
 defmodule IndiePaperWeb.Pages.LoginPage do
   use IndiePaperWeb.PageHelpers
 
-  def visit(session) do
+  def visit_page(session) do
     session
     |> visit(Routes.author_session_path(@endpoint, :new))
   end
