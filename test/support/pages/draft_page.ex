@@ -29,4 +29,9 @@ defmodule IndiePaperWeb.Pages.DraftPage.Edit do
     session
     |> assert_has(data("test", "title", text: title))
   end
+
+  def has_draft_chapter_title(session, title) do
+    session
+    |> assert_has(data("test", "chapter-title", text: title))
+  end
 end

@@ -20,7 +20,7 @@ defmodule IndiePaperWeb.DraftController do
   end
 
   def edit(conn, %{"id" => draft_id}) do
-    draft = Drafts.get_draft!(draft_id)
+    draft = Drafts.get_draft!(draft_id) |> Drafts.with_chapters()
     render(conn, "edit.html", draft: draft)
   end
 end

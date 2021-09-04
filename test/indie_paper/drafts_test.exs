@@ -29,4 +29,16 @@ defmodule IndiePaper.DraftsTest do
       assert draft.id == inserted_draft.id
     end
   end
+
+  describe "with_chapters/1" do
+    test "loads associated chapters of draft" do
+      draft = insert(:draft)
+      first_chapter = Enum.at(draft.chapters, 0)
+
+      inserted_draft = Drafts.get_draft!(draft.id) |> Drafts.with_chapters()
+      first_inserted_chapter = Enum.at(inserted_draft.chapters, 0)
+
+      assert first_chapter.title == first_inserted_chapter.title
+    end
+  end
 end
