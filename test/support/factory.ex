@@ -14,6 +14,7 @@ defmodule IndiePaper.Factory do
       email: sequence(:email, &"author#{&1}@email.com")
     }
     |> Authors.Author.registration_changeset(%{password: "longpassword123"})
+    |> Ecto.Changeset.put_change(:password, "longpassword123")
     |> Ecto.Changeset.apply_changes()
   end
 end

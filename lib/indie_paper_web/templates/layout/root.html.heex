@@ -23,6 +23,7 @@
                         <%= link "Sign out", to: Routes.author_session_path(@conn, :delete), method: :delete %>
                     <% else %>
                         <%= link "Log in", to: Routes.author_session_path(@conn, :new) %>
+                        <%= link "Start Writing", to: Routes.author_registration_path(@conn, :new) %>
                     <% end %>
                 </div>
             </div>

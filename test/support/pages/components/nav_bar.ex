@@ -16,8 +16,18 @@ defmodule IndiePaperWeb.Pages.Components.NavBar do
     |> assert_has(link("Dashboard"))
   end
 
+  def has_sign_out?(session) do
+    session
+    |> assert_has(link("Sign out"))
+  end
+
   def click_sign_out(session) do
     session
     |> click(link("Sign out"))
+  end
+
+  def click_start_writing(session) do
+    session
+    |> click(link("Start Writing"))
   end
 end
