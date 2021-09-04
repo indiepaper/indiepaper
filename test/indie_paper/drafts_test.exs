@@ -47,10 +47,9 @@ defmodule IndiePaper.DraftsTest do
       [draft1, draft2] = insert_pair(:draft)
 
       drafts = Drafts.list_drafts(draft1.author)
-      draft = Enum.at(drafts, 0)
 
-      assert draft1.id == draft.id
-      refute draft2.id == draft.id
+      assert Enum.find(drafts, fn draft -> draft.id == draft1.id end)
+      refute Enum.find(drafts, fn draft -> draft.id == draft2.id end)
     end
   end
 end
