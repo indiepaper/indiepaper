@@ -41,11 +41,19 @@
   }
 
   .base-button {
-    @apply px-4 py-3 rounded-lg;
+    @apply px-4 py-2 rounded-lg;
   }
 
   .primary-button {
     @apply bg-primary base-button text-gray-50;
+  }
+
+  .submit-button {
+    @apply primary-button py-3;
+  }
+
+  .secondary-button {
+    @apply bg-white base-button border rounded-lg border-primary-border shadow-sm;
   }
 
   .error-box {
