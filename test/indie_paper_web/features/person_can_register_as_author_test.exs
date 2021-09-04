@@ -9,7 +9,7 @@ defmodule IndiePaperWeb.Feature.PersonCanRegisterAsAuthorTest do
     session
     |> HomePage.visit()
     |> NavBar.click_start_writing()
-    |> RegisterPage.register(email: author.email, password: author.password)
+    |> RegisterPage.sign_up(email: author.email, password: author.password)
     |> DashboardPage.has_title?()
     |> NavBar.has_sign_out?()
   end

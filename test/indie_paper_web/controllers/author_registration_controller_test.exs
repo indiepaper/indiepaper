@@ -8,7 +8,7 @@ defmodule IndiePaperWeb.AuthorRegistrationControllerTest do
       conn = get(conn, Routes.author_registration_path(conn, :new))
       response = html_response(conn, 200)
       assert response =~ "Sign in"
-      assert response =~ "Register"
+      assert response =~ "Sign up"
     end
 
     test "redirects if already logged in", %{conn: conn} do
