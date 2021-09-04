@@ -10,7 +10,7 @@ defmodule IndiePaperWeb.Feature.AuthorCanLoginTest do
     session
     |> HomePage.visit()
     |> NavBar.click_sign_in()
-    |> LoginPage.login(author.email)
+    |> LoginPage.login(email: author.email, password: author.password)
     |> DashboardPage.has_title?()
     |> NavBar.has_dashboard_link?()
     |> NavBar.click_sign_out()

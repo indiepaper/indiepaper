@@ -4,7 +4,6 @@ defmodule IndiePaperWeb.FeatureCase do
   using do
     quote do
       use IndiePaperWeb.PageHelpers
-      alias IndiePaperWeb.Pages
     end
   end
 

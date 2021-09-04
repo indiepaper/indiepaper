@@ -20,9 +20,9 @@ end
 defmodule IndiePaperWeb.Pages.DraftPage.Edit do
   use IndiePaperWeb.PageHelpers
 
-  def visit(session) do
+  def visit_page(session, draft: draft) do
     session
-    |> visit(Routes.draft_path(@endpoint, :edit))
+    |> visit(Routes.draft_path(@endpoint, :edit, draft))
   end
 
   def has_draft_title(session, title) do

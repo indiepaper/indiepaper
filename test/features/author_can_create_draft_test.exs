@@ -9,7 +9,7 @@ defmodule IndiePaperWeb.Feature.AuthorCanCreateDraftTest do
 
     session
     |> DraftPage.New.visit()
-    |> LoginPage.login(author.email)
+    |> LoginPage.login(email: author.email, password: author.password)
     |> DraftPage.New.fill_form(draft_params)
     |> DraftPage.New.submit_form()
     |> DraftPage.Edit.has_draft_title(draft_params[:title])
