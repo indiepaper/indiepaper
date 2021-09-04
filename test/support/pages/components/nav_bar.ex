@@ -1,14 +1,14 @@
 defmodule IndiePaperWeb.Pages.Components.NavBar do
   use IndiePaperWeb.PageHelpers
 
-  def click_login(session) do
+  def click_sign_in(session) do
     session
-    |> click(link("Log in"))
+    |> click(link("Sign in"))
   end
 
-  def has_login_link?(session) do
+  def has_sign_in_link?(session) do
     session
-    |> assert_has(link("Log in"))
+    |> assert_has(link("Sign in"))
   end
 
   def has_dashboard_link?(session) do

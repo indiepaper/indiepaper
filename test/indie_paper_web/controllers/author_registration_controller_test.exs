@@ -7,7 +7,7 @@ defmodule IndiePaperWeb.AuthorRegistrationControllerTest do
     test "renders registration page", %{conn: conn} do
       conn = get(conn, Routes.author_registration_path(conn, :new))
       response = html_response(conn, 200)
-      assert response =~ "Log in"
+      assert response =~ "Sign in"
       assert response =~ "Register"
     end
 

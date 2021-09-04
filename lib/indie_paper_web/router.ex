@@ -21,14 +21,14 @@ defmodule IndiePaperWeb.Router do
   scope "/", IndiePaperWeb do
     pipe_through [:browser, :redirect_if_author_is_authenticated]
 
-    get "/authors/register", AuthorRegistrationController, :new
-    post "/authors/register", AuthorRegistrationController, :create
-    get "/authors/login", AuthorSessionController, :new
-    post "/authors/login", AuthorSessionController, :create
-    get "/authors/reset_password", AuthorResetPasswordController, :new
-    post "/authors/reset_password", AuthorResetPasswordController, :create
-    get "/authors/reset_password/:token", AuthorResetPasswordController, :edit
-    put "/authors/reset_password/:token", AuthorResetPasswordController, :update
+    get "/secure/sign-up", AuthorRegistrationController, :new
+    post "/secure/sign-up", AuthorRegistrationController, :create
+    get "/secure/sign-in", AuthorSessionController, :new
+    post "/secure/sign-in", AuthorSessionController, :create
+    get "/secure/reset_password", AuthorResetPasswordController, :new
+    post "/secure/reset_password", AuthorResetPasswordController, :create
+    get "/secure/reset_password/:token", AuthorResetPasswordController, :edit
+    put "/secure/reset_password/:token", AuthorResetPasswordController, :update
   end
 
   scope "/", IndiePaperWeb do
@@ -42,11 +42,11 @@ defmodule IndiePaperWeb.Router do
   scope "/", IndiePaperWeb do
     pipe_through [:browser]
 
-    delete "/authors/log_out", AuthorSessionController, :delete
-    get "/authors/confirm", AuthorConfirmationController, :new
-    post "/authors/confirm", AuthorConfirmationController, :create
-    get "/authors/confirm/:token", AuthorConfirmationController, :edit
-    post "/authors/confirm/:token", AuthorConfirmationController, :update
+    delete "/secure/log_out", AuthorSessionController, :delete
+    get "/secure/confirm", AuthorConfirmationController, :new
+    post "/secure/confirm", AuthorConfirmationController, :create
+    get "/secure/confirm/:token", AuthorConfirmationController, :edit
+    post "/secure/confirm/:token", AuthorConfirmationController, :update
   end
 
   scope "/", IndiePaperWeb do
