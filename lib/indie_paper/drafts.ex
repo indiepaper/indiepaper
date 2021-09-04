@@ -1,5 +1,6 @@
 defmodule IndiePaper.Drafts do
   alias IndiePaper.Drafts.Draft
+  alias IndiePaper.Authors.Author
 
   alias IndiePaper.Repo
 
@@ -20,5 +21,11 @@ defmodule IndiePaper.Drafts do
   def with_chapters(%Draft{} = draft) do
     draft
     |> Repo.preload(:chapters)
+  end
+
+  def list_drafts(%Author{} = author) do
+    Draft
+    |> Bodyguard.scope(author)
+    |> Repo.all()
   end
 end

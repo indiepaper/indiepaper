@@ -41,4 +41,16 @@ defmodule IndiePaper.DraftsTest do
       assert first_chapter.title == first_inserted_chapter.title
     end
   end
+
+  describe "list_drafts/1" do
+    test "lists drafts of a given author" do
+      [draft1, draft2] = insert_pair(:draft)
+
+      drafts = Drafts.list_drafts(draft1.author)
+      draft = Enum.at(drafts, 0)
+
+      assert draft1.id == draft.id
+      refute draft2.id == draft.id
+    end
+  end
 end
