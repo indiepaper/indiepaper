@@ -8,8 +8,8 @@ defmodule IndiePaperWeb.DraftController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"draft" => draft_params}) do
-    case Drafts.create_draft(draft_params) do
+  def create(%{assigns: %{current_author: current_author}} = conn, %{"draft" => draft_params}) do
+    case Drafts.create_draft(current_author, draft_params) do
       {:ok, draft} ->
         conn
         |> redirect(to: Routes.draft_path(conn, :edit, draft))
@@ -20,7 +20,7 @@ defmodule IndiePaperWeb.DraftController do
   end
 
   def edit(conn, %{"id" => draft_id}) do
-    draft = Drafts.get_draft!(draft_id)
+    draft = Drafts.get_draft!(draft_id) |> Drafts.with_chapters()
     render(conn, "edit.html", draft: draft)
   end
 end

@@ -1,6 +1,8 @@
 defmodule IndiePaperWeb.Router do
   use IndiePaperWeb, :router
 
+  import IndiePaperWeb.AuthorAuth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -8,17 +10,56 @@ defmodule IndiePaperWeb.Router do
     plug :put_root_layout, {IndiePaperWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_author
   end
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
+  ## Authentication routes
+  scope "/", IndiePaperWeb do
+    pipe_through [:browser, :redirect_if_author_is_authenticated]
+
+    get "/secure/sign-up", AuthorRegistrationController, :new
+    post "/secure/sign-up", AuthorRegistrationController, :create
+    get "/secure/sign-in", AuthorSessionController, :new
+    post "/secure/sign-in", AuthorSessionController, :create
+    get "/secure/reset_password", AuthorResetPasswordController, :new
+    post "/secure/reset_password", AuthorResetPasswordController, :create
+    get "/secure/reset_password/:token", AuthorResetPasswordController, :edit
+    put "/secure/reset_password/:token", AuthorResetPasswordController, :update
+  end
+
+  scope "/", IndiePaperWeb do
+    pipe_through [:browser, :require_authenticated_author]
+
+    get "/authors/settings", AuthorSettingsController, :edit
+    put "/authors/settings", AuthorSettingsController, :update
+    get "/authors/settings/confirm_email/:token", AuthorSettingsController, :confirm_email
+  end
+
+  scope "/", IndiePaperWeb do
+    pipe_through [:browser]
+
+    delete "/secure/log_out", AuthorSessionController, :delete
+    get "/secure/confirm", AuthorConfirmationController, :new
+    post "/secure/confirm", AuthorConfirmationController, :create
+    get "/secure/confirm/:token", AuthorConfirmationController, :edit
+    post "/secure/confirm/:token", AuthorConfirmationController, :update
+  end
+
+  scope "/", IndiePaperWeb do
+    pipe_through [:browser, :require_authenticated_author]
+
+    resources "/drafts", DraftController, only: [:new, :create, :edit]
+    resources "/dashboard", DashboardController, only: [:index]
+  end
+
   scope "/", IndiePaperWeb do
     pipe_through :browser
 
     get "/", PageController, :index
-    resources "/drafts", DraftController, only: [:new, :create, :edit]
   end
 
   # Other scopes may use custom stacks.
@@ -38,7 +79,7 @@ defmodule IndiePaperWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: IndiePaperWeb.Telemetry
+      live_dashboard "/live_dashboard", metrics: IndiePaperWeb.Telemetry
     end
   end
 

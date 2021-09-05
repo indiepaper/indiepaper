@@ -1,11 +1,11 @@
-defmodule IndiePaperWeb.VisitHomePageTest do
+defmodule IndiePaperWeb.Feature.VisitHomePageTest do
   use IndiePaperWeb.FeatureCase, async: true
 
-  alias IndiePaperWeb.Pages.Page
+  alias IndiePaperWeb.Pages.HomePage
 
   test "people can visit home page", %{session: session} do
     session
-    |> Page.Index.visit()
-    |> Page.Index.has_title()
+    |> HomePage.visit()
+    |> HomePage.has_title()
   end
 end

@@ -1,1 +1,10 @@
-<h1 data-test="title"><%= @draft.title %></h1>
+
+<section class="bg-background">
+    <div class="container-box page-box">
+        <h1 data-test="title" class="page-heading"><%= @draft.title %></h1>
+
+        <%= for chapter <- @draft.chapters do %>
+            <h3 data-test="chapter-title"><%= chapter.title %></h3>
+        <% end %>
+    </div>
+</section>

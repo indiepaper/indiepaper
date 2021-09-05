@@ -10,17 +10,24 @@
 
         <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
         <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/static/fonts/fonts.css")}/>
-        <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
+        <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/js/app.js")}></script>
     </head>
 
     <body class="antialised text-primary-text">
         <header class="border-b-2 border-orange-400">
-            <div class="container-box">
+            <div class="container-box flex flex-row items-center justify-between">
                 <%= link "IndiePaper", to: Routes.page_path(@conn, :index), class: "font-bold", "data-test": "title"  %>
+                <div class="flex flex-row items-center space-x-5 md:space-x-6">
+                    <%= if @current_author do %>
+                        <%= link "Dashboard", to: Routes.dashboard_path(@conn, :index) %>
+                        <%= link "Sign out", to: Routes.author_session_path(@conn, :delete), method: :delete %>
+                    <% else %>
+                        <%= link "Sign in", to: Routes.author_session_path(@conn, :new) %>
+                        <%= link "Start Writing", to: Routes.author_registration_path(@conn, :new), class: "secondary-button text-sm" %>
+                    <% end %>
+                </div>
             </div>
         </header>
-        <main>
-            <%= @inner_content %>
-        </main>
+        <%= @inner_content %>
     </body>
 </html>

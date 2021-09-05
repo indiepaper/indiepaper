@@ -1,4 +1,4 @@
-defmodule IndiePaperWeb.Pages.Page.Index do
+defmodule IndiePaperWeb.Pages.HomePage do
   use IndiePaperWeb.PageHelpers
 
   def visit(session) do

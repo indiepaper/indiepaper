@@ -33,6 +33,7 @@ defmodule IndiePaper.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bcrypt_elixir, "~> 2.0"},
       {:phoenix, "~> 1.6.0-rc.0", override: true},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
@@ -42,7 +43,7 @@ defmodule IndiePaper.MixProject do
       {:phoenix_live_view, "~> 0.16.0"},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.5"},
-      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
+      {:esbuild, git: "https://github.com/phoenixframework/esbuild", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.3"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
@@ -51,7 +52,8 @@ defmodule IndiePaper.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:wallaby, "~> 0.28.0", [runtime: false, only: :test]},
       {:tesla, "~> 1.4", override: true},
-      {:ex_machina, "~> 2.7", only: :test}
+      {:ex_machina, "~> 2.7", only: :test},
+      {:bodyguard, "~> 2.4"}
     ]
   end
 
@@ -66,10 +68,10 @@ defmodule IndiePaper.MixProject do
       setup: ["deps.get", "ecto.setup", "cmd --cd assets npm install"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test --max-cases=2"],
       "assets.deploy": [
         "cmd --cd assets npm run deploy",
-        # "esbuild default --minify",
+        "esbuild --no-runtime-config default --minify",
         "phx.digest"
       ]
     ]

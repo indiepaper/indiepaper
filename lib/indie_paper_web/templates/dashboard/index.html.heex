@@ -1,0 +1,20 @@
+
+<section class="bg-background">
+    <div class="container-box page-box">
+        <div class="max-w-2xl">
+            <h1 data-test="title" class="page-heading">Draft Books</h1>
+            <p class="page-description">your current drafts appear here. Write them with love and care they deserve</p>
+
+            <div class="mt-12">
+                <%= for draft <- @drafts do %>
+                    <div class="primary-card">
+                        <h2 data-test="draft-title" class="text-lg"><%= draft.title %></h2>
+                        <div class="mt-3">
+                            <%= link "Edit draft", to: Routes.draft_path(@conn, :edit, draft), class: "small-link" %>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</section>

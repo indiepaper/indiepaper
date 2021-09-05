@@ -1,0 +1,37 @@
+<section class="bg-white">
+    <div class="container-box page-box">
+        <div class="max-w-md mx-auto">
+            <h1 class="page-heading">Welcome Back</h1>
+            <p class="page-description">and log in to your account, we missed you.</p>
+
+            <div class="mt-12">
+                <.form let={f} for={@conn} action={Routes.author_session_path(@conn, :create)} as={:author}>
+                <%= if @error_message do %>
+                    <div class="form-error-box">
+                        <p><%= @error_message %></p>
+                    </div>
+                <% end %>
+
+                <div class="form-container">
+                    <div class="input-container">
+                        <%= label f, :email, class: "input-label" %>
+                        <%= email_input f, :email, required: true, class: "form-input" %>
+                    </div>
+
+                    <div class="input-container">
+                        <%= label f, :password, class: "input-label" %>
+                        <%= password_input f, :password, required: true, class: "form-input" %>
+                        <div class="flex flex-row items-center mt-3">
+                            <%= checkbox f, :remember_me, class: "rounded focus:outline-none focus:ring-accent border-primary-border-darker text-accent" %>
+                            <%= label f, :remember_me, "Remember me", class: "ml-2" %>
+                        </div>
+                    </div>
+
+                    <%= submit "Log in", class: "submit-button w-full" %>
+                </div>
+
+                </.form>
+            </div>
+        </div>
+    </div>
+</section>
