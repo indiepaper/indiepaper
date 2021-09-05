@@ -12,11 +12,13 @@ defmodule IndiePaper.DraftsTest do
   describe "create_draft/1" do
     test "creates draft with given params" do
       draft_params = string_params_for(:draft)
+      author = insert(:author)
 
-      {:ok, draft} = Drafts.create_draft(draft_params)
+      {:ok, draft} = Drafts.create_draft(author, draft_params)
 
       assert %Drafts.Draft{} = draft
       assert draft.title == draft_params["title"]
+      assert draft.author_id == author.id
     end
   end
 

@@ -1,4 +1,9 @@
 defmodule IndiePaper.Drafts do
+  @behaviour Bodyguard.Policy
+  alias __MODULE__
+
+  def authorize(:create_draft, _, _), do: true
+
   alias IndiePaper.Drafts.Draft
   alias IndiePaper.Authors.Author
 
@@ -8,10 +13,12 @@ defmodule IndiePaper.Drafts do
     Draft.changeset(draft, attrs)
   end
 
-  def create_draft(params) do
-    %Draft{}
-    |> Draft.changeset(params)
-    |> Repo.insert()
+  def create_draft(%Author{} = author, params) do
+    with :ok <- Bodyguard.permit(__MODULE__, :create_draft, author, %{}) do
+      Ecto.build_assoc(author, :drafts)
+      |> Draft.changeset(params)
+      |> Repo.insert()
+    end
   end
 
   def get_draft!(id) do

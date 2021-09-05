@@ -1,6 +1,11 @@
 defmodule IndiePaperWeb.Pages.DashboardPage do
   use IndiePaperWeb.PageHelpers
 
+  def visit_page(session) do
+    session
+    |> visit(Routes.dashboard_path(@endpoint, :index))
+  end
+
   def has_title?(session) do
     session
     |> assert_has(data("test", "title", text: "Dashboard"))
