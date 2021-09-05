@@ -1,11 +1,20 @@
 
 <section class="bg-background">
     <div class="container-box page-box">
-        <h1 data-test="title" class="page-heading">Dashboard</h1>
+        <div class="max-w-2xl">
+            <h1 data-test="title" class="page-heading">Draft Books</h1>
+            <p class="page-description">your current drafts appear here. Write them with love and care they deserve</p>
 
-        <%= for draft <- @drafts do %>
-            <h2 data-test="draft-title"><%= draft.title %></h2>
-            <%= link "Edit draft", to: Routes.draft_path(@conn, :edit, draft) %>
-        <% end %>
+            <div class="mt-12">
+                <%= for draft <- @drafts do %>
+                    <div class="flex flex-col items-start p-6 bg-white shadow-sm rounded-lg border border-primary-border">
+                        <h2 data-test="draft-title" class="text-lg"><%= draft.title %></h2>
+                        <div class="mt-3">
+                            <%= link "Edit draft", to: Routes.draft_path(@conn, :edit, draft), class: "text-sm text-secondary-text" %>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
     </div>
 </section>
