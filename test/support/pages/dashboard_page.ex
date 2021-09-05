@@ -20,4 +20,9 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
     session
     |> refute_has(data("test", "draft-title", text: title))
   end
+
+  def click_edit_draft(session) do
+    session
+    |> click(link("Edit draft"))
+  end
 end

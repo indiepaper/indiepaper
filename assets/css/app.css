@@ -13,7 +13,7 @@
   }
 
   .page-heading {
-    @apply text-2xl font-bold;
+    @apply text-xl font-bold;
   }
 
   .page-description {

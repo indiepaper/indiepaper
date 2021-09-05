@@ -1,5 +1,11 @@
-<h1 data-test="title">Dashboard</h1>
 
-<%= for draft <- @drafts do %>
-    <h2 data-test="draft-title"><%= draft.title %></h2>
-<% end %>
+<section class="bg-background">
+    <div class="container-box page-box">
+        <h1 data-test="title" class="page-heading">Dashboard</h1>
+
+        <%= for draft <- @drafts do %>
+            <h2 data-test="draft-title"><%= draft.title %></h2>
+            <%= link "Edit draft", to: Routes.draft_path(@conn, :edit, draft) %>
+        <% end %>
+    </div>
+</section>
