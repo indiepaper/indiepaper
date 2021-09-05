@@ -63,6 +63,14 @@
   .form-error-box {
     @apply error-box mb-8;
   }
+
+  .primary-card {
+    @apply flex flex-col items-start p-6 bg-white shadow-sm rounded-lg border border-primary-border;
+  }
+
+  .small-link {
+    @apply text-sm text-secondary-text;
+  }
 }
 
 /* LiveView specific classes for your customization */
