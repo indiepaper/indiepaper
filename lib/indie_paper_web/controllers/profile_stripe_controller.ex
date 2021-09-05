@@ -1,4 +1,4 @@
-defmodule IndiePaperWeb.DashboardStripeConnectController do
+defmodule IndiePaperWeb.ProfileStripeConnectController do
   use IndiePaperWeb, :controller
 
   def new(conn, _params) do

@@ -55,7 +55,7 @@ defmodule IndiePaperWeb.Router do
     resources "/drafts", DraftController, only: [:new, :create, :edit]
 
     resources "/dashboard", DashboardController, only: [:index]
-    resources "/dashboard/stripe/connect", DashboardStripeConnectController, only: [:new]
+    resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:new]
   end
 
   scope "/", IndiePaperWeb do

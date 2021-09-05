@@ -165,7 +165,8 @@ defmodule IndiePaper.Authors do
   """
   def deliver_update_email_instructions(%Author{} = author, current_email, update_email_url_fun)
       when is_function(update_email_url_fun, 1) do
-    {encoded_token, author_token} = AuthorToken.build_email_token(author, "change:#{current_email}")
+    {encoded_token, author_token} =
+      AuthorToken.build_email_token(author, "change:#{current_email}")
 
     Repo.insert!(author_token)
     AuthorNotifier.deliver_update_email_instructions(author, update_email_url_fun.(encoded_token))
@@ -260,7 +261,11 @@ defmodule IndiePaper.Authors do
     else
       {encoded_token, author_token} = AuthorToken.build_email_token(author, "confirm")
       Repo.insert!(author_token)
-      AuthorNotifier.deliver_confirmation_instructions(author, confirmation_url_fun.(encoded_token))
+
+      AuthorNotifier.deliver_confirmation_instructions(
+        author,
+        confirmation_url_fun.(encoded_token)
+      )
     end
   end
 
@@ -301,7 +306,11 @@ defmodule IndiePaper.Authors do
       when is_function(reset_password_url_fun, 1) do
     {encoded_token, author_token} = AuthorToken.build_email_token(author, "reset_password")
     Repo.insert!(author_token)
-    AuthorNotifier.deliver_reset_password_instructions(author, reset_password_url_fun.(encoded_token))
+
+    AuthorNotifier.deliver_reset_password_instructions(
+      author,
+      reset_password_url_fun.(encoded_token)
+    )
   end
 
   @doc """
