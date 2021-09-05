@@ -9,6 +9,9 @@ defmodule IndiePaper.Authors.Author do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
 
+    field :is_payment_connected, :boolean, default: false
+    field :stripe_connect_id, :string
+
     has_many :drafts, IndiePaper.Drafts.Draft
 
     timestamps()

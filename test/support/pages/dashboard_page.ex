@@ -25,4 +25,9 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
     session
     |> click(link("Edit draft"))
   end
+
+  def click_connect_stripe(session) do
+    session
+    |> click(link("Connect Stripe"))
+  end
 end
