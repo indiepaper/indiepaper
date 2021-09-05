@@ -1,6 +1,5 @@
 defmodule IndiePaper.Drafts do
   @behaviour Bodyguard.Policy
-  alias __MODULE__
 
   def authorize(:create_draft, _, _), do: true
 
