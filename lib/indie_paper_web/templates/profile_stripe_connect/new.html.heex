@@ -1,0 +1,5 @@
+<%= form_for @conn, Routes.profile_stripe_connect_path(@conn, :create), [as: :stripe_connect_params], fn f -> %>
+    <%= label f, :country_code, "Country", class: "primary-input-label" %>
+    <%= select f, :country_code, IndiePaper.PaymentHandler.StripeHandler.stripe_connect_enabled_countries() %>
+    <%= submit "Connect Stripe" %>
+<% end %>

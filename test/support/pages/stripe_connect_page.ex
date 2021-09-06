@@ -8,6 +8,6 @@ defmodule IndiePaperWeb.Pages.StripeConnectPage.New do
 
   def connect_stripe(session) do
     session
-    |> click(link("Connect Stripe"))
+    |> click(button("Connect Stripe"))
   end
 end

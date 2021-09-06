@@ -30,7 +30,10 @@ indie_paper-*.tar
 npm-debug.log
 /assets/node_modules/
 .log/
-
 .DS_Store
 
+# Screenshots from integration tests
 screenshots/
+
+# Development Secrets
+dev.secret.exs

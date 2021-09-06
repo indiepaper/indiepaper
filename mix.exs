@@ -53,7 +53,8 @@ defmodule IndiePaper.MixProject do
       {:wallaby, "~> 0.28.0", [runtime: false, only: :test]},
       {:tesla, "~> 1.4", override: true},
       {:ex_machina, "~> 2.7", only: :test},
-      {:bodyguard, "~> 2.4"}
+      {:bodyguard, "~> 2.4"},
+      {:stripity_stripe, "~> 2.0"}
     ]
   end
 
