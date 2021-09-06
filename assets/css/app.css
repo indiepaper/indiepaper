@@ -17,7 +17,7 @@
   }
 
   .page-description {
-    @apply text-secondary-text;
+    @apply text-secondary-text font-normal mt-1;
   }
 
   .form-container {
@@ -49,7 +49,7 @@
   }
 
   .submit-button {
-    @apply primary-button py-3;
+    @apply primary-button;
   }
 
   .secondary-button {
