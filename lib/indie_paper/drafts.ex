@@ -17,7 +17,12 @@ defmodule IndiePaper.Drafts do
     with :ok <- Bodyguard.permit(__MODULE__, :create_draft_with_placeholder_chapters, author, %{}) do
       Ecto.build_assoc(author, :drafts)
       |> Draft.changeset(params)
-      |> Draft.chapters_changeset([Chapters.placeholder_chapter(title: "Introduction")])
+      |> Draft.chapters_changeset([
+        Chapters.placeholder_chapter(title: "Introduction"),
+        Chapters.placeholder_chapter(title: "Preface"),
+        Chapters.placeholder_chapter(title: "Chapter 1"),
+        Chapters.placeholder_chapter(title: "Chapter 2")
+      ])
       |> Repo.insert()
     end
   end

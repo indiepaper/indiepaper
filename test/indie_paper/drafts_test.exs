@@ -25,6 +25,10 @@ defmodule IndiePaper.DraftsTest do
       assert Enum.find(draft_with_chapters.chapters, fn chapter ->
                chapter.title == "Introduction"
              end)
+
+      assert Enum.find(draft_with_chapters.chapters, fn chapter ->
+               chapter.title == "Preface"
+             end)
     end
   end
 

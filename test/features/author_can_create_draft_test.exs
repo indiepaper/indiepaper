@@ -14,6 +14,7 @@ defmodule IndiePaperWeb.Feature.AuthorCanCreateDraftTest do
     |> DraftPage.New.submit_form()
     |> DraftPage.Edit.has_draft_title(draft_params[:title])
     |> DraftPage.Edit.has_draft_chapter_title?("Introduction")
+    |> DraftPage.Edit.has_draft_chapter_title?("Preface")
     |> DashboardPage.visit_page()
     |> DashboardPage.has_draft_title?(draft_params[:title])
   end
