@@ -373,4 +373,8 @@ defmodule IndiePaper.Authors do
   def set_payment_connected(author) do
     update_author_profile(author, %{is_payment_connected: true})
   end
+
+  def is_payment_connected?(author) do
+    author.is_payment_connected
+  end
 end

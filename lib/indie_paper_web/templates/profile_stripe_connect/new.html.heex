@@ -5,12 +5,10 @@
         <div class="mt-8 max-w-md">
             <%= form_for @conn, Routes.profile_stripe_connect_path(@conn, :create), [as: :stripe_connect_params], fn f -> %>
                 <div class="form-container">
-                    <%= if not IndiePaper.Authors.has_stripe_connect_id?(@current_author) do %>
-                        <div class="input-container">
+                        <div class={"input-container #{if IndiePaper.Authors.has_stripe_connect_id?(@current_author), do: 'hidden'}"}>
                             <%= label f, :country_code, "Country", class: "input-label" %>
-                            <%= select f, :country_code, IndiePaper.PaymentHandler.StripeHandler.stripe_connect_enabled_countries(), class: "form-input" %>
+                            <%= select f, :country_code, IndiePaper.PaymentHandler.StripeHandler.stripe_connect_enabled_countries(), class: "form-input"%>
                         </div>
-                    <% end %>
 
                     <%= submit "Connect Stripe", class: "submit-button" %>
                 </div>

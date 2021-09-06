@@ -550,4 +550,14 @@ defmodule IndiePaper.AuthorsTest do
       assert updated_author.is_payment_connected
     end
   end
+
+  describe "is_payment_connected/1" do
+    test "checks if the author has payment connected" do
+      author = insert(:author)
+      author_without_payment = insert(:author, is_payment_connected: false)
+
+      assert Authors.is_payment_connected?(author)
+      refute Authors.is_payment_connected?(author_without_payment)
+    end
+  end
 end
