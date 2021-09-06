@@ -10,10 +10,13 @@ defmodule IndiePaperWeb.ProfileStripeConnectController do
   def create(%{assigns: %{current_author: current_author}} = conn, %{
         "stripe_connect_params" => %{"country_code" => country_code}
       }) do
-    {:ok, stripe_connect_url} =
-      PaymentHandler.get_stripe_connect_url(current_author, country_code)
+    case PaymentHandler.get_stripe_connect_url(current_author, country_code) do
+      {:ok, stripe_connect_url} ->
+        conn
+        |> redirect(external: stripe_connect_url)
 
-    conn
-    |> redirect(external: stripe_connect_url)
+      {:error, message} ->
+        conn |> put_flash(:alert, message) |> render(conn, "new.html")
+    end
   end
 end
