@@ -9,12 +9,12 @@ defmodule IndiePaper.DraftsTest do
     end
   end
 
-  describe "create_draft/1" do
+  describe "create_draft_with_placeholder_chapters/2" do
     test "creates draft with given params and inserts default chapters" do
       draft_params = string_params_for(:draft)
       author = insert(:author)
 
-      {:ok, draft} = Drafts.create_draft(author, draft_params)
+      {:ok, draft} = Drafts.create_draft_with_placeholder_chapters(author, draft_params)
 
       assert %Drafts.Draft{} = draft
       assert draft.title == draft_params["title"]

@@ -1,7 +1,7 @@
 defmodule IndiePaper.Drafts do
   @behaviour Bodyguard.Policy
 
-  def authorize(:create_draft, _, _), do: true
+  def authorize(:create_draft_with_placeholder_chapters, _, _), do: true
 
   alias IndiePaper.Drafts.Draft
   alias IndiePaper.Authors.Author
@@ -13,8 +13,8 @@ defmodule IndiePaper.Drafts do
     Draft.changeset(draft, attrs)
   end
 
-  def create_draft(%Author{} = author, params) do
-    with :ok <- Bodyguard.permit(__MODULE__, :create_draft, author, %{}) do
+  def create_draft_with_placeholder_chapters(%Author{} = author, params) do
+    with :ok <- Bodyguard.permit(__MODULE__, :create_draft_with_placeholder_chapters, author, %{}) do
       Ecto.build_assoc(author, :drafts)
       |> Draft.changeset(params)
       |> Draft.chapters_changeset([Chapters.placeholder_chapter(title: "Introduction")])
