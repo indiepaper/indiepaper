@@ -19,7 +19,9 @@ defmodule IndiePaper.Factory do
 
   def author_factory do
     %IndiePaper.Authors.Author{
-      email: sequence(:email, &"author#{&1}@email.com")
+      email: sequence(:email, &"author#{&1}@email.com"),
+      stripe_connect_id: "acc_hxtv",
+      is_payment_connected: true
     }
     |> Authors.Author.registration_changeset(%{password: "longpassword123"})
     |> Ecto.Changeset.put_change(:password, "longpassword123")

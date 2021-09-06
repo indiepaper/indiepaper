@@ -17,6 +17,6 @@ defmodule IndiePaperWeb.Feature.AuthorCanConnectPaymentWithStripeTest do
 
     stripe_uri = URI.parse(stripe_url)
 
-    assert stripe_uri.host == "stripe.com"
+    assert String.contains?(stripe_uri.host, "stripe.me")
   end
 end

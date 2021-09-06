@@ -11,7 +11,7 @@ defmodule IndiePaper.PaymentHandlerTest do
 
       stripe_connect_uri = URI.parse(stripe_connect_url)
 
-      assert stripe_connect_uri.host == "stripe.com"
+      assert String.contains?(stripe_connect_uri.host, "stripe.me")
     end
   end
 end

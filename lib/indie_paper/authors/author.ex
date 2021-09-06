@@ -141,4 +141,9 @@ defmodule IndiePaper.Authors.Author do
       add_error(changeset, :current_password, "is not valid")
     end
   end
+
+  def profile_changeset(author, attrs) do
+    author
+    |> cast(attrs, [:stripe_connect_id])
+  end
 end

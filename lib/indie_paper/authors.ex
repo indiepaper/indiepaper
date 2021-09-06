@@ -356,4 +356,10 @@ defmodule IndiePaper.Authors do
       {:error, :author, changeset, _} -> {:error, changeset}
     end
   end
+
+  def update_author_profile(author, attrs) do
+    author
+    |> Author.profile_changeset(attrs)
+    |> Repo.update()
+  end
 end

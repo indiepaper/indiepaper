@@ -223,7 +223,9 @@ defmodule IndiePaper.AuthorsTest do
     end
 
     test "does not update email if author email changed", %{author: author, token: token} do
-      assert Authors.update_author_email(%{author | email: "current@example.com"}, token) == :error
+      assert Authors.update_author_email(%{author | email: "current@example.com"}, token) ==
+               :error
+
       assert Repo.get!(Author, author.id).email == author.email
       assert Repo.get_by(AuthorToken, author_id: author.id)
     end
@@ -488,7 +490,9 @@ defmodule IndiePaper.AuthorsTest do
     end
 
     test "updates the password", %{author: author} do
-      {:ok, updated_author} = Authors.reset_author_password(author, %{password: "new valid password"})
+      {:ok, updated_author} =
+        Authors.reset_author_password(author, %{password: "new valid password"})
+
       assert is_nil(updated_author.password)
       assert Authors.get_author_by_email_and_password(author.email, "new valid password")
     end
@@ -503,6 +507,17 @@ defmodule IndiePaper.AuthorsTest do
   describe "inspect/2" do
     test "does not include password" do
       refute inspect(%Author{password: "123456"}) =~ "password: \"123456\""
+    end
+  end
+
+  describe "update_author_profile/2" do
+    test "updates author profile with limited profile fields" do
+      author = insert(:author)
+
+      {:ok, author} =
+        Authors.update_author_profile(author, %{stripe_connect_id: "updated_stripe_connect_id"})
+
+      assert author.stripe_connect_id == "updated_stripe_connect_id"
     end
   end
 end

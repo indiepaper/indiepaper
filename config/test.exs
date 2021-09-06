@@ -36,3 +36,7 @@ config :phoenix, :plug_init_mode, :runtime
 
 # Setup Wallaby to use Chrome
 config :wallaby, driver: Wallaby.Chrome
+
+config :stripity_stripe,
+  api_base_url: "http://localhost:12111/v1/",
+  api_key: "sk_test_thisisaboguskey"
