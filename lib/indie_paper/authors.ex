@@ -362,4 +362,7 @@ defmodule IndiePaper.Authors do
     |> Author.profile_changeset(attrs)
     |> Repo.update()
   end
+
+  def has_stripe_connect_id?(%Author{stripe_connect_id: nil}), do: false
+  def has_stripe_connect_id?(%Author{stripe_connect_id: _}), do: true
 end

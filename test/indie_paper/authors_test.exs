@@ -520,4 +520,14 @@ defmodule IndiePaper.AuthorsTest do
       assert author.stripe_connect_id == "updated_stripe_connect_id"
     end
   end
+
+  describe "has_stripe_connect_id?/1" do
+    test "check if stripe_connect_id exists on Author" do
+      author = insert(:author)
+      author_without_stripe = insert(:author, stripe_connect_id: nil)
+
+      assert Authors.has_stripe_connect_id?(author)
+      refute Authors.has_stripe_connect_id?(author_without_stripe)
+    end
+  end
 end
