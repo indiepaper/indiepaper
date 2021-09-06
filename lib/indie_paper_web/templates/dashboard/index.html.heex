@@ -12,7 +12,7 @@
             <h1 data-test="title" class="page-heading">Draft Books</h1>
             <p class="page-description">your current drafts appear here. Write them with love and care they deserve</p>
 
-            <div class="mt-6">
+            <div class="mt-8 space-y-8">
                 <%= for draft <- @drafts do %>
                     <div class="primary-card">
                         <h2 data-test="draft-title" class="text-lg"><%= draft.title %></h2>
