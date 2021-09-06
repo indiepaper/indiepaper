@@ -10,7 +10,7 @@ defmodule IndiePaper.DraftsTest do
   end
 
   describe "create_draft/1" do
-    test "creates draft with given params" do
+    test "creates draft with given params and inserts default chapters" do
       draft_params = string_params_for(:draft)
       author = insert(:author)
 
@@ -19,6 +19,12 @@ defmodule IndiePaper.DraftsTest do
       assert %Drafts.Draft{} = draft
       assert draft.title == draft_params["title"]
       assert draft.author_id == author.id
+
+      draft_with_chapters = draft |> Drafts.with_chapters()
+
+      assert Enum.find(draft_with_chapters.chapters, fn chapter ->
+               chapter.title == "Introduction"
+             end)
     end
   end
 

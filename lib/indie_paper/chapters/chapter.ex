@@ -1,4 +1,4 @@
-defmodule IndiePaper.Drafts.Chapter do
+defmodule IndiePaper.Chapters.Chapter do
   use Ecto.Schema
   import Ecto.Changeset
 

@@ -5,6 +5,7 @@ defmodule IndiePaper.Drafts do
 
   alias IndiePaper.Drafts.Draft
   alias IndiePaper.Authors.Author
+  alias IndiePaper.Chapters
 
   alias IndiePaper.Repo
 
@@ -16,6 +17,7 @@ defmodule IndiePaper.Drafts do
     with :ok <- Bodyguard.permit(__MODULE__, :create_draft, author, %{}) do
       Ecto.build_assoc(author, :drafts)
       |> Draft.changeset(params)
+      |> Draft.chapters_changeset([Chapters.placeholder_chapter(title: "Introduction")])
       |> Repo.insert()
     end
   end

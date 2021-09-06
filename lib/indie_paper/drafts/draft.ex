@@ -9,7 +9,7 @@ defmodule IndiePaper.Drafts.Draft do
   @foreign_key_type :binary_id
   schema "drafts" do
     field :title, :string
-    has_many :chapters, IndiePaper.Drafts.Chapter
+    has_many :chapters, IndiePaper.Chapters.Chapter
     belongs_to :author, IndiePaper.Authors.Author
 
     timestamps()
@@ -19,6 +19,11 @@ defmodule IndiePaper.Drafts.Draft do
     draft_or_changeset
     |> cast(attrs, [:title])
     |> validate_required([:title])
+  end
+
+  def chapters_changeset(draft_or_changeset, chapters) do
+    draft_or_changeset
+    |> put_assoc(:chapters, chapters)
   end
 
   def scope(query, %IndiePaper.Authors.Author{id: author_id}, _) do

@@ -12,7 +12,7 @@ defmodule IndiePaper.Factory do
   end
 
   def chapter_factory do
-    %IndiePaper.Drafts.Chapter{
+    %IndiePaper.Chapters.Chapter{
       title: sequence(:title, &"Chapter Title #{&1}")
     }
   end
