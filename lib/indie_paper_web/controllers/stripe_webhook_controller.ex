@@ -1,6 +1,8 @@
 defmodule IndiePaperWeb.StripeWebhookController do
   use IndiePaperWeb, :controller
 
+  alias IndiePaper.PaymentHandler
+
   def connect(%Plug.Conn{assigns: %{stripe_event: stripe_event}} = conn, _params) do
     case handle_webhook(stripe_event) do
       {:ok, _} -> handle_success(conn)
@@ -21,7 +23,17 @@ defmodule IndiePaperWeb.StripeWebhookController do
     |> send_resp(422, error)
   end
 
-  defp handle_webhook(%{type: "account.updated"} = stripe_event) do
+  def handle_webhook(%{
+        type: "account.updated",
+        data: %{object: %{charges_enabled: true, id: stripe_connect_id}}
+      }) do
+    case PaymentHandler.set_payment_connected(stripe_connect_id) do
+      {:ok, _author} -> {:ok, "success"}
+      {:error, _} -> {:error, "there was an error while setting payment connected"}
+    end
+  end
+
+  def handle_webhook(%{type: "account.updated"}) do
     {:ok, "success"}
   end
 end

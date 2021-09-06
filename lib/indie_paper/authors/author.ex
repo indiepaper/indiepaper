@@ -144,7 +144,7 @@ defmodule IndiePaper.Authors.Author do
 
   def profile_changeset(author, attrs) do
     author
-    |> cast(attrs, [:stripe_connect_id])
+    |> cast(attrs, [:stripe_connect_id, :is_payment_connected])
     |> unique_constraint([:stripe_connect_id])
   end
 end

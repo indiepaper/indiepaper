@@ -15,4 +15,9 @@ defmodule IndiePaper.PaymentHandler do
   def get_stripe_connect_url(%Authors.Author{stripe_connect_id: stripe_connect_id}, _country_code) do
     StripeHandler.get_connect_url(stripe_connect_id)
   end
+
+  def set_payment_connected(stripe_connect_id) do
+    author = Authors.get_by_stripe_connect_id!(stripe_connect_id)
+    Authors.set_payment_connected(author)
+  end
 end

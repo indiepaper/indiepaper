@@ -530,4 +530,24 @@ defmodule IndiePaper.AuthorsTest do
       refute Authors.has_stripe_connect_id?(author_without_stripe)
     end
   end
+
+  describe "get_by_stripe_connect_id!/1" do
+    test "gets author by stripe_connect_id" do
+      author = insert(:author)
+
+      found_author = Authors.get_by_stripe_connect_id!(author.stripe_connect_id)
+
+      assert found_author.id == author.id
+    end
+  end
+
+  describe "set_payment_connected/1" do
+    test "sets the payment_connected field on author" do
+      author = insert(:author, is_payment_connected: false)
+
+      {:ok, updated_author} = Authors.set_payment_connected(author)
+
+      assert updated_author.is_payment_connected
+    end
+  end
 end

@@ -365,4 +365,12 @@ defmodule IndiePaper.Authors do
 
   def has_stripe_connect_id?(%Author{stripe_connect_id: nil}), do: false
   def has_stripe_connect_id?(%Author{stripe_connect_id: _}), do: true
+
+  def get_by_stripe_connect_id!(stripe_connect_id) do
+    Repo.get_by!(Author, stripe_connect_id: stripe_connect_id)
+  end
+
+  def set_payment_connected(author) do
+    update_author_profile(author, %{is_payment_connected: true})
+  end
 end
