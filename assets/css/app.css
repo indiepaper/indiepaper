@@ -56,6 +56,10 @@
     @apply bg-white base-button border rounded-lg border-primary-border shadow-sm;
   }
 
+  .accent-button {
+    @apply secondary-button border-accent;
+  }
+
   .error-box {
     @apply text-red-500 bg-red-50 border-red-500 px-4 py-2 rounded-md;
   }
