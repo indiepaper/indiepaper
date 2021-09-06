@@ -22,7 +22,6 @@ defmodule IndiePaperWeb.StripeWebhookController do
   end
 
   defp handle_webhook(%{type: "account.updated"} = stripe_event) do
-    IO.inspect(stripe_event)
     {:ok, "success"}
   end
 end

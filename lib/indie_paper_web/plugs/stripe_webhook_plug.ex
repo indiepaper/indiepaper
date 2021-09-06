@@ -3,7 +3,7 @@ defmodule IndiePaperWeb.Plugs.StripeWebhookPlug do
 
   def init(config), do: config
 
-  def call(%{request_path: "/stripe/webhooks"} = conn, _) do
+  def call(%{request_path: "/stripe/webhooks/connect"} = conn, _) do
     signing_secret = Application.get_env(:stripity_stripe, :connect_webhook_signing_secret)
     {:ok, body, _} = Plug.Conn.read_body(conn)
     [stripe_signature] = Plug.Conn.get_req_header(conn, "stripe-signature")
