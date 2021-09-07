@@ -17,8 +17,9 @@ defmodule IndiePaper.Drafts.Draft do
 
   def changeset(draft_or_changeset, attrs) do
     draft_or_changeset
-    |> cast(attrs, [:title])
+    |> cast(attrs, [:title, :author_id])
     |> validate_required([:title])
+    |> cast_or_constraint_assoc(:author)
   end
 
   def chapters_changeset(draft_or_changeset, chapters) do
@@ -28,5 +29,15 @@ defmodule IndiePaper.Drafts.Draft do
 
   def scope(query, %IndiePaper.Authors.Author{id: author_id}, _) do
     from p in query, where: p.author_id == ^author_id
+  end
+
+  defp cast_or_constraint_assoc(changeset, name) do
+    {:assoc, %{owner_key: key}} = changeset.types[name]
+
+    if changeset.changes[key] do
+      assoc_constraint(changeset, name)
+    else
+      cast_assoc(changeset, name, required: true)
+    end
   end
 end
