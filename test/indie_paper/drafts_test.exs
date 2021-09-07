@@ -48,9 +48,8 @@ defmodule IndiePaper.DraftsTest do
       first_chapter = Enum.at(draft.chapters, 0)
 
       inserted_draft = Drafts.get_draft!(draft.id) |> Drafts.with_chapters()
-      first_inserted_chapter = Enum.at(inserted_draft.chapters, 0)
 
-      assert first_chapter.title == first_inserted_chapter.title
+      assert Enum.find(inserted_draft.chapters, fn chapter -> chapter.id == first_chapter.id end)
     end
   end
 

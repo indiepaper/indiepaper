@@ -7,6 +7,8 @@ defmodule IndiePaper.Chapters.Chapter do
   schema "chapters" do
     field :title, :string
     field :draft_id, :binary_id
+    field :chapter_index, :integer, nil: false, default: 0
+    field :content_json, :map
 
     timestamps()
   end

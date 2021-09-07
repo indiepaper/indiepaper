@@ -11,4 +11,23 @@ defmodule IndiePaper.Chapters do
       title: title
     })
   end
+
+  def placeholder_content_json(title, content) do
+    %{
+      "content" => [
+        %{
+          "attrs" => %{"level" => 1},
+          "content" => [
+            %{"text" => title, "type" => "text"}
+          ],
+          "type" => "heading"
+        },
+        %{
+          "content" => [%{"text" => content, "type" => "text"}],
+          "type" => "paragraph"
+        }
+      ],
+      "type" => "doc"
+    }
+  end
 end

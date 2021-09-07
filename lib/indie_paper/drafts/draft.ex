@@ -9,7 +9,7 @@ defmodule IndiePaper.Drafts.Draft do
   @foreign_key_type :binary_id
   schema "drafts" do
     field :title, :string
-    has_many :chapters, IndiePaper.Chapters.Chapter
+    has_many :chapters, IndiePaper.Chapters.Chapter, preload_order: [desc: :chapter_index]
     belongs_to :author, IndiePaper.Authors.Author
 
     timestamps()

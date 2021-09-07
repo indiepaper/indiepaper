@@ -1,13 +1,12 @@
 defmodule IndiePaper.Drafts do
   @behaviour Bodyguard.Policy
 
-  def authorize(:create_draft_with_placeholder_chapters, _, _), do: true
-
+  alias IndiePaper.Repo
   alias IndiePaper.Drafts.Draft
   alias IndiePaper.Authors.Author
   alias IndiePaper.Chapters
 
-  alias IndiePaper.Repo
+  def authorize(:create_draft_with_placeholder_chapters, %Author{}, _), do: true
 
   def change_draft(%Draft{} = draft, attrs \\ %{}) do
     Draft.changeset(draft, attrs)
