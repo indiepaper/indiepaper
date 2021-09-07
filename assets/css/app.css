@@ -72,8 +72,16 @@
     @apply flex flex-col items-start p-6 bg-white shadow-sm rounded-lg border border-primary-border;
   }
 
-  .small-link {
-    @apply text-sm text-secondary-text;
+  .base-link {
+    @apply flex flex-row items-center space-x-1.5 text-gray-600 hover:text-gray-800;
+  }
+
+  .primary-link {
+    @apply base-link;
+  }
+
+  .secondary-link {
+    @apply base-link text-sm;
   }
 }
 
