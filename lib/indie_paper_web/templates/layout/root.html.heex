@@ -20,7 +20,7 @@
                 <div class="flex flex-row items-center space-x-5 md:space-x-6">
                     <%= if @current_author do %>
                         <%= link "Dashboard", to: Routes.dashboard_path(@conn, :index), class: "primary-link" %>
-                        <%= link "Sign out", to: Routes.author_session_path(@conn, :delete), method: :delete, class: "primary-link" %>
+                        <%= link "Sign out", to: Routes.author_session_path(@conn, :delete), method: :delete, class: "primary-link", "data-no-instant": true %>
                     <% else %>
                         <%= link "Sign in", to: Routes.author_session_path(@conn, :new) , class: "primary-link"%>
                         <%= link "Start Writing", to: Routes.author_registration_path(@conn, :new), class: "secondary-button text-sm" %>
