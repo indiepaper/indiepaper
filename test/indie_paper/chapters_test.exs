@@ -5,9 +5,9 @@ defmodule IndiePaper.ChaptersTest do
 
   describe "placeholder_chapter/1" do
     test "returns changeset of placeholder chapter for empty draft" do
-      chapter = Chapters.placeholder_chapter(title: "Placeholder Title")
+      chapter = Chapters.placeholder_chapter(title: "Placeholder Title", chapter_index: 4)
 
-      assert %Ecto.Changeset{changes: %{title: "Placeholder Title"}} = chapter
+      assert %Ecto.Changeset{changes: %{title: "Placeholder Title", chapter_index: 4}} = chapter
     end
   end
 end

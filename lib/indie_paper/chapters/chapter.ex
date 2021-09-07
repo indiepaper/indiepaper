@@ -16,7 +16,8 @@ defmodule IndiePaper.Chapters.Chapter do
   @doc false
   def changeset(chapter, attrs) do
     chapter
-    |> cast(attrs, [:title])
-    |> validate_required([:title])
+    |> cast(attrs, [:title, :chapter_index, :content_json])
+    |> validate_required([:title, :chapter_index, :content_json])
+    |> validate_number(:chapter_index, greater_than_or_equal_to: 0)
   end
 end

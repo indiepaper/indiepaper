@@ -17,10 +17,10 @@ defmodule IndiePaper.Drafts do
       Ecto.build_assoc(author, :drafts)
       |> Draft.changeset(params)
       |> Draft.chapters_changeset([
-        Chapters.placeholder_chapter(title: "Introduction"),
-        Chapters.placeholder_chapter(title: "Preface"),
-        Chapters.placeholder_chapter(title: "Chapter 1"),
-        Chapters.placeholder_chapter(title: "Chapter 2")
+        Chapters.placeholder_chapter(title: "Introduction", chapter_index: 0),
+        Chapters.placeholder_chapter(title: "Preface", chapter_index: 1),
+        Chapters.placeholder_chapter(title: "Chapter 1", chapter_index: 2),
+        Chapters.placeholder_chapter(title: "Chapter 2", chapter_index: 3)
       ])
       |> Repo.insert()
     end

@@ -6,9 +6,11 @@ defmodule IndiePaper.Chapters do
     |> Chapter.changeset(attrs)
   end
 
-  def placeholder_chapter(title: title) do
+  def placeholder_chapter(title: title, chapter_index: chapter_index) do
     change_chapter(%Chapter{}, %{
-      title: title
+      title: title,
+      chapter_index: chapter_index,
+      content_json: placeholder_content_json(title, "Write your masterpiece here.")
     })
   end
 
