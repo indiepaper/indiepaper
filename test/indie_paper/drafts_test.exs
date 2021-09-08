@@ -63,4 +63,16 @@ defmodule IndiePaper.DraftsTest do
       refute Enum.find(drafts, fn draft -> draft.id == draft2.id end)
     end
   end
+
+  describe "get_first_chapter/1" do
+    test "returns the first chapter of the draft" do
+      draft = insert(:draft)
+
+      first_chapter = Drafts.get_first_chapter(draft)
+
+      find_first_chapter = Enum.find(draft.chapters, fn chapter -> chapter.chapter_index == 0 end)
+
+      assert first_chapter.id == find_first_chapter.id
+    end
+  end
 end

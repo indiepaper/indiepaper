@@ -40,4 +40,8 @@ defmodule IndiePaper.Drafts do
     |> Bodyguard.scope(author)
     |> Repo.all()
   end
+
+  def get_first_chapter(%Draft{chapters: chapters}) do
+    Enum.find(chapters, fn chapter -> chapter.chapter_index == 0 end)
+  end
 end

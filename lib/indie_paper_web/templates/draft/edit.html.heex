@@ -1,16 +1,16 @@
 <section class="bg-background">
     <div class="page-box container-box">
-        <div class="flex flex-col items-stretch space-y-12 md:flex-row md:items-stretch md:space-y-0">
+        <div class="flex flex-col items-stretch space-y-12 md:flex-row md:items-stretch md:space-y-0" x-data={"draftEditor(chapterContentJSON, '#{@first_chapter.id}')"}>
             <div class="flex flex-col md:pt-8 md:pr-6 md:pb-12 md:w-64">
                 <h1 data-test="title" class="page-heading"><%= @draft.title %></h1>
                 <div class="mt-12 space-y-3">
                     <%= for chapter <- @draft.chapters do %>
-                        <button class="block py-2 px-6 w-full text-left rounded-md hover:bg-warm-gray-100" data-test="chapter-title"><%= chapter.title %></button>
+                        <button class="block py-2 px-6 w-full text-left rounded-md hover:bg-warm-gray-100" :class={"{'bg-warm-gray-100' : selectedChapterId === '#{chapter.id}'}"} data-test="chapter-title"><%= chapter.title %></button>
                     <% end %>
                 </div>
             </div>
             <div class="flex-1 p-0 bg-white rounded-lg border border-primary-border">
-                <div class="flex flex-col items-stretch" x-data="draftEditor(chapterContentJSON)">
+                <div class="flex flex-col items-stretch" >
                     <div class="flex flex-row items-baseline py-4 px-6 space-x-4 text-gray-600 border-b hover:text-gray-800 border-primary-border">
                         <button
                             @click="toggleBold()"
@@ -53,6 +53,5 @@
 
 <script phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/js/draft-editor.js")}></script>
 <script type="text/javascript">
- const chapterContentJSON = <%= raw(Jason.encode!(Enum.at(@draft.chapters, 0).content_json)) %>
-
+ const chapterContentJSON = <%= raw(Jason.encode!(@first_chapter.content_json)) %>
 </script>

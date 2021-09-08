@@ -2,10 +2,14 @@ import { Editor } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 
 document.addEventListener("alpine:init", () => {
-  Alpine.data("draftEditor", (content) => {
+  Alpine.data("draftEditor", (content, selectedChapterId) => {
     let editor;
 
     return {
+      selectedChapterId: selectedChapterId,
+      setSelectedChapterId(chapterId) {
+        this.selectedChapterId = chapterId;
+      },
       isActive(type, opts = {}, updatedAt) {
         return editor.isActive(type, opts);
       },
