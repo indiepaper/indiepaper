@@ -29,6 +29,10 @@ document.addEventListener("alpine:init", () => {
         draftId: draftId,
         selectChapter(chapterId) {
           this.isEditorLoading = true;
+
+          const contentJson = editor.getJSON();
+          this.updateContentJson(contentJson);
+
           this.selectedChapterId = chapterId;
 
           fetch(`/drafts/${this.draftId}/chapters/${chapterId}/edit`)
@@ -75,11 +79,12 @@ document.addEventListener("alpine:init", () => {
             onCreate({ editor }) {
               _this.updatedAt = Date.now();
             },
-            onUpdate({ editor }) {
+            onUpdate: debounce(({ editor }) => {
+              console.log("Hello");
               _this.updatedAt = Date.now();
               const contentJson = editor.getJSON();
               _this.updateContentJson(contentJson);
-            },
+            }, 480),
             onSelectionUpdate({ editor }) {
               _this.updatedAt = Date.now();
             },
