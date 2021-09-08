@@ -9,6 +9,9 @@ document.addEventListener("alpine:init", () => {
       isActive(type, opts = {}, updatedAt) {
         return editor.isActive(type, opts);
       },
+      toggleItalic() {
+        editor.chain().toggleItalic().focus().run();
+      },
       toggleBold() {
         editor.chain().toggleBold().focus().run();
       },
