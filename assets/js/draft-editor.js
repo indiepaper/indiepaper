@@ -32,6 +32,11 @@ document.addEventListener("alpine:init", () => {
           onSelectionUpdate({ editor }) {
             _this.updatedAt = Date.now();
           },
+          editorProps: {
+            attributes: {
+              class: "focus:outline-none",
+            },
+          },
         });
       },
     };
