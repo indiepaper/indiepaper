@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.3.3",
-    "alpinejs": "^3.2.4",
+    "@tiptap/core": "^2.0.0-beta.103",
+    "@tiptap/starter-kit": "^2.0.0-beta.102",
+    "alpinejs": "^3.3.2",
     "instant.page": "^5.1.0"
   }
 }
