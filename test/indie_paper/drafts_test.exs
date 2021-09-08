@@ -66,13 +66,11 @@ defmodule IndiePaper.DraftsTest do
 
   describe "get_first_chapter/1" do
     test "returns the first chapter of the draft" do
-      draft = insert(:draft)
+      draft = insert(:draft, chapters: [build(:chapter, chapter_index: 0)])
 
       first_chapter = Drafts.get_first_chapter(draft)
 
-      find_first_chapter = Enum.find(draft.chapters, fn chapter -> chapter.chapter_index == 0 end)
-
-      assert first_chapter.id == find_first_chapter.id
+      assert first_chapter.chapter_index == 0
     end
   end
 end

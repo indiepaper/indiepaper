@@ -34,9 +34,4 @@ defmodule IndiePaperWeb.Pages.DraftPage.Edit do
     session
     |> assert_has(data("test", "chapter-title", text: title))
   end
-
-  def has_chapter_content?(session, title) do
-    session
-    |> assert_has(Wallaby.Query.text(title))
-  end
 end

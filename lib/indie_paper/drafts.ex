@@ -42,6 +42,6 @@ defmodule IndiePaper.Drafts do
   end
 
   def get_first_chapter(%Draft{chapters: chapters}) do
-    Enum.find(chapters, fn chapter -> chapter.chapter_index == 0 end)
+    Enum.min_by(chapters, fn chapter -> chapter.chapter_index end)
   end
 end

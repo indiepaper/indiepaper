@@ -13,6 +13,5 @@ defmodule IndiePaperWeb.Features.AuthorCanEditDraftTest do
     |> DashboardPage.click_edit_draft()
     |> DraftPage.Edit.has_draft_title(draft.title)
     |> DraftPage.Edit.has_draft_chapter_title?(draft_chapter.title)
-    |> DraftPage.Edit.has_chapter_content?(draft_chapter.title)
   end
 end
