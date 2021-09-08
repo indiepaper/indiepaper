@@ -9,35 +9,35 @@
                     <% end %>
                 </div>
             </div>
-            <div class="flex-1 primary-card">
-                <div x-data="editor('<p>This is where the content goes</p>')">
-                        <div class="editor-menu-fixed">
-                            <button
-                                @click="toggleBold()"
-                                :class="{ 'is-active' : isActive('bold', updatedAt) }"
-                            >
-                                Bold
-                            </button>
-                            <button
-                                @click="toggleHeading(1)"
-                                :class="{ 'is-active' : isActive('heading', { level: 1 }, updatedAt) }"
-                            >
-                                H1
-                            </button>
-                            <button
-                                @click="toggleHeading(2)"
-                                :class="{ 'is-active' : isActive('heading', { level: 2 }, updatedAt) }"
-                            >
-                                H2
-                            </button>
-                            <button
-                                @click="toggleHeading(3)"
-                                :class="{ 'is-active' : isActive('heading', { level: 3 }, updatedAt) }"
-                            >
-                                H3
-                            </button>
-                        </div>
-                        <div x-ref="editorReference"></div>
+            <div class="flex-1 p-0 bg-white rounded-lg border border-primary-border">
+                <div class="flex flex-col items-stretch" x-data="draftEditor(chapterContentJSON)">
+                    <div class="flex flex-row py-4 px-6 space-x-4 border-b border-primary-border">
+                        <button
+                            @click="toggleBold()"
+                            :class="{ 'is-active' : isActive('bold', updatedAt) }"
+                        >
+                            Bold
+                        </button>
+                        <button
+                            @click="toggleHeading(1)"
+                            :class="{ 'is-active' : isActive('heading', { level: 1 }, updatedAt) }"
+                        >
+                            H1
+                        </button>
+                        <button
+                            @click="toggleHeading(2)"
+                            :class="{ 'is-active' : isActive('heading', { level: 2 }, updatedAt) }"
+                        >
+                            H2
+                        </button>
+                        <button
+                            @click="toggleHeading(3)"
+                            :class="{ 'is-active' : isActive('heading', { level: 3 }, updatedAt) }"
+                        >
+                            H3
+                        </button>
+                    </div>
+                    <div class="py-6 px-6 prose" x-ref="editorReference"></div>
                 </div>
             </div>
         </div>
@@ -45,3 +45,7 @@
 </section>
 
 <script phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/js/draft-editor.js")}></script>
+<script type="text/javascript">
+ const chapterContentJSON = <%= raw(Jason.encode!(Enum.at(@draft.chapters, 0).content_json)) %>
+
+</script>
