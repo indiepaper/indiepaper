@@ -20,4 +20,14 @@ defmodule IndiePaper.ChaptersTest do
       assert chapter.id == found_chapter.id
     end
   end
+
+  describe "update_chapter/2" do
+    test "updates chapter with given params" do
+      chapter = insert(:chapter)
+
+      {:ok, updated_chapter} = Chapters.update_chapter(chapter, %{title: "Updated Title"})
+
+      assert updated_chapter.title == "Updated Title"
+    end
+  end
 end

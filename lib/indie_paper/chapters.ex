@@ -35,4 +35,10 @@ defmodule IndiePaper.Chapters do
   end
 
   def get_chapter!(id), do: Repo.get!(Chapter, id)
+
+  def update_chapter(chapter, attrs) do
+    chapter
+    |> Chapter.changeset(attrs)
+    |> Repo.update()
+  end
 end

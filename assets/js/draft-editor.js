@@ -51,6 +51,20 @@ document.addEventListener("alpine:init", () => {
           editor.chain().toggleHeading({ level: level }).focus().run();
         },
         updatedAt: Date.now(),
+        updateContentJson(contentJson) {
+          this.isEditorLoading = true;
+
+          fetch(`/drafts/${this.draftId}/chapters/${this.selectedChapterId}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRF-TOKEN": csrfToken,
+            },
+            body: JSON.stringify({ content_json: contentJson }),
+          })
+            .then((res) => res.json())
+            .then((data) => (this.isEditorLoading = false));
+        },
         init() {
           const _this = this;
 
@@ -63,23 +77,8 @@ document.addEventListener("alpine:init", () => {
             },
             onUpdate({ editor }) {
               _this.updatedAt = Date.now();
-              contentJson = editor.getJSON();
-
-              _this.isEditorLoading = true;
-
-              fetch(
-                `/drafts/${_this.draftId}/chapters/${_this.selectedChapterId}`,
-                {
-                  method: "PATCH",
-                  headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": csrfToken,
-                  },
-                  body: JSON.stringify({ content_json: contentJson }),
-                }
-              )
-                .then((res) => res.json())
-                .then((data) => (_this.isEditorLoading = false));
+              const contentJson = editor.getJSON();
+              _this.updateContentJson(contentJson);
             },
             onSelectionUpdate({ editor }) {
               _this.updatedAt = Date.now();
