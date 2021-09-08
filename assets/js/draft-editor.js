@@ -13,7 +13,9 @@ document.addEventListener("alpine:init", () => {
         this.isLoading = true;
         this.selectedChapterId = chapterId;
 
-        fetch(`/drafts/${this.draftId}/chapters/${chapterId}/edit`);
+        fetch(`/drafts/${this.draftId}/chapters/${chapterId}/edit`)
+          .then((res) => res.json())
+          .then((content_json) => editor.commands.setContent(content_json));
       },
       isActive(type, opts = {}, updatedAt) {
         return editor.isActive(type, opts);

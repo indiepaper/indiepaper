@@ -1,4 +1,5 @@
 defmodule IndiePaper.Chapters do
+  alias IndiePaper.Repo
   alias IndiePaper.Chapters.Chapter
 
   def change_chapter(%Chapter{} = chapter, attrs \\ %{}) do
@@ -32,4 +33,6 @@ defmodule IndiePaper.Chapters do
       "type" => "doc"
     }
   end
+
+  def get_chapter!(id), do: Repo.get!(Chapter, id)
 end

@@ -10,4 +10,14 @@ defmodule IndiePaper.ChaptersTest do
       assert %Ecto.Changeset{changes: %{title: "Placeholder Title", chapter_index: 4}} = chapter
     end
   end
+
+  describe "get_chapter!/1" do
+    test "gets the chapter with the given id" do
+      chapter = insert(:chapter)
+
+      found_chapter = Chapters.get_chapter!(chapter.id)
+
+      assert chapter.id == found_chapter.id
+    end
+  end
 end
