@@ -14,12 +14,16 @@ defmodule IndiePaper.Factory do
 
   def chapter_factory do
     %IndiePaper.Chapters.Chapter{
-      title: sequence(:title, &"Chapter Title #{&1}"),
+      title: sequence(:title, &"Chapter Title #{&1}", start_at: 0),
       chapter_index: sequence(:chapter_index, fn num -> num end, start_at: 0),
       content_json:
-        sequence(:content_json, fn num ->
-          Chapters.placeholder_content_json("Chapter #{num}", "Long Content")
-        end)
+        sequence(
+          :content_json,
+          fn num ->
+            Chapters.placeholder_content_json("Chapter Title #{num}", "Long Content")
+          end,
+          start_at: 0
+        )
     }
   end
 

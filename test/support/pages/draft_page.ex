@@ -34,4 +34,14 @@ defmodule IndiePaperWeb.Pages.DraftPage.Edit do
     session
     |> assert_has(data("test", "chapter-title", text: title))
   end
+
+  def click_chapter_title(session, title) do
+    session
+    |> click(button(title))
+  end
+
+  def has_chapter_content_title?(session, title) do
+    session
+    |> assert_text(css(".ProseMirror > h1"), title)
+  end
 end
