@@ -45,6 +45,7 @@ document.addEventListener("alpine:init", () => {
             .catch(() => (this.isEditorError = true));
         },
         saveCurrentChapterContentJson() {
+          this.isEditorError = false;
           const contentJson = editor.getJSON();
           this.updateContentJson(contentJson);
         },
