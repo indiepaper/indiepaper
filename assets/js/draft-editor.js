@@ -80,11 +80,14 @@ document.addEventListener("alpine:init", () => {
               _this.updatedAt = Date.now();
             },
             onUpdate: debounce(({ editor }) => {
-              console.log("Hello");
               _this.updatedAt = Date.now();
               const contentJson = editor.getJSON();
               _this.updateContentJson(contentJson);
             }, 480),
+            onBlur({ editor, event }) {
+              const contentJson = editor.getJSON();
+              _this.updateContentJson(contentJson);
+            },
             onSelectionUpdate({ editor }) {
               _this.updatedAt = Date.now();
             },
