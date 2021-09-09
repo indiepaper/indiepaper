@@ -1,7 +1,7 @@
 defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
   use IndiePaperWeb.FeatureCase, async: true
 
-  alias IndiePaperWeb.Pages.{DraftPage, LoginPage, DashboardPage}
+  alias IndiePaperWeb.Pages.{DraftPage, LoginPage, DashboardPage, BookPage}
 
   test "author can edit and publish draft", %{session: session} do
     draft = insert(:draft)
@@ -18,8 +18,8 @@ defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
       Enum.at(Enum.at(draft_chapter1.content_json["content"], 0)["content"], 0)["text"]
     )
     |> DraftPage.Edit.click_publish()
-    |> DraftPage.Publish.New.fill_form(book_params)
-    |> DraftPage.Publish.New.click_publish()
+    |> BookPage.New.fill_form(book_params)
+    |> BookPage.New.click_publish()
     |> BookPage.Show.has_book_title?(book_params[:title])
   end
 end

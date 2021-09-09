@@ -6,7 +6,7 @@
                     <h1 data-test="title" class="page-heading"><%= @draft.title %></h1>
                 </div>
                 <div class="flex flex-row space-x-4">
-                    <%= link "Publish", to: Routes.draft_draft_publish_path(@conn, :new, @draft),  class: "text-sm primary-button" %>
+                    <%= link "Publish", to: Routes.draft_book_path(@conn, :new, @draft),  class: "text-sm primary-button" %>
                 </div>
             </div>
         </div>
