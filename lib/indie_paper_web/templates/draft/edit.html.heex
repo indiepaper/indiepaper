@@ -1,4 +1,4 @@
-<section class="bg-background">
+<section class="bg-background" x-data={"draftEditor(chapterContentJSON, '#{@draft.id}','#{@first_chapter.id}', '#{Phoenix.Controller.get_csrf_token()}')"}>
     <div class="bg-white border-b border-primary-border">
         <div class="container-box">
             <div class="flex flex-col items-start space-y-8 md:flex-row md:justify-between md:items-center md:space-y-0">
@@ -6,13 +6,28 @@
                     <h1 data-test="title" class="page-heading"><%= @draft.title %></h1>
                 </div>
                 <div class="flex flex-row space-x-4">
-                    <button class="text-sm primary-button">Publish</button>
+                    <%= link "Publish", to: Routes.draft_draft_publish_path(@conn, :new, @draft),  class: "text-sm primary-button" %>
                 </div>
             </div>
         </div>
     </div>
     <div class="pt-12 page-box container-box">
-        <div class="flex flex-col items-stretch space-y-12 md:flex-row md:items-stretch md:space-y-0" x-data={"draftEditor(chapterContentJSON, '#{@draft.id}','#{@first_chapter.id}', '#{Phoenix.Controller.get_csrf_token()}')"}>
+        <div x-show="isEditorError" class="flex flex-col items-start py-4 px-6 mt-4 mb-16 space-y-4 text-white bg-red-400 md:flex-row md:justify-between md:items-center md:space-y-0 error-box">
+            <div class="flex flex-row items-center space-x-2">
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <p>Oops, an error occured while saving chapter.</p>
+            </div>
+            <button @click="saveCurrentChapterContentJson()"  class="text-sm text-gray-900 border-0 secondary-button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                <span>Try again</span></button>
+        </div>
+        <div class="flex flex-col items-stretch space-y-12 md:flex-row md:items-stretch md:space-y-0" >
             <div class="flex flex-col md:pt-8 md:pr-6 md:pb-12 md:w-64">
                 <div class="space-y-3">
                     <%= for chapter <- @draft.chapters do %>

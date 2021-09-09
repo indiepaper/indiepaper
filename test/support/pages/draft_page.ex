@@ -42,6 +42,11 @@ defmodule IndiePaperWeb.Pages.DraftPage.Edit do
 
   def has_chapter_content_title?(session, title) do
     session
-    |> assert_text(css(".ProseMirror > h1"), title)
+    |> assert_has(Wallaby.Query.text(css(".ProseMirror > h1"), title))
+  end
+
+  def click_publish(session) do
+    session
+    |> click(link("Publish"))
   end
 end

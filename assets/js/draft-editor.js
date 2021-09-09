@@ -25,6 +25,7 @@ document.addEventListener("alpine:init", () => {
 
       return {
         isEditorLoading: false,
+        isEditorError: false,
         selectedChapterId: selectedChapterId,
         draftId: draftId,
         selectChapter(chapterId) {
@@ -40,7 +41,8 @@ document.addEventListener("alpine:init", () => {
             .then((content_json) => {
               editor.commands.setContent(content_json);
               this.isEditorLoading = false;
-            });
+            })
+            .catch(() => (this.isEditorError = true));
         },
         saveCurrentChapterContentJson() {
           const contentJson = editor.getJSON();
@@ -71,7 +73,8 @@ document.addEventListener("alpine:init", () => {
             body: JSON.stringify({ content_json: contentJson }),
           })
             .then((res) => res.json())
-            .then((data) => (this.isEditorLoading = false));
+            .then((data) => (this.isEditorLoading = false))
+            .catch(() => (this.isEditorError = true));
         },
         init() {
           const _this = this;
