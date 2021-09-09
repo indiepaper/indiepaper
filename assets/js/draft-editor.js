@@ -42,6 +42,10 @@ document.addEventListener("alpine:init", () => {
               this.isEditorLoading = false;
             });
         },
+        saveCurrentChapterContentJson() {
+          const contentJson = editor.getJSON();
+          this.updateContentJson(contentJson);
+        },
         isActive(type, opts = {}, updatedAt) {
           return editor.isActive(type, opts);
         },
