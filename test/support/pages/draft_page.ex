@@ -50,3 +50,16 @@ defmodule IndiePaperWeb.Pages.DraftPage.Edit do
     |> click(link("Publish"))
   end
 end
+
+defmodule IndiePaperWeb.Pages.DraftPage.Publish.New do
+  use IndiePaperWeb.PageHelpers
+
+  def fill_form(session, attrs) do
+    session
+  end
+
+  def click_publish(session) do
+    session
+    |> click(button("Publish Book"))
+  end
+end

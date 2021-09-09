@@ -4,6 +4,17 @@ defmodule IndiePaper.Factory do
   alias IndiePaper.Authors
   alias IndiePaper.Chapters
 
+  def book_factory do
+    %IndiePaper.Books.Book{
+      title: sequence("Book Title"),
+      short_description: "Really long and short description",
+      long_description_html:
+        "<h3>Book Description Html</h3><p>This is the description of the description</p>",
+      author: build(:author),
+      draft: build(:draft)
+    }
+  end
+
   def draft_factory do
     %IndiePaper.Drafts.Draft{
       title: sequence(:title, &"Draft Title #{&1}"),
