@@ -8,7 +8,6 @@ defmodule IndiePaper.Books.Book do
     field :long_description_html, :string
     field :short_description, :string
     field :title, :string
-    belongs_to :author, IndiePaper.Authors.Author
     belongs_to :draft, IndiePaper.Drafts.Draft
 
     timestamps()
