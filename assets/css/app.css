@@ -21,7 +21,7 @@
   }
 
   .form-container {
-    @apply flex flex-col space-y-6 md:items-start;
+    @apply flex flex-col space-y-6 items-start;
   }
 
   .input-container {
@@ -41,7 +41,7 @@
   }
 
   .base-button {
-    @apply px-4 py-2 rounded-lg flex flex-row items-center space-x-1.5;
+    @apply px-4 py-2 rounded-lg inline-flex flex-row items-center justify-center space-x-1.5;
   }
 
   .primary-button {
