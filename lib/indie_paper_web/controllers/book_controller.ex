@@ -12,9 +12,14 @@ defmodule IndiePaperWeb.BookController do
 
   def create(conn, %{"draft_id" => draft_id, "book" => book_params}) do
     draft = Drafts.get_draft!(draft_id)
-    {:ok, book} = Books.create_book(draft, book_params)
 
-    redirect(conn, to: Routes.book_path(conn, :show, book))
+    case Books.create_book(draft, book_params) do
+      {:ok, book} ->
+        redirect(conn, to: Routes.book_path(conn, :show, book))
+
+      {:error, changeset} ->
+        render(conn, "new.html", draft: draft, changeset: changeset)
+    end
   end
 
   def show(conn, %{"id" => book_id}) do
