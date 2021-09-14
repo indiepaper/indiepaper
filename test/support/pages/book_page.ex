@@ -5,7 +5,7 @@ defmodule IndiePaperWeb.Pages.BookPage.New do
     session
     |> fill_in(text_field("Title"), with: attrs[:title])
     |> fill_in(text_field("Short description"), with: attrs[:short_description])
-    |> fill_in(text_field("Long description"), with: attrs[:long_description_html])
+    |> fill_in(css("[contenteditable='true']"), with: attrs[:long_description_html])
   end
 
   def click_publish(session) do
