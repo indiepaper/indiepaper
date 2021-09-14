@@ -43,7 +43,7 @@ document.addEventListener("alpine:init", () => {
           },
           editorProps: {
             attributes: {
-              class: "focus:outline-none",
+              class: "focus:outline-none font-normal",
             },
           },
         });

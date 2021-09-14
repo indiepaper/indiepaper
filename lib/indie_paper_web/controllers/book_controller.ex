@@ -6,7 +6,7 @@ defmodule IndiePaperWeb.BookController do
 
   def new(conn, %{"draft_id" => draft_id}) do
     draft = Drafts.get_draft!(draft_id)
-    changeset = Books.change_book(%Books.Book{})
+    changeset = Books.change_book(%Books.Book{}, %{title: draft.title})
     render(conn, "new.html", draft: draft, changeset: changeset)
   end
 
