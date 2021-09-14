@@ -2,10 +2,11 @@ import { Editor } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 
 document.addEventListener("alpine:init", () => {
-  Alpine.data("bookLongDescriptionHtmlEditor", (content) => {
+  Alpine.data("bookLongDescriptionHtmlEditor", () => {
     let editor;
 
     return {
+      longDescriptionHtml: "",
       isActive(type, opts = {}, updatedAt) {
         return editor.isActive(type, opts);
       },
@@ -20,22 +21,22 @@ document.addEventListener("alpine:init", () => {
       },
       updatedAt: Date.now(),
       updateContentHtml(contentHtml) {
-        console.log(contentHtml);
+        this.longDescriptionHtml = contentHtml;
       },
       init() {
         const _this = this;
 
         editor = new Editor({
           element: this.$refs.editorReference,
+          content: this.$refs.longDescriptionHtmlReference.value,
           extensions: [StarterKit],
-          content: content,
           onCreate({ editor }) {
             _this.updatedAt = Date.now();
           },
           onUpdate: ({ editor }) => {
             _this.updatedAt = Date.now();
             const contentHtml = editor.getHTML();
-            _this.updateContentHtml(contentHtml);
+            _this.longDescriptionHtml = contentHtml;
           },
           onSelectionUpdate({ editor }) {
             _this.updatedAt = Date.now();
