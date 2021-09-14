@@ -3,7 +3,7 @@ defmodule IndiePaperWeb.DraftChapterController do
 
   alias IndiePaper.Chapters
 
-  def edit(conn, %{"draft_id" => draft_id, "id" => id}) do
+  def edit(conn, %{"draft_id" => _draft_id, "id" => id}) do
     chapter = Chapters.get_chapter!(id)
     json(conn, chapter.content_json)
   end
