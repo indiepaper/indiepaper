@@ -1,0 +1,37 @@
+<section>
+    <%= form_for @changeset, Routes.draft_book_path(@conn, :create, @draft), fn f -> %>
+        <%= if @changeset.action do %>
+            <div class="form-error-box">
+                <p>Oops, Something went wrong. Please check errors below</p>
+            </div>
+        <% end %>
+
+        <div class="form-container">
+            <div class="input-container">
+                <%= label f, :title, class: "input-label"  %>
+                <%= text_input f, :title, class: "form-input"  %>
+                <p class="input-error">
+                    <%= error_tag f, :title %>
+                </p>
+            </div>
+
+            <div class="input-container">
+                <%= label f, :short_description, class: "input-label"  %>
+                <%= text_input f, :short_description, class: "form-input"  %>
+                <p class="input-error">
+                    <%= error_tag f, :short_description %>
+                </p>
+            </div>
+
+            <div class="input-container">
+                <%= label f, :long_description_html, "Long description",  class: "input-label" %>
+                <%= text_input f, :long_description_html, class: "form-input"  %>
+                <p class="input-error">
+                    <%= error_tag f, :long_description_html %>
+                </p>
+            </div>
+
+            <%= submit "Publish Book", class: "primary-button" %>
+        </div>
+    <% end %>
+</section>

@@ -58,7 +58,7 @@ defmodule IndiePaperWeb.Router do
 
     resources "/drafts", DraftController, only: [:new, :create, :edit] do
       resources "/chapters", DraftChapterController, only: [:edit, :update]
-      resources "/books", BookController, only: [:new]
+      resources "/books", BookController, only: [:new, :create]
     end
 
     resources "/dashboard", DashboardController, only: [:index]
@@ -69,6 +69,7 @@ defmodule IndiePaperWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/books", BookController, only: [:show]
   end
 
   # Other scopes may use custom stacks.

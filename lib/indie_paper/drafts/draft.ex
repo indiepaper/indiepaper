@@ -11,6 +11,7 @@ defmodule IndiePaper.Drafts.Draft do
     field :title, :string
     has_many :chapters, IndiePaper.Chapters.Chapter, preload_order: [asc: :chapter_index]
     belongs_to :author, IndiePaper.Authors.Author
+    has_one :book, IndiePaper.Books.Book
 
     timestamps()
   end
