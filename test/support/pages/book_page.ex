@@ -22,3 +22,12 @@ defmodule IndiePaperWeb.Pages.BookPage.Show do
     |> assert_has(data("test", "title", text: title))
   end
 end
+
+defmodule IndiePaperWeb.Pages.BookPage.Edit do
+  use IndiePaperWeb.PageHelpers
+
+  def has_book_title?(session, title) do
+    session
+    |> assert_has(Wallaby.Query.text(title))
+  end
+end
