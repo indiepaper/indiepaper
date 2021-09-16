@@ -11,7 +11,7 @@
                     </div>
                 <% end %>
 
-                <div class="space-y-8 form-container">
+                <div class="space-y-10 form-container">
                     <div class="input-container">
                         <%= label f, :title, class: "input-label"  %>
                         <%= text_input f, :title, class: "form-input"  %>
@@ -22,7 +22,7 @@
 
                     <div class="input-container">
                         <%= label f, :short_description, class: "input-label"  %>
-                        <%= textarea f, :short_description, class: "form-input"  %>
+                        <%= textarea f, :short_description, class: "form-input min-h-[120px]"  %>
                         <p class="input-error">
                             <%= error_tag f, :short_description %>
                         </p>
