@@ -9,16 +9,14 @@ defmodule IndiePaper.DraftsTest do
     end
   end
 
-  describe "create_draft_with_placeholder_chapters/2" do
-    test "creates draft with given params and inserts default chapters" do
-      draft_params = string_params_for(:draft)
-      author = insert(:author)
+  describe "create_draft_with_placeholder_chapters!/1" do
+    test "creates draft with placeholder chapters and associates with given book" do
+      book = insert(:book)
 
-      {:ok, draft} = Drafts.create_draft_with_placeholder_chapters(author, draft_params)
+      draft = Drafts.create_draft_with_placeholder_chapters!(book)
 
       assert %Drafts.Draft{} = draft
-      assert draft.title == draft_params["title"]
-      assert draft.author_id == author.id
+      assert draft.book_id == book.id
 
       draft_with_chapters = draft |> Drafts.with_chapters()
 

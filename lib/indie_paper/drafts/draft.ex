@@ -16,10 +16,9 @@ defmodule IndiePaper.Drafts.Draft do
     timestamps()
   end
 
-  def changeset(draft_or_changeset, attrs) do
+  def changeset(draft_or_changeset) do
     draft_or_changeset
-    |> cast(attrs, [:title, :author_id])
-    |> validate_required([:title])
+    |> cast(%{}, [])
   end
 
   def chapters_changeset(draft_or_changeset, chapters) do
