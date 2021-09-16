@@ -3,6 +3,7 @@ defmodule IndiePaper.BooksTest do
 
   alias IndiePaper.Books
   alias IndiePaper.Books.Book
+  alias IndiePaper.Drafts
 
   describe "change_book/2" do
     test "returns a book changeset" do
@@ -19,6 +20,17 @@ defmodule IndiePaper.BooksTest do
 
       assert book.author_id == author.id
       assert book.title == book_params[:title]
+    end
+
+    test "creates a book and associates draft with it" do
+      book_params = params_for(:book)
+      author = insert(:author)
+
+      {:ok, book} = Books.create_book(author, book_params)
+
+      book_with_draft = book |> Books.with_draft()
+
+      assert book_with_draft.draft.book_id == book.id
     end
   end
 

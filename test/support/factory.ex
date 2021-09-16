@@ -10,7 +10,8 @@ defmodule IndiePaper.Factory do
       short_description: "Really long and short description",
       long_description_html:
         "<h3>Book Description Html</h3><p>This is the description of the description</p>",
-      draft: build(:draft)
+      draft: build(:draft),
+      author: build(:author)
     }
   end
 

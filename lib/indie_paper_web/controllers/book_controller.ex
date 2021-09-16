@@ -9,8 +9,8 @@ defmodule IndiePaperWeb.BookController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"book" => book_params}) do
-    case Books.create_book(book_params) do
+  def create(%{assigns: %{current_author: current_author}} = conn, %{"book" => book_params}) do
+    case Books.create_book(current_author, book_params) do
       {:ok, book} ->
         redirect(conn, to: Routes.book_path(conn, :show, book))
 
