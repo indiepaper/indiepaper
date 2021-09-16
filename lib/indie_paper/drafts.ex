@@ -5,10 +5,6 @@ defmodule IndiePaper.Drafts do
   alias IndiePaper.Authors.Author
   alias IndiePaper.Chapters
 
-  def change_draft(%Draft{} = draft, attrs \\ %{}) do
-    Draft.changeset(draft, attrs)
-  end
-
   def create_draft_with_placeholder_chapters!(book) do
     Ecto.build_assoc(book, :draft)
     |> Draft.changeset()
@@ -25,14 +21,9 @@ defmodule IndiePaper.Drafts do
     Repo.get!(Draft, id)
   end
 
-  def with_chapters_and_book(%Draft{} = draft) do
+  def with_assoc(%Draft{} = draft, assoc) do
     draft
-    |> Repo.preload([:chapters, :book])
-  end
-
-  def list_drafts(%Author{} = author) do
-    Draft
-    |> Repo.all()
+    |> Repo.preload(assoc)
   end
 
   def get_first_chapter(%Draft{chapters: chapters}) do

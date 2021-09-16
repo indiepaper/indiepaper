@@ -3,12 +3,6 @@ defmodule IndiePaper.DraftsTest do
 
   alias IndiePaper.Drafts
 
-  describe "change_draft/1" do
-    test "creates empty changeset" do
-      assert %Ecto.Changeset{} = Drafts.change_draft(%Drafts.Draft{})
-    end
-  end
-
   describe "create_draft_with_placeholder_chapters!/1" do
     test "creates draft with placeholder chapters and associates with given book" do
       book = insert(:book)
@@ -18,7 +12,7 @@ defmodule IndiePaper.DraftsTest do
       assert %Drafts.Draft{} = draft
       assert draft.book_id == book.id
 
-      draft_with_chapters = draft |> Drafts.with_chapters()
+      draft_with_chapters = draft |> Drafts.with_assoc(:chapters)
 
       assert Enum.find(draft_with_chapters.chapters, fn chapter ->
                chapter.title == "Introduction"
@@ -37,17 +31,6 @@ defmodule IndiePaper.DraftsTest do
       inserted_draft = Drafts.get_draft!(draft.id)
 
       assert draft.id == inserted_draft.id
-    end
-  end
-
-  describe "list_drafts/1" do
-    test "lists drafts of a given author" do
-      [draft1, draft2] = insert_pair(:draft)
-
-      drafts = Drafts.list_drafts(draft1.author)
-
-      assert Enum.find(drafts, fn draft -> draft.id == draft1.id end)
-      refute Enum.find(drafts, fn draft -> draft.id == draft2.id end)
     end
   end
 
