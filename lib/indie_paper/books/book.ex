@@ -8,9 +8,16 @@ defmodule IndiePaper.Books.Book do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "books" do
-    field :long_description_html, :string
-    field :short_description, :string
     field :title, :string
+
+    field :status, Ecto.Enum,
+      values: [:pending_publication, :publication_in_progress, :published, :delisted, :removed],
+      default: :pending_publication,
+      nil: false
+
+    field :short_description, :string
+    field :long_description_html, :string
+
     has_one :draft, IndiePaper.Drafts.Draft
     belongs_to :author, IndiePaper.Authors.Author
 

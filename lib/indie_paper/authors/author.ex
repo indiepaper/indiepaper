@@ -12,7 +12,6 @@ defmodule IndiePaper.Authors.Author do
     field :is_payment_connected, :boolean, default: false
     field :stripe_connect_id, :string
 
-    has_many :drafts, IndiePaper.Drafts.Draft
     has_many :books, IndiePaper.Books.Book
 
     timestamps()

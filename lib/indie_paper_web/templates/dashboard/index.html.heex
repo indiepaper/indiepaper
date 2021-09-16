@@ -17,6 +17,7 @@
             <div class="mt-8 space-y-8">
                 <%= for book <- @books do %>
                     <div class="primary-card">
+                        <span data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
                         <h2 data-test="book-title" class="text-lg"><%= book.title %></h2>
                         <div class="flex flex-row mt-4 space-x-4">
                             <%= link to: Routes.draft_path(@conn, :edit, book.draft), class: "secondary-link" do %>

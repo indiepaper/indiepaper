@@ -35,4 +35,9 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
     session
     |> click(link("Edit listing"))
   end
+
+  def book_has_pending_publication_status?(session) do
+    session
+    |> assert_has(data("test", "book-status", text: "Pending publication"))
+  end
 end
