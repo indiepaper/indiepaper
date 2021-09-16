@@ -1,5 +1,6 @@
 defmodule IndiePaper.Books do
   alias IndiePaper.Repo
+  import Ecto.Query
 
   alias IndiePaper.Books.Book
   alias IndiePaper.Drafts
@@ -7,6 +8,7 @@ defmodule IndiePaper.Books do
   def list_books(author) do
     Book
     |> Bodyguard.scope(author)
+    |> order_by(desc: :updated_at)
     |> Repo.all()
   end
 
