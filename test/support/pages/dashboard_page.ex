@@ -31,7 +31,7 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
     |> click(link("Connect Stripe"))
   end
 
-  def click_edit_listing?(session) do
+  def click_edit_listing(session) do
     session
     |> click(link("Edit listing"))
   end

@@ -23,8 +23,10 @@
                             <%= link to: Routes.draft_path(@conn, :edit, book.draft), class: "secondary-link" do %>
                                 <p>Edit</p>
                             <% end %>
-                            <%= link to: Routes.book_path(@conn, :edit, book), class: "secondary-link" do %>
-                                <p>Edit listing</p>
+                            <%= if IndiePaper.Books.is_published?(book) do %>
+                                <%= link to: Routes.book_path(@conn, :edit, book), class: "secondary-link" do %>
+                                    <p>Edit listing</p>
+                                <% end %>
                             <% end %>
                         </div>
                     </div>

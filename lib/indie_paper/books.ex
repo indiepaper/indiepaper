@@ -43,4 +43,6 @@ defmodule IndiePaper.Books do
   def get_book!(book_id), do: Repo.get!(Book, book_id)
 
   def with_draft(book), do: Repo.preload(book, :draft)
+
+  def is_published?(book), do: book.status == :published
 end
