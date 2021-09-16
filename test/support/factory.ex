@@ -40,7 +40,8 @@ defmodule IndiePaper.Factory do
     %IndiePaper.Authors.Author{
       email: sequence(:email, &"author#{&1}@email.com"),
       stripe_connect_id: sequence(:stripe_connect_id, &"acc_stripeacc#{&1}"),
-      is_payment_connected: true
+      is_payment_connected: true,
+      account_status: :payment_connected
     }
     |> Authors.Author.registration_changeset(%{password: "longpassword123"})
     |> Ecto.Changeset.put_change(:password, "longpassword123")
