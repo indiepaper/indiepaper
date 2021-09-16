@@ -4,6 +4,12 @@ defmodule IndiePaper.Books do
   alias IndiePaper.Books.Book
   alias IndiePaper.Drafts
 
+  def list_books(author) do
+    Book
+    |> Bodyguard.scope(author)
+    |> Repo.all()
+  end
+
   def change_book(%Book{} = book, attrs \\ %{}) do
     book
     |> Book.changeset(attrs)

@@ -32,7 +32,6 @@ defmodule IndiePaper.Drafts do
 
   def list_drafts(%Author{} = author) do
     Draft
-    |> Bodyguard.scope(author)
     |> Repo.all()
   end
 

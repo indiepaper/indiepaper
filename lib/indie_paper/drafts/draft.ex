@@ -1,7 +1,4 @@
 defmodule IndiePaper.Drafts.Draft do
-  @behaviour Bodyguard.Schema
-  import Ecto.Query, only: [from: 2]
-
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -24,9 +21,5 @@ defmodule IndiePaper.Drafts.Draft do
   def chapters_changeset(draft_or_changeset, chapters) do
     draft_or_changeset
     |> put_assoc(:chapters, chapters)
-  end
-
-  def scope(query, %IndiePaper.Authors.Author{id: author_id}, _) do
-    from p in query, where: p.author_id == ^author_id
   end
 end

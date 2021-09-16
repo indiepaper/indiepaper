@@ -44,4 +44,15 @@ defmodule IndiePaper.BooksTest do
       assert found_book.id == book.id
     end
   end
+
+  describe "list_books/1" do
+    test "lists books of a given author" do
+      [book1, book2] = insert_pair(:book)
+
+      drafts = Books.list_books(book1.author)
+
+      assert Enum.find(drafts, fn draft -> draft.id == book1.id end)
+      refute Enum.find(drafts, fn draft -> draft.id == book2.id end)
+    end
+  end
 end

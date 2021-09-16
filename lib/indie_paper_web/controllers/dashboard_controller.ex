@@ -1,10 +1,10 @@
 defmodule IndiePaperWeb.DashboardController do
   use IndiePaperWeb, :controller
 
-  alias IndiePaper.Drafts
+  alias IndiePaper.Books
 
   def index(%{assigns: %{current_author: current_author}} = conn, _params) do
-    drafts = Drafts.list_drafts(current_author)
-    render(conn, "index.html", drafts: drafts)
+    books = Books.list_books(current_author) |> Books.with_draft()
+    render(conn, "index.html", books: books)
   end
 end
