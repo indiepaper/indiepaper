@@ -13,6 +13,7 @@ defmodule IndiePaper.Authors.Author do
     field :stripe_connect_id, :string
 
     has_many :drafts, IndiePaper.Drafts.Draft
+    has_many :books, IndiePaper.Books.Book
 
     timestamps()
   end

@@ -1,7 +1,6 @@
 defmodule IndiePaper.Books do
   alias IndiePaper.Repo
 
-  alias IndiePaper.Drafts
   alias IndiePaper.Books.Book
 
   def change_book(%Book{} = book, attrs \\ %{}) do
@@ -9,8 +8,8 @@ defmodule IndiePaper.Books do
     |> Book.changeset(attrs)
   end
 
-  def create_book(draft = %Drafts.Draft{}, params) do
-    Ecto.build_assoc(draft, :book)
+  def create_book(author, params) do
+    Ecto.build_assoc(author, :books)
     |> Book.changeset(params)
     |> Repo.insert()
   end
