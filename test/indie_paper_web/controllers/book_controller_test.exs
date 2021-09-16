@@ -8,7 +8,7 @@ defmodule IndiePaperWeb.BookControllerTest do
 
       response =
         conn
-        |> log_in_author(book.draft.author)
+        |> log_in_author(book.author)
         |> post(Routes.book_path(conn, :create), %{
           "book" => book_params
         })

@@ -58,7 +58,7 @@ defmodule IndiePaperWeb.Router do
 
     resources "/books", BookController, only: [:new, :create, :edit]
 
-    resources "/drafts", DraftController, only: [:new, :create, :edit] do
+    resources "/drafts", DraftController, only: [:edit] do
       resources "/chapters", DraftChapterController, only: [:edit, :update]
     end
 
