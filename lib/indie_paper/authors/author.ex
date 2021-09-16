@@ -9,6 +9,11 @@ defmodule IndiePaper.Authors.Author do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
 
+    field :account_status, Ecto.Enum,
+      values: [:created, :confirmed, :payment_connected, :suspended, :banned],
+      default: :created,
+      nil: false
+
     field :is_payment_connected, :boolean, default: false
     field :stripe_connect_id, :string
 

@@ -92,6 +92,13 @@ defmodule IndiePaper.AuthorsTest do
       assert is_nil(author.confirmed_at)
       assert is_nil(author.password)
     end
+
+    test "registered author has account status as created" do
+      email = unique_author_email()
+      {:ok, author} = Authors.register_author(valid_author_attributes(email: email))
+
+      assert author.account_status == :created
+    end
   end
 
   describe "change_author_registration/2" do
