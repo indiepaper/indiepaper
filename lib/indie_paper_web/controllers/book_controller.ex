@@ -1,7 +1,6 @@
 defmodule IndiePaperWeb.BookController do
   use IndiePaperWeb, :controller
 
-  alias IndiePaper.Drafts
   alias IndiePaper.Books
 
   def new(conn, _params) do
@@ -18,6 +17,18 @@ defmodule IndiePaperWeb.BookController do
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
+  end
+
+  def edit(conn, %{"id" => book_id}) do
+    book = Books.get_book!(book_id)
+    changeset = Books.change_book(book)
+    render(conn, "edit.html", book: book, changeset: changeset)
+  end
+
+  def update(conn, %{"id" => book_id, "book" => book_params}) do
+    book = Books.get_book!(book_id)
+    {:ok, updated_book} = Books.update_book(book, book_params)
+    redirect(conn, to: Routes.book_path(conn, :show, updated_book))
   end
 
   def show(conn, %{"id" => book_id}) do

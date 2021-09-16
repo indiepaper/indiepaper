@@ -32,6 +32,12 @@ defmodule IndiePaper.Books do
     end
   end
 
+  def update_book(book, book_params) do
+    book
+    |> Book.changeset(book_params)
+    |> Repo.update()
+  end
+
   def get_book!(book_id), do: Repo.get!(Book, book_id)
 
   def with_draft(book), do: Repo.preload(book, :draft)

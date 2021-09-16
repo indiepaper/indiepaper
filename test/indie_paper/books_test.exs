@@ -55,4 +55,15 @@ defmodule IndiePaper.BooksTest do
       refute Enum.find(drafts, fn draft -> draft.id == book2.id end)
     end
   end
+
+  describe "update_book/2" do
+    test "updates book with given parameters" do
+      book = insert(:book)
+      book_params = params_for(:book, title: "Updated Book")
+
+      {:ok, updated_book} = Books.update_book(book, book_params)
+
+      assert updated_book.title == book_params[:title]
+    end
+  end
 end

@@ -2,7 +2,6 @@ defmodule IndiePaper.Drafts do
   alias IndiePaper.Repo
 
   alias IndiePaper.Drafts.Draft
-  alias IndiePaper.Authors.Author
   alias IndiePaper.Chapters
 
   def create_draft_with_placeholder_chapters!(book) do
