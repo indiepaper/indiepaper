@@ -27,8 +27,14 @@ defmodule IndiePaperWeb.BookController do
 
   def update(conn, %{"id" => book_id, "book" => book_params}) do
     book = Books.get_book!(book_id)
-    {:ok, updated_book} = Books.update_book(book, book_params)
-    redirect(conn, to: Routes.book_path(conn, :show, updated_book))
+
+    case Books.update_book(book, book_params) do
+      {:ok, updated_book} ->
+        redirect(conn, to: Routes.book_path(conn, :show, updated_book))
+
+      {:error, changeset} ->
+        render(conn, "edit.html", changeset: changeset, book: book)
+    end
   end
 
   def show(conn, %{"id" => book_id}) do

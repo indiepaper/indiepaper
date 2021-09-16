@@ -17,4 +17,20 @@ defmodule IndiePaperWeb.BookControllerTest do
       assert response =~ "has already been taken"
     end
   end
+
+  describe "update/2" do
+    test "returns error when invalid update params", %{conn: conn} do
+      book = insert(:book)
+
+      response =
+        conn
+        |> log_in_author(book.author)
+        |> patch(Routes.book_path(conn, :update, book), %{
+          "book" => %{"title" => nil}
+        })
+        |> html_response(200)
+
+      assert response =~ "be blank"
+    end
+  end
 end
