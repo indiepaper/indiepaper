@@ -8,7 +8,7 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
 
   def has_title?(session) do
     session
-    |> assert_has(data("test", "title", text: "Draft Books"))
+    |> assert_has(data("test", "title", text: "Your Books"))
   end
 
   def has_draft_title?(session, title) do
