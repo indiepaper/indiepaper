@@ -5,9 +5,7 @@ defmodule IndiePaper.Drafts.Draft do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "drafts" do
-    field :title, :string
     has_many :chapters, IndiePaper.Chapters.Chapter, preload_order: [asc: :chapter_index]
-    belongs_to :author, IndiePaper.Authors.Author
     belongs_to :book, IndiePaper.Books.Book
 
     timestamps()
