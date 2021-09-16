@@ -25,9 +25,9 @@ defmodule IndiePaper.Drafts do
     Repo.get!(Draft, id)
   end
 
-  def with_chapters(%Draft{} = draft) do
+  def with_chapters_and_book(%Draft{} = draft) do
     draft
-    |> Repo.preload(:chapters)
+    |> Repo.preload([:chapters, :book])
   end
 
   def list_drafts(%Author{} = author) do

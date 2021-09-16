@@ -3,7 +3,6 @@ defmodule IndiePaper.BooksTest do
 
   alias IndiePaper.Books
   alias IndiePaper.Books.Book
-  alias IndiePaper.Drafts
 
   describe "change_book/2" do
     test "returns a book changeset" do

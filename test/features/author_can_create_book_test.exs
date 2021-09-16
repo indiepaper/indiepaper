@@ -19,7 +19,7 @@ defmodule IndiePaperWeb.Feature.AuthorCanCreateBookTest do
     |> DashboardNavBar.click_create_new()
     |> BookPage.New.fill_form(book_params)
     |> BookPage.New.submit_form()
-    |> DraftPage.Edit.has_draft_title(book_params[:title])
+    |> DraftPage.Edit.has_book_title(book_params[:title])
     |> DraftPage.Edit.has_draft_chapter_title?("Introduction")
     |> DraftPage.Edit.has_draft_chapter_title?("Preface")
     |> DashboardPage.visit_page()

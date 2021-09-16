@@ -11,7 +11,7 @@ defmodule IndiePaper.Books do
 
   def create_book(author, params) do
     Ecto.build_assoc(author, :books)
-    |> Book.changeset(params)
+    |> Book.initial_draft_changeset(params)
     |> Repo.insert()
   end
 

@@ -6,7 +6,7 @@ defmodule IndiePaperWeb.Pages.DraftPage.Edit do
     |> visit(Routes.draft_path(@endpoint, :edit, draft))
   end
 
-  def has_draft_title(session, title) do
+  def has_book_title(session, title) do
     session
     |> assert_has(data("test", "title", text: title))
   end
