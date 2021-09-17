@@ -40,12 +40,6 @@ defmodule IndiePaperWeb.Router do
   end
 
   scope "/", IndiePaperWeb do
-    pipe_through [:browser, :require_authenticated_author, :account_status_payment_connected]
-
-    resources "/books", BookController, only: [:edit, :update]
-  end
-
-  scope "/", IndiePaperWeb do
     pipe_through [:browser, :require_authenticated_author]
 
     get "/authors/settings", AuthorSettingsController, :edit
@@ -61,6 +55,13 @@ defmodule IndiePaperWeb.Router do
     post "/secure/confirm", AuthorConfirmationController, :create
     get "/secure/confirm/:token", AuthorConfirmationController, :edit
     post "/secure/confirm/:token", AuthorConfirmationController, :update
+  end
+
+  # App Specific Routes
+  scope "/", IndiePaperWeb do
+    pipe_through [:browser, :require_authenticated_author, :account_status_payment_connected]
+
+    resources "/books", BookController, only: [:edit, :update]
   end
 
   scope "/", IndiePaperWeb do

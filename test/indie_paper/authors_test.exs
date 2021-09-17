@@ -550,11 +550,12 @@ defmodule IndiePaper.AuthorsTest do
 
   describe "set_payment_connected/1" do
     test "sets the payment_connected field on author" do
-      author = insert(:author, is_payment_connected: false)
+      author = insert(:author, is_payment_connected: false, account_status: :created)
 
       {:ok, updated_author} = Authors.set_payment_connected(author)
 
       assert updated_author.is_payment_connected
+      assert updated_author.account_status == :payment_connected
     end
   end
 

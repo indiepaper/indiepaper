@@ -29,10 +29,16 @@ defmodule IndiePaperWeb.Plugs.EnsureAccountStatusPlug do
   defp maybe_halt(true, conn, _), do: conn
 
   defp maybe_halt(_any, conn, :payment_connected),
-    do: redirect(conn, Routes.profile_stripe_connect_path(conn, :new))
+    do:
+      redirect(
+        conn,
+        Routes.profile_stripe_connect_path(conn, :new),
+        "Connect with your Stripe Account to Publish and start recieving payments"
+      )
 
-  defp redirect(conn, route) do
+  defp redirect(conn, route, info_message) do
     conn
+    |> Phoenix.Controller.put_flash(:info, info_message)
     |> Phoenix.Controller.redirect(to: route)
     |> halt()
   end
