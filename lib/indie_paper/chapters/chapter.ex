@@ -9,6 +9,7 @@ defmodule IndiePaper.Chapters.Chapter do
     field :draft_id, :binary_id
     field :chapter_index, :integer, null: false, default: 0
     field :content_json, :map
+    field :published_content_json, :map
 
     timestamps()
   end

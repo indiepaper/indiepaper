@@ -46,10 +46,17 @@ defmodule IndiePaper.Chapters do
   end
 
   def publish_chapters(%Drafts.Draft{} = draft) do
-    from(c in Chapter,
-      where: c.draft_id == ^draft.id,
-      update: [set: [published_content_json: c.content_json]]
-    )
-    |> Repo.update_all([])
+    {count, _} =
+      from(c in Chapter,
+        where: c.draft_id == ^draft.id,
+        update: [set: [published_content_json: c.content_json]]
+      )
+      |> Repo.update_all([])
+
+    {:ok, count}
+  end
+
+  def list_chapters(draft) do
+    Repo.all(from c in Chapter, where: c.id == ^draft.id)
   end
 end

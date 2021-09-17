@@ -35,11 +35,24 @@ defmodule IndiePaper.ChaptersTest do
     test "sets published_content_json with current_content_json" do
       draft = insert(:draft)
 
-      {:ok, chapters} = Chapters.publish_chapters(draft)
+      {:ok, _} = Chapters.publish_chapters(draft)
+      chapters = Chapters.list_chapters(draft)
 
       Enum.each(chapters, fn chapter ->
         assert chapter.content_json == chapter.published_content_json
       end)
+    end
+  end
+
+  describe "list_chapters/1" do
+    test "lists chapters associated with draft" do
+      draft = insert(:draft)
+      chapter = insert(:chapter)
+
+      chapters = Chapters.list_chapters(draft)
+
+      assert Enum.all?(chapters, fn chapter -> chapter.draft_id == draft.id end)
+      refute Enum.find(chapters, fn ch -> ch.id == chapter.id end)
     end
   end
 end
