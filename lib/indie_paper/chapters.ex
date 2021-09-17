@@ -1,5 +1,8 @@
 defmodule IndiePaper.Chapters do
+  import Ecto.Query
+
   alias IndiePaper.Repo
+  alias IndiePaper.Drafts
   alias IndiePaper.Chapters.Chapter
 
   def change_chapter(%Chapter{} = chapter, attrs \\ %{}) do
@@ -40,5 +43,13 @@ defmodule IndiePaper.Chapters do
     chapter
     |> Chapter.changeset(attrs)
     |> Repo.update()
+  end
+
+  def publish_chapters(%Drafts.Draft{} = draft) do
+    from(c in Chapter,
+      where: c.draft_id == ^draft.id,
+      update: [set: [published_content_json: c.content_json]]
+    )
+    |> Repo.update_all([])
   end
 end

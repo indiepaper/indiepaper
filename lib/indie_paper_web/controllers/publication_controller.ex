@@ -4,7 +4,7 @@ defmodule IndiePaperWeb.PublicationController do
   alias IndiePaper.{Books, Publication}
 
   def create(conn, %{"book_id" => book_id}) do
-    book = Books.get_book!(book_id) |> Books.with_draft()
+    book = Books.get_book!(book_id) |> Books.with_assoc(:draft)
 
     if Books.is_listing_complete?(book) do
       case Publication.publish_book(book) do

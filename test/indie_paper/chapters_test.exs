@@ -30,4 +30,16 @@ defmodule IndiePaper.ChaptersTest do
       assert updated_chapter.title == "Updated Title"
     end
   end
+
+  describe "publish_chapters" do
+    test "sets published_content_json with current_content_json" do
+      draft = insert(:draft)
+
+      {:ok, chapters} = Chapters.publish_chapters(draft)
+
+      Enum.each(chapters, fn chapter ->
+        assert chapter.content_json == chapter.published_content_json
+      end)
+    end
+  end
 end
