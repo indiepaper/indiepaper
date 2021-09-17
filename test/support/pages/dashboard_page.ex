@@ -23,7 +23,7 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
 
   def click_edit_draft(session) do
     session
-    |> click(link("Edit draft"))
+    |> click(link("Edit"))
   end
 
   def click_connect_stripe(session) do
