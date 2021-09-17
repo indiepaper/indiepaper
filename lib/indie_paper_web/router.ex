@@ -17,6 +17,10 @@ defmodule IndiePaperWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :account_status_payment_connected do
+    plug IndiePaperWeb.Plugs.EnsureAccountStatusPlug, :payment_connected
+  end
+
   scope "/stripe/webhooks", IndiePaperWeb do
     post "/connect", StripeWebhookController, :connect
   end
@@ -33,6 +37,12 @@ defmodule IndiePaperWeb.Router do
     post "/secure/reset_password", AuthorResetPasswordController, :create
     get "/secure/reset_password/:token", AuthorResetPasswordController, :edit
     put "/secure/reset_password/:token", AuthorResetPasswordController, :update
+  end
+
+  scope "/", IndiePaperWeb do
+    pipe_through [:browser, :require_authenticated_author, :account_status_payment_connected]
+
+    resources "/books", BookController, only: [:edit, :update]
   end
 
   scope "/", IndiePaperWeb do
@@ -56,7 +66,7 @@ defmodule IndiePaperWeb.Router do
   scope "/", IndiePaperWeb do
     pipe_through [:browser, :require_authenticated_author]
 
-    resources "/books", BookController, only: [:new, :create, :edit, :update]
+    resources "/books", BookController, only: [:new, :create]
 
     resources "/drafts", DraftController, only: [:edit] do
       resources "/chapters", DraftChapterController, only: [:edit, :update]
