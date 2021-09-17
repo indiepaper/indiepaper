@@ -11,7 +11,14 @@ defmodule IndiePaper.Books.Book do
     field :title, :string
 
     field :status, Ecto.Enum,
-      values: [:pending_publication, :publication_in_progress, :published, :delisted, :removed],
+      values: [
+        :pending_publication,
+        :listing_complete,
+        :publication_in_progress,
+        :published,
+        :delisted,
+        :removed
+      ],
       default: :pending_publication,
       nil: false
 

@@ -45,4 +45,5 @@ defmodule IndiePaper.Books do
   def with_draft(book), do: Repo.preload(book, :draft)
 
   def is_published?(book), do: book.status == :published
+  def is_listing_complete?(book), do: book.status in [:listing_complete, :published]
 end
