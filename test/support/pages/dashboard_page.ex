@@ -23,7 +23,7 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
 
   def click_edit_draft(session) do
     session
-    |> click(link("Edit"))
+    |> click(link("Edit draft"))
   end
 
   def click_connect_stripe(session) do
@@ -31,9 +31,9 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
     |> click(link("Connect Stripe"))
   end
 
-  def click_edit_listing(session) do
+  def click_update_listing(session) do
     session
-    |> click(link("Edit listing"))
+    |> click(link("Update listing"))
   end
 
   def book_has_pending_publication_status?(session) do
