@@ -24,6 +24,7 @@ defmodule IndiePaperWeb.Plugs.EnsureAccountStatusPlugTest do
       response =
         conn
         |> log_in_author(author)
+        |> fetch_flash()
         |> EnsureAccountStatusPlug.call(:payment_connected)
         |> redirected_to(302)
 

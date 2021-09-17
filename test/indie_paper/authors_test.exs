@@ -517,12 +517,14 @@ defmodule IndiePaper.AuthorsTest do
     end
   end
 
-  describe "update_author_profile/2" do
+  describe "update_author_internal_profile/2" do
     test "updates author profile with limited profile fields" do
       author = insert(:author)
 
       {:ok, author} =
-        Authors.update_author_profile(author, %{stripe_connect_id: "updated_stripe_connect_id"})
+        Authors.update_author_internal_profile(author, %{
+          stripe_connect_id: "updated_stripe_connect_id"
+        })
 
       assert author.stripe_connect_id == "updated_stripe_connect_id"
     end

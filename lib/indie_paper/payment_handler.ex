@@ -5,7 +5,7 @@ defmodule IndiePaper.PaymentHandler do
   def get_stripe_connect_url(%Authors.Author{stripe_connect_id: nil} = author, country_code) do
     with {:ok, stripe_connect_id} <- StripeHandler.create_connect_account(country_code),
          {:ok, author_with_stripe_connect_id} <-
-           Authors.update_author_profile(author, %{stripe_connect_id: stripe_connect_id}) do
+           Authors.update_author_internal_profile(author, %{stripe_connect_id: stripe_connect_id}) do
       get_stripe_connect_url(author_with_stripe_connect_id, country_code)
     else
       {:error, _} -> {:error, "error creating Stripe Connect account"}

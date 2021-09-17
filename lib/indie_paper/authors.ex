@@ -357,9 +357,9 @@ defmodule IndiePaper.Authors do
     end
   end
 
-  def update_author_profile(author, attrs) do
+  def update_author_internal_profile(author, attrs) do
     author
-    |> Author.profile_changeset(attrs)
+    |> Author.internal_profile_changeset(attrs)
     |> Repo.update()
   end
 
@@ -371,7 +371,7 @@ defmodule IndiePaper.Authors do
   end
 
   def set_payment_connected(author) do
-    update_author_profile(author, %{
+    update_author_internal_profile(author, %{
       is_payment_connected: true,
       account_status: :payment_connected
     })
