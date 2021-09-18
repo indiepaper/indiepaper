@@ -26,9 +26,12 @@ document.addEventListener("alpine:init", () => {
       init() {
         const _this = this;
 
+        _this.longDescriptionHtml =
+          this.$refs.longDescriptionHtmlReference.value;
+
         editor = new Editor({
           element: this.$refs.editorReference,
-          content: this.$refs.longDescriptionHtmlReference.value,
+          content: _this.longDescriptionHtml,
           extensions: [StarterKit],
           onCreate({ editor }) {
             _this.updatedAt = Date.now();
