@@ -46,4 +46,15 @@ defmodule IndiePaper.Books do
 
   def is_published?(book), do: book.status == :published
   def is_listing_complete?(book), do: book.status in [:listing_complete, :published]
+
+  def update_book_status(book, status) do
+    book
+    |> Book.status_changeset(%{status: status})
+    |> Repo.update()
+  end
+
+  def publish_book(book) do
+    book
+    |> update_book_status(:published)
+  end
 end

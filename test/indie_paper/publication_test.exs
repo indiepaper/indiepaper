@@ -1,18 +1,19 @@
 defmodule IndiePaper.PublicationTest do
   use IndiePaper.DataCase, async: true
 
-  alias IndiePaper.{Publication, Books}
+  alias IndiePaper.{Publication, Books, Chapters}
 
   describe "publish_book/1" do
     test "populate chapter with published content_json" do
-      book = insert(:book)
+      book = insert(:book, status: :pending_publication)
 
       {:ok, book} = Publication.publish_book(book)
-      book_with_draft_chapters = book |> Books.with_assoc(draft: :chapters)
-
       assert Books.is_published?(book)
 
-      Enum.each(book_with_draft_chapters.draft.chapters, fn {chapter} ->
+      book = book |> Books.with_assoc(:draft)
+      chapters = Chapters.list_chapters(book.draft)
+
+      Enum.each(chapters, fn {chapter} ->
         assert chapter.content_json == chapter.published_content_json
       end)
     end

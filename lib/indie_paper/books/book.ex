@@ -46,6 +46,11 @@ defmodule IndiePaper.Books.Book do
     |> unique_constraint(:title)
   end
 
+  def status_changeset(book, attrs) do
+    book
+    |> cast(attrs, [:status])
+  end
+
   def scope(query, %IndiePaper.Authors.Author{id: author_id}, _) do
     from p in query, where: p.author_id == ^author_id
   end
