@@ -1,6 +1,21 @@
 defmodule IndiePaperWeb.Pages.BookPage.Show do
   use IndiePaperWeb.PageHelpers
 
+  def visit_page(session, book) do
+    session
+    |> visit(Routes.book_path(@endpoint, :show, book))
+  end
+
+  def select_product(session, product_title) do
+    session
+    |> click(button(product_title))
+  end
+
+  def click_buy_button(session) do
+    session
+    |> click(button("Buy Now"))
+  end
+
   def has_book_title?(session, title) do
     session
     |> assert_has(data("test", "title", text: title))
