@@ -12,7 +12,15 @@ defmodule IndiePaper.Factory do
         "<h3>Book Description Html</h3><p>This is the description of the description</p>",
       draft: build(:draft),
       author: build(:author),
-      status: :published
+      status: :published,
+      products: [build(:product), build(:product)]
+    }
+  end
+
+  def product_factory do
+    %IndiePaper.Products.Product{
+      title: sequence("Product Title"),
+      description: sequence("Short description about Product")
     }
   end
 
