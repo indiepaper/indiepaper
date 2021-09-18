@@ -42,6 +42,9 @@ defmodule IndiePaperWeb.Endpoint do
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
+  # Stripe Webhook Plugs
+  plug IndiePaperWeb.Plugs.StripeWebhookPlug
+
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],

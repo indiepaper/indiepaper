@@ -1,37 +1,31 @@
 defmodule IndiePaper.Drafts do
-  @behaviour Bodyguard.Policy
-
-  def authorize(:create_draft, _, _), do: true
-
-  alias IndiePaper.Drafts.Draft
-  alias IndiePaper.Authors.Author
-
   alias IndiePaper.Repo
 
-  def change_draft(%Draft{} = draft, attrs \\ %{}) do
-    Draft.changeset(draft, attrs)
-  end
+  alias IndiePaper.Drafts.Draft
+  alias IndiePaper.Chapters
 
-  def create_draft(%Author{} = author, params) do
-    with :ok <- Bodyguard.permit(__MODULE__, :create_draft, author, %{}) do
-      Ecto.build_assoc(author, :drafts)
-      |> Draft.changeset(params)
-      |> Repo.insert()
-    end
+  def create_draft_with_placeholder_chapters!(book) do
+    Ecto.build_assoc(book, :draft)
+    |> Draft.changeset()
+    |> Draft.chapters_changeset([
+      Chapters.placeholder_chapter(title: "Introduction", chapter_index: 0),
+      Chapters.placeholder_chapter(title: "Preface", chapter_index: 1),
+      Chapters.placeholder_chapter(title: "Chapter 1", chapter_index: 2),
+      Chapters.placeholder_chapter(title: "Chapter 2", chapter_index: 3)
+    ])
+    |> Repo.insert!()
   end
 
   def get_draft!(id) do
     Repo.get!(Draft, id)
   end
 
-  def with_chapters(%Draft{} = draft) do
+  def with_assoc(%Draft{} = draft, assoc) do
     draft
-    |> Repo.preload(:chapters)
+    |> Repo.preload(assoc)
   end
 
-  def list_drafts(%Author{} = author) do
-    Draft
-    |> Bodyguard.scope(author)
-    |> Repo.all()
+  def get_first_chapter(%Draft{chapters: chapters}) do
+    Enum.min_by(chapters, fn chapter -> chapter.chapter_index end)
   end
 end

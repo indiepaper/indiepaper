@@ -13,16 +13,16 @@
         <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/js/app.js")}></script>
     </head>
 
-    <body class="antialiased text-primary-text font-medium">
+    <body class="antialiased font-medium text-primary-text">
         <header class="border-b-2 border-orange-400">
-            <div class="container-box flex flex-row items-center justify-between">
+            <div class="flex flex-row justify-between items-center container-box">
                 <%= link "IndiePaper", to: Routes.page_path(@conn, :index), class: "font-bold", "data-test": "title"  %>
                 <div class="flex flex-row items-center space-x-5 md:space-x-6">
                     <%= if @current_author do %>
-                        <%= link "Dashboard", to: Routes.dashboard_path(@conn, :index) %>
-                        <%= link "Sign out", to: Routes.author_session_path(@conn, :delete), method: :delete %>
+                        <%= link "Dashboard", to: Routes.dashboard_path(@conn, :index), class: "primary-link" %>
+                        <%= link "Sign out", to: Routes.author_session_path(@conn, :delete), method: :delete, class: "primary-link", "data-no-instant": true %>
                     <% else %>
-                        <%= link "Sign in", to: Routes.author_session_path(@conn, :new) %>
+                        <%= link "Sign in", to: Routes.author_session_path(@conn, :new) , class: "primary-link"%>
                         <%= link "Start Writing", to: Routes.author_registration_path(@conn, :new), class: "secondary-button text-sm" %>
                     <% end %>
                 </div>

@@ -17,6 +17,14 @@ defmodule IndiePaperWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :account_status_payment_connected do
+    plug IndiePaperWeb.Plugs.EnsureAccountStatusPlug, :payment_connected
+  end
+
+  scope "/stripe/webhooks", IndiePaperWeb do
+    post "/connect", StripeWebhookController, :connect
+  end
+
   ## Authentication routes
   scope "/", IndiePaperWeb do
     pipe_through [:browser, :redirect_if_author_is_authenticated]
@@ -49,17 +57,33 @@ defmodule IndiePaperWeb.Router do
     post "/secure/confirm/:token", AuthorConfirmationController, :update
   end
 
+  # App Specific Routes
+  scope "/", IndiePaperWeb do
+    pipe_through [:browser, :require_authenticated_author, :account_status_payment_connected]
+
+    resources "/books", BookController, only: [:edit, :update] do
+      resources "/publication", PublicationController, only: [:create]
+    end
+  end
+
   scope "/", IndiePaperWeb do
     pipe_through [:browser, :require_authenticated_author]
 
-    resources "/drafts", DraftController, only: [:new, :create, :edit]
+    resources "/books", BookController, only: [:new, :create]
+
+    resources "/drafts", DraftController, only: [:edit] do
+      resources "/chapters", DraftChapterController, only: [:edit, :update]
+    end
+
     resources "/dashboard", DashboardController, only: [:index]
+    resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:new, :create]
   end
 
   scope "/", IndiePaperWeb do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/books", BookController, only: [:show]
   end
 
   # Other scopes may use custom stacks.

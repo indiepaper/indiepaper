@@ -8,12 +8,12 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
 
   def has_title?(session) do
     session
-    |> assert_has(data("test", "title", text: "Draft Books"))
+    |> assert_has(data("test", "title", text: "Your Books"))
   end
 
-  def has_draft_title?(session, title) do
+  def has_book_title?(session, title) do
     session
-    |> assert_has(data("test", "draft-title", text: title))
+    |> assert_has(data("test", "book-title", text: title))
   end
 
   def not_has_draft_title?(session, title) do
@@ -24,5 +24,20 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
   def click_edit_draft(session) do
     session
     |> click(link("Edit draft"))
+  end
+
+  def click_connect_stripe(session) do
+    session
+    |> click(link("Connect Stripe"))
+  end
+
+  def click_update_listing(session) do
+    session
+    |> click(link("Update listing"))
+  end
+
+  def book_has_pending_publication_status?(session) do
+    session
+    |> assert_has(data("test", "book-status", text: "Pending publication"))
   end
 end

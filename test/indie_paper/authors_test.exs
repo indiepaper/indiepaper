@@ -92,6 +92,13 @@ defmodule IndiePaper.AuthorsTest do
       assert is_nil(author.confirmed_at)
       assert is_nil(author.password)
     end
+
+    test "registered author has account status as created" do
+      email = unique_author_email()
+      {:ok, author} = Authors.register_author(valid_author_attributes(email: email))
+
+      assert author.account_status == :created
+    end
   end
 
   describe "change_author_registration/2" do
@@ -223,7 +230,9 @@ defmodule IndiePaper.AuthorsTest do
     end
 
     test "does not update email if author email changed", %{author: author, token: token} do
-      assert Authors.update_author_email(%{author | email: "current@example.com"}, token) == :error
+      assert Authors.update_author_email(%{author | email: "current@example.com"}, token) ==
+               :error
+
       assert Repo.get!(Author, author.id).email == author.email
       assert Repo.get_by(AuthorToken, author_id: author.id)
     end
@@ -488,7 +497,9 @@ defmodule IndiePaper.AuthorsTest do
     end
 
     test "updates the password", %{author: author} do
-      {:ok, updated_author} = Authors.reset_author_password(author, %{password: "new valid password"})
+      {:ok, updated_author} =
+        Authors.reset_author_password(author, %{password: "new valid password"})
+
       assert is_nil(updated_author.password)
       assert Authors.get_author_by_email_and_password(author.email, "new valid password")
     end
@@ -503,6 +514,60 @@ defmodule IndiePaper.AuthorsTest do
   describe "inspect/2" do
     test "does not include password" do
       refute inspect(%Author{password: "123456"}) =~ "password: \"123456\""
+    end
+  end
+
+  describe "update_author_internal_profile/2" do
+    test "updates author profile with limited profile fields" do
+      author = insert(:author)
+
+      {:ok, author} =
+        Authors.update_author_internal_profile(author, %{
+          stripe_connect_id: "updated_stripe_connect_id"
+        })
+
+      assert author.stripe_connect_id == "updated_stripe_connect_id"
+    end
+  end
+
+  describe "has_stripe_connect_id?/1" do
+    test "check if stripe_connect_id exists on Author" do
+      author = insert(:author)
+      author_without_stripe = insert(:author, stripe_connect_id: nil)
+
+      assert Authors.has_stripe_connect_id?(author)
+      refute Authors.has_stripe_connect_id?(author_without_stripe)
+    end
+  end
+
+  describe "get_by_stripe_connect_id!/1" do
+    test "gets author by stripe_connect_id" do
+      author = insert(:author)
+
+      found_author = Authors.get_by_stripe_connect_id!(author.stripe_connect_id)
+
+      assert found_author.id == author.id
+    end
+  end
+
+  describe "set_payment_connected/1" do
+    test "sets the payment_connected field on author" do
+      author = insert(:author, is_payment_connected: false, account_status: :created)
+
+      {:ok, updated_author} = Authors.set_payment_connected(author)
+
+      assert updated_author.is_payment_connected
+      assert updated_author.account_status == :payment_connected
+    end
+  end
+
+  describe "is_payment_connected/1" do
+    test "checks if the author has payment connected" do
+      author = insert(:author)
+      author_without_payment = insert(:author, is_payment_connected: false)
+
+      assert Authors.is_payment_connected?(author)
+      refute Authors.is_payment_connected?(author_without_payment)
     end
   end
 end

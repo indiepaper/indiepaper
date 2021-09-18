@@ -17,11 +17,11 @@
   }
 
   .page-description {
-    @apply text-secondary-text;
+    @apply text-secondary-text font-normal mt-1;
   }
 
   .form-container {
-    @apply flex flex-col space-y-6 md:items-start;
+    @apply flex flex-col space-y-6 items-start;
   }
 
   .input-container {
@@ -41,7 +41,7 @@
   }
 
   .base-button {
-    @apply px-4 py-2 rounded-lg;
+    @apply px-4 py-2 rounded-lg inline-flex flex-row items-center justify-center space-x-1.5;
   }
 
   .primary-button {
@@ -49,11 +49,15 @@
   }
 
   .submit-button {
-    @apply primary-button py-3;
+    @apply primary-button;
   }
 
   .secondary-button {
-    @apply bg-white base-button border rounded-lg border-primary-border shadow-sm;
+    @apply bg-white base-button border rounded-lg border-primary-border shadow-sm hover:border-warm-gray-600 transition;
+  }
+
+  .accent-button {
+    @apply secondary-button border-accent;
   }
 
   .error-box {
@@ -68,8 +72,16 @@
     @apply flex flex-col items-start p-6 bg-white shadow-sm rounded-lg border border-primary-border;
   }
 
-  .small-link {
-    @apply text-sm text-secondary-text;
+  .base-link {
+    @apply flex flex-row items-center space-x-1.5 text-gray-600 hover:text-gray-800 border-b-2 pb-0.5 border-transparent hover:border-gray-600 focus:border-gray-600 transition;
+  }
+
+  .primary-link {
+    @apply base-link;
+  }
+
+  .secondary-link {
+    @apply base-link text-sm;
   }
 }
 
@@ -124,4 +136,8 @@
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+[x-cloak] {
+  display: none;
 }

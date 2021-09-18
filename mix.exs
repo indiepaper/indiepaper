@@ -43,7 +43,7 @@ defmodule IndiePaper.MixProject do
       {:phoenix_live_view, "~> 0.16.0"},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.5"},
-      {:esbuild, git: "https://github.com/phoenixframework/esbuild", runtime: Mix.env() == :dev},
+      {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.3"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
@@ -53,7 +53,8 @@ defmodule IndiePaper.MixProject do
       {:wallaby, "~> 0.28.0", [runtime: false, only: :test]},
       {:tesla, "~> 1.4", override: true},
       {:ex_machina, "~> 2.7", only: :test},
-      {:bodyguard, "~> 2.4"}
+      {:bodyguard, "~> 2.4"},
+      {:stripity_stripe, "~> 2.0"}
     ]
   end
 
@@ -71,7 +72,7 @@ defmodule IndiePaper.MixProject do
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test --max-cases=2"],
       "assets.deploy": [
         "cmd --cd assets npm run deploy",
-        "esbuild --no-runtime-config default --minify",
+        "esbuild default --minify",
         "phx.digest"
       ]
     ]

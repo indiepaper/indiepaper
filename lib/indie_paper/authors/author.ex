@@ -9,7 +9,15 @@ defmodule IndiePaper.Authors.Author do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
 
-    has_many :drafts, IndiePaper.Drafts.Draft
+    field :account_status, Ecto.Enum,
+      values: [:created, :confirmed, :payment_connected, :suspended, :banned],
+      default: :created,
+      nil: false
+
+    field :is_payment_connected, :boolean, default: false
+    field :stripe_connect_id, :string
+
+    has_many :books, IndiePaper.Books.Book
 
     timestamps()
   end
@@ -137,5 +145,11 @@ defmodule IndiePaper.Authors.Author do
     else
       add_error(changeset, :current_password, "is not valid")
     end
+  end
+
+  def internal_profile_changeset(author, attrs) do
+    author
+    |> cast(attrs, [:stripe_connect_id, :is_payment_connected, :account_status])
+    |> unique_constraint([:stripe_connect_id])
   end
 end

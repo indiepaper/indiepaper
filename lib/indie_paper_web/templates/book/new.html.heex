@@ -1,17 +1,18 @@
 <section class="bg-background">
     <div class="container-box page-box">
-        <h1 class="page-heading" data-test="title">Create Draft</h1>
-        <p class="page-description">Create a new draft with just a title, it's that simple.</p>
+        <h1 class="page-heading" data-test="title">Publish Draft</h1>
+        <p class="page-description">Publish draft as book, fill out the details of the book.</p>
 
-        <div class="mt-12 max-w-xl">
-            <%= form_for @changeset, Routes.draft_path(@conn, :create), fn f -> %>
+        <div class="mt-12 max-w-2xl">
+            <%= form_for @changeset, Routes.book_path(@conn, :create), fn f -> %>
+
                 <%= if @changeset.action do %>
                     <div class="form-error-box">
                         <p>Oops, Something went wrong. Please check errors below</p>
                     </div>
                 <% end %>
 
-                <div class="form-container">
+                <div class="space-y-6 form-container">
                     <div class="input-container">
                         <%= label f, :title, class: "input-label"  %>
                         <%= text_input f, :title, class: "form-input"  %>
@@ -19,11 +20,9 @@
                             <%= error_tag f, :title %>
                         </p>
                     </div>
-
-                    <%= submit "Create", class: "primary-button" %>
+                    <%= submit "Create Book", class: "primary-button" %>
                 </div>
             <% end %>
         </div>
     </div>
 </section>
-

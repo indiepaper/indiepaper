@@ -165,7 +165,8 @@ defmodule IndiePaper.Authors do
   """
   def deliver_update_email_instructions(%Author{} = author, current_email, update_email_url_fun)
       when is_function(update_email_url_fun, 1) do
-    {encoded_token, author_token} = AuthorToken.build_email_token(author, "change:#{current_email}")
+    {encoded_token, author_token} =
+      AuthorToken.build_email_token(author, "change:#{current_email}")
 
     Repo.insert!(author_token)
     AuthorNotifier.deliver_update_email_instructions(author, update_email_url_fun.(encoded_token))
@@ -260,7 +261,11 @@ defmodule IndiePaper.Authors do
     else
       {encoded_token, author_token} = AuthorToken.build_email_token(author, "confirm")
       Repo.insert!(author_token)
-      AuthorNotifier.deliver_confirmation_instructions(author, confirmation_url_fun.(encoded_token))
+
+      AuthorNotifier.deliver_confirmation_instructions(
+        author,
+        confirmation_url_fun.(encoded_token)
+      )
     end
   end
 
@@ -301,7 +306,11 @@ defmodule IndiePaper.Authors do
       when is_function(reset_password_url_fun, 1) do
     {encoded_token, author_token} = AuthorToken.build_email_token(author, "reset_password")
     Repo.insert!(author_token)
-    AuthorNotifier.deliver_reset_password_instructions(author, reset_password_url_fun.(encoded_token))
+
+    AuthorNotifier.deliver_reset_password_instructions(
+      author,
+      reset_password_url_fun.(encoded_token)
+    )
   end
 
   @doc """
@@ -346,5 +355,29 @@ defmodule IndiePaper.Authors do
       {:ok, %{author: author}} -> {:ok, author}
       {:error, :author, changeset, _} -> {:error, changeset}
     end
+  end
+
+  def update_author_internal_profile(author, attrs) do
+    author
+    |> Author.internal_profile_changeset(attrs)
+    |> Repo.update()
+  end
+
+  def has_stripe_connect_id?(%Author{stripe_connect_id: nil}), do: false
+  def has_stripe_connect_id?(%Author{stripe_connect_id: _}), do: true
+
+  def get_by_stripe_connect_id!(stripe_connect_id) do
+    Repo.get_by!(Author, stripe_connect_id: stripe_connect_id)
+  end
+
+  def set_payment_connected(author) do
+    update_author_internal_profile(author, %{
+      is_payment_connected: true,
+      account_status: :payment_connected
+    })
+  end
+
+  def is_payment_connected?(author) do
+    author.is_payment_connected
   end
 end

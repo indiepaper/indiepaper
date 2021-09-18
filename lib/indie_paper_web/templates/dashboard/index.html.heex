@@ -1,16 +1,38 @@
-
 <section class="bg-background">
-    <div class="container-box page-box">
-        <div class="max-w-2xl">
-            <h1 data-test="title" class="page-heading">Draft Books</h1>
-            <p class="page-description">your current drafts appear here. Write them with love and care they deserve</p>
+    <%= render "_nav_bar.html", assigns %>
 
-            <div class="mt-12">
-                <%= for draft <- @drafts do %>
+    <div class="container-box page-box">
+        <%= if not IndiePaper.Authors.is_payment_connected?(@current_author) do %>
+            <div class="inline-block py-4 px-6 mb-16 shadow-none primary-card">
+                <div class="flex flex-col items-start space-y-4 text-sm md:flex-row md:items-center md:space-y-0 md:space-x-6">
+                    <p>Connect your Stripe account to Start Selling your books.</p>
+                    <%= link "Connect Stripe", to: Routes.profile_stripe_connect_path(@conn, :new), class: "secondary-button" %>
+                </div>
+            </div>
+        <% end %>
+        <div class="max-w-2xl">
+            <h1 data-test="title" class="page-heading">Your Books</h1>
+            <p class="page-description">your current drafts and published books appear here. Write them with love and care they deserve</p>
+
+            <div class="mt-8 space-y-8">
+                <%= for book <- @books do %>
                     <div class="primary-card">
-                        <h2 data-test="draft-title" class="text-lg"><%= draft.title %></h2>
-                        <div class="mt-3">
-                            <%= link "Edit draft", to: Routes.draft_path(@conn, :edit, draft), class: "small-link" %>
+                        <%= if IndiePaper.Books.is_pending_publication?(book)  do %>
+                            <span class="py-1 px-2 text-xs text-orange-700 bg-orange-100 rounded-lg" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
+                        <% end %>
+                        <%= if IndiePaper.Books.is_published?(book)  do %>
+                            <span class="py-1 px-2 text-xs text-green-700 bg-green-100 rounded-lg" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
+                        <% end %>
+                        <h2 data-test="book-title" class="mt-2 text-lg"><%= book.title %></h2>
+                        <div class="flex flex-row mt-6 space-x-4 text-secondary-text">
+                            <%= link to: Routes.draft_path(@conn, :edit, book.draft), class: "secondary-link"  do %>
+                                <p>Edit draft</p>
+                            <% end %>
+                            <%= if IndiePaper.Books.is_published?(book) do %>
+                                <%= link to: Routes.book_path(@conn, :edit, book), class: "secondary-link" do %>
+                                    <p>Update listing</p>
+                                <% end %>
+                            <% end %>
                         </div>
                     </div>
                 <% end %>

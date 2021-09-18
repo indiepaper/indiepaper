@@ -1,0 +1,18 @@
+<section class="bg-background">
+    <div class="container-box page-box">
+        <h1 class="page-heading">Connect with Stripe</h1>
+        <p class="page-description">Payments are secured by Stripe, connect your Stripe account to start recieving payments</p>
+        <div class="mt-8 max-w-md">
+            <%= form_for @conn, Routes.profile_stripe_connect_path(@conn, :create), [as: :stripe_connect_params], fn f -> %>
+                <div class="form-container">
+                        <div class={"input-container #{if IndiePaper.Authors.has_stripe_connect_id?(@current_author), do: 'hidden'}"}>
+                            <%= label f, :country_code, "Country", class: "input-label" %>
+                            <%= select f, :country_code, IndiePaper.PaymentHandler.StripeHandler.stripe_connect_enabled_countries(), class: "form-input"%>
+                        </div>
+
+                    <%= submit "Connect Stripe", class: "submit-button" %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</section>
