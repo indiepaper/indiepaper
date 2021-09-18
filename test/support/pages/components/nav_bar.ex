@@ -13,7 +13,7 @@ defmodule IndiePaperWeb.Pages.Components.NavBar do
 
   def has_dashboard_link?(session) do
     session
-    |> assert_has(link("Dashboard"))
+    |> assert_has(data("test", "dashboard-link", text: "Dashboard"))
   end
 
   def has_sign_out?(session) do
