@@ -10,11 +10,6 @@ defmodule IndiePaperWeb.PublicationController do
       case Publication.publish_book(book) do
         {:ok, book} ->
           redirect(conn, to: Routes.book_path(conn, :show, book))
-
-        {:error, message} ->
-          conn
-          |> put_flash(:error, message)
-          |> redirect(to: Routes.draft_path(conn, :edit, book.draft))
       end
     else
       conn
