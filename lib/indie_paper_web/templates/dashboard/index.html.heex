@@ -17,7 +17,12 @@
             <div class="mt-8 space-y-8">
                 <%= for book <- @books do %>
                     <div class="primary-card">
-                        <span class="py-1 px-2 text-xs text-orange-700 bg-orange-100 rounded-lg" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
+                        <%= if IndiePaper.Books.is_pending_publication?(book)  do %>
+                            <span class="py-1 px-2 text-xs text-orange-700 bg-orange-100 rounded-lg" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
+                        <% end %>
+                        <%= if IndiePaper.Books.is_published?(book)  do %>
+                            <span class="py-1 px-2 text-xs text-green-700 bg-green-100 rounded-lg" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
+                        <% end %>
                         <h2 data-test="book-title" class="mt-2 text-lg"><%= book.title %></h2>
                         <div class="flex flex-row mt-6 space-x-4 text-secondary-text">
                             <%= link to: Routes.draft_path(@conn, :edit, book.draft), class: "secondary-link"  do %>
