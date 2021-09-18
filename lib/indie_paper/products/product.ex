@@ -6,8 +6,9 @@ defmodule IndiePaper.Products.Product do
   @foreign_key_type :binary_id
   schema "products" do
     field :description, :string
-    field :title, :string
-    field :book_id, :binary_id
+    field :title, :string, nil: false
+
+    belongs_to :book, IndiePaper.Books.Book
 
     timestamps()
   end

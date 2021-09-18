@@ -1,5 +1,6 @@
 <h1 data-test="title"><%= @book.title %></h1>
 
 <%= for product <- @book.products do %>
-    <p><%= product.title %></p>
+    <button><%= product.title %></button>
 <% end %>
+    <button>Buy Now</button>

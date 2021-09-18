@@ -25,6 +25,7 @@ defmodule IndiePaper.Books.Book do
     field :long_description_html, :string
 
     has_one :draft, IndiePaper.Drafts.Draft
+    has_many :products, IndiePaper.Products.Product
     belongs_to :author, IndiePaper.Authors.Author
 
     timestamps()
