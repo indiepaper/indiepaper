@@ -31,7 +31,7 @@
 
                     <div class="input-container" x-data={"bookLongDescriptionHtmlEditor()"}>
                         <%= label f, :long_description_html, "Long description",  class: "input-label" %>
-                        <%= textarea f, :long_description_html, class: "form-input hidden", "x-model": "longDescriptionHtml", "x-ref": "longDescriptionHtmlReference"  %>
+                        <%= hidden_input f, :long_description_html, class: "form-input", "x-model": "longDescriptionHtml", "x-ref": "longDescriptionHtmlReference"  %>
                         <div class="bg-white rounded-lg border border-primary-border" >
                             <div class="flex flex-col items-stretch" >
                                 <div class="flex flex-row items-center py-4 px-6 space-x-4 text-gray-600 border-b hover:text-gray-800 border-primary-border">
