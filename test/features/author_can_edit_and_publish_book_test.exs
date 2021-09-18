@@ -3,7 +3,6 @@ defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
 
   alias IndiePaperWeb.Pages.{DraftPage, LoginPage, DashboardPage, BookPage}
 
-  @tag :skip
   test "author can edit and publish draft", %{session: session} do
     book = insert(:book, status: :pending_publication)
     [draft_chapter1, _draft_chapter2] = book.draft.chapters
