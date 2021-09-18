@@ -83,7 +83,7 @@ document.addEventListener("alpine:init", () => {
           this.isThrottling = true;
           setTimeout(() => {
             this.isThrottling = false;
-          }, 640);
+          }, 1280);
         },
         init() {
           const _this = this;
