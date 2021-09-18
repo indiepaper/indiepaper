@@ -19,6 +19,7 @@ defmodule IndiePaper.BooksTest do
 
       assert book.author_id == author.id
       assert book.title == book_params[:title]
+      assert book.short_description
     end
   end
 
@@ -74,16 +75,6 @@ defmodule IndiePaper.BooksTest do
       {:ok, published_book} = Books.publish_book(book)
 
       assert published_book.status == :published
-    end
-  end
-
-  describe "is_listing_complete/2" do
-    test "checks if book has listing complete" do
-      book = insert(:book, status: :listing_complete)
-      published_book = insert(:book)
-
-      assert Books.is_listing_complete?(book)
-      assert Books.is_listing_complete?(published_book)
     end
   end
 end

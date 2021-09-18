@@ -6,14 +6,9 @@ defmodule IndiePaperWeb.PublicationController do
   def create(conn, %{"book_id" => book_id}) do
     book = Books.get_book!(book_id) |> Books.with_assoc(:draft)
 
-    if Books.is_listing_complete?(book) do
-      case Publication.publish_book(book) do
-        {:ok, book} ->
-          redirect(conn, to: Routes.book_path(conn, :show, book))
-      end
-    else
-      conn
-      |> redirect(to: Routes.book_path(conn, :edit, book))
+    case Publication.publish_book(book) do
+      {:ok, book} ->
+        redirect(conn, to: Routes.book_path(conn, :show, book))
     end
   end
 end

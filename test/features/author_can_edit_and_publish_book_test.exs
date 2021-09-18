@@ -18,11 +18,12 @@ defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
       Enum.at(Enum.at(draft_chapter1.content_json["content"], 0)["content"], 0)["text"]
     )
     |> DraftPage.Edit.click_publish()
+    |> BookPage.Show.has_book_title?(book.title)
+    |> DashboardPage.visit_page()
+    |> DashboardPage.click_update_listing()
     |> BookPage.Edit.fill_form(book_params)
     |> BookPage.Edit.click_publish()
     |> BookPage.Show.has_book_title?(book_params[:title])
-    |> DashboardPage.visit_page()
-    |> DashboardPage.click_update_listing()
   end
 
   test "author can republish already published book", %{session: session} do

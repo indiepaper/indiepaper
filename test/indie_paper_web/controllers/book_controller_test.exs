@@ -32,19 +32,5 @@ defmodule IndiePaperWeb.BookControllerTest do
 
       assert response =~ "be blank"
     end
-
-    test "redirects to publish endpoint when the book is pending publication", %{conn: conn} do
-      book = insert(:book, status: :pending_publication)
-
-      response =
-        conn
-        |> log_in_author(book.author)
-        |> patch(Routes.book_path(conn, :update, book), %{
-          "book" => %{"title" => book.title}
-        })
-        |> redirected_to(302)
-
-      assert response == Routes.book_publication_path(conn, :create, book)
-    end
   end
 end

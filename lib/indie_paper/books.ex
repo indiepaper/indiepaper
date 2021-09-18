@@ -20,6 +20,10 @@ defmodule IndiePaper.Books do
   def create_book(author, params) do
     Ecto.build_assoc(author, :books)
     |> Book.initial_draft_changeset(params)
+    |> Book.changeset(%{
+      short_description: "Short description about your book",
+      long_description_html: "<h1>You love your book, let the world know</h1>"
+    })
     |> Repo.insert()
   end
 
@@ -45,7 +49,6 @@ defmodule IndiePaper.Books do
   def with_assoc(book, assoc), do: Repo.preload(book, assoc)
 
   def is_published?(book), do: book.status == :published
-  def is_listing_complete?(book), do: book.status in [:listing_complete, :published]
   def is_pending_publication?(book), do: book.status == :pending_publication
 
   def update_book_status(book, status) do
