@@ -73,7 +73,7 @@
   }
 
   .base-link {
-    @apply flex flex-row items-center space-x-1.5 text-gray-600 hover:text-gray-800 transition;
+    @apply flex flex-row items-center space-x-1.5 text-gray-600 hover:text-gray-900 transition;
   }
 
   .primary-link {
