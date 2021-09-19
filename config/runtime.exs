@@ -44,6 +44,12 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
+  # Stripe Config
+  config :stripity_stripe,
+    api_version: "2020-08-27",
+    api_key: System.get_env("STRIPE_API_SECRET"),
+    connect_webhook_signing_secret: System.get_env("STRIPE_CONNECT_WEBHOOK_SECRET")
+
   # ## Using releases
   #
   # If you are doing OTP releases, you need to instruct Phoenix
@@ -71,4 +77,5 @@ if config_env() == :prod do
   #     config :swoosh, :api_client, Swoosh.ApiClient.Hackney
   #
   # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
+  #
 end
