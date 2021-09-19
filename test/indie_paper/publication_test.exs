@@ -17,5 +17,16 @@ defmodule IndiePaper.PublicationTest do
         assert chapter.content_json == chapter.published_content_json
       end)
     end
+
+    test "creates empty product if the book is pending_publication" do
+      book = insert(:book, status: :pending_publication, products: [])
+
+      {:ok, published_book} = Publication.publish_book(book)
+      book_with_products = published_book |> Books.with_assoc(:products)
+
+      product = Enum.at(book_with_products.products, 0)
+
+      assert product.title == "Read Online"
+    end
   end
 end
