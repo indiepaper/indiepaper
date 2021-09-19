@@ -21,7 +21,9 @@ defmodule IndiePaper.PublicationTest do
     test "creates empty product if the book is pending_publication" do
       book = insert(:book, status: :pending_publication, products: [])
 
-      {:ok, published_book} = Publication.publish_book(book)
+      found_book = Books.get_book!(book.id)
+      {:ok, published_book} = Publication.publish_book(found_book)
+
       book_with_products = published_book |> Books.with_assoc(:products)
 
       product = Enum.at(book_with_products.products, 0)
