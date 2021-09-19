@@ -16,8 +16,8 @@
 
             <div class="mt-8 space-y-12">
                 <%= for book <- @books do %>
-                    <div class="p-0 primary-card">
-                        <div class="flex flex-row justify-between items-center py-3 px-6 w-full border-b border-secondary-border">
+                    <div class="items-stretch p-0 primary-card">
+                        <div class="flex flex-row justify-between items-center py-3 px-6 border-b border-secondary-border">
                             <%= if IndiePaper.Books.is_pending_publication?(book)  do %>
                                 <span class="py-1 px-2 text-xs text-orange-700 bg-orange-100 rounded-lg" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
                             <% end %>
@@ -51,9 +51,20 @@
                                     <p>Update listing</p>
                                 <% end %>
                             </div>
-                            <%= for product <- book.products do %>
-                                <p data-test="product-title"><%= product.title %></p>
+                        </div>
+                        <div class="">
+                            <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-primary-border">
+                                <p>Products</p>
+                                <p class="text-sm">Add Product</p>
+                            </div>
+                            <div class="border-secondary-border">
+                                <%= for product <- book.products do %>
+                                    <div class="py-3 px-6 border-t">
+                                        <p data-test="product-title"><%= product.title %></p>
+                                        <p class="text-sm text-secondary-text"><%= product.title %></p>
+                                    </div>
                                 <% end %>
+                            </div>
                         </div>
                     </div>
                 <% end %>
