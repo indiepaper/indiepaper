@@ -52,20 +52,23 @@
                                 <% end %>
                             </div>
                         </div>
-                        <div class="">
-                            <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-primary-border">
-                                <p>Products</p>
-                                <p class="text-sm">Add Product</p>
+
+                        <%= if IndiePaper.Books.is_published?(book)  do %>
+                            <div class="">
+                                <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-primary-border">
+                                    <p>Products</p>
+                                    <p class="text-sm">Add Product</p>
+                                </div>
+                                <div>
+                                    <%= for product <- book.products do %>
+                                        <div class="py-3 px-6 border-t border-lightest-border">
+                                            <p data-test="product-title"><%= product.title %></p>
+                                            <p class="text-sm text-secondary-text"><%= product.title %></p>
+                                        </div>
+                                    <% end %>
+                                </div>
                             </div>
-                            <div class="border-secondary-border">
-                                <%= for product <- book.products do %>
-                                    <div class="py-3 px-6 border-t">
-                                        <p data-test="product-title"><%= product.title %></p>
-                                        <p class="text-sm text-secondary-text"><%= product.title %></p>
-                                    </div>
-                                <% end %>
-                            </div>
-                        </div>
+                        <% end %>
                     </div>
                 <% end %>
             </div>
