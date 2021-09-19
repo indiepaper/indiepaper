@@ -40,4 +40,9 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
     session
     |> assert_has(data("test", "book-status", text: "Pending publication"))
   end
+
+  def has_product_title?(session, title) do
+    session
+    |> assert_has(data("test", "product-title", text: title))
+  end
 end

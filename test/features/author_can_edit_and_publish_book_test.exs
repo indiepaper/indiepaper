@@ -49,5 +49,9 @@ defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
     |> BookPage.Show.select_product(
       Products.default_read_online_product_changeset(book).changes.title
     )
+    |> DashboardPage.visit_page()
+    |> DashboardPage.has_product_title?(
+      Products.default_read_online_product_changeset(book).changes.title
+    )
   end
 end

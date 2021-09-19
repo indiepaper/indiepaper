@@ -51,6 +51,9 @@
                                     <p>Update listing</p>
                                 <% end %>
                             </div>
+                            <%= for product <- book.products do %>
+                                <p data-test="product-title"><%= product.title %></p>
+                                <% end %>
                         </div>
                     </div>
                 <% end %>
