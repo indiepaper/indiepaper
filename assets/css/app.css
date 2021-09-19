@@ -77,7 +77,7 @@
   }
 
   .primary-link {
-    @apply base-link;
+    @apply base-link text-gray-700;
   }
 
   .secondary-link {
