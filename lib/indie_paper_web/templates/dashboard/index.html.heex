@@ -14,7 +14,7 @@
             <h1 data-test="title" class="page-heading">Your Books</h1>
             <p class="page-description">your current drafts and published books appear here. Write them with love and care they deserve</p>
 
-            <div class="mt-8 space-y-8">
+            <div class="mt-8 space-y-12">
                 <%= for book <- @books do %>
                     <div class="p-0 primary-card">
                         <div class="flex flex-row justify-between items-center py-3 px-6 w-full border-b border-secondary-border">
@@ -37,7 +37,7 @@
                         <div class="p-6">
                             <h2 data-test="book-title" class="text-lg"><%= book.title %></h2>
                             <h2 data-test="book-title" class="mt-1 text-sm text-secondary-text"><%= book.short_description %></h2>
-                            <div class="flex flex-row mt-6 space-x-6 text-secondary-text">
+                            <div class="flex flex-row mt-8 space-x-6 text-secondary-text">
                                 <%= link to: Routes.draft_path(@conn, :edit, book.draft), class: "secondary-link"  do %>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
