@@ -68,11 +68,11 @@ defmodule IndiePaper.BooksTest do
     end
   end
 
-  describe "publish_book/1" do
-    test "sets status of book as published" do
+  describe "publish_book_changeset/1" do
+    test "returns changeset sets status of book as published" do
       book = insert(:book, status: :pending_publication)
 
-      {:ok, published_book} = Books.publish_book(book)
+      {:ok, published_book} = Books.publish_book_changeset(book) |> Repo.update()
 
       assert published_book.status == :published
     end

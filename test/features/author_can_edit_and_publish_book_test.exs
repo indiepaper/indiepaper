@@ -36,4 +36,15 @@ defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
     |> DraftPage.Edit.click_publish()
     |> BookPage.Show.has_book_title?(book.title)
   end
+
+  test "publishing creates read online product", %{session: session} do
+    book = insert(:book, status: :published)
+
+    session
+    |> DashboardPage.visit_page()
+    |> LoginPage.login(email: book.author.email, password: book.author.password)
+    |> DashboardPage.click_edit_draft()
+    |> DraftPage.Edit.click_publish()
+    |> BookPage.Show.select_product("Read Online")
+  end
 end
