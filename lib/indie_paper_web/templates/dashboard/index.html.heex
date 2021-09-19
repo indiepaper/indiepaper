@@ -24,7 +24,13 @@
                             <span class="py-1 px-2 text-xs text-green-700 bg-green-100 rounded-lg" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
                         <% end %>
                         <h2 data-test="book-title" class="mt-2 text-lg"><%= book.title %></h2>
+                        <h2 data-test="book-title" class="mt-1 text-sm text-secondary-text"><%= book.short_description %></h2>
                         <div class="flex flex-row mt-6 space-x-4 text-secondary-text">
+                            <%= if IndiePaper.Books.is_published?(book) do %>
+                                <%= link to: Routes.book_path(@conn, :show, book), class: "secondary-link" do %>
+                                    <p>View</p>
+                                <% end %>
+                            <% end %>
                             <%= link to: Routes.draft_path(@conn, :edit, book.draft), class: "secondary-link"  do %>
                                 <p>Edit draft</p>
                             <% end %>
