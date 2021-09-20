@@ -18,7 +18,7 @@ defmodule IndiePaper.Products.Product do
   def changeset(product, attrs) do
     product
     |> cast(attrs, [:title, :description, :price])
-    |> validate_required([:title, :description])
+    |> validate_required([:title, :description, :price])
     |> validate_money(:price)
   end
 
