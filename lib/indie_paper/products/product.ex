@@ -25,7 +25,7 @@ defmodule IndiePaper.Products.Product do
   defp validate_money(changeset, field) do
     validate_change(changeset, field, fn
       _, %Money{amount: amount} when amount > 0 -> []
-      _, _ -> [amount: "must be greater than 0"]
+      _, _ -> [price: "must be greater than 0"]
     end)
   end
 end
