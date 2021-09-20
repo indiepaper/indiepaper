@@ -20,7 +20,8 @@ defmodule IndiePaper.Factory do
   def product_factory do
     %IndiePaper.Products.Product{
       title: sequence("Product Title"),
-      description: sequence("Short description about Product")
+      description: sequence("Short description about Product"),
+      amount: Money.new(400)
     }
   end
 

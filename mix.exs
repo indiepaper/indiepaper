@@ -55,7 +55,8 @@ defmodule IndiePaper.MixProject do
       {:ex_machina, "~> 2.7", only: :test},
       {:bodyguard, "~> 2.4"},
       {:appsignal, "~> 2.0"},
-      {:stripity_stripe, "~> 2.0"}
+      {:stripity_stripe, "~> 2.0"},
+      {:money, "~> 1.4"}
     ]
   end
 
