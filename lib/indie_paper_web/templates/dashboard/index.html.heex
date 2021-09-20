@@ -66,13 +66,20 @@
                                 </div>
                                 <div>
                                     <%= for product <- book.products do %>
-                                        <div class="flex flex-row items-center py-3 px-6 border-t border-lightest-border">
-                                            <div>
-                                            <p data-test="product-title"><%= product.title %></p>
-                                            <p class="text-sm text-secondary-text"><%= product.title %></p>
-                                            <p data-test="product-price"><%= Money.to_string(product.price) %></p>
+                                        <%= link to: Routes.book_product_path(@conn, :edit, book, product), "data-test": "product-edit" do %>
+                                            <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-lightest-border">
+                                                <div>
+                                                    <p data-test="product-title"><%= product.title %></p>
+                                                    <p class="text-sm text-secondary-text"><%= product.title %></p>
+                                                </div>
+                                                <div class="flex flex-row items-center space-x-1.5">
+                                                    <p data-test="product-price"><%= Money.to_string(product.price) %></p>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                                    </svg>
+                                                </div>
                                             </div>
-                                        </div>
+                                        <% end %>
                                     <% end %>
                                 </div>
                             </div>

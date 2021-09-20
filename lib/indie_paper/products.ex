@@ -21,4 +21,12 @@ defmodule IndiePaper.Products do
     |> Product.changeset(params)
     |> Repo.insert()
   end
+
+  def update_product(product, params) do
+    product
+    |> Product.changeset(params)
+    |> Repo.update()
+  end
+
+  def get_product!(id), do: Repo.get!(Product, id)
 end

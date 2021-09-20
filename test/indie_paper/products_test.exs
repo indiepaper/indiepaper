@@ -32,4 +32,24 @@ defmodule IndiePaper.ProductsTest do
       assert product.title == product_params[:title]
     end
   end
+
+  describe "get_product!/1" do
+    test "gets product with the given id" do
+      product = insert(:product)
+
+      found_product = Products.get_product!(product.id)
+
+      assert product.id == found_product.id
+    end
+  end
+
+  describe "update_product/2" do
+    test "updates product with given params" do
+      product = insert(:product)
+
+      {:ok, updated_product} = Products.update_product(product, %{title: "Updated Product"})
+
+      assert updated_product.title == "Updated Product"
+    end
+  end
 end

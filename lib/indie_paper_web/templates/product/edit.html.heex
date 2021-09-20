@@ -1,0 +1,11 @@
+<section class="bg-background">
+    <div class="container-box page-box">
+        <div class="max-w-2xl">
+            <h1 class="page-heading">Edit Product</h1>
+            <p class="page-description">Products are what your readers buy, bundle as many assets as you want with each product.</p>
+            <div class="mt-16">
+                <%= render "_form.html", Map.put(assigns, :action, Routes.book_product_path(@conn, :update, @book, @product)) %>
+            </div>
+        </div>
+    </div>
+</section>

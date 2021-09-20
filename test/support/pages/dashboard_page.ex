@@ -55,4 +55,9 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
     session
     |> click(link("Add Product"))
   end
+
+  def click_edit_product(session, title) do
+    session
+    |> click(data("test", "product-edit", text: title))
+  end
 end
