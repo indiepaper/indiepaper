@@ -17,7 +17,7 @@
 
             <div class="md:w-56 input-container">
                 <%= label f, :price, class: "input-label"  %>
-                <%= text_input f, :price, class: "form-input"  %>
+                <%= text_input f, :price, class: "form-input", placeholder: "$15.00"  %>
                 <p class="input-error">
                     <%= error_tag f, :price %>
                 </p>
