@@ -23,7 +23,7 @@ defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
     |> DashboardPage.visit_page()
     |> DashboardPage.click_update_listing()
     |> BookPage.Edit.fill_form(book_params)
-    |> BookPage.Edit.click_publish()
+    |> BookPage.Edit.click_update_listing()
     |> BookPage.Show.has_book_title?(book_params[:title])
   end
 

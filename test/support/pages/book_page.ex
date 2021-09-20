@@ -37,9 +37,9 @@ defmodule IndiePaperWeb.Pages.BookPage.Edit do
     |> fill_in(css("[contenteditable='true']"), with: attrs[:long_description_html])
   end
 
-  def click_publish(session) do
+  def click_update_listing(session) do
     session
-    |> click(button("Publish Book"))
+    |> click(button("Update Listing"))
   end
 end
 
