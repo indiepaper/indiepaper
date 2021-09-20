@@ -14,6 +14,7 @@ defmodule IndiePaperWeb.Features.AuthorCanCreateProductsForSaleTest do
     |> ProductPage.New.fill_form(product_params)
     |> ProductPage.New.click_add_product()
     |> DashboardPage.has_product_title?(product_params[:title])
+    |> DashboardPage.has_product_price?(product_params[:price])
     |> BookPage.Show.visit_page(book)
     |> BookPage.Show.select_product(product_params[:title])
   end

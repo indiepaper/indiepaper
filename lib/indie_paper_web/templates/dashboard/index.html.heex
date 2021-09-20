@@ -66,9 +66,12 @@
                                 </div>
                                 <div>
                                     <%= for product <- book.products do %>
-                                        <div class="py-3 px-6 border-t border-lightest-border">
+                                        <div class="flex flex-row items-center py-3 px-6 border-t border-lightest-border">
+                                            <div>
                                             <p data-test="product-title"><%= product.title %></p>
                                             <p class="text-sm text-secondary-text"><%= product.title %></p>
+                                            <p data-test="product-price"><%= Money.to_string(product.price) %></p>
+                                            </div>
                                         </div>
                                     <% end %>
                                 </div>

@@ -46,6 +46,11 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
     |> assert_has(data("test", "product-title", text: title))
   end
 
+  def has_product_price?(session, price) do
+    session
+    |> assert_has(data("test", "product-price", text: Money.to_string(price)))
+  end
+
   def click_add_product(session) do
     session
     |> click(link("Add Product"))
