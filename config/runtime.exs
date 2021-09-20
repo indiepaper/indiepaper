@@ -31,15 +31,16 @@ if config_env() == :prod do
     System.get_env("FLY_APP_NAME") ||
       raise "FLY_APP_NAME not available"
 
-  deploy_domain = System.get_env("DEPLOY_DOMAIN") || raise "DEPLOY_DOMAIN not available"
+  indie_paper_deploy_domain =
+    System.get_env("INDIEPAPER_DEPLOY_DOMAIN") || raise "INDIEPAPER_DEPLOY_DOMAIN not available"
 
   config :indie_paper, IndiePaperWeb.Endpoint,
     server: true,
-    url: [host: deploy_domain, port: 443, scheme: "https"],
+    url: [host: indie_paper_deploy_domain, port: 443, scheme: "https"],
     check_origin: [
       "https://#{app_name}.fly.dev",
-      "https://#{deploy_domain}",
-      "https://www.#{deploy_domain}"
+      "https://#{indie_paper_deploy_domain}",
+      "https://www.#{indie_paper_deploy_domain}"
     ],
     http: [
       # Enable IPv6 and bind on all interfaces.
