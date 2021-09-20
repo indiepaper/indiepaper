@@ -1,0 +1,27 @@
+<%= form_for @changeset, @action, fn f -> %>
+    <%= if @changeset.action do %>
+        <div class="form-error-box">
+            <p>Oops, Something went wrong. Please check errors below</p>
+        </div>
+    <% end %>
+
+    <div class="space-y-6 form-container">
+        <div class="input-container">
+            <%= label f, :title, class: "input-label"  %>
+            <%= text_input f, :title, class: "form-input"  %>
+            <p class="input-error">
+                <%= error_tag f, :title %>
+            </p>
+        </div>
+
+        <div class="input-container">
+            <%= label f, :description, class: "input-label"  %>
+            <%= textarea f, :description, class: "form-input min-h-[120px]"  %>
+            <p class="input-error">
+                <%= error_tag f, :description %>
+            </p>
+        </div>
+
+        <%= submit "Add Product", class: "primary-button" %>
+    </div>
+<% end %>

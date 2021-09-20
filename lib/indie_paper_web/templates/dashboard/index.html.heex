@@ -57,7 +57,9 @@
                             <div class="">
                                 <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-primary-border">
                                     <p>Products</p>
-                                    <p class="text-sm">Add Product</p>
+                                    <%= link to: Routes.book_product_path(@conn, :new, book) do %>
+                                        <p>Add Product</p>
+                                    <% end %>
                                 </div>
                                 <div>
                                     <%= for product <- book.products do %>

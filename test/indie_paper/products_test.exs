@@ -12,4 +12,24 @@ defmodule IndiePaper.ProductsTest do
       assert product.book_id == book.id
     end
   end
+
+  describe "change_product/2" do
+    test "returns changeset with given attrs" do
+      changeset = Products.change_product(%Products.Product{}, %{title: "Product Title"})
+
+      assert changeset.changes.title == "Product Title"
+    end
+  end
+
+  describe "create_product/2" do
+    test "creates product associated with book" do
+      book = insert(:book)
+      product_params = params_for(:product)
+
+      {:ok, product} = Products.create_product(book, product_params)
+
+      assert product.book_id == book.id
+      assert product.title == product_params[:title]
+    end
+  end
 end

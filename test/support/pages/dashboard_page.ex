@@ -45,4 +45,9 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
     session
     |> assert_has(data("test", "product-title", text: title))
   end
+
+  def click_add_product(session) do
+    session
+    |> click(link("Add Product"))
+  end
 end
