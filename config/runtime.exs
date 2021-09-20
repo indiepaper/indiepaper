@@ -57,6 +57,14 @@ if config_env() == :prod do
     api_key: System.get_env("STRIPE_API_SECRET"),
     connect_webhook_signing_secret: System.get_env("STRIPE_CONNECT_WEBHOOK_SIGNING_SECRET")
 
+  # Setup AppSignal in production
+  config :appsignal, :config,
+    otp_app: :indie_paper,
+    name: "IndiePaper",
+    push_api_key: System.get_env("APPSIGNAL_PUSH_API_KEY"),
+    env: System.get_env("INDIEPAPER_DEPLOY_ENV"),
+    active: true
+
   # ## Using releases
   #
   # If you are doing OTP releases, you need to instruct Phoenix
