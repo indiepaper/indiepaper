@@ -4,6 +4,10 @@
 @import "tailwindcss/utilities";
 
 @layer components {
+  .secondary-text {
+    @apply text-secondary-text font-normal;
+  }
+
   .container-box {
     @apply max-w-7xl mx-auto p-6 md:px-12;
   }
@@ -17,7 +21,7 @@
   }
 
   .page-description {
-    @apply text-secondary-text font-normal mt-1;
+    @apply secondary-text mt-1;
   }
 
   .form-container {
@@ -41,7 +45,7 @@
   }
 
   .base-button {
-    @apply px-4 py-2 rounded-lg inline-flex flex-row items-center justify-center space-x-1.5;
+    @apply px-4 py-2 rounded-lg inline-flex flex-row items-center justify-center space-x-1.5 font-medium;
   }
 
   .primary-button {
@@ -73,7 +77,7 @@
   }
 
   .base-link {
-    @apply flex flex-row items-center space-x-1.5 text-gray-600 hover:text-gray-900 transition;
+    @apply flex flex-row items-center space-x-1.5 text-gray-600 hover:text-gray-900 transition font-medium;
   }
 
   .primary-link {

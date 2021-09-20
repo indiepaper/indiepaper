@@ -36,7 +36,7 @@
                         </div>
                         <div class="p-6">
                             <h2 data-test="book-title" class="text-lg"><%= book.title %></h2>
-                            <h2 data-test="book-title" class="mt-1 text-sm text-secondary-text"><%= book.short_description %></h2>
+                            <h2 data-test="book-title" class="mt-1 text-sm secondary-text"><%= book.short_description %></h2>
                             <div class="flex flex-row mt-8 space-x-6 text-secondary-text">
                                 <%= link to: Routes.draft_path(@conn, :edit, book.draft), class: "secondary-link"  do %>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -70,7 +70,7 @@
                                             <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-lightest-border">
                                                 <div>
                                                     <p data-test="product-title"><%= product.title %></p>
-                                                    <p class="text-sm text-secondary-text"><%= product.title %></p>
+                                                    <p class="text-sm secondary-text"><%= product.title %></p>
                                                 </div>
                                                 <div class="flex flex-row items-center space-x-1.5">
                                                     <p data-test="product-price"><%= Money.to_string(product.price) %></p>
