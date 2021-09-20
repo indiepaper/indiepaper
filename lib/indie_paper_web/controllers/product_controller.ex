@@ -29,9 +29,16 @@ defmodule IndiePaperWeb.ProductController do
     render(conn, "edit.html", book: book, product: product, changeset: changeset)
   end
 
-  def update(conn, %{"id" => product_id, "product" => product_params}) do
+  def update(conn, %{"book_id" => book_id, "id" => product_id, "product" => product_params}) do
+    book = Books.get_book!(book_id)
     product = Products.get_product!(product_id)
-    {:ok, updated_product} = Products.update_product(product, product_params)
-    redirect(conn, to: Routes.dashboard_path(conn, :index))
+
+    case Products.update_product(product, product_params) do
+      {:ok, _updated_product} ->
+        redirect(conn, to: Routes.dashboard_path(conn, :index))
+
+      {:error, changeset} ->
+        render(conn, "edit.html", changeset: changeset, book: book, product: product)
+    end
   end
 end
