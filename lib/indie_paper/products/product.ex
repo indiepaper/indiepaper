@@ -7,6 +7,7 @@ defmodule IndiePaper.Products.Product do
   schema "products" do
     field :description, :string
     field :title, :string, nil: false
+    field :price, Money.Ecto.Amount.Type
 
     belongs_to :book, IndiePaper.Books.Book
 
@@ -16,7 +17,15 @@ defmodule IndiePaper.Products.Product do
   @doc false
   def changeset(product, attrs) do
     product
-    |> cast(attrs, [:title, :description])
+    |> cast(attrs, [:title, :description, :price])
     |> validate_required([:title, :description])
+    |> validate_money(:price)
+  end
+
+  defp validate_money(changeset, field) do
+    validate_change(changeset, field, fn
+      _, %Money{amount: amount} when amount > 0 -> []
+      _, _ -> [amount: "must be greater than 0"]
+    end)
   end
 end
