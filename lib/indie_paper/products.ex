@@ -10,7 +10,7 @@ defmodule IndiePaper.Products do
   def default_read_online_product_changeset(book) do
     Ecto.build_assoc(book, :products)
     |> Product.changeset(%{
-      title: "Read Online",
+      title: "Read online",
       description: "Read the book in our web version",
       price: 1500
     })

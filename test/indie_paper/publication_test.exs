@@ -28,7 +28,7 @@ defmodule IndiePaper.PublicationTest do
 
       product = Enum.at(book_with_products.products, 0)
 
-      assert product.title == "Read Online"
+      assert product.title == "Read online"
     end
   end
 end

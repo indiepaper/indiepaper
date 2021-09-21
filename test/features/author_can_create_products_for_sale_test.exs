@@ -18,6 +18,7 @@ defmodule IndiePaperWeb.Features.AuthorCanCreateProductsForSaleTest do
     |> DashboardPage.has_product_price?(product_params[:price])
     |> DashboardPage.click_edit_product(product_params[:title])
     |> ProductPage.fill_form(update_product_params)
+    |> ProductPage.click_read_online_asset()
     |> ProductPage.click_save_product()
     |> DashboardPage.has_product_title?(update_product_params[:title])
     |> DashboardPage.has_product_price?(update_product_params[:price])

@@ -8,7 +8,7 @@ defmodule IndiePaper.ProductsTest do
       book = insert(:book)
       {:ok, product} = Products.default_read_online_product_changeset(book) |> Repo.insert()
 
-      assert product.title == "Read Online"
+      assert product.title == "Read online"
       assert product.book_id == book.id
     end
   end

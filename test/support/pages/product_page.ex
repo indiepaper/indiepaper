@@ -12,4 +12,9 @@ defmodule IndiePaperWeb.Pages.ProductPage do
     session
     |> click(button("Save Product"))
   end
+
+  def click_read_online_asset(session) do
+    session
+    |> click(data("test", "book-asset", text: "Read online"))
+  end
 end
