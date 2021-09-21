@@ -29,7 +29,7 @@
   }
 
   .form-tight-container {
-    @apply form-container !space-y-6;
+    @apply form-container space-y-6;
   }
 
   .input-container {
