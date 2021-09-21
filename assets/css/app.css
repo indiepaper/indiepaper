@@ -28,6 +28,10 @@
     @apply flex flex-col space-y-8 items-start;
   }
 
+  .form-tight-container {
+    @apply form-container !space-y-6;
+  }
+
   .input-container {
     @apply flex flex-col w-full;
   }
