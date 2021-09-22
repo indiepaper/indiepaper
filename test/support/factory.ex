@@ -13,7 +13,14 @@ defmodule IndiePaper.Factory do
       draft: build(:draft),
       author: build(:author),
       status: :published,
-      products: [build(:product), build(:product)]
+      products: [build(:product), build(:product)],
+      assets: [build(:asset)]
+    }
+  end
+
+  def asset_factory do
+    %IndiePaper.Assets.Asset{
+      type: :readable
     }
   end
 
