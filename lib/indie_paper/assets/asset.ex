@@ -5,8 +5,8 @@ defmodule IndiePaper.Assets.Asset do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "assets" do
-    field :type, :string
-    field :book_id, :binary_id
+    field :type, Ecto.Enum, values: [:readable]
+    belongs_to :book, IndiePaper.Books.Book
 
     timestamps()
   end

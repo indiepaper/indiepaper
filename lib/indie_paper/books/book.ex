@@ -26,6 +26,7 @@ defmodule IndiePaper.Books.Book do
 
     has_one :draft, IndiePaper.Drafts.Draft
     has_many :products, IndiePaper.Products.Product
+    has_many :assets, IndiePaper.Assets.Asset
     belongs_to :author, IndiePaper.Authors.Author
 
     timestamps()
