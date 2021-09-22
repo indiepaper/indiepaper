@@ -73,7 +73,7 @@
                                                     <p class="text-sm secondary-text"><%= product.description %></p>
                                                 </div>
                                                 <div class="flex flex-row items-center space-x-1.5">
-                                                    <p data-test="product-price"><%= IndiePaper.PaymentHandler.MoneyHandler.to_string(product.price) %></p>
+                                                    <p data-test="product-price"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(product.price) %></p>
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                                                     </svg>
