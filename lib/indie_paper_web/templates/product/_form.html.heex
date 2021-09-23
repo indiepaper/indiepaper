@@ -1,3 +1,4 @@
+<div x-data="{}">
 <%= form_for @changeset, @action, fn f -> %>
     <%= if @changeset.action do %>
         <div class="form-error-box">
@@ -34,10 +35,17 @@
 
         <div class="input-container">
             <%= label f, :assets, class: "input-label"  %>
-            <%= text_input f, :assets, class: "form-input"  %>
-            <%= for asset <- @book.assets do %>
-                <p data-test="book-asset"><%= asset.title %></p>
+            <p class="input-label-info">are the things your readers get after purchasing the product</p>
+            <%= hidden_input f, :assets, class: "form-input"  %>
+            <div class="mt-2">
+                <%= for asset <- @book.assets do %>
+                    <button @click.prevent="" class="text-sm bg-transparent border-dark-border secondary-button" data-test="book-asset">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p><%= asset.title %></p></button>
                 <% end %>
+            </div>
             <p class="input-error">
                 <%= error_tag f, :assets %>
             </p>
@@ -46,3 +54,4 @@
         <%= submit "Save Product", class: "primary-button" %>
     </div>
 <% end %>
+</div>

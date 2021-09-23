@@ -4,10 +4,6 @@
 @import "tailwindcss/utilities";
 
 @layer components {
-  .secondary-text {
-    @apply text-secondary-text font-normal;
-  }
-
   .container-box {
     @apply max-w-7xl mx-auto p-6 md:px-12;
   }
@@ -22,6 +18,10 @@
 
   .page-description {
     @apply secondary-text mt-1;
+  }
+
+  .secondary-text {
+    @apply text-secondary-text font-normal;
   }
 
   .form-container {
@@ -44,6 +44,10 @@
     @apply mb-1;
   }
 
+  .input-label-info {
+    @apply -mt-1 mb-1 secondary-text text-sm;
+  }
+
   .input-error {
     @apply text-sm text-primary-error block mt-1;
   }
@@ -61,7 +65,7 @@
   }
 
   .secondary-button {
-    @apply bg-white base-button border rounded-lg border-primary-border shadow-sm hover:border-warm-gray-600 transition;
+    @apply bg-white base-button border rounded-lg border-primary-border shadow-sm hover:border-darker-border transition;
   }
 
   .accent-button {
