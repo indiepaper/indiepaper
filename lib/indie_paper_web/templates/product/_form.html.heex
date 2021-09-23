@@ -32,6 +32,17 @@
             </p>
         </div>
 
+        <div class="input-container">
+            <%= label f, :assets, class: "input-label"  %>
+            <%= text_input f, :assets, class: "form-input"  %>
+            <%= for asset <- @book.assets do %>
+                <p data-test="book-asset"><%= asset.title %></p>
+                <% end %>
+            <p class="input-error">
+                <%= error_tag f, :assets %>
+            </p>
+        </div>
+
         <%= submit "Save Product", class: "primary-button" %>
     </div>
 <% end %>

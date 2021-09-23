@@ -5,6 +5,5 @@
             <button><%= product.title %></button>
         <% end %>
         <button>Buy Now</button>
-
     </div>
 </section>

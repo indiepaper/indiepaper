@@ -14,13 +14,14 @@ defmodule IndiePaper.Factory do
       author: build(:author),
       status: :published,
       products: [build(:product), build(:product)],
-      assets: [build(:asset)]
+      assets: [build(:asset, title: "Read online")]
     }
   end
 
   def asset_factory do
     %IndiePaper.Assets.Asset{
-      type: :readable
+      type: :readable,
+      title: sequence("Asset Title")
     }
   end
 
