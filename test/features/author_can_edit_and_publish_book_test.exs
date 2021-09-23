@@ -2,7 +2,7 @@ defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
   use IndiePaperWeb.FeatureCase, async: true
 
   alias IndiePaper.Products
-  alias IndiePaperWeb.Pages.{DraftPage, LoginPage, DashboardPage, BookPage}
+  alias IndiePaperWeb.Pages.{DraftPage, LoginPage, DashboardPage, BookPage, ProductPage}
 
   test "author can edit and publish draft", %{session: session} do
     book = insert(:book, status: :pending_publication)
@@ -38,8 +38,10 @@ defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
     |> BookPage.Show.has_book_title?(book.title)
   end
 
-  test "publishing creates read online product at first time", %{session: session} do
-    book = insert(:book, status: :pending_publication)
+  test "publishing creates read online product with Read online asset at first time", %{
+    session: session
+  } do
+    book = insert(:book, status: :pending_publication, assets: [])
 
     session
     |> DashboardPage.visit_page()
@@ -53,5 +55,9 @@ defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
     |> DashboardPage.has_product_title?(
       Products.default_read_online_product_changeset(book).changes.title
     )
+    |> DashboardPage.click_edit_product(
+      Products.default_read_online_product_changeset(book).changes.title
+    )
+    |> ProductPage.click_read_online_asset()
   end
 end
