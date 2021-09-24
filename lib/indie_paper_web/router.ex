@@ -84,7 +84,10 @@ defmodule IndiePaperWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    resources "/books", BookController, only: [:show]
+
+    resources "/books", BookController, only: [:show] do
+      resources "/checkout", CheckoutController, only: [:create]
+    end
   end
 
   # Other scopes may use custom stacks.
