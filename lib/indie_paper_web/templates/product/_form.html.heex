@@ -39,7 +39,7 @@
             <%= hidden_input f, :assets, class: "form-input"  %>
             <div class="mt-2">
                 <%= for asset <- @book.assets do %>
-                    <button @click.prevent="" class="text-sm bg-transparent border-dark-border secondary-button" data-test="book-asset">
+                    <button @click.prevent="" class="text-sm secondary-button hover:border-dark-border" data-test="book-asset">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>

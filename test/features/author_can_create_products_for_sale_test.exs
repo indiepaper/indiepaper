@@ -3,6 +3,7 @@ defmodule IndiePaperWeb.Features.AuthorCanCreateProductsForSaleTest do
 
   alias IndiePaperWeb.Pages.{LoginPage, DashboardPage, BookPage, ProductPage}
 
+  @tag :skip
   test "author can create and edit products for sale", %{session: session} do
     book = insert(:book, products: [])
     product_params = params_for(:product)
