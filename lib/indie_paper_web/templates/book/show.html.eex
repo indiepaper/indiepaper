@@ -1,9 +1,6 @@
 <section class="bg-background">
     <div class="container-box page-box">
         <h1 data-test="title"><%= @book.title %></h1>
-        <%= for product <- @book.products do %>
-            <button><%= product.title %></button>
-        <% end %>
         <button>Buy Now</button>
     </div>
 </section>
