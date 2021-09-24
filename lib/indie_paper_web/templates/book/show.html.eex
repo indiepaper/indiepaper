@@ -1,7 +1,7 @@
 <section class="bg-background">
     <div class="py-24 md:py-32 container-box page-box">
         <div class="mx-auto max-w-4xl">
-            <div class="flex flex-col items-start px-8">
+            <div class="flex flex-col items-start md:px-8">
                 <h1 class="text-4xl font-black text-gray-800 md:text-6xl" data-test="title"><%= @book.title %></h1>
                 <div class="mt-8 max-w-xl text-gray-600 secondary-text">
                     <p class=""><%= @book.short_description %></p>
@@ -15,7 +15,7 @@
                     </button>
                 <% end %>
             </div>
-            <div class="py-12 px-8 mt-16 w-full text-gray-700 border-t md:mt-20 md:text-gray-600 secondary-text prose-sm border-primary-border md:prose">
+            <div class="py-12 mt-16 w-full text-gray-700 border-t md:px-8 md:mt-20 md:text-gray-600 secondary-text prose-sm border-primary-border md:prose">
                 <%= raw(@book.long_description_html) %>
             </div>
         </div>
