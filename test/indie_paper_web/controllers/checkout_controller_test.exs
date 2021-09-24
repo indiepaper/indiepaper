@@ -4,7 +4,6 @@ defmodule IndiePaperWeb.CheckoutControllerTest do
   describe "create/2" do
     test "redirects to stripe checkout page", %{conn: conn} do
       book = insert(:book)
-      reader = insert(:author)
 
       response =
         conn

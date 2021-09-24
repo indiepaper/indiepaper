@@ -48,4 +48,39 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
       {:error, _} -> {:error, "error creating Stripe Account link"}
     end
   end
+
+  def get_checkout_session(
+        item_title: item_title,
+        item_amount: item_amount,
+        stripe_connect_id: stripe_connect_id
+      ) do
+    case Stripe.Session.create(%{
+           payment_method_types: ["card"],
+           line_items: [
+             %{
+               name: item_title,
+               amount: item_amount,
+               currency: "usd",
+               quantity: 1
+             }
+           ],
+           payment_intent_data: %{
+             application_fee_amount: 123,
+             on_behalf_of: stripe_connect_id,
+             transfer_data: %{
+               destination: stripe_connect_id
+             }
+           },
+           mode: "payment",
+           success_url: "#{Endpoint.url()}/dashboard/orders",
+           cancel_url: "#{Endpoint.url()}/dashboard"
+         }) do
+      {:ok, stripe_checkout_session} ->
+        {:ok, stripe_checkout_session}
+
+      {:error, err} ->
+        IO.inspect(err)
+        {:error, "error creating Stripe Account link"}
+    end
+  end
 end

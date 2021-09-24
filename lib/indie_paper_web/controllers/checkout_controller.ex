@@ -6,6 +6,7 @@ defmodule IndiePaperWeb.CheckoutController do
   def create(conn, %{"book_id" => book_id}) do
     book = Books.get_book!(book_id)
     {:ok, checkout_sesion_url} = PaymentHandler.get_checkout_session_url(book)
+
     redirect(conn, external: checkout_sesion_url)
   end
 end

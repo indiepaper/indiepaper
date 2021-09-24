@@ -25,4 +25,14 @@ defmodule IndiePaper.PaymentHandlerTest do
       assert updated_author.is_payment_connected
     end
   end
+
+  describe "get_checkout_session_url/1" do
+    test "returns the stripe checkout session url" do
+      book = insert(:book)
+
+      {:ok, checkout_session_url} = PaymentHandler.get_checkout_session_url(book)
+
+      assert checkout_session_url == nil
+    end
+  end
 end

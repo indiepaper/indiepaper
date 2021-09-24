@@ -61,4 +61,14 @@ defmodule IndiePaper.Books do
     book
     |> Book.status_changeset(%{status: :published})
   end
+
+  def get_read_online_product(book) do
+    book_with_products = book |> with_assoc(:products)
+    book_with_products.products |> Enum.at(0)
+  end
+
+  def get_author(book) do
+    book_with_author = book |> with_assoc(:author)
+    book_with_author.author
+  end
 end

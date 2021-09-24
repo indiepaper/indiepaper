@@ -1,5 +1,5 @@
 defmodule IndiePaper.PaymentHandler do
-  alias IndiePaper.Authors
+  alias IndiePaper.{Authors, Books, Products}
   alias IndiePaper.PaymentHandler.StripeHandler
 
   def get_stripe_connect_url(%Authors.Author{stripe_connect_id: nil} = author, country_code) do
@@ -19,5 +19,19 @@ defmodule IndiePaper.PaymentHandler do
   def set_payment_connected(stripe_connect_id) do
     author = Authors.get_by_stripe_connect_id!(stripe_connect_id)
     Authors.set_payment_connected(author)
+  end
+
+  def get_checkout_session_url(book) do
+    read_online_product = Books.get_read_online_product(book)
+    author = Books.get_author(book)
+
+    {:ok, stripe_checkout_session} =
+      StripeHandler.get_checkout_session(
+        item_title: "#{book.title} - #{read_online_product.title}",
+        item_amount: read_online_product.price.amount,
+        stripe_connect_id: author.stripe_connect_id
+      )
+
+    {:ok, stripe_checkout_session.url}
   end
 end
