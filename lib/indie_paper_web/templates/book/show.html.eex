@@ -6,9 +6,15 @@
                 <div class="mt-8 max-w-xl">
                     <p class=""><%= @book.short_description %></p>
                 </div>
-                <button class="py-3 px-6 mt-8 font-black rounded-lg border-none shadow-sm md:mt-12 border-dark-border primary-button">Buy Now</button>
+                <button class="flex flex-row justify-center items-center py-4 px-12 mt-8 space-x-2 rounded-lg border-none shadow-sm md:mt-12 border-dark-border primary-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    <p class="font-black">Buy Now</p>
+                </button>
             </div>
             <div class="py-12 px-8 mt-16 w-full text-gray-700 border-t md:mt-20 md:text-gray-600 prose-sm border-primary-border md:prose">
+
                 <%= raw(@book.long_description_html) %>
             </div>
         </div>
