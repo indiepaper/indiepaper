@@ -3,10 +3,13 @@ defmodule IndiePaper.ProductsTest do
 
   alias IndiePaper.Products
 
-  describe "default_read_online_product_changeset/1" do
+  describe "default_read_online_product_changeset/2" do
     test "creates default product" do
       book = insert(:book)
-      {:ok, product} = Products.default_read_online_product_changeset(book) |> Repo.insert()
+      asset = insert(:asset)
+
+      {:ok, product} =
+        Products.default_read_online_product_changeset(book, asset) |> Repo.insert()
 
       assert product.title == "Read online"
       assert product.book_id == book.id
