@@ -1,6 +1,16 @@
 <section class="bg-background">
     <div class="container-box page-box">
-        <h1 data-test="title"><%= @book.title %></h1>
-        <button>Buy Now</button>
+        <div class="mx-auto max-w-4xl">
+            <div class="flex flex-col items-start px-8">
+                <h1 class="text-4xl font-black text-gray-800 md:text-6xl" data-test="title"><%= @book.title %></h1>
+                <div class="mt-8 max-w-xl">
+                    <p class=""><%= @book.short_description %></p>
+                </div>
+                <button class="py-3 px-6 mt-8 font-black rounded-lg border-none border-dark-border primary-button">Buy Now</button>
+            </div>
+            <div class="py-12 px-8 mt-20 w-full text-gray-600 border-t prose-sm border-primary-border md:prose">
+                <%= raw(@book.long_description_html) %>
+            </div>
+        </div>
     </div>
 </section>
