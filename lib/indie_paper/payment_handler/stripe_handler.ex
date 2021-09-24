@@ -66,7 +66,6 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
            ],
            payment_intent_data: %{
              application_fee_amount: 123,
-             on_behalf_of: stripe_connect_id,
              transfer_data: %{
                destination: stripe_connect_id
              }
