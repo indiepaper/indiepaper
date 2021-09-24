@@ -16,6 +16,11 @@ defmodule IndiePaperWeb.Pages.BookPage.Show do
     |> click(button("Buy Now"))
   end
 
+  def has_buy_button?(session) do
+    session
+    |> assert_has(button("Buy Now"))
+  end
+
   def has_book_title?(session, title) do
     session
     |> assert_has(data("test", "title", text: title))
