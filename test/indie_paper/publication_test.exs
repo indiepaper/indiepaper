@@ -24,11 +24,13 @@ defmodule IndiePaper.PublicationTest do
       found_book = Books.get_book!(book.id)
       {:ok, published_book} = Publication.publish_book(found_book)
 
-      book_with_products = published_book |> Books.with_assoc(:products)
+      book_with_products = published_book |> Books.with_assoc(products: :assets)
 
       product = Enum.at(book_with_products.products, 0)
+      asset = Enum.at(product.assets, 0)
 
       assert product.title == "Read online"
+      assert asset.title == "Read online"
     end
   end
 end

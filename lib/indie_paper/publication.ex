@@ -29,17 +29,17 @@ defmodule IndiePaper.Publication do
         Assets.readable_asset_changeset(book)
         |> repo.insert()
 
-      _ ->
-        {:ok, nil}
+      asset ->
+        {:ok, asset}
     end
   end
 
   def maybe_insert_default_product(
         repo,
-        _previous_data,
+        %{default_readable_asset: readable_asset},
         %Books.Book{status: :pending_publication} = book
       ) do
-    Products.default_read_online_product_changeset(book)
+    Products.default_read_online_product_changeset(book, readable_asset)
     |> repo.insert()
   end
 

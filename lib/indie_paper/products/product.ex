@@ -10,6 +10,7 @@ defmodule IndiePaper.Products.Product do
     field :price, Money.Ecto.Amount.Type
 
     belongs_to :book, IndiePaper.Books.Book
+    many_to_many :assets, IndiePaper.Assets.Asset, join_through: "product_assets"
 
     timestamps()
   end
@@ -20,6 +21,11 @@ defmodule IndiePaper.Products.Product do
     |> cast(attrs, [:title, :description, :price])
     |> validate_required([:title, :description, :price])
     |> validate_money(:price)
+  end
+
+  def asset_changeset(product, asset) do
+    product
+    |> Ecto.Changeset.put_assoc(:assets, [asset])
   end
 
   defp validate_money(changeset, field) do
