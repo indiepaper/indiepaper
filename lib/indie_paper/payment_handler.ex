@@ -1,5 +1,5 @@
 defmodule IndiePaper.PaymentHandler do
-  alias IndiePaper.{Authors, Books, Products}
+  alias IndiePaper.{Authors, Books}
   alias IndiePaper.PaymentHandler.StripeHandler
 
   def get_stripe_connect_url(%Authors.Author{stripe_connect_id: nil} = author, country_code) do

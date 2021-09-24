@@ -56,7 +56,8 @@ if config_env() == :prod do
   config :stripity_stripe,
     api_version: "2020-08-27",
     api_key: System.get_env("STRIPE_API_SECRET"),
-    connect_webhook_signing_secret: System.get_env("STRIPE_CONNECT_WEBHOOK_SIGNING_SECRET")
+    connect_webhook_signing_secret: System.get_env("STRIPE_CONNECT_WEBHOOK_SIGNING_SECRET"),
+    account_webhook_signing_secret: System.get_env("STRIPE_ACCOUNT_WEBHOOK_SIGNING_SECRET")
 
   # Setup AppSignal in production
   config :appsignal, :config,
