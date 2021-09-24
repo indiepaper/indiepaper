@@ -38,6 +38,7 @@ defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
     |> BookPage.Show.has_book_title?(book.title)
   end
 
+  @tag :skip
   test "publishing creates read online product with Read online asset at first time", %{
     session: session
   } do
