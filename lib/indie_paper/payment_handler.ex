@@ -31,7 +31,11 @@ defmodule IndiePaper.PaymentHandler do
              item_amount: read_online_product.price.amount,
              stripe_connect_id: author.stripe_connect_id
            ),
-         {:ok, _order} <- Orders.create_order(customer, book) do
+         {:ok, _order} <-
+           Orders.create_order_with_customer(customer, %{
+             book_id: book.id,
+             products: book.products
+           }) do
       {:ok, stripe_checkout_session.url}
     end
   end

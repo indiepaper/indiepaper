@@ -16,13 +16,15 @@ defmodule IndiePaper.OrdersTest do
     end
   end
 
-  describe "create_order/2" do
+  describe "create_order_with_customer/2" do
     test "creates order and associates to customer" do
       product = insert(:product)
       book = insert(:book, products: [product])
       customer = insert(:author)
 
-      {:ok, order} = Orders.create_order(customer, book)
+      {:ok, order} =
+        Orders.create_order_with_customer(customer, %{book_id: book.id, products: book.products})
+
       order_with_line_items = Orders.with_assoc(order, :line_items)
       line_item = Enum.at(order_with_line_items.line_items, 0)
 

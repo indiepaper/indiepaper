@@ -35,5 +35,13 @@ defmodule IndiePaper.PaymentHandlerTest do
 
       assert checkout_session_url == nil
     end
+
+    test "returns the stripe checkout session url even when customer is nil" do
+      book = insert(:book)
+
+      {:ok, checkout_session_url} = PaymentHandler.get_checkout_session_url(nil, book)
+
+      assert checkout_session_url == nil
+    end
   end
 end
