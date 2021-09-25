@@ -19,8 +19,13 @@ defmodule IndiePaper.Orders.Order do
   @doc false
   def changeset(order, attrs) do
     order
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:book_id])
+    |> validate_required([:book_id])
+  end
+
+  def line_items_changeset(order, line_items) do
+    order
+    |> Ecto.Changeset.put_assoc(:line_items, line_items)
   end
 
   def scope(query, %IndiePaper.Authors.Author{id: customer_id}, _) do

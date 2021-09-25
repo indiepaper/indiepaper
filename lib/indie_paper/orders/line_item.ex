@@ -15,7 +15,7 @@ defmodule IndiePaper.Orders.LineItem do
   @doc false
   def changeset(line_item, attrs) do
     line_item
-    |> cast(attrs, [:amount])
-    |> validate_required([:amount])
+    |> cast(attrs, [:amount, :product_id])
+    |> validate_required([:amount, :product_id])
   end
 end
