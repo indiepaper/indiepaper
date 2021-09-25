@@ -24,6 +24,7 @@ defmodule IndiePaper.OrdersTest do
 
       {:ok, order} =
         Orders.create_order_with_customer(customer, %{
+          amount: 340,
           book_id: book.id,
           products: book.products,
           stripe_checkout_session_id: "checkout_session_id"
@@ -37,6 +38,7 @@ defmodule IndiePaper.OrdersTest do
       assert order.book_id == book.id
       assert line_item.product_id == product.id
       assert line_item.amount == product.price
+      assert order.amount.amount == 340
     end
   end
 

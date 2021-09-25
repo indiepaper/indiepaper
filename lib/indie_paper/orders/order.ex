@@ -9,6 +9,8 @@ defmodule IndiePaper.Orders.Order do
   @foreign_key_type :binary_id
   schema "orders" do
     field :stripe_checkout_session_id, :string, nil: false
+    field :amount, Money.Ecto.Amount.Type
+
     belongs_to :book, IndiePaper.Books.Book
     belongs_to :customer, IndiePaper.Authors.Author
 
@@ -28,8 +30,8 @@ defmodule IndiePaper.Orders.Order do
   @doc false
   def changeset(order, attrs) do
     order
-    |> cast(attrs, [:book_id, :stripe_checkout_session_id, :status])
-    |> validate_required([:book_id, :stripe_checkout_session_id])
+    |> cast(attrs, [:book_id, :stripe_checkout_session_id, :status, :amount])
+    |> validate_required([:book_id, :stripe_checkout_session_id, :amount])
   end
 
   def line_items_changeset(order, line_items) do

@@ -13,6 +13,8 @@
                             <% else %>
                                 <span data-test="order-status" class="py-1 px-2 text-xs text-warm-gray-600 bg-warm-gray-100 rounded-lg border border-warm-gray-200"><%= Phoenix.Naming.humanize(order.status) %></span>
                             <% end %>
+
+                            <p data-test="product-price"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(order.amount) %></p>
                         </div>
                         <div class="p-6">
                             <%= link to: Routes.book_path(@conn, :show, order.book) do %>
@@ -31,7 +33,6 @@
                                             <p class="text-sm secondary-text"><%= line_item.product.description %></p>
                                         </div>
                                         <div class="flex flex-row items-center space-x-1.5">
-                                            <p data-test="product-price"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(line_item.amount) %></p>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                                             </svg>

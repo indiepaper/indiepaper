@@ -1,6 +1,6 @@
 defmodule IndiePaper.PaymentHandler do
   alias IndiePaper.{Authors, Books, Orders}
-  alias IndiePaper.PaymentHandler.StripeHandler
+  alias IndiePaper.PaymentHandler.{StripeHandler, MoneyHandler}
 
   def get_stripe_connect_url(%Authors.Author{stripe_connect_id: nil} = author, country_code) do
     with {:ok, stripe_connect_id} <- StripeHandler.create_connect_account(country_code),
@@ -26,6 +26,11 @@ defmodule IndiePaper.PaymentHandler do
     read_online_product = Books.get_read_online_product(book)
     author = Books.get_author(book)
 
+    order_amount =
+      Enum.reduce(book_with_products.products, Money.new(0), fn product, acc ->
+        MoneyHandler.add(product.price, acc)
+      end)
+
     with {:ok, stripe_checkout_session} <-
            StripeHandler.get_checkout_session(
              item_title: "#{book.title} - #{read_online_product.title}",
@@ -34,6 +39,7 @@ defmodule IndiePaper.PaymentHandler do
            ),
          {:ok, _order} <-
            Orders.create_order_with_customer(customer, %{
+             amount: order_amount,
              book_id: book.id,
              stripe_checkout_session_id: stripe_checkout_session.id,
              products: book_with_products.products
