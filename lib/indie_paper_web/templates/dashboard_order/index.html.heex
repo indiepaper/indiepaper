@@ -8,7 +8,7 @@
                 <%= for order <- @orders do %>
                     <div class="items-stretch p-0 primary-card">
                         <div class="flex flex-row justify-between items-center py-3 px-6 border-b border-secondary-border">
-                            <span class="py-1 px-2 text-xs text-orange-700 bg-orange-100 rounded-lg">paid</span>
+                            <span data-test="order-status" class="py-1 px-2 text-xs text-orange-700 bg-orange-100 rounded-lg"><%= Phoenix.Naming.humanize(order.status) %></span>
                             <%= link to: Routes.book_path(@conn, :show, order.book), class: "secondary-link" do %>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />

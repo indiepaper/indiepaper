@@ -20,5 +20,6 @@ defmodule IndiePaperWeb.Feature.ReaderCanVisitAndBuyBookTest do
     session
     |> DashboardOrderPage.visit_page()
     |> DashboardOrderPage.has_book_title?(book.title)
+    |> DashboardOrderPage.has_order_status?("Payment pending")
   end
 end

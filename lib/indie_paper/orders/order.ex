@@ -13,6 +13,14 @@ defmodule IndiePaper.Orders.Order do
 
     has_many :line_items, IndiePaper.Orders.LineItem
 
+    field :status, Ecto.Enum,
+      values: [
+        :payment_pending,
+        :payment_completed
+      ],
+      default: :payment_pending,
+      nil: false
+
     timestamps()
   end
 

@@ -35,7 +35,8 @@ defmodule IndiePaper.Factory do
     %IndiePaper.Orders.Order{
       line_items: [build(:line_item), build(:line_item)],
       book: build(:book),
-      customer: build(:author)
+      customer: build(:author),
+      status: :payment_pending
     }
   end
 
