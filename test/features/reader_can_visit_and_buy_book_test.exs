@@ -30,5 +30,6 @@ defmodule IndiePaperWeb.Feature.ReaderCanVisitAndBuyBookTest do
     |> DashboardOrderPage.visit_page()
     |> LoginPage.login(email: order.customer.email, password: order.customer.password)
     |> DashboardOrderPage.click_read_online()
+    |> BookPage.Read.has_book_title?(order.book.title)
   end
 end

@@ -1,3 +1,12 @@
+defmodule IndiePaperWeb.Pages.BookPage.Read do
+  use IndiePaperWeb.PageHelpers
+
+  def has_book_title?(session, title) do
+    session
+    |> assert_has(data("test", "book-title", text: title))
+  end
+end
+
 defmodule IndiePaperWeb.Pages.BookPage.Show do
   use IndiePaperWeb.PageHelpers
 
