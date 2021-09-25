@@ -1,0 +1,6 @@
+<%= for order <- @orders do %>
+    <h1 data-test="order-book-title"><%= order.book.title %></h1>
+    <%= for line_item <- order.line_items do %>
+        <p data-test="order-product-title"><%= line_item.product.title %></p>
+    <% end %>
+<% end %>

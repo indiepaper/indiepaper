@@ -27,8 +27,6 @@ defmodule IndiePaper.Factory do
 
   def line_item_factory do
     %IndiePaper.Orders.LineItem{
-      product: build(:product),
-      order: build(:order),
       amount: Money.new(500)
     }
   end

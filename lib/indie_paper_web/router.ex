@@ -76,7 +76,10 @@ defmodule IndiePaperWeb.Router do
       resources "/chapters", DraftChapterController, only: [:edit, :update]
     end
 
-    resources "/dashboard", DashboardController, only: [:index]
+    resources "/dashboard", DashboardController, only: [:index] do
+    end
+
+    resources "/dashboard/orders", DashboardOrderController, only: [:index]
     resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:new, :create]
   end
 
