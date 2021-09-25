@@ -22,6 +22,7 @@ defmodule IndiePaper.PaymentHandler do
   end
 
   def get_checkout_session_url(customer, book) do
+    book_with_products = Books.with_assoc(book, :products)
     read_online_product = Books.get_read_online_product(book)
     author = Books.get_author(book)
 
@@ -34,7 +35,7 @@ defmodule IndiePaper.PaymentHandler do
          {:ok, _order} <-
            Orders.create_order_with_customer(customer, %{
              book_id: book.id,
-             products: book.products
+             products: book_with_products.products
            }) do
       {:ok, stripe_checkout_session.url}
     end
