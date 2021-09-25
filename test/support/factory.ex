@@ -25,6 +25,22 @@ defmodule IndiePaper.Factory do
     }
   end
 
+  def line_item_factory do
+    %IndiePaper.Orders.LineItem{
+      product: build(:product),
+      order: build(:order),
+      amount: Money.new(500)
+    }
+  end
+
+  def order_factory do
+    %IndiePaper.Orders.Order{
+      line_items: [build(:line_item), build(:line_item)],
+      book: build(:book),
+      customer: build(:author)
+    }
+  end
+
   def product_factory do
     %IndiePaper.Products.Product{
       title: sequence("Product Title"),
