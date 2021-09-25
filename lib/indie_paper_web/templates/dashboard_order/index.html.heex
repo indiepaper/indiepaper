@@ -8,16 +8,21 @@
                 <%= for order <- @orders do %>
                     <div class="items-stretch p-0 primary-card">
                         <div class="flex flex-row justify-between items-center py-3 px-6 border-b border-secondary-border">
-                            <span data-test="order-status" class="py-1 px-2 text-xs text-warm-gray-700 bg-warm-gray-100 rounded-lg border border-warm-gray-200"><%= Phoenix.Naming.humanize(order.status) %></span>
+                            <%= if IndiePaper.Orders.is_payment_completed?(order) do %>
+                                <span data-test="order-status" class="py-1 px-2 text-xs text-green-800 bg-green-100 rounded-lg border border-green-200"><%= Phoenix.Naming.humanize(order.status) %></span>
+                            <% else %>
+                                <span data-test="order-status" class="py-1 px-2 text-xs text-warm-gray-600 bg-warm-gray-100 rounded-lg border border-warm-gray-200"><%= Phoenix.Naming.humanize(order.status) %></span>
+                            <% end %>
                         </div>
                         <div class="p-6">
                             <%= link to: Routes.book_path(@conn, :show, order.book) do %>
-                            <h2 data-test="order-book-title" class="text-lg"><%= order.book.title %></h2>
-                            <h2 data-test="book-title" class="mt-1 text-sm secondary-text"><%= order.book.short_description %></h2>
+                                <h2 data-test="order-book-title" class="text-lg"><%= order.book.title %></h2>
+                                <h2 data-test="book-title" class="mt-1 text-sm secondary-text"><%= order.book.short_description %></h2>
                             <% end %>
                         </div>
 
-                        <div class="">
+                        <%= if IndiePaper.Orders.is_payment_completed?(order) do %>
+                        <div>
                             <div>
                                 <%= for line_item <- order.line_items do %>
                                     <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-lightest-border">
@@ -35,6 +40,7 @@
                                 <% end %>
                             </div>
                         </div>
+                        <% end %>
                     </div>
                 <% end %>
             </div>
