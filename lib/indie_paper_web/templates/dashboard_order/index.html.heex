@@ -4,3 +4,11 @@
         <p data-test="order-product-title"><%= line_item.product.title %></p>
     <% end %>
 <% end %>
+
+<section class="bg-background">
+    <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
+    <div class="container-box page-box">
+        <h1 class="page-heading">Your Orders</h1>
+        <p class="page-description">The books you have bought will show up here</p>
+    </div>
+</section>
