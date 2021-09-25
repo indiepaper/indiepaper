@@ -37,7 +37,8 @@ defmodule IndiePaper.Factory do
       book: build(:book),
       customer: build(:author),
       status: :payment_pending,
-      stripe_checkout_session_id: "checkout_session_id"
+      stripe_checkout_session_id: "checkout_session_id",
+      amount: Money.new(420)
     }
   end
 
