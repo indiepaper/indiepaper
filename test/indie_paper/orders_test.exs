@@ -23,12 +23,17 @@ defmodule IndiePaper.OrdersTest do
       customer = insert(:author)
 
       {:ok, order} =
-        Orders.create_order_with_customer(customer, %{book_id: book.id, products: book.products})
+        Orders.create_order_with_customer(customer, %{
+          book_id: book.id,
+          products: book.products,
+          stripe_checkout_session_id: "checkout_session_id"
+        })
 
       order_with_line_items = Orders.with_assoc(order, :line_items)
       line_item = Enum.at(order_with_line_items.line_items, 0)
 
       assert order.customer_id == customer.id
+      assert order.stripe_checkout_session_id == "checkout_session_id"
       assert order.book_id == book.id
       assert line_item.product_id == product.id
       assert line_item.amount == product.price

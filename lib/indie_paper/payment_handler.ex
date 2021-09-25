@@ -35,6 +35,7 @@ defmodule IndiePaper.PaymentHandler do
          {:ok, _order} <-
            Orders.create_order_with_customer(customer, %{
              book_id: book.id,
+             stripe_checkout_session_id: stripe_checkout_session.id,
              products: book_with_products.products
            }) do
       {:ok, stripe_checkout_session.url}
