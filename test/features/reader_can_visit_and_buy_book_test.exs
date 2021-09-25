@@ -22,4 +22,13 @@ defmodule IndiePaperWeb.Feature.ReaderCanVisitAndBuyBookTest do
     |> DashboardOrderPage.has_book_title?(book.title)
     |> DashboardOrderPage.has_order_status?("Payment pending")
   end
+
+  test "reader can read book if bought asset", %{session: session} do
+    order = insert(:order, line_items: [build(:line_item)])
+
+    session
+    |> DashboardOrderPage.visit_page()
+    |> LoginPage.login(email: order.customer.email, password: order.customer.password)
+    |> DashboardOrderPage.click_read_online()
+  end
 end

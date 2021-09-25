@@ -20,4 +20,9 @@ defmodule IndiePaperWeb.Pages.DashboardOrderPage do
     session
     |> assert_has(data("test", "order-product-title", text: title))
   end
+
+  def click_read_online(session) do
+    session
+    |> click(link("read-online-link"))
+  end
 end

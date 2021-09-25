@@ -27,7 +27,8 @@ defmodule IndiePaper.Factory do
 
   def line_item_factory do
     %IndiePaper.Orders.LineItem{
-      amount: Money.new(500)
+      amount: Money.new(500),
+      product: build(:product)
     }
   end
 
@@ -36,7 +37,7 @@ defmodule IndiePaper.Factory do
       line_items: [build(:line_item), build(:line_item)],
       book: build(:book),
       customer: build(:author),
-      status: :payment_pending,
+      status: :payment_completed,
       stripe_checkout_session_id: "checkout_session_id",
       amount: Money.new(420)
     }
