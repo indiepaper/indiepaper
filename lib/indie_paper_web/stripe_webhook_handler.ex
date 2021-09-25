@@ -2,7 +2,6 @@ defmodule IndiePaperWeb.StripeWebhookHandler do
   @behaviour Stripe.WebhookHandler
   @impl true
   def handle_event(%Stripe.Event{type: "checkout.session.completed"} = event) do
-    IO.inspect(event)
     {:ok, event}
   end
 

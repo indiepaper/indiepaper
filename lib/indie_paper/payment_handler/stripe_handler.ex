@@ -45,7 +45,7 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
            type: "account_onboarding"
          }) do
       {:ok, stripe_account_link} -> {:ok, stripe_account_link.url}
-      {:error, _} -> {:error, "error creating Stripe Account link"}
+      {:error, error} -> {:error, error_message(error, "error creating Stripe Account link")}
     end
   end
 
@@ -77,9 +77,12 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
       {:ok, stripe_checkout_session} ->
         {:ok, stripe_checkout_session}
 
-      {:error, err} ->
-        IO.inspect(err)
-        {:error, "error creating Stripe Account link"}
+      {:error, error} ->
+        {:error, error_message(error, "error creating Stripe Checkout Session.")}
     end
+  end
+
+  defp error_message(error, default_message) do
+    (error.user_message && error.user_message) || default_message
   end
 end

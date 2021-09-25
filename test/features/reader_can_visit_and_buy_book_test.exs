@@ -1,12 +1,15 @@
 defmodule IndiePaperWeb.Feature.ReaderCanVisitAndBuyBookTest do
   use IndiePaperWeb.FeatureCase, async: true
 
-  alias IndiePaperWeb.Pages.{BookPage}
+  alias IndiePaperWeb.Pages.{BookPage, LoginPage}
 
   test "reader can visit book page and buy book", %{session: session} do
     book = insert(:book)
+    customer = insert(:author)
 
     session
+    |> LoginPage.visit_page()
+    |> LoginPage.login(email: customer.email, password: customer.password)
     |> BookPage.Show.visit_page(book)
     |> BookPage.Show.has_buy_button?()
   end
