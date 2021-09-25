@@ -1,6 +1,7 @@
 defmodule IndiePaper.PaymentHandlerTest do
   use IndiePaper.DataCase, async: true
 
+  alias IndiePaper.Orders
   alias IndiePaper.PaymentHandler
 
   describe "get_stripe_connect_url/2" do
@@ -42,6 +43,20 @@ defmodule IndiePaper.PaymentHandlerTest do
       {:ok, checkout_session_url} = PaymentHandler.get_checkout_session_url(nil, book)
 
       assert checkout_session_url == nil
+    end
+  end
+
+  describe "set_payment_completed_order/1" do
+    test "sets the order status as payment connected" do
+      order =
+        insert(:order, status: :payment_pending, stripe_checkout_session_id: "checkout_session_id")
+
+      {:ok, order} =
+        PaymentHandler.set_payment_completed_order(
+          stripe_checkout_session_id: order.stripe_checkout_session_id
+        )
+
+      assert Orders.is_payment_completed?(order)
     end
   end
 end

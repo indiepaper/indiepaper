@@ -42,4 +42,21 @@ defmodule IndiePaper.Orders do
       change_line_item(%LineItem{}, %{amount: product.price, product_id: product.id})
     end)
   end
+
+  def update_order(order, attrs) do
+    order
+    |> Order.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def get_by_stripe_checkout_session_id!(stripe_checkout_session_id),
+    do: Repo.get_by!(Order, stripe_checkout_session_id: stripe_checkout_session_id)
+
+  def set_payment_completed(order) do
+    order
+    |> update_order(%{status: :payment_completed})
+  end
+
+  def is_payment_completed?(%Order{status: :payment_completed}), do: true
+  def is_payment_completed?(_), do: false
 end

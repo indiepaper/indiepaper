@@ -28,7 +28,7 @@ defmodule IndiePaper.Orders.Order do
   @doc false
   def changeset(order, attrs) do
     order
-    |> cast(attrs, [:book_id, :stripe_checkout_session_id])
+    |> cast(attrs, [:book_id, :stripe_checkout_session_id, :status])
     |> validate_required([:book_id, :stripe_checkout_session_id])
   end
 

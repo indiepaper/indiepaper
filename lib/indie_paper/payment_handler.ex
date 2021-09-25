@@ -41,4 +41,9 @@ defmodule IndiePaper.PaymentHandler do
       {:ok, stripe_checkout_session.url}
     end
   end
+
+  def set_payment_completed_order(stripe_checkout_session_id: stripe_checkout_session_id) do
+    Orders.get_by_stripe_checkout_session_id!(stripe_checkout_session_id)
+    |> Orders.set_payment_completed()
+  end
 end

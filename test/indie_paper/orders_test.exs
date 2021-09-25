@@ -39,4 +39,14 @@ defmodule IndiePaper.OrdersTest do
       assert line_item.amount == product.price
     end
   end
+
+  describe "update_order" do
+    test "updates order" do
+      order = insert(:order, status: :payment_pending)
+
+      {:ok, order} = Orders.update_order(order, %{status: :payment_completed})
+
+      assert order.status == :payment_completed
+    end
+  end
 end
