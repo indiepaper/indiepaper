@@ -27,7 +27,7 @@
                             <div>
                                 <div>
                                     <%= for line_item <- order.line_items do %>
-                                        <%= link to: Routes.book_live_path(@conn, IndiePaperWeb.ReadLive, order.book), id: "read-online-link" do %>
+                                        <%= link to: Routes.book_read_path(@conn, :index, order.book), id: "read-online-link" do %>
                                             <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-light-border">
                                                 <div>
                                                     <p data-test="order-product-title"><%= line_item.product.title %></p>

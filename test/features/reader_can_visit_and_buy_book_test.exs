@@ -23,7 +23,6 @@ defmodule IndiePaperWeb.Feature.ReaderCanVisitAndBuyBookTest do
     |> DashboardOrderPage.has_order_status?("Payment pending")
   end
 
-  @tag :skip
   test "reader can read book if bought asset", %{session: session} do
     order = insert(:order, line_items: [build(:line_item)])
 
