@@ -41,7 +41,14 @@ let liveSocket = new LiveSocket("/live", Socket, {
   hooks: hooks,
   dom: {
     onBeforeElUpdated(from, to) {
+      if (!window.Alpine) return;
+
+      if (from.nodeType !== 1) return;
+
+      // If the element we are updating is an Alpine component...
       if (from._x_dataStack) {
+        // Then temporarily clone it (with it's data) to the "to" element.
+        // This should simulate LiveView being aware of Alpine changes.
         window.Alpine.clone(from, to);
       }
     },
