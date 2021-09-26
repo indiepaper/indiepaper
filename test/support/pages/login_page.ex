@@ -14,4 +14,9 @@ defmodule IndiePaperWeb.Pages.LoginPage do
     |> fill_in(text_field("Password"), with: password)
     |> click(button("Log in"))
   end
+
+  def click_sign_in_with_google(session) do
+    session
+    |> click(link("Sign in with Google"))
+  end
 end
