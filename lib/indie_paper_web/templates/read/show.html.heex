@@ -2,7 +2,7 @@
     <div class="container-box page-box">
         <h1 class="page-heading" data-test="book-title"><%= @book.title %></h1>
         <%= for chapter <- @chapters do %>
-            <p data-test="book-chapter-title"><%= chapter.title %></p>
+            <%= link chapter.title, to: Routes.book_read_path(@conn, :show, @book, chapter), "data-test": "chapter-title" %>
         <% end %>
         <div x-data={"chapterRender(publishedContentJSON)"}>
             <div class="prose" x-html="renderedContentHtml">
