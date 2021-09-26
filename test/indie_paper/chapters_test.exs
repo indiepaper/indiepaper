@@ -31,11 +31,11 @@ defmodule IndiePaper.ChaptersTest do
     end
   end
 
-  describe "publish_chapters" do
+  describe "publish_chapters_query" do
     test "sets published_content_json with current_content_json" do
       draft = insert(:draft)
 
-      {:ok, _} = Chapters.publish_chapters(draft)
+      {_, nil} = Chapters.publish_chapters_query(draft) |> Repo.update_all([])
       chapters = Chapters.list_chapters(draft)
 
       Enum.each(chapters, fn chapter ->

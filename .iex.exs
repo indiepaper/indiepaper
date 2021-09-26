@@ -1,0 +1,1 @@
+alias IndiePaper.{Repo, Authors}

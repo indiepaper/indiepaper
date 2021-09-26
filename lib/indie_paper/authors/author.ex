@@ -18,6 +18,7 @@ defmodule IndiePaper.Authors.Author do
     field :stripe_connect_id, :string
 
     has_many :books, IndiePaper.Books.Book
+    has_many :orders, IndiePaper.Orders.Order, foreign_key: :customer_id
 
     timestamps()
   end

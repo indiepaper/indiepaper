@@ -57,8 +57,18 @@ defmodule IndiePaper.Books do
     |> Repo.update()
   end
 
-  def publish_book(book) do
+  def publish_book_changeset(book) do
     book
-    |> update_book_status(:published)
+    |> Book.status_changeset(%{status: :published})
+  end
+
+  def get_read_online_product(book) do
+    book_with_products = book |> with_assoc(:products)
+    book_with_products.products |> Enum.at(0)
+  end
+
+  def get_author(book) do
+    book_with_author = book |> with_assoc(:author)
+    book_with_author.author
   end
 end

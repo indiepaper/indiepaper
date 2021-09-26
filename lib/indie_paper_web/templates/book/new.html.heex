@@ -1,4 +1,5 @@
 <section class="bg-background">
+    <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
     <div class="container-box page-box">
         <h1 class="page-heading" data-test="title">Publish Draft</h1>
         <p class="page-description">Publish draft as book, fill out the details of the book.</p>
@@ -12,7 +13,7 @@
                     </div>
                 <% end %>
 
-                <div class="space-y-6 form-container">
+                <div class="form-tight-container">
                     <div class="input-container">
                         <%= label f, :title, class: "input-label"  %>
                         <%= text_input f, :title, class: "form-input"  %>

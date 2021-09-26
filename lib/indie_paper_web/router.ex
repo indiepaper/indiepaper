@@ -61,21 +61,26 @@ defmodule IndiePaperWeb.Router do
   scope "/", IndiePaperWeb do
     pipe_through [:browser, :require_authenticated_author, :account_status_payment_connected]
 
-    resources "/books", BookController, only: [:edit, :update] do
+    resources "/books", BookController, only: [] do
       resources "/publication", PublicationController, only: [:create]
+      resources "/products", ProductController, only: [:create, :edit, :update]
     end
   end
 
   scope "/", IndiePaperWeb do
     pipe_through [:browser, :require_authenticated_author]
 
-    resources "/books", BookController, only: [:new, :create]
+    resources "/books", BookController, only: [:new, :create, :edit, :update] do
+      resources "/read", ReadController, only: [:index, :show]
+    end
 
     resources "/drafts", DraftController, only: [:edit] do
       resources "/chapters", DraftChapterController, only: [:edit, :update]
     end
 
     resources "/dashboard", DashboardController, only: [:index]
+
+    resources "/dashboard/orders", DashboardOrderController, only: [:index]
     resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:new, :create]
   end
 
@@ -83,7 +88,10 @@ defmodule IndiePaperWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    resources "/books", BookController, only: [:show]
+
+    resources "/books", BookController, only: [:show] do
+      resources "/checkout", CheckoutController, only: [:create]
+    end
   end
 
   # Other scopes may use custom stacks.

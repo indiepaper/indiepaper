@@ -31,9 +31,17 @@ if config_env() == :prod do
     System.get_env("FLY_APP_NAME") ||
       raise "FLY_APP_NAME not available"
 
+  indie_paper_deploy_domain =
+    System.get_env("INDIEPAPER_DEPLOY_DOMAIN") || raise "INDIEPAPER_DEPLOY_DOMAIN not available"
+
   config :indie_paper, IndiePaperWeb.Endpoint,
     server: true,
-    url: [host: "#{app_name}.fly.dev", port: 80],
+    url: [host: indie_paper_deploy_domain, port: 443, scheme: "https"],
+    check_origin: [
+      "https://#{app_name}.fly.dev",
+      "https://#{indie_paper_deploy_domain}",
+      "https://www.#{indie_paper_deploy_domain}"
+    ],
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
@@ -43,6 +51,21 @@ if config_env() == :prod do
       port: String.to_integer(System.get_env("PORT") || "4000")
     ],
     secret_key_base: secret_key_base
+
+  # Stripe Config
+  config :stripity_stripe,
+    api_version: "2020-08-27",
+    api_key: System.get_env("STRIPE_API_SECRET"),
+    connect_webhook_signing_secret: System.get_env("STRIPE_CONNECT_WEBHOOK_SIGNING_SECRET"),
+    account_webhook_signing_secret: System.get_env("STRIPE_ACCOUNT_WEBHOOK_SIGNING_SECRET")
+
+  # Setup AppSignal in production
+  config :appsignal, :config,
+    otp_app: :indie_paper,
+    name: "IndiePaper",
+    push_api_key: System.get_env("APPSIGNAL_PUSH_API_KEY"),
+    env: System.get_env("INDIEPAPER_DEPLOY_ENV"),
+    active: true
 
   # ## Using releases
   #
@@ -71,4 +94,5 @@ if config_env() == :prod do
   #     config :swoosh, :api_client, Swoosh.ApiClient.Hackney
   #
   # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
+  #
 end

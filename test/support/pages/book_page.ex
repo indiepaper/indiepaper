@@ -1,5 +1,39 @@
+defmodule IndiePaperWeb.Pages.BookPage.Read do
+  use IndiePaperWeb.PageHelpers
+
+  def has_book_title?(session, title) do
+    session
+    |> assert_has(data("test", "book-title", text: title))
+  end
+
+  def has_chapter_title?(session, title) do
+    session
+    |> assert_has(data("test", "book-chapter-title", text: title))
+  end
+end
+
 defmodule IndiePaperWeb.Pages.BookPage.Show do
   use IndiePaperWeb.PageHelpers
+
+  def visit_page(session, book) do
+    session
+    |> visit(Routes.book_path(@endpoint, :show, book))
+  end
+
+  def select_product(session, product_title) do
+    session
+    |> click(button(product_title))
+  end
+
+  def click_buy_button(session) do
+    session
+    |> click(button("Buy Now"))
+  end
+
+  def has_buy_button?(session) do
+    session
+    |> assert_has(button("Buy Now"))
+  end
 
   def has_book_title?(session, title) do
     session
@@ -22,9 +56,9 @@ defmodule IndiePaperWeb.Pages.BookPage.Edit do
     |> fill_in(css("[contenteditable='true']"), with: attrs[:long_description_html])
   end
 
-  def click_publish(session) do
+  def click_update_listing(session) do
     session
-    |> click(button("Publish Book"))
+    |> click(button("Update Listing"))
   end
 end
 

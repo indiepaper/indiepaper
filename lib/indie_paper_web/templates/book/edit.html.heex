@@ -1,4 +1,5 @@
 <section class="bg-background">
+    <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
     <div class="container-box page-box">
         <h1 class="page-heading" data-test="title">Edit Book Listing</h1>
         <p class="page-description">Edit the listing of the book</p>
@@ -30,7 +31,7 @@
 
                     <div class="input-container" x-data={"bookLongDescriptionHtmlEditor()"}>
                         <%= label f, :long_description_html, "Long description",  class: "input-label" %>
-                        <%= textarea f, :long_description_html, class: "form-input hidden", "x-model": "longDescriptionHtml", "x-ref": "longDescriptionHtmlReference"  %>
+                        <%= hidden_input f, :long_description_html, class: "form-input", "x-model": "longDescriptionHtml", "x-ref": "longDescriptionHtmlReference"  %>
                         <div class="bg-white rounded-lg border border-primary-border" >
                             <div class="flex flex-col items-stretch" >
                                 <div class="flex flex-row items-center py-4 px-6 space-x-4 text-gray-600 border-b hover:text-gray-800 border-primary-border">
@@ -66,7 +67,7 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0H24V24H0z"/><path d="M22 8l-.002 2-2.505 2.883c1.59.435 2.757 1.89 2.757 3.617 0 2.071-1.679 3.75-3.75 3.75-1.826 0-3.347-1.305-3.682-3.033l1.964-.382c.156.806.866 1.415 1.718 1.415.966 0 1.75-.784 1.75-1.75s-.784-1.75-1.75-1.75c-.286 0-.556.069-.794.19l-1.307-1.547L19.35 10H15V8h7zM4 4v7h7V4h2v16h-2v-7H4v7H2V4h2z"/></svg>
                                     </button>
                                 </div>
-                                <div class="py-2 px-6 prose min-h-[360px]" x-ref="editorReference"></div>
+                                <div class="py-4 px-6 prose min-h-[360px]" x-ref="editorReference"></div>
                             </div>
                         </div>
                         <p class="input-error">
@@ -74,7 +75,7 @@
                         </p>
                     </div>
 
-                    <%= submit "Publish Book", class: "primary-button" %>
+                    <%= submit "Update Listing", class: "primary-button" %>
                 </div>
             <% end %>
         </div>

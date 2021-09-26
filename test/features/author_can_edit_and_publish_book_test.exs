@@ -1,7 +1,8 @@
 defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
   use IndiePaperWeb.FeatureCase, async: true
 
-  alias IndiePaperWeb.Pages.{DraftPage, LoginPage, DashboardPage, BookPage}
+  alias IndiePaper.Products
+  alias IndiePaperWeb.Pages.{DraftPage, LoginPage, DashboardPage, BookPage, ProductPage}
 
   test "author can edit and publish draft", %{session: session} do
     book = insert(:book, status: :pending_publication)
@@ -22,7 +23,7 @@ defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
     |> DashboardPage.visit_page()
     |> DashboardPage.click_update_listing()
     |> BookPage.Edit.fill_form(book_params)
-    |> BookPage.Edit.click_publish()
+    |> BookPage.Edit.click_update_listing()
     |> BookPage.Show.has_book_title?(book_params[:title])
   end
 
@@ -35,5 +36,30 @@ defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
     |> DashboardPage.click_edit_draft()
     |> DraftPage.Edit.click_publish()
     |> BookPage.Show.has_book_title?(book.title)
+  end
+
+  @tag :skip
+  test "publishing creates read online product with Read online asset at first time", %{
+    session: session
+  } do
+    book = insert(:book, status: :pending_publication, assets: [])
+    asset = insert(:asset)
+
+    session
+    |> DashboardPage.visit_page()
+    |> LoginPage.login(email: book.author.email, password: book.author.password)
+    |> DashboardPage.click_edit_draft()
+    |> DraftPage.Edit.click_publish()
+    |> BookPage.Show.select_product(
+      Products.default_read_online_product_changeset(book, asset).changes.title
+    )
+    |> DashboardPage.visit_page()
+    |> DashboardPage.has_product_title?(
+      Products.default_read_online_product_changeset(book, asset).changes.title
+    )
+    |> DashboardPage.click_edit_product(
+      Products.default_read_online_product_changeset(book, asset).changes.title
+    )
+    |> ProductPage.click_read_online_asset()
   end
 end

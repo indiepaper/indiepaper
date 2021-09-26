@@ -12,7 +12,43 @@ defmodule IndiePaper.Factory do
         "<h3>Book Description Html</h3><p>This is the description of the description</p>",
       draft: build(:draft),
       author: build(:author),
-      status: :published
+      status: :published,
+      products: [build(:product), build(:product)],
+      assets: [build(:asset, title: "Read online")]
+    }
+  end
+
+  def asset_factory do
+    %IndiePaper.Assets.Asset{
+      type: :readable,
+      title: sequence("Asset Title")
+    }
+  end
+
+  def line_item_factory do
+    %IndiePaper.Orders.LineItem{
+      amount: Money.new(500),
+      product: build(:product)
+    }
+  end
+
+  def order_factory do
+    %IndiePaper.Orders.Order{
+      line_items: [build(:line_item), build(:line_item)],
+      book: build(:book),
+      customer: build(:author),
+      status: :payment_completed,
+      stripe_checkout_session_id: "checkout_session_id",
+      amount: Money.new(420)
+    }
+  end
+
+  def product_factory do
+    %IndiePaper.Products.Product{
+      title: sequence("Product Title"),
+      description: sequence("Short description about Product"),
+      price: Money.new(400),
+      assets: [build(:asset, title: "Read online")]
     }
   end
 
@@ -26,6 +62,17 @@ defmodule IndiePaper.Factory do
     %IndiePaper.Chapters.Chapter{
       title: sequence(:title, &"Chapter Title #{&1}", start_at: 0),
       chapter_index: sequence(:chapter_index, fn num -> num end, start_at: 0),
+      published_content_json:
+        sequence(
+          :published_content_json,
+          fn num ->
+            Chapters.placeholder_content_json(
+              "Published Chapter Title #{num}",
+              "PUblished Long Content"
+            )
+          end,
+          start_at: 0
+        ),
       content_json:
         sequence(
           :content_json,

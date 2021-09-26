@@ -570,4 +570,14 @@ defmodule IndiePaper.AuthorsTest do
       refute Authors.is_payment_connected?(author_without_payment)
     end
   end
+
+  describe "set_stripe_connect_id/2" do
+    test "sets stripe connect id for author" do
+      author = insert(:author, stripe_connect_id: nil)
+
+      {:ok, connected_author} = Authors.set_stripe_connect_id(author, "connect_id")
+
+      assert connected_author.stripe_connect_id == "connect_id"
+    end
+  end
 end

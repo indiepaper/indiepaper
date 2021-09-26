@@ -68,13 +68,33 @@ defmodule IndiePaper.BooksTest do
     end
   end
 
-  describe "publish_book/1" do
-    test "sets status of book as published" do
+  describe "publish_book_changeset/1" do
+    test "returns changeset sets status of book as published" do
       book = insert(:book, status: :pending_publication)
 
-      {:ok, published_book} = Books.publish_book(book)
+      {:ok, published_book} = Books.publish_book_changeset(book) |> Repo.update()
 
       assert published_book.status == :published
+    end
+  end
+
+  describe "get_read_online_product/1" do
+    test "gets the one read online product each book has" do
+      product = insert(:product, title: "Read online")
+      book = insert(:book, products: [product])
+      product_from_book = Books.get_read_online_product(book)
+
+      assert product_from_book.title == "Read online"
+    end
+  end
+
+  describe "get_author/1" do
+    test "returns the current author of the book" do
+      book = insert(:book)
+
+      author = Books.get_author(book)
+
+      assert author.id == book.author.id
     end
   end
 end

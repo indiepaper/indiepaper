@@ -17,11 +17,19 @@
   }
 
   .page-description {
-    @apply text-secondary-text font-normal mt-1;
+    @apply secondary-text mt-1;
+  }
+
+  .secondary-text {
+    @apply text-secondary-text font-normal;
   }
 
   .form-container {
-    @apply flex flex-col space-y-6 items-start;
+    @apply flex flex-col space-y-8 items-start;
+  }
+
+  .form-tight-container {
+    @apply form-container !space-y-6;
   }
 
   .input-container {
@@ -36,12 +44,16 @@
     @apply mb-1;
   }
 
+  .input-label-info {
+    @apply -mt-1 mb-1 secondary-text text-sm;
+  }
+
   .input-error {
     @apply text-sm text-primary-error block mt-1;
   }
 
   .base-button {
-    @apply px-4 py-2 rounded-lg inline-flex flex-row items-center justify-center space-x-1.5;
+    @apply px-4 py-2 rounded-lg inline-flex flex-row items-center justify-center space-x-1.5 font-medium;
   }
 
   .primary-button {
@@ -53,7 +65,7 @@
   }
 
   .secondary-button {
-    @apply bg-white base-button border rounded-lg border-primary-border shadow-sm hover:border-warm-gray-600 transition;
+    @apply bg-white base-button border rounded-lg border-primary-border shadow-sm hover:border-darker-border transition;
   }
 
   .accent-button {
@@ -73,11 +85,11 @@
   }
 
   .base-link {
-    @apply flex flex-row items-center space-x-1.5 text-gray-600 hover:text-gray-800 border-b-2 pb-0.5 border-transparent hover:border-gray-600 focus:border-gray-600 transition;
+    @apply flex flex-row items-center space-x-1.5 text-gray-600 hover:text-gray-900 transition font-medium;
   }
 
   .primary-link {
-    @apply base-link;
+    @apply base-link text-gray-700;
   }
 
   .secondary-link {

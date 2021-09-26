@@ -36,7 +36,7 @@ config :esbuild,
   version: "0.12.18",
   default: [
     args:
-      ~w(js/app.js js/draft-editor.js js/book-long-description-html-editor.js static/fonts/fonts.css --bundle --loader:.otf=file --target=es2016 --outdir=../priv/static/assets),
+      ~w(js/app.js js/draft-editor.js js/book-long-description-html-editor.js js/chapter-render.js static/fonts/fonts.css --bundle --loader:.otf=file --target=es2016 --outdir=../priv/static/assets),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
@@ -48,6 +48,10 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+# Setup Default currency for Money
+config :money,
+  default_currency: :USD
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

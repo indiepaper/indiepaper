@@ -370,6 +370,11 @@ defmodule IndiePaper.Authors do
     Repo.get_by!(Author, stripe_connect_id: stripe_connect_id)
   end
 
+  def set_stripe_connect_id(author, stripe_connect_id) do
+    author
+    |> update_author_internal_profile(%{stripe_connect_id: stripe_connect_id})
+  end
+
   def set_payment_connected(author) do
     update_author_internal_profile(author, %{
       is_payment_connected: true,

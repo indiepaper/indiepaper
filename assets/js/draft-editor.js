@@ -24,6 +24,7 @@ document.addEventListener("alpine:init", () => {
       let editor;
 
       return {
+        isThrottling: false,
         isEditorLoading: false,
         isEditorError: false,
         selectedChapterId: selectedChapterId,
@@ -63,6 +64,8 @@ document.addEventListener("alpine:init", () => {
         },
         updatedAt: Date.now(),
         updateContentJson(contentJson) {
+          if (this.isThrottling) return;
+
           this.isEditorLoading = true;
 
           fetch(`/drafts/${this.draftId}/chapters/${this.selectedChapterId}`, {
@@ -76,6 +79,11 @@ document.addEventListener("alpine:init", () => {
             .then((res) => res.json())
             .then((data) => (this.isEditorLoading = false))
             .catch(() => (this.isEditorError = true));
+
+          this.isThrottling = true;
+          setTimeout(() => {
+            this.isThrottling = false;
+          }, 1280);
         },
         init() {
           const _this = this;
@@ -87,11 +95,11 @@ document.addEventListener("alpine:init", () => {
             onCreate({ editor }) {
               _this.updatedAt = Date.now();
             },
-            onUpdate: debounce(({ editor }) => {
+            onUpdate: ({ editor }) => {
               _this.updatedAt = Date.now();
               const contentJson = editor.getJSON();
               _this.updateContentJson(contentJson);
-            }, 480),
+            },
             onBlur({ editor, event }) {
               const contentJson = editor.getJSON();
               _this.updateContentJson(contentJson);
