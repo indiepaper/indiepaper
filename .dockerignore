@@ -23,7 +23,6 @@ erl_crash.dump
 indie_paper-*.tar
 
 # Ignore assets that are produced by build tools.
-/priv/static/
 /priv/static/assets/
 
 # In case you use Node.js/npm, you want to ignore these.
