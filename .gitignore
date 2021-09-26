@@ -24,7 +24,6 @@ indie_paper-*.tar
 
 # Ignore assets that are produced by build tools.
 /priv/static/assets/
-/priv/static/fonts/
 
 # In case you use Node.js/npm, you want to ignore these.
 npm-debug.log
