@@ -25,11 +25,13 @@ defmodule IndiePaperWeb.Feature.ReaderCanVisitAndBuyBookTest do
 
   test "reader can read book if bought asset", %{session: session} do
     order = insert(:order, line_items: [build(:line_item)])
+    chapter = Enum.at(order.book.draft.chapters, 0)
 
     session
     |> DashboardOrderPage.visit_page()
     |> LoginPage.login(email: order.customer.email, password: order.customer.password)
     |> DashboardOrderPage.click_read_online()
     |> BookPage.Read.has_book_title?(order.book.title)
+    |> BookPage.Read.has_chapter_title?(chapter.title)
   end
 end

@@ -37,6 +37,7 @@ defmodule IndiePaper.Chapters do
     }
   end
 
+  @spec get_chapter!(String) :: %Chapter{}
   def get_chapter!(id), do: Repo.get!(Chapter, id)
 
   def update_chapter(chapter, attrs) do

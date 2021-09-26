@@ -5,6 +5,11 @@ defmodule IndiePaperWeb.Pages.BookPage.Read do
     session
     |> assert_has(data("test", "book-title", text: title))
   end
+
+  def has_chapter_title?(session, title) do
+    session
+    |> assert_has(data("test", "book-chapter-title", text: title))
+  end
 end
 
 defmodule IndiePaperWeb.Pages.BookPage.Show do
