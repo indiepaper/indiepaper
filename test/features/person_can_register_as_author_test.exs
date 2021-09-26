@@ -16,6 +16,7 @@ defmodule IndiePaperWeb.Feature.PersonCanRegisterAsAuthorTest do
   test "person can register as author with Socials", %{session: session} do
     session
     |> RegisterPage.visit_page()
-    |> RegisterPage.click_sign_up_with_google()
+    |> RegisterPage.has_sign_up_with_google?()
+    |> RegisterPage.has_sign_up_with_twitter?()
   end
 end

@@ -13,8 +13,13 @@ defmodule IndiePaperWeb.Pages.RegisterPage do
     |> click(button("Sign up"))
   end
 
-  def click_sign_up_with_google(session) do
+  def has_sign_up_with_google?(session) do
     session
-    |> click(link("Sign up with Google"))
+    |> assert_has(link("Sign up with Google"))
+  end
+
+  def has_sign_up_with_twitter?(session) do
+    session
+    |> assert_has(link("Sign up with Twitter"))
   end
 end
