@@ -16,4 +16,11 @@ defmodule IndiePaperWeb.Feature.AuthorCanLoginTest do
     |> NavBar.click_sign_out()
     |> NavBar.has_sign_in_link?()
   end
+
+  test "author can login with Google", %{session: session} do
+    session
+    |> HomePage.visit()
+    |> NavBar.click_sign_in()
+    |> LoginPage.click_sign_in_with_google()
+  end
 end

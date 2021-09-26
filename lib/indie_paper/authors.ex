@@ -357,6 +357,19 @@ defmodule IndiePaper.Authors do
     end
   end
 
+  # For OAuth author may or may not be present in database when signing in
+  def fetch_or_create_author(attrs) do
+    case get_author_by_email(attrs.email) do
+      %Author{} = author ->
+        {:ok, author}
+
+      _ ->
+        %Author{}
+        |> Author.registration_changeset(attrs)
+        |> Repo.insert()
+    end
+  end
+
   def update_author_internal_profile(author, attrs) do
     author
     |> Author.internal_profile_changeset(attrs)

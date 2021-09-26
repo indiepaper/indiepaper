@@ -29,6 +29,9 @@ defmodule IndiePaperWeb.Router do
   scope "/", IndiePaperWeb do
     pipe_through [:browser, :redirect_if_author_is_authenticated]
 
+    get "/auth/:provider", AuthorOauthController, :request
+    get "/auth/:provider/callback", AuthorOauthController, :callback
+
     get "/secure/sign-up", AuthorRegistrationController, :new
     post "/secure/sign-up", AuthorRegistrationController, :create
     get "/secure/sign-in", AuthorSessionController, :new
