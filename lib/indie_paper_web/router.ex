@@ -71,15 +71,14 @@ defmodule IndiePaperWeb.Router do
     pipe_through [:browser, :require_authenticated_author]
 
     resources "/books", BookController, only: [:new, :create, :edit, :update] do
-      resources "/read", ReadController, only: [:index]
+      live "/read", ReadLive
     end
 
     resources "/drafts", DraftController, only: [:edit] do
       resources "/chapters", DraftChapterController, only: [:edit, :update]
     end
 
-    resources "/dashboard", DashboardController, only: [:index] do
-    end
+    resources "/dashboard", DashboardController, only: [:index]
 
     resources "/dashboard/orders", DashboardOrderController, only: [:index]
     resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:new, :create]
