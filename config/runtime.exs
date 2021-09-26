@@ -67,6 +67,11 @@ if config_env() == :prod do
     env: System.get_env("INDIEPAPER_DEPLOY_ENV"),
     active: true
 
+  # Setup UeberAuth Google
+  config :ueberauth, Ueberauth.Strategy.Google.OAuth,
+    client_id: System.get_env("UEBERAUTH_GOOGLE_CLIENT_ID"),
+    client_secret: System.get_env("UEBERAUTH_GOOGLE_CLIENT_SECRET")
+
   # ## Using releases
   #
   # If you are doing OTP releases, you need to instruct Phoenix
