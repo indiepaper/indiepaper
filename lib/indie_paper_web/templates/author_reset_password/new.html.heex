@@ -9,15 +9,13 @@
 
                 <div class="max-w-md form-tight-container">
                     <div class="input-container">
-                        <div class="flex flex-row justify-between items-baseline pr-2 form-label">
-                            <%= label f, :email %>
-                            <%= link "back to Sign in", to: Routes.author_session_path(@conn, :new), class: "secondary-link text-sm" %>
-                        </div>
+                        <%= label f, :email, class: "form-label" %>
                         <%= email_input f, :email, required: true, class: "form-input" %>
                     </div>
 
-                    <div>
-                        <%= submit "Send instructions to reset password", class: "submit-button" %>
+                    <div class="flex flex-row justify-between items-baseline w-full">
+                        <%= submit "Reset password", class: "submit-button" %>
+                        <%= link "Sign in", to: Routes.author_session_path(@conn, :new), class: "secondary-link text-base" %>
                     </div>
                 </div>
                 </.form>
