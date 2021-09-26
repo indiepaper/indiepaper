@@ -36,7 +36,10 @@
                     </div>
 
                     <div class="input-container">
-                        <%= label f, :password, class: "input-label" %>
+                        <div class="flex flex-row justify-between items-baseline form-label">
+                            <%= label f, :password %>
+                            <%= link "Forgot password?", to: Routes.author_reset_password_path(@conn, :new), class: "secondary-link text-sm" %>
+                        </div>
                         <%= password_input f, :password, required: true, class: "form-input" %>
                         <div class="flex flex-row items-center mt-3">
                             <%= checkbox f, :remember_me, class: "rounded focus:outline-none focus:ring-accent border-primary-border-darker text-accent" %>
