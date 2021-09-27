@@ -91,7 +91,7 @@ defmodule IndiePaperWeb.AuthorConfirmationControllerTest do
         |> log_in_author(author)
         |> post(Routes.author_confirmation_path(conn, :update, token))
 
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/dashboard"
       refute get_flash(conn, :error)
     end
 

@@ -4,7 +4,11 @@ defmodule IndiePaperWeb.AuthorConfirmationController do
   alias IndiePaper.Authors
 
   def new(conn, _params) do
-    render(conn, "new.html")
+    if conn.assigns.current_author do
+      create(conn, %{"author" => %{"email" => conn.assigns.current_author.email}})
+    else
+      render(conn, "new.html")
+    end
   end
 
   def create(conn, %{"author" => %{"email" => email}}) do
@@ -27,7 +31,11 @@ defmodule IndiePaperWeb.AuthorConfirmationController do
   end
 
   def edit(conn, %{"token" => token}) do
-    render(conn, "edit.html", token: token)
+    if conn.assigns.current_author do
+      update(conn, %{"token" => token})
+    else
+      render(conn, "edit.html", token: token)
+    end
   end
 
   # Do not log in the author after confirmation to avoid a
@@ -37,7 +45,9 @@ defmodule IndiePaperWeb.AuthorConfirmationController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Author confirmed successfully.")
-        |> redirect(to: "/")
+        |> redirect(
+          to: if(conn.assigns.current_author, do: Routes.dashboard_path(conn, :index), else: "/")
+        )
 
       :error ->
         # If there is a current author and the account was already confirmed,
@@ -46,7 +56,7 @@ defmodule IndiePaperWeb.AuthorConfirmationController do
         # a warning message.
         case conn.assigns do
           %{current_author: %{confirmed_at: confirmed_at}} when not is_nil(confirmed_at) ->
-            redirect(conn, to: "/")
+            redirect(conn, to: Routes.dashboard_path(conn, :index))
 
           %{} ->
             conn
