@@ -33,7 +33,9 @@ defmodule IndiePaperWeb.AuthorOauthController do
 
     case Authors.fetch_or_create_author(author_params) do
       {:ok, author} ->
-        AuthorAuth.log_in_author(conn, author, %{"remember_me" => "true"})
+        conn
+        |> put_flash(:info, "Successfully signed in")
+        |> AuthorAuth.log_in_author(author, %{"remember_me" => "true"})
 
       _ ->
         conn
