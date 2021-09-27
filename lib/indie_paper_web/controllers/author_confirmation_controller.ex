@@ -19,10 +19,11 @@ defmodule IndiePaperWeb.AuthorConfirmationController do
     conn
     |> put_flash(
       :info,
-      "If your email is in our system and it has not been confirmed yet, " <>
-        "you will receive an email with instructions shortly."
+      "Confirmation Email has been sent, check for instructions"
     )
-    |> redirect(to: "/")
+    |> redirect(
+      to: if(conn.assigns.current_author, do: Routes.dashboard_path(conn, :index), else: "/")
+    )
   end
 
   def edit(conn, %{"token" => token}) do

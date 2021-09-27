@@ -26,7 +26,7 @@ defmodule IndiePaperWeb.AuthorConfirmationControllerTest do
         })
 
       assert redirected_to(conn) == "/"
-      assert get_flash(conn, :info) =~ "If your email is in our system"
+      assert get_flash(conn, :info) =~ "Confirmation Email has been sent, check for instructions"
       assert Repo.get_by!(Authors.AuthorToken, author_id: author.id).context == "confirm"
     end
 
@@ -39,7 +39,7 @@ defmodule IndiePaperWeb.AuthorConfirmationControllerTest do
         })
 
       assert redirected_to(conn) == "/"
-      assert get_flash(conn, :info) =~ "If your email is in our system"
+      assert get_flash(conn, :info) =~ "Confirmation Email has been sent, check for instructions"
       refute Repo.get_by(Authors.AuthorToken, author_id: author.id)
     end
 
@@ -50,7 +50,7 @@ defmodule IndiePaperWeb.AuthorConfirmationControllerTest do
         })
 
       assert redirected_to(conn) == "/"
-      assert get_flash(conn, :info) =~ "If your email is in our system"
+      assert get_flash(conn, :info) =~ "Confirmation Email has been sent, check for instructions"
       assert Repo.all(Authors.AuthorToken) == []
     end
   end

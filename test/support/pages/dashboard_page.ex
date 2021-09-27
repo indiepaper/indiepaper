@@ -61,8 +61,13 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
     |> click(data("test", "product-edit", text: title))
   end
 
-  def has_resend_confirmation_email?(session) do
+  def click_resend_confirmation_email(session) do
     session
-    |> assert_has(link("Resend Confirmation Email"))
+    |> click(link("Resend Confirmation Email"))
+  end
+
+  def has_confirmation_email_text?(session) do
+    session
+    |> assert_has(Wallaby.Query.text("Confirmation Email has been sent"))
   end
 end
