@@ -56,7 +56,8 @@ config :money,
 # Setup UeberAuth
 config :ueberauth, Ueberauth,
   providers: [
-    google: {Ueberauth.Strategy.Google, []}
+    google: {Ueberauth.Strategy.Google, []},
+    twitter: {Ueberauth.Strategy.Twitter, []}
   ]
 
 # Import environment specific config. This must remain at the bottom

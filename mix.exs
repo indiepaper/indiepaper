@@ -58,7 +58,8 @@ defmodule IndiePaper.MixProject do
       {:stripity_stripe, "~> 2.0"},
       {:money, "~> 1.4"},
       {:ueberauth, "~> 0.6"},
-      {:ueberauth_google, "~> 0.10"}
+      {:ueberauth_google, "~> 0.10"},
+      {:ueberauth_twitter, "~> 0.4"}
     ]
   end
 
