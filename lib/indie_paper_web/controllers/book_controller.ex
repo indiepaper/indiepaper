@@ -30,7 +30,13 @@ defmodule IndiePaperWeb.BookController do
 
     case Books.update_book(book, book_params) do
       {:ok, updated_book} ->
-        redirect(conn, to: Routes.book_path(conn, :show, updated_book))
+        redirect(conn,
+          to:
+            if(Books.is_published?(updated_book),
+              do: Routes.book_path(conn, :show, updated_book),
+              else: Routes.dashboard_path(conn, :index)
+            )
+        )
 
       {:error, changeset} ->
         render(conn, "edit.html", changeset: changeset, book: book)

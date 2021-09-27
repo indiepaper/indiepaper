@@ -19,6 +19,18 @@ defmodule IndiePaperWeb.BookControllerTest do
   end
 
   describe "update/2" do
+    test "redirects to dashboard if book is not published", %{conn: conn} do
+      book = insert(:book, status: :pending_publication)
+
+      response =
+        conn
+        |> log_in_author(book.author)
+        |> patch(Routes.book_path(conn, :update, book), %{"book" => %{title: "Updated Title"}})
+        |> redirected_to()
+
+      assert response =~ "dashboard"
+    end
+
     test "returns error when invalid update params", %{conn: conn} do
       book = insert(:book)
 
