@@ -80,6 +80,4 @@ config :phoenix, :stacktrace_depth, 20
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
 
-config :swoosh, :api_client, Swoosh.ApiClient.Hackney
-
 import_config "dev.secret.exs"
