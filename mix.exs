@@ -45,6 +45,7 @@ defmodule IndiePaper.MixProject do
       {:phoenix_live_dashboard, "~> 0.5"},
       {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.3"},
+      {:hackney, "~> 1.17"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},

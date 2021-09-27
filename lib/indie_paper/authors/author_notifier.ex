@@ -8,7 +8,7 @@ defmodule IndiePaper.Authors.AuthorNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"MyApp", "contact@example.com"})
+      |> from({"IndiePaper Support", "support@indiepaper.co"})
       |> subject(subject)
       |> text_body(body)
 
