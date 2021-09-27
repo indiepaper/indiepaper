@@ -7,6 +7,7 @@ defmodule IndiePaperWeb.Plugs.EnsureAccountStatusPlug do
 
   def init(config), do: config
 
+  # Speicify status as from least to the major ones
   def call(conn, account_status_list) do
     conn
     |> IndiePaperWeb.AuthorAuth.fetch_current_author(%{})
@@ -32,16 +33,21 @@ defmodule IndiePaperWeb.Plugs.EnsureAccountStatusPlug do
 
   defp maybe_halt(true, conn, _), do: conn
 
-  defp maybe_halt(_any, conn, status_list) do
-    cond do
-      Enum.find_value(status_list, fn status -> status == :payment_connected end) ->
-        redirect(
-          conn,
-          Routes.profile_stripe_connect_path(conn, :new),
-          "Connect with your Stripe Account to Publish and start recieving payments"
-        )
-    end
-  end
+  defp maybe_halt(_any, conn, [:payment_connected | _]),
+    do:
+      redirect(
+        conn,
+        Routes.profile_stripe_connect_path(conn, :new),
+        "Connect with your Stripe Account to Publish and start recieving payments"
+      )
+
+  defp maybe_halt(_any, conn, [:confirmed | _]),
+    do:
+      redirect(
+        conn,
+        Routes.dashboard_path(conn, :index),
+        "Confirm your email address to continue"
+      )
 
   defp redirect(conn, route, info_message) do
     conn
