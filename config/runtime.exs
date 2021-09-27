@@ -77,7 +77,7 @@ if config_env() == :prod do
     consumer_secret: System.get_env("UEBERAUTH_TWITTER_CONSUMER_SECRET")
 
   # Setup Swoosh with Postmark
-  config :sample, IndiePaper.Mailer,
+  config :indie_paper, IndiePaper.Mailer,
     adapter: Swoosh.Adapters.Postmark,
     api_key: System.get_env("SWOOSH_POSTMARK_API_KEY")
 
