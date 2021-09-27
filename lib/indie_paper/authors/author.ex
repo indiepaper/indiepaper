@@ -118,7 +118,8 @@ defmodule IndiePaper.Authors.Author do
   """
   def confirm_changeset(author) do
     now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
-    change(author, confirmed_at: now)
+
+    change(author, confirmed_at: now, account_status: :confirmed)
   end
 
   @doc """
