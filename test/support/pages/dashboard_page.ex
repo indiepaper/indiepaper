@@ -31,6 +31,11 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
     |> click(link("Connect Stripe"))
   end
 
+  def has_no_connect_stripe?(session) do
+    session
+    |> refute_has(link("Connect Stripe"))
+  end
+
   def click_update_listing(session) do
     session
     |> click(link("Update listing"))
@@ -59,5 +64,20 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
   def click_edit_product(session, title) do
     session
     |> click(data("test", "product-edit", text: title))
+  end
+
+  def click_resend_confirmation_email(session) do
+    session
+    |> click(link("Resend Confirmation Email"))
+  end
+
+  def has_confirmation_email_text?(session) do
+    session
+    |> assert_has(Wallaby.Query.text("Confirmation Email has been sent"))
+  end
+
+  def has_confirm_email_text?(session) do
+    session
+    |> assert_has(Wallaby.Query.text("Confirm your email address to continue"))
   end
 end

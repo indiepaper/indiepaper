@@ -13,7 +13,7 @@ defmodule IndiePaperWeb.AuthorConfirmationControllerTest do
     test "renders the resend confirmation page", %{conn: conn} do
       conn = get(conn, Routes.author_confirmation_path(conn, :new))
       response = html_response(conn, 200)
-      assert response =~ "<h1>Resend confirmation instructions</h1>"
+      assert response =~ "Resend confirmation instructions</h1>"
     end
   end
 
@@ -26,7 +26,7 @@ defmodule IndiePaperWeb.AuthorConfirmationControllerTest do
         })
 
       assert redirected_to(conn) == "/"
-      assert get_flash(conn, :info) =~ "If your email is in our system"
+      assert get_flash(conn, :info) =~ "Confirmation Email has been sent, check for instructions"
       assert Repo.get_by!(Authors.AuthorToken, author_id: author.id).context == "confirm"
     end
 
@@ -39,7 +39,7 @@ defmodule IndiePaperWeb.AuthorConfirmationControllerTest do
         })
 
       assert redirected_to(conn) == "/"
-      assert get_flash(conn, :info) =~ "If your email is in our system"
+      assert get_flash(conn, :info) =~ "Confirmation Email has been sent, check for instructions"
       refute Repo.get_by(Authors.AuthorToken, author_id: author.id)
     end
 
@@ -50,7 +50,7 @@ defmodule IndiePaperWeb.AuthorConfirmationControllerTest do
         })
 
       assert redirected_to(conn) == "/"
-      assert get_flash(conn, :info) =~ "If your email is in our system"
+      assert get_flash(conn, :info) =~ "Confirmation Email has been sent, check for instructions"
       assert Repo.all(Authors.AuthorToken) == []
     end
   end
@@ -59,7 +59,7 @@ defmodule IndiePaperWeb.AuthorConfirmationControllerTest do
     test "renders the confirmation page", %{conn: conn} do
       conn = get(conn, Routes.author_confirmation_path(conn, :edit, "some-token"))
       response = html_response(conn, 200)
-      assert response =~ "<h1>Confirm account</h1>"
+      assert response =~ "Confirm account</h1>"
 
       form_action = Routes.author_confirmation_path(conn, :update, "some-token")
       assert response =~ "action=\"#{form_action}\""
@@ -91,7 +91,7 @@ defmodule IndiePaperWeb.AuthorConfirmationControllerTest do
         |> log_in_author(author)
         |> post(Routes.author_confirmation_path(conn, :update, token))
 
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/dashboard"
       refute get_flash(conn, :error)
     end
 

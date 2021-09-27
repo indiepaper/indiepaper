@@ -19,4 +19,15 @@ defmodule IndiePaperWeb.Feature.AuthorCanConnectPaymentWithStripeTest do
 
     assert String.contains?(stripe_uri.host, "stripe.me")
   end
+
+  test "redirected to dashboard when not confirmed", %{session: session} do
+    author = insert(:author, is_payment_connected: false, account_status: :created)
+
+    session
+    |> DashboardPage.visit_page()
+    |> LoginPage.login(email: author.email, password: author.password)
+    |> DashboardPage.has_no_connect_stripe?()
+    |> StripeConnectPage.New.visit_page()
+    |> DashboardPage.has_confirm_email_text?()
+  end
 end

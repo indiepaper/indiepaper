@@ -14,4 +14,17 @@ defmodule IndiePaper.Authors.AuthorTest do
       assert "has already been taken" in errors_on(changeset).stripe_connect_id
     end
   end
+
+  describe "confirm_changeset/1" do
+    test "sets account status of author as confirmed" do
+      author = insert(:author, confirmed_at: nil, account_status: :created)
+
+      changeset = Author.confirm_changeset(author)
+
+      updated_author = Ecto.Changeset.apply_changes(changeset)
+
+      assert updated_author.confirmed_at
+      assert updated_author.account_status == :confirmed
+    end
+  end
 end

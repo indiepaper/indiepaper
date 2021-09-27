@@ -366,6 +366,7 @@ defmodule IndiePaper.Authors do
       _ ->
         %Author{}
         |> Author.registration_changeset(attrs)
+        |> Author.confirm_changeset()
         |> Repo.insert()
     end
   end
@@ -398,4 +399,10 @@ defmodule IndiePaper.Authors do
   def is_payment_connected?(author) do
     author.is_payment_connected
   end
+
+  def is_confirmed?(%{account_status: :confirmed}), do: true
+  def is_confirmed?(_), do: false
+
+  def is_created?(%{account_status: :created}), do: true
+  def is_created?(_), do: false
 end

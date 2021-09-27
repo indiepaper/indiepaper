@@ -11,7 +11,7 @@ defmodule IndiePaperWeb.Plugs.EnsureAccountStatusPlugTest do
         conn
         |> log_in_author(author)
         |> get(Routes.dashboard_path(conn, :index))
-        |> EnsureAccountStatusPlug.call(:payment_connected)
+        |> EnsureAccountStatusPlug.call([:payment_connected])
         |> html_response(200)
 
       assert response =~ "Dashboard"
@@ -25,7 +25,7 @@ defmodule IndiePaperWeb.Plugs.EnsureAccountStatusPlugTest do
         conn
         |> log_in_author(author)
         |> fetch_flash()
-        |> EnsureAccountStatusPlug.call(:payment_connected)
+        |> EnsureAccountStatusPlug.call([:payment_connected])
         |> redirected_to(302)
 
       assert response == Routes.profile_stripe_connect_path(conn, :new)

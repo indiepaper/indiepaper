@@ -1,12 +1,14 @@
-<h1>Confirm account</h1>
+<section class="bg-background">
+    <div class="container-box page-box">
+        <h1 class="page-heading">Confirm account</h1>
+        <p class="page-description">Confirm your email, and login</p>
 
-<.form let={_f} for={:author} action={Routes.author_confirmation_path(@conn, :update, @token)}>
-  <div>
-    <%= submit "Confirm my account" %>
-  </div>
-</.form>
-
-<p>
-  <%= link "Register", to: Routes.author_registration_path(@conn, :new) %> |
-  <%= link "Log in", to: Routes.author_session_path(@conn, :new) %>
-</p>
+        <div class="mt-8">
+        <.form let={_f} for={:author} action={Routes.author_confirmation_path(@conn, :update, @token)}>
+        <div>
+            <%= submit "Confirm my account", class: "submit-button" %>
+        </div>
+        </.form>
+        </div>
+    </div>
+</section>

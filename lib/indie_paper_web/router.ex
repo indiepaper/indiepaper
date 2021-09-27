@@ -18,7 +18,11 @@ defmodule IndiePaperWeb.Router do
   end
 
   pipeline :account_status_payment_connected do
-    plug IndiePaperWeb.Plugs.EnsureAccountStatusPlug, :payment_connected
+    plug IndiePaperWeb.Plugs.EnsureAccountStatusPlug, [:payment_connected]
+  end
+
+  pipeline :account_status_confirmed do
+    plug IndiePaperWeb.Plugs.EnsureAccountStatusPlug, [:confirmed, :payment_connected]
   end
 
   scope "/stripe/webhooks", IndiePaperWeb do
@@ -71,11 +75,19 @@ defmodule IndiePaperWeb.Router do
   end
 
   scope "/", IndiePaperWeb do
-    pipe_through [:browser, :require_authenticated_author]
+    pipe_through [:browser, :require_authenticated_author, :account_status_confirmed]
 
-    resources "/books", BookController, only: [:new, :create, :edit, :update] do
+    resources "/books", BookController, only: [] do
       resources "/read", ReadController, only: [:index, :show]
     end
+
+    resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:new, :create]
+  end
+
+  scope "/", IndiePaperWeb do
+    pipe_through [:browser, :require_authenticated_author]
+
+    resources "/books", BookController, only: [:new, :create, :edit, :update]
 
     resources "/drafts", DraftController, only: [:edit] do
       resources "/chapters", DraftChapterController, only: [:edit, :update]
@@ -84,7 +96,6 @@ defmodule IndiePaperWeb.Router do
     resources "/dashboard", DashboardController, only: [:index]
 
     resources "/dashboard/orders", DashboardOrderController, only: [:index]
-    resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:new, :create]
   end
 
   scope "/", IndiePaperWeb do

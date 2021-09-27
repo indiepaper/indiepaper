@@ -72,6 +72,10 @@ if config_env() == :prod do
     client_id: System.get_env("UEBERAUTH_GOOGLE_CLIENT_ID"),
     client_secret: System.get_env("UEBERAUTH_GOOGLE_CLIENT_SECRET")
 
+  config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
+    consumer_key: System.get_env("UEBERAUTH_TWITTER_CONSUMER_KEY"),
+    consumer_secret: System.get_env("UEBERAUTH_TWITTER_CONSUMER_SECRET")
+
   # ## Using releases
   #
   # If you are doing OTP releases, you need to instruct Phoenix

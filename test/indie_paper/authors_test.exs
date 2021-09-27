@@ -580,4 +580,23 @@ defmodule IndiePaper.AuthorsTest do
       assert connected_author.stripe_connect_id == "connect_id"
     end
   end
+
+  describe "fetch_or_create_author/1" do
+    test "creates confirmed author if email not present" do
+      author_params = params_for(:author, password: "test_password")
+
+      {:ok, created_author} = Authors.fetch_or_create_author(author_params)
+
+      assert created_author.email == author_params[:email]
+      assert Authors.is_confirmed?(created_author)
+    end
+  end
+
+  describe "is_confirmed?" do
+    test "tests if author is confirmed" do
+      author = insert(:author, account_status: :created)
+
+      refute Authors.is_confirmed?(author)
+    end
+  end
 end
