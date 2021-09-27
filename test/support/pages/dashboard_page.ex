@@ -60,4 +60,9 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
     session
     |> click(data("test", "product-edit", text: title))
   end
+
+  def has_resend_confirmation_email?(session) do
+    session
+    |> assert_has(link("Resend Confirmation Email"))
+  end
 end

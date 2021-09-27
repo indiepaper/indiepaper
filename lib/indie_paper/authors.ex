@@ -402,4 +402,7 @@ defmodule IndiePaper.Authors do
 
   def is_confirmed?(%{account_status: :confirmed}), do: true
   def is_confirmed?(_), do: false
+
+  def is_created?(%{account_status: :created}), do: true
+  def is_created?(_), do: false
 end

@@ -1,4 +1,13 @@
 <section class="bg-background">
+    <%= if IndiePaper.Authors.is_created?(@current_author) do %>
+        <div class="shadow-inner bg-accent">
+            <div class="flex flex-row items-center py-4 space-x-8 container-box">
+                <p class="text-sm text-white">Confirm your account to start writing.</p>
+                <%= link "Resend Confrimation Email", to: Routes.author_confirmation_path(@conn, :new), class: "text-xs border-accent secondary-button" %>
+            </div>
+        </div>
+    <% end %>
+
     <%= render "_nav_bar.html", assigns %>
 
     <div class="container-box page-box">

@@ -10,6 +10,7 @@ defmodule IndiePaperWeb.Feature.PersonCanRegisterAsAuthorTest do
     |> RegisterPage.visit_page()
     |> RegisterPage.sign_up(email: author.email, password: author.password)
     |> DashboardPage.has_title?()
+    |> DashboardPage.has_resend_confirmation_email?()
     |> NavBar.has_sign_out?()
   end
 
