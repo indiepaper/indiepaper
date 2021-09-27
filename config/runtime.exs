@@ -76,6 +76,11 @@ if config_env() == :prod do
     consumer_key: System.get_env("UEBERAUTH_TWITTER_CONSUMER_KEY"),
     consumer_secret: System.get_env("UEBERAUTH_TWITTER_CONSUMER_SECRET")
 
+  # Setup Swoosh with Postmark
+  config :sample, IndiePaper.Mailer,
+    adapter: Swoosh.Adapters.Postmark,
+    api_key: System.get_env("SWOOSH_POSTMARK_API_KEY")
+
   # ## Using releases
   #
   # If you are doing OTP releases, you need to instruct Phoenix
