@@ -1,5 +1,10 @@
 <section class="bg-white">
-    <div class="md:py-32 container-box page-box">
+    <div class="flex flex-row justify-end items-center space-x-2 container-box">
+        <%= link to: Routes.author_registration_path(@conn, :create), class: "primary-link" do %>
+            <p>Don't have an account? Sign up</p>
+        <% end %>
+    </div>
+    <div class="md:py-24 container-box page-box">
         <div class="mx-auto max-w-md">
             <h1 class="page-heading">Welcome Back</h1>
             <p class="page-description">and log in to your account, we missed you.</p>

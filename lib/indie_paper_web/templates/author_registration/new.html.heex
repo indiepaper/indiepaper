@@ -1,5 +1,10 @@
 <section class="bg-white">
-    <div class="md:py-32 container-box page-box">
+    <div class="flex flex-row justify-end items-center space-x-2 container-box">
+        <%= link to: Routes.author_session_path(@conn, :create), class: "primary-link" do %>
+            <p>Already have an account? Sign in</p>
+        <% end %>
+    </div>
+    <div class="md:py-24 container-box page-box">
         <div class="mx-auto max-w-md">
             <h1 class="page-heading">Sign up for IndiePaper</h1>
             <p class="page-description">and start selling in no time. Be sure to use the same email for previous purchases.</p>
