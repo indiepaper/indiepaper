@@ -65,12 +65,6 @@
                                     </svg>
                                     <p>Update listing</p>
                                 <% end %>
-
-                                <%= if IndiePaper.Books.is_published?(book) do %>
-                                    <%= link to: Routes.book_path(@conn, :show, book), class: "secondary-link" do %>
-                                        <p>Show listing</p>
-                                    <% end %>
-                                <% end %>
                             </div>
                         </div>
 
