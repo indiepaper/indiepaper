@@ -81,8 +81,7 @@ if config_env() == :prod do
 
   config :indie_paper, IndiePaper.Mailer,
     adapter: Swoosh.Adapters.Postmark,
-    api_key: System.get_env("SWOOSH_POSTMARK_API_KEY"),
-    email_domain: indie_paper_deploy_domain
+    api_key: System.get_env("SWOOSH_POSTMARK_API_KEY")
 
   # ## Using releases
   #
