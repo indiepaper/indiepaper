@@ -134,7 +134,7 @@ defmodule IndiePaperWeb.AuthorAuth do
       conn
       |> put_flash(:info, "Create an account or Sign in to continue.")
       |> maybe_store_return_to()
-      |> redirect(to: Routes.author_session_path(conn, :new))
+      |> redirect(to: Routes.author_registration_path(conn, :new))
       |> halt()
     end
   end

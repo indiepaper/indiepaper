@@ -10,7 +10,7 @@ defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
     book_params = params_for(:book)
 
     session
-    |> DashboardPage.visit_page()
+    |> LoginPage.visit_page()
     |> LoginPage.login(email: book.author.email, password: book.author.password)
     |> DashboardPage.click_edit_draft()
     |> DraftPage.Edit.has_book_title(book.title)
@@ -31,7 +31,7 @@ defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
     book = insert(:book, status: :published)
 
     session
-    |> DashboardPage.visit_page()
+    |> LoginPage.visit_page()
     |> LoginPage.login(email: book.author.email, password: book.author.password)
     |> DashboardPage.click_edit_draft()
     |> DraftPage.Edit.click_publish()
@@ -46,7 +46,7 @@ defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
     asset = insert(:asset)
 
     session
-    |> DashboardPage.visit_page()
+    |> LoginPage.visit_page()
     |> LoginPage.login(email: book.author.email, password: book.author.password)
     |> DashboardPage.click_edit_draft()
     |> DraftPage.Edit.click_publish()
