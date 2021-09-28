@@ -21,7 +21,7 @@ defmodule IndiePaperWeb.AuthorSessionController do
 
   def delete(conn, _params) do
     conn
-    |> put_flash(:info, "Logged out successfully.")
+    |> put_flash(:info, "You have succesfully logged out.")
     |> AuthorAuth.log_out_author()
   end
 end

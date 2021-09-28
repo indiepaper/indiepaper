@@ -145,7 +145,7 @@ defmodule IndiePaperWeb.AuthorAuthTest do
       conn = conn |> fetch_flash() |> AuthorAuth.require_authenticated_author([])
       assert conn.halted
       assert redirected_to(conn) == Routes.author_session_path(conn, :new)
-      assert get_flash(conn, :info) =~ "You should be signed in"
+      assert get_flash(conn, :info) =~ "Create an account or Sign in "
     end
 
     test "stores the path to redirect to on GET", %{conn: conn} do
