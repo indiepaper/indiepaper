@@ -8,7 +8,7 @@ defmodule IndiePaperWeb.AuthorGetsRedirectedToStripeConnectWhenPublishingTest do
     book = insert(:book, author: author, status: :pending_publication)
 
     session
-    |> DashboardPage.visit_page()
+    |> LoginPage.visit_page()
     |> LoginPage.login(email: book.author.email, password: book.author.password)
     |> DashboardPage.click_edit_draft()
     |> DraftPage.Edit.click_publish()

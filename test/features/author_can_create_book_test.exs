@@ -14,7 +14,7 @@ defmodule IndiePaperWeb.Feature.AuthorCanCreateBookTest do
     author = insert(:author)
 
     session
-    |> DashboardPage.visit_page()
+    |> LoginPage.visit_page()
     |> LoginPage.login(email: author.email, password: author.password)
     |> DashboardNavBar.click_create_new()
     |> BookPage.New.fill_form(book_params)

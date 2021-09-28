@@ -36,27 +36,21 @@ defmodule IndiePaper.PaymentHandlerTest do
 
       assert checkout_session_url == nil
     end
-
-    test "returns the stripe checkout session url even when customer is nil" do
-      book = insert(:book)
-
-      {:ok, checkout_session_url} = PaymentHandler.get_checkout_session_url(nil, book)
-
-      assert checkout_session_url == nil
-    end
   end
 
   describe "set_payment_completed_order/1" do
-    test "sets the order status as payment connected" do
+    test "sets the order status as payment connected and sends email" do
       order =
         insert(:order, status: :payment_pending, stripe_checkout_session_id: "checkout_session_id")
 
-      {:ok, order} =
+      {:ok, updated_order} =
         PaymentHandler.set_payment_completed_order(
           stripe_checkout_session_id: order.stripe_checkout_session_id
         )
 
-      assert Orders.is_payment_completed?(order)
+      assert Orders.is_payment_completed?(updated_order)
+
+      assert_email_sent(to: order.customer.email)
     end
   end
 end

@@ -20,7 +20,6 @@ defmodule IndiePaperWeb.AuthorRegistrationController do
           )
 
         conn
-        |> put_flash(:info, "Author created successfully.")
         |> AuthorAuth.log_in_author(author)
 
       {:error, %Ecto.Changeset{} = changeset} ->

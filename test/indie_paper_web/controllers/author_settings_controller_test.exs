@@ -16,7 +16,7 @@ defmodule IndiePaperWeb.AuthorSettingsControllerTest do
     test "redirects if author is not logged in" do
       conn = build_conn()
       conn = get(conn, Routes.author_settings_path(conn, :edit))
-      assert redirected_to(conn) == Routes.author_session_path(conn, :new)
+      assert redirected_to(conn) == Routes.author_registration_path(conn, :new)
     end
   end
 
@@ -101,7 +101,12 @@ defmodule IndiePaperWeb.AuthorSettingsControllerTest do
       %{token: token, email: email}
     end
 
-    test "updates the author email once", %{conn: conn, author: author, token: token, email: email} do
+    test "updates the author email once", %{
+      conn: conn,
+      author: author,
+      token: token,
+      email: email
+    } do
       conn = get(conn, Routes.author_settings_path(conn, :confirm_email, token))
       assert redirected_to(conn) == Routes.author_settings_path(conn, :edit)
       assert get_flash(conn, :info) =~ "Email changed successfully"
@@ -123,7 +128,7 @@ defmodule IndiePaperWeb.AuthorSettingsControllerTest do
     test "redirects if author is not logged in", %{token: token} do
       conn = build_conn()
       conn = get(conn, Routes.author_settings_path(conn, :confirm_email, token))
-      assert redirected_to(conn) == Routes.author_session_path(conn, :new)
+      assert redirected_to(conn) == Routes.author_registration_path(conn, :new)
     end
   end
 end

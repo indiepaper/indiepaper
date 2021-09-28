@@ -28,8 +28,9 @@ defmodule IndiePaperWeb.Feature.ReaderCanVisitAndBuyBookTest do
     chapter = Enum.at(order.book.draft.chapters, 0)
 
     session
-    |> DashboardOrderPage.visit_page()
+    |> LoginPage.visit_page()
     |> LoginPage.login(email: order.customer.email, password: order.customer.password)
+    |> DashboardOrderPage.visit_page()
     |> DashboardOrderPage.click_read_online()
     |> BookPage.Read.has_book_title?(order.book.title)
     |> BookPage.Read.has_chapter_title?(chapter.title)

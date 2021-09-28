@@ -1,13 +1,13 @@
 <section class="bg-white">
-    <div class="flex flex-row justify-end items-center space-x-2 container-box">
+    <div class="flex flex-row justify-end items-center space-x-2 md:mt-4 container-box">
         <%= link to: Routes.author_registration_path(@conn, :create), class: "primary-link" do %>
             <p>Don't have an account? Sign up</p>
         <% end %>
     </div>
     <div class="md:py-24 container-box page-box">
         <div class="mx-auto max-w-md">
-            <h1 class="page-heading">Welcome Back</h1>
-            <p class="page-description">and log in to your account, we missed you.</p>
+            <h1 class="page-heading">Sign in to IndiePaper</h1>
+            <p class="page-description">welcome back, we missed you.</p>
 
             <div class="flex flex-col mt-12 space-y-4 text-sm">
                 <%= link to: Routes.author_oauth_path(@conn, :request, "google"), class: "secondary-button space-x-2 py-3" do %>

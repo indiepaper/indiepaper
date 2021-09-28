@@ -37,7 +37,6 @@ defmodule IndiePaper.Books.Book do
     book
     |> cast(attrs, [:title, :short_description, :long_description_html])
     |> validate_required([:title, :short_description, :long_description_html])
-    |> unique_constraint(:title)
   end
 
   def initial_draft_changeset(book, attrs) do

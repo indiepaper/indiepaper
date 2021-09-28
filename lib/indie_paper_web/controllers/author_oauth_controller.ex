@@ -12,14 +12,14 @@ defmodule IndiePaperWeb.AuthorOauthController do
         "provider" => "google"
       }) do
     conn
-    |> register_or_sign_in_with_email(author_info.email)
+    |> register_or_sign_in_with_email(author_info.email, "Google")
   end
 
   def callback(%{assigns: %{ueberauth_auth: %{info: author_info}}} = conn, %{
         "provider" => "twitter"
       }) do
     conn
-    |> register_or_sign_in_with_email(author_info.email)
+    |> register_or_sign_in_with_email(author_info.email, "Twitter")
   end
 
   def callback(conn, _params) do
@@ -28,13 +28,13 @@ defmodule IndiePaperWeb.AuthorOauthController do
     |> redirect(to: "/")
   end
 
-  defp register_or_sign_in_with_email(conn, email) do
+  defp register_or_sign_in_with_email(conn, email, provider) do
     author_params = %{email: email, password: random_password()}
 
     case Authors.fetch_or_create_author(author_params) do
       {:ok, author} ->
         conn
-        |> put_flash(:info, "Successfully signed in")
+        |> put_flash(:info, "Signed in to #{email} with #{provider}")
         |> AuthorAuth.log_in_author(author, %{"remember_me" => "true"})
 
       _ ->

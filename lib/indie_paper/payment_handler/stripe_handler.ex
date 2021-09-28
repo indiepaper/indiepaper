@@ -1,6 +1,8 @@
 defmodule IndiePaper.PaymentHandler.StripeHandler do
   alias IndiePaperWeb.Endpoint
 
+  alias IndiePaperWeb.Router.Helpers, as: Routes
+
   def stripe_connect_enabled_countries() do
     [{"United States", "US"}, {"Italy", "IT"}, {"India", "IN"}]
   end
@@ -71,8 +73,9 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
              }
            },
            mode: "payment",
-           success_url: "#{Endpoint.url()}/dashboard/orders",
-           cancel_url: "#{Endpoint.url()}/dashboard"
+           success_url:
+             Routes.dashboard_order_url(Endpoint, :index, stripe_checkout_success: true),
+           cancel_url: Routes.dashboard_url(Endpoint, :index)
          }) do
       {:ok, stripe_checkout_session} ->
         {:ok, stripe_checkout_session}

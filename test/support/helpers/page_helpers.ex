@@ -8,6 +8,7 @@ defmodule IndiePaperWeb.PageHelpers do
 
       @endpoint IndiePaperWeb.Endpoint
       import IndiePaper.Factory
+      import Swoosh.TestAssertions
     end
   end
 end

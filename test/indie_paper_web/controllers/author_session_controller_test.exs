@@ -82,14 +82,14 @@ defmodule IndiePaperWeb.AuthorSessionControllerTest do
       conn = conn |> log_in_author(author) |> delete(Routes.author_session_path(conn, :delete))
       assert redirected_to(conn) == "/"
       refute get_session(conn, :author_token)
-      assert get_flash(conn, :info) =~ "Logged out successfully"
+      assert get_flash(conn, :info) =~ "logged out"
     end
 
     test "succeeds even if the author is not logged in", %{conn: conn} do
       conn = delete(conn, Routes.author_session_path(conn, :delete))
       assert redirected_to(conn) == "/"
       refute get_session(conn, :author_token)
-      assert get_flash(conn, :info) =~ "Logged out successfully"
+      assert get_flash(conn, :info) =~ "logged out"
     end
   end
 end

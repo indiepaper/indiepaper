@@ -77,7 +77,7 @@ if config_env() == :prod do
     consumer_secret: System.get_env("UEBERAUTH_TWITTER_CONSUMER_SECRET")
 
   # Setup Swoosh with Postmark
-  config :swoosh, :api_client, Swoosh.ApiClient.Hackney
+  config :swoosh, local: false, api_client: Swoosh.ApiClient.Hackney
 
   config :indie_paper, IndiePaper.Mailer,
     adapter: Swoosh.Adapters.Postmark,
