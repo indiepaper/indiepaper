@@ -1,14 +1,13 @@
 defmodule IndiePaper.Mailer do
   use Swoosh.Mailer, otp_app: :indie_paper
 
-  # All this gynmastics so we can use dev.indiepaper.co for staging
   defp email_domain() do
-    case Domainatrex.parse(IndiePaperWeb.Endpoint.url()) do
-      {:ok, %{domain: domain, tld: tld}} ->
-        "#{domain}.#{tld}"
+    domain_uri = URI.parse(IndiePaperWeb.Endpoint.url())
 
-      {:error, _} ->
-        "example.com"
+    case domain_uri.host do
+      "dev.indiepaper.co" -> "indiepaper.co"
+      "localhost" -> "example.com"
+      _ -> domain_uri.host
     end
   end
 
