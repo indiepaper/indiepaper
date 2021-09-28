@@ -35,6 +35,7 @@ defmodule IndiePaper.PaymentHandler do
            StripeHandler.get_checkout_session(
              item_title: "#{book.title} - #{read_online_product.title}",
              item_amount: read_online_product.price.amount,
+             platform_fees: get_platform_fees(read_online_product.price).amount,
              stripe_connect_id: author.stripe_connect_id
            ),
          {:ok, _order} <-
@@ -61,5 +62,9 @@ defmodule IndiePaper.PaymentHandler do
            ) do
       {:ok, updated_order}
     end
+  end
+
+  def get_platform_fees(price) do
+    MoneyHandler.calculate_percentage(price, 9)
   end
 end

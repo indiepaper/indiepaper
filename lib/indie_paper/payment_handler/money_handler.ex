@@ -4,4 +4,6 @@ defmodule IndiePaper.PaymentHandler.MoneyHandler do
   end
 
   def add(m, addend), do: Money.add(m, addend)
+
+  def calculate_percentage(money, percentage), do: Money.multiply(money, percentage / 100)
 end

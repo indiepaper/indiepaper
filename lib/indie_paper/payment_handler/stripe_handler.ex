@@ -54,6 +54,7 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
   def get_checkout_session(
         item_title: item_title,
         item_amount: item_amount,
+        platform_fees: platform_fees,
         stripe_connect_id: stripe_connect_id
       ) do
     case Stripe.Session.create(%{
@@ -67,7 +68,7 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
              }
            ],
            payment_intent_data: %{
-             application_fee_amount: 123,
+             application_fee_amount: platform_fees,
              transfer_data: %{
                destination: stripe_connect_id
              }

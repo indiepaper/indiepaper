@@ -53,4 +53,13 @@ defmodule IndiePaper.PaymentHandlerTest do
       assert_email_sent(to: order.customer.email, from: {"IndiePaper", "support@example.com"})
     end
   end
+
+  describe "get_platform_fees/1" do
+    test "returns platform fees" do
+      price = Money.new(400)
+
+      platform_fees = PaymentHandler.get_platform_fees(price)
+      assert platform_fees.amount == 36
+    end
+  end
 end
