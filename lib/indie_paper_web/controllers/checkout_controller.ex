@@ -3,7 +3,7 @@ defmodule IndiePaperWeb.CheckoutController do
 
   alias IndiePaper.{PaymentHandler, Books}
 
-  def create(conn, %{"book_id" => book_id}) do
+  def new(conn, %{"book_id" => book_id}) do
     book = Books.get_book!(book_id)
 
     {:ok, checkout_session_url} =

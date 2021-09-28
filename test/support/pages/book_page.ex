@@ -32,7 +32,7 @@ defmodule IndiePaperWeb.Pages.BookPage.Show do
 
   def has_buy_button?(session) do
     session
-    |> assert_has(button("Buy Now"))
+    |> assert_has(link("Buy Now"))
   end
 
   def has_book_title?(session, title) do
