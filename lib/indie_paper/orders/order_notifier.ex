@@ -1,9 +1,9 @@
-defmodule IndiePaper.Authors.AuthorNotifier do
+defmodule IndiePaper.Authors.OrderNotifier do
   import Swoosh.Email
 
   alias IndiePaper.Mailer
 
-  def build_order_payment_completed_email(reader, author, book, book_read_url) do
+  def deliver_order_payment_completed_email(reader, author, book, book_read_url) do
     email =
       new()
       |> to(reader.email)
