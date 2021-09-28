@@ -24,8 +24,8 @@ defmodule IndiePaperWeb.AuthorOauthController do
 
   def callback(conn, _params) do
     conn
-    |> put_flash(:error, "Authentication failed")
-    |> redirect(to: "/")
+    |> put_flash(:error, "Authentication attempt with Social Provider failed. Please try again")
+    |> redirect(to: Routes.author_registration_path(conn, :new))
   end
 
   defp register_or_sign_in_with_email(conn, email, provider) do

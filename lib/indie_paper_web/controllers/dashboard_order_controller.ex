@@ -11,7 +11,7 @@ defmodule IndiePaperWeb.DashboardOrderController do
       conn
       |> put_flash(
         :info,
-        "Hoorah!! Your purchase has been succesfully completed. You can find the order here."
+        "Hoorah! Your purchase has been succesfully completed. You can find the order here."
       )
       |> render("index.html", orders: orders)
     else
