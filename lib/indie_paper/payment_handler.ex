@@ -1,5 +1,5 @@
 defmodule IndiePaper.PaymentHandler do
-  alias IndiePaper.{Authors, Books, Orders}
+  alias IndiePaper.{Authors, Books, Orders, Orders.OrderNotifier}
   alias IndiePaper.PaymentHandler.{StripeHandler, MoneyHandler}
 
   def get_stripe_connect_url(%Authors.Author{stripe_connect_id: nil} = author, country_code) do
@@ -49,7 +49,17 @@ defmodule IndiePaper.PaymentHandler do
   end
 
   def set_payment_completed_order(stripe_checkout_session_id: stripe_checkout_session_id) do
-    Orders.get_by_stripe_checkout_session_id!(stripe_checkout_session_id)
-    |> Orders.set_payment_completed()
+    with order <- Orders.get_by_stripe_checkout_session_id!(stripe_checkout_session_id),
+         {:ok, updated_order} <-
+           Orders.set_payment_completed(order),
+         order_with_books <- Orders.with_assoc(updated_order, [:customer, book: :author]),
+         {:ok, _email} <-
+           OrderNotifier.deliver_order_payment_completed_email(
+             reader: order_with_books.customer,
+             author: order_with_books.book.author,
+             book: order_with_books.book
+           ) do
+      {:ok, updated_order}
+    end
   end
 end

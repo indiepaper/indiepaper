@@ -2,24 +2,25 @@ defmodule IndiePaper.Orders.OrderNotifier do
   import Swoosh.Email
 
   alias IndiePaper.Mailer
+  alias IndiePaperWeb.Router.Helpers, as: Routes
+  alias IndiePaperWeb.Endpoint
 
   def deliver_order_payment_completed_email(
         reader: reader,
         author: author,
-        book: book,
-        book_read_url: book_read_url
+        book: book
       ) do
     email =
       new()
       |> to(reader.email)
-      |> from({"IndiePaper", "support@indiepaper.co"})
+      |> from({"IndiePaper", "support@" <> Endpoint.url()})
       |> subject("Thanks for buying at IndiePaper")
       |> text_body("""
       ==============================
 
       Heyy #{reader.email},
 
-      Thanks for buying #{book.title} from #{author.email} on IndiePaper. You can read book online at #{book_read_url}.
+      Thanks for buying #{book.title} from #{author.email} on IndiePaper. You can read book online at #{Routes.book_read_path(Endpoint, :index, book)}.
 
       If you have any queries reply to this email and we'll take care of it.
 
@@ -31,7 +32,7 @@ defmodule IndiePaper.Orders.OrderNotifier do
       """)
 
     with {:ok, _metadata} <- Mailer.deliver(email) do
-      email
+      {:ok, email}
     end
   end
 end

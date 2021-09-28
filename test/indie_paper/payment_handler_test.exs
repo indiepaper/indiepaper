@@ -56,18 +56,9 @@ defmodule IndiePaper.PaymentHandlerTest do
           stripe_checkout_session_id: order.stripe_checkout_session_id
         )
 
-      order_with_customer = order |> Orders.with_assoc(:customer)
-
       assert Orders.is_payment_completed?(updated_order)
 
-      assert_email_sent(
-        IndiePaper.Orders.OrderNotifier.deliver_order_payment_completed_email(
-          reader: order_with_customer.customer,
-          author: order.book.author,
-          book: order.book,
-          book_read_url: "/read/"
-        )
-      )
+      assert_email_sent()
     end
   end
 end
