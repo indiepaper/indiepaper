@@ -20,7 +20,7 @@ defmodule IndiePaper.Orders.OrderNotifier do
 
       Heyy #{reader.email},
 
-      Thanks for buying #{book.title} from #{author.email} on IndiePaper. You can read book online at #{Routes.book_read_path(Endpoint, :index, book)}.
+      Thanks for buying #{book.title} from #{author.email} on IndiePaper. You can read book online at #{Routes.book_read_url(Endpoint, :index, book)}.
 
       If you have any queries reply to this email and we'll take care of it.
 
@@ -28,7 +28,7 @@ defmodule IndiePaper.Orders.OrderNotifier do
       Team IndiePaper
       ==============================
 
-      We're a small team of people building out a new platform for authors to self publish their books easily. You can find out more at https://indiepaper.me/why
+      We're a small team of people building out a new platform for authors to self publish their books easily. You can find out more at https://indiepaper.me
       """)
 
     with {:ok, _metadata} <- Mailer.deliver(email) do
