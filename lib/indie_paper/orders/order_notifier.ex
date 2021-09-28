@@ -7,7 +7,7 @@ defmodule IndiePaper.Orders.OrderNotifier do
 
   def deliver_order_payment_completed_email(
         reader: reader,
-        author: author,
+        author: _author,
         book: book
       ) do
     email =
@@ -20,7 +20,7 @@ defmodule IndiePaper.Orders.OrderNotifier do
 
       Heyy #{reader.email},
 
-      Thanks for buying #{book.title} from #{author.email} on IndiePaper. You can read book online at #{Routes.book_read_url(Endpoint, :index, book)}.
+      Thanks for buying #{book.title} on IndiePaper. You can read book online at #{Routes.book_read_url(Endpoint, :index, book)}.
 
       If you have any queries reply to this email and we'll take care of it.
 
