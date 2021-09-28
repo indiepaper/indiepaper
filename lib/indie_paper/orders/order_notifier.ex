@@ -13,7 +13,7 @@ defmodule IndiePaper.Orders.OrderNotifier do
     email =
       new()
       |> to(reader.email)
-      |> from({"IndiePaper", "support@" <> Endpoint.url()})
+      |> from({"IndiePaper", Mailer.from_email()})
       |> subject("Thanks for buying at IndiePaper")
       |> text_body("""
       ==============================
