@@ -25,6 +25,7 @@ defmodule IndiePaperWeb.ChannelCase do
 
       # The default endpoint for testing
       @endpoint IndiePaperWeb.Endpoint
+      import Swoosh.TestAssertions
     end
   end
 

@@ -25,6 +25,7 @@ defmodule IndiePaper.DataCase do
       import Ecto.Query
       import IndiePaper.DataCase
       import IndiePaper.Factory
+      import Swoosh.TestAssertions
     end
   end
 

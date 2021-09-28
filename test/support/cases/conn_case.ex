@@ -30,6 +30,7 @@ defmodule IndiePaperWeb.ConnCase do
       @endpoint IndiePaperWeb.Endpoint
       import IndiePaper.Factory
       import IndiePaperWeb.ConnCaseHelpers
+      import Swoosh.TestAssertions
     end
   end
 
