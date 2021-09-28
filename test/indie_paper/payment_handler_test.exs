@@ -50,7 +50,7 @@ defmodule IndiePaper.PaymentHandlerTest do
 
       assert Orders.is_payment_completed?(updated_order)
 
-      assert_email_sent(to: order.customer.email, from: {"IndiePaper", "support@localhost"})
+      assert_email_sent(to: order.customer.email, from: {"IndiePaper", "support@example.com"})
     end
   end
 end

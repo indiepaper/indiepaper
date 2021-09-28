@@ -60,7 +60,8 @@ defmodule IndiePaper.MixProject do
       {:money, "~> 1.4"},
       {:ueberauth, "~> 0.6"},
       {:ueberauth_google, "~> 0.10"},
-      {:ueberauth_twitter, "~> 0.4"}
+      {:ueberauth_twitter, "~> 0.4"},
+      {:domainatrex, "~> 2.2.0"}
     ]
   end
 
