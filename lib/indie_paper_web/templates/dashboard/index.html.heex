@@ -50,8 +50,10 @@
                             <% end %>
                         </div>
                         <div class="p-6">
+                            <%= link to: (if IndiePaper.Books.is_published?(book), do: Routes.book_path(@conn, :show, book), else: Routes.book_path(@conn, :edit, book)) , class: "block" do %>
                             <h2 data-test="book-title" class="text-lg"><%= book.title %></h2>
                             <h2 data-test="book-title" class="mt-1 text-sm secondary-text"><%= book.short_description %></h2>
+                            <% end %>
                             <div class="flex flex-row mt-8 space-x-6 text-secondary-text">
                                 <%= link to: Routes.draft_path(@conn, :edit, book.draft), class: "secondary-link"  do %>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
