@@ -23,7 +23,7 @@ defmodule IndiePaper.OrdersTest do
       customer = insert(:author)
 
       {:ok, order} =
-        Orders.create_order_with_customer(customer, %{
+        Orders.create_order(customer, %{
           amount: 340,
           book_id: book.id,
           products: book.products,

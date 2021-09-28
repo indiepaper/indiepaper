@@ -15,18 +15,8 @@ defmodule IndiePaper.Orders do
     order |> Repo.preload(assoc)
   end
 
-  def create_order_with_customer(nil, attrs) do
-    %Order{}
-    |> create_order(attrs)
-  end
-
-  def create_order_with_customer(customer, attrs) do
+  def create_order(customer, attrs \\ %{}) do
     Ecto.build_assoc(customer, :orders)
-    |> create_order(attrs)
-  end
-
-  def create_order(order, attrs \\ %{}) do
-    order
     |> Order.changeset(attrs)
     |> Order.line_items_changeset(line_items_changeset(attrs[:products]))
     |> Repo.insert()
