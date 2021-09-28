@@ -132,7 +132,7 @@ defmodule IndiePaperWeb.AuthorAuth do
       conn
     else
       conn
-      |> put_flash(:error, "You must log in to access this page.")
+      |> put_flash(:info, "You should be signed in to access this page.")
       |> maybe_store_return_to()
       |> redirect(to: Routes.author_session_path(conn, :new))
       |> halt()
