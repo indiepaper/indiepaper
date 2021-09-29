@@ -28,4 +28,8 @@ defmodule IndiePaper.Drafts do
   def get_first_chapter(%Draft{chapters: chapters}) do
     Enum.min_by(chapters, fn chapter -> chapter.chapter_index end)
   end
+
+  def get_last_chapter(%Draft{chapters: chapters}) do
+    Enum.max_by(chapters, fn chapter -> chapter.chapter_index end)
+  end
 end
