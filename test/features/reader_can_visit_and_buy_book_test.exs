@@ -35,4 +35,15 @@ defmodule IndiePaperWeb.Feature.ReaderCanVisitAndBuyBookTest do
     |> BookPage.Read.has_book_title?(order.book.title)
     |> BookPage.Read.has_chapter_title?(chapter.title)
   end
+
+  test "reader cannot buy own book", %{session: session} do
+    book = insert(:book)
+
+    session
+    |> LoginPage.visit_page()
+    |> LoginPage.login(email: book.author.email, password: book.author.password)
+    |> BookPage.Show.visit_page(book)
+    |> BookPage.Show.click_buy_button()
+    |> BookPage.Show.has_blocked_message?()
+  end
 end

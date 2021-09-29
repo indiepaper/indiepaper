@@ -27,7 +27,7 @@ defmodule IndiePaperWeb.Pages.BookPage.Show do
 
   def click_buy_button(session) do
     session
-    |> click(button("Buy Now"))
+    |> click(link("Buy Now"))
   end
 
   def has_buy_button?(session) do
@@ -38,6 +38,11 @@ defmodule IndiePaperWeb.Pages.BookPage.Show do
   def has_book_title?(session, title) do
     session
     |> assert_has(data("test", "title", text: title))
+  end
+
+  def has_blocked_message?(session) do
+    session
+    |> assert_has(Wallaby.Query.text("cannot buy"))
   end
 end
 
