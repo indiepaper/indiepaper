@@ -1,8 +1,8 @@
 <section class="bg-background">
     <div class="container-box page-box">
         <div class="max-w-xl">
-        <h1 class="page-heading">Edit Chapter</h1>
-        <p class="page-description">I know this is kind of wierd to create a chapter on a separate page, but bear with me this will change once we refactor our editor.</p>
+            <h1 class="page-heading">Edit Chapter</h1>
+            <p class="page-description">I know this is kind of wierd to edit a chapter on a separate page, but bear with me this will change once we refactor our editor.</p>
         </div>
 
         <div class="mt-12 max-w-2xl">
@@ -14,7 +14,7 @@
                     </div>
                 <% end %>
 
-                <div class="form-tight-container">
+                <div class="max-w-lg form-tight-container">
                     <div class="input-container">
                         <%= label f, :title, class: "input-label"  %>
                         <%= text_input f, :title, class: "form-input"  %>
