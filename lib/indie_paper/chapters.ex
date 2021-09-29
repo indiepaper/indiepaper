@@ -10,6 +10,18 @@ defmodule IndiePaper.Chapters do
     |> Chapter.changeset(attrs)
   end
 
+  def create_chapter(draft, params \\ %{}) do
+    Ecto.build_assoc(draft, :chapters)
+    |> change_chapter(
+      Map.put(
+        params,
+        "content_json",
+        placeholder_content_json(params["title"], "Test Content")
+      )
+    )
+    |> Repo.insert()
+  end
+
   def placeholder_chapter(title: title, chapter_index: chapter_index) do
     change_chapter(%Chapter{}, %{
       title: title,

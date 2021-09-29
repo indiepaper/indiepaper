@@ -1,0 +1,30 @@
+<section class="bg-background">
+    <div class="container-box page-box">
+        <div class="max-w-xl">
+        <h1 class="page-heading">Add Chapter</h1>
+        <p class="page-description">I know this is kind of wierd to create a chapter on a separate page, but bear with me this will change once we refactor our editor.</p>
+        </div>
+
+        <div class="mt-12 max-w-2xl">
+            <%= form_for @changeset, Routes.draft_draft_chapter_path(@conn, :create, @draft), fn f -> %>
+
+                <%= if @changeset.action do %>
+                    <div class="form-error-box">
+                        <p>Oops, Something went wrong. Please check errors below</p>
+                    </div>
+                <% end %>
+
+                <div class="form-tight-container">
+                    <div class="input-container">
+                        <%= label f, :title, class: "input-label"  %>
+                        <%= text_input f, :title, class: "form-input"  %>
+                        <p class="input-error">
+                            <%= error_tag f, :title %>
+                        </p>
+                    </div>
+                    <%= submit "Add Chapter", class: "primary-button" %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</section>

@@ -5,7 +5,7 @@
                 <div>
                     <h1 data-test="title" class="page-heading"><%= @draft.book.title %></h1>
                 </div>
-                    <%= link "Publish", to: Routes.book_publication_path(@conn, :create, @draft.book), method: :post, class: "primary-button w-full md:w-auto md:text-sm" %>
+                <%= link "Publish", to: Routes.book_publication_path(@conn, :create, @draft.book), method: :post, class: "primary-button w-full md:w-auto md:text-sm" %>
             </div>
         </div>
     </div>
@@ -27,43 +27,78 @@
         </div>
         <div class="flex flex-col items-stretch space-y-12 md:flex-row md:items-stretch md:space-y-0" >
             <div class="flex flex-col md:pt-8 md:pr-6 md:pb-12 md:w-64">
-                <div class="space-y-3">
-                    <%= for chapter <- @draft.chapters do %>
-                        <button @click={"selectChapter('#{chapter.id}')"} class="block py-2 px-6 w-full text-left rounded-md hover:bg-warm-gray-100" :class={"{'bg-warm-gray-100' : selectedChapterId === '#{chapter.id}'}"} data-test="chapter-title"><%= chapter.title %></button>
-                    <% end %>
+                <div class="space-y-6">
+                    <div class="flex flex-row justify-between items-center">
+                        <div>
+                            <p>Chapters</p>
+                        </div>
+                        <%= link to: Routes.draft_draft_chapter_path(@conn, :new, @draft), class: "px-3 text-xs secondary-button" do %>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <p>Add</p>
+                        <% end %>
+                    </div>
+                    <div class="space-y-4">
+                        <%= for chapter <- @draft.chapters do %>
+                            <div class="flex flex-row justify-between items-center pr-2 space-x-2 rounded-md hover:bg-warm-gray-100"
+                                 :class={"{'bg-warm-gray-100' : selectedChapterId === '#{chapter.id}'}"}
+                            >
+                                <button @click={"selectChapter('#{chapter.id}')"}
+                                        class="block py-2 px-6 w-full text-left rounded-md hover:bg-warm-gray-100"
+                                        :class={"{'bg-warm-gray-100' : selectedChapterId === '#{chapter.id}'}"} data-test="chapter-title">
+                                    <%= chapter.title %>
+                                </button>
+                                <%= link to: Routes.draft_draft_chapter_path(@conn, :edit, @draft, chapter) do %>
+                                    <div
+                                    :class={"{'!block' : selectedChapterId === '#{chapter.id}'}"}
+                                        class={"secondary-button px-2 hidden"}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
+                                    </div>
+                                <% end %>
+                            </div>
+                        <% end %>
+                    </div>
                 </div>
             </div>
             <div class="flex-1 p-0 bg-white rounded-lg border border-primary-border">
                 <div class="flex flex-col items-stretch" >
-                    <div class="flex flex-row items-center py-4 px-8 space-x-4 text-gray-600 border-b hover:text-gray-800 border-primary-border">
+                    <div class="flex flex-row items-center py-4 px-8 space-x-1 border-b border-primary-border">
                         <button
                             @click="toggleBold()"
-                            :class="{ 'border-b-2 border-gray-800 pb-1' : isActive('bold', updatedAt) }"
+                            class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
+                            :class="{ 'text-white bg-gray-800' : isActive('bold', updatedAt) }"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current" ><path fill="none" d="M0 0h24v24H0z"/><path d="M8 11h4.5a2.5 2.5 0 1 0 0-5H8v5zm10 4.5a4.5 4.5 0 0 1-4.5 4.5H6V4h6.5a4.5 4.5 0 0 1 3.256 7.606A4.498 4.498 0 0 1 18 15.5zM8 13v5h5.5a2.5 2.5 0 1 0 0-5H8z"/></svg>
                         </button>
                         <button
+                            class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
                             @click="toggleItalic()"
-                            :class="{ 'border-b-2 border-gray-800 pb-1' : isActive('italic', updatedAt) }"
+                            :class="{ 'text-white bg-gray-800' : isActive('italic', updatedAt) }"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 20H7v-2h2.927l2.116-12H9V4h8v2h-2.927l-2.116 12H15z"/></svg>
                         </button>
-                        <span></span>
+                        <span class="px-1"></span>
                         <button
+                            class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
                             @click="toggleHeading(1)"
-                            :class="{ 'border-b-2 border-gray-800 pb-1' : isActive('heading', { level: 1 }, updatedAt) }"
+                            :class="{ 'text-white bg-gray-800' : isActive('heading', { level: 1 }, updatedAt) }"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0H24V24H0z"/><path d="M13 20h-2v-7H4v7H2V4h2v7h7V4h2v16zm8-12v12h-2v-9.796l-2 .536V8.67L19.5 8H21z"/></svg>
                         </button>
                         <button
+                            class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
                             @click="toggleHeading(2)"
-                            :class="{ 'border-b-2 border-gray-800 pb-1' : isActive('heading', { level: 2 }, updatedAt) }"
+                            :class="{ 'text-white bg-gray-800' : isActive('heading', { level: 2 }, updatedAt) }"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0H24V24H0z"/><path d="M4 4v7h7V4h2v16h-2v-7H4v7H2V4h2zm14.5 4c2.071 0 3.75 1.679 3.75 3.75 0 .857-.288 1.648-.772 2.28l-.148.18L18.034 18H22v2h-7v-1.556l4.82-5.546c.268-.307.43-.709.43-1.148 0-.966-.784-1.75-1.75-1.75-.918 0-1.671.707-1.744 1.606l-.006.144h-2C14.75 9.679 16.429 8 18.5 8z"/></svg>
                         </button>
                         <button
+                            class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
                             @click="toggleHeading(3)"
-                            :class="{ 'border-b-2 border-gray-800 pb-1' : isActive('heading', { level: 3 }, updatedAt) }"
+                            :class="{ 'text-white bg-gray-800' : isActive('heading', { level: 3 }, updatedAt) }"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0H24V24H0z"/><path d="M22 8l-.002 2-2.505 2.883c1.59.435 2.757 1.89 2.757 3.617 0 2.071-1.679 3.75-3.75 3.75-1.826 0-3.347-1.305-3.682-3.033l1.964-.382c.156.806.866 1.415 1.718 1.415.966 0 1.75-.784 1.75-1.75s-.784-1.75-1.75-1.75c-.286 0-.556.069-.794.19l-1.307-1.547L19.35 10H15V8h7zM4 4v7h7V4h2v16h-2v-7H4v7H2V4h2z"/></svg>
                         </button>
@@ -76,7 +111,7 @@
                             Save
                         </button>
                     </div>
-                    <div class="py-8 px-8 prose min-h-[720px]" x-ref="editorReference"></div>
+                    <div class="py-8 px-8 prose min-h-[720px] font-normal" x-ref="editorReference"></div>
                 </div>
             </div>
         </div>
