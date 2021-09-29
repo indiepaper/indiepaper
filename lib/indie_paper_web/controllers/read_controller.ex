@@ -17,7 +17,7 @@ defmodule IndiePaperWeb.ReadController do
     render(conn, "show.html",
       book: book,
       chapters: book.draft.chapters,
-      published_content_json: chapter.published_content_json
+      current_chapter: chapter
     )
   end
 end
