@@ -37,7 +37,7 @@ document.addEventListener("alpine:init", () => {
 
           this.selectedChapterId = chapterId;
 
-          fetch(`/drafts/${this.draftId}/chapters/${chapterId}/edit`)
+          fetch(`/drafts/${this.draftId}/chapters/${chapterId}`)
             .then((res) => res.json())
             .then((content_json) => {
               editor.commands.setContent(content_json);
