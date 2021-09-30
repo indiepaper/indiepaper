@@ -3,7 +3,10 @@ defmodule IndiePaperWeb.FallbackController do
 
   def call(conn, {:error, :unauthorized}) do
     conn
-    |> put_flash(:error, "You are not authorized to perform that action.")
+    |> put_flash(
+      :error,
+      "You are not authorized to perform that action. Contact Support if you think it's an error."
+    )
     |> redirect(to: "/")
   end
 end
