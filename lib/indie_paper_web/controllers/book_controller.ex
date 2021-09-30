@@ -33,7 +33,7 @@ defmodule IndiePaperWeb.BookController do
   def update(conn, %{"id" => book_id, "book" => book_params}) do
     book = Books.get_book!(book_id)
 
-    case Books.update_book(book, book_params) do
+    case Books.update_book(conn.assigns.current_author, book, book_params) do
       {:ok, updated_book} ->
         redirect(conn,
           to:

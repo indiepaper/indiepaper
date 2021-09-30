@@ -62,7 +62,7 @@ defmodule IndiePaper.BooksTest do
       book = insert(:book)
       book_params = params_for(:book, title: "Updated Book")
 
-      {:ok, updated_book} = Books.update_book(book, book_params)
+      {:ok, updated_book} = Books.update_book(book.author, book, book_params)
 
       assert updated_book.title == book_params[:title]
     end

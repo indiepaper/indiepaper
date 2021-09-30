@@ -43,10 +43,12 @@ defmodule IndiePaper.Books do
     end
   end
 
-  def update_book(book, book_params) do
-    book
-    |> Book.changeset(book_params)
-    |> Repo.update()
+  def update_book(current_author, book, book_params) do
+    with :ok <- Bodyguard.permit(__MODULE__, :update_book, current_author, book) do
+      book
+      |> Book.changeset(book_params)
+      |> Repo.update()
+    end
   end
 
   def get_book!(book_id), do: Repo.get!(Book, book_id)
