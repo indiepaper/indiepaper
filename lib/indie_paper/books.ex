@@ -1,4 +1,9 @@
 defmodule IndiePaper.Books do
+  @behaviour Bodyguard.Policy
+
+  def authorize(:update_book, %{id: author_id}, %{author_id: author_id}), do: true
+  def authorize(_, _, _), do: false
+
   alias IndiePaper.Repo
   import Ecto.Query
 

@@ -3,8 +3,7 @@ defmodule IndiePaperWeb.FallbackController do
 
   def call(conn, {:error, :unauthorized}) do
     conn
-    |> put_status(:forbidden)
-    |> put_view(IndiePaperWeb.ErrorView)
-    |> render(:"403")
+    |> put_flash(:error, "You are not authorized to perform that action.")
+    |> redirect(to: "/")
   end
 end
