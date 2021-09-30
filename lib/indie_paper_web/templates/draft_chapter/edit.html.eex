@@ -22,7 +22,7 @@
                             <%= error_tag f, :title %>
                         </p>
                     </div>
-                    <%= submit "Add Chapter", class: "primary-button" %>
+                    <%= submit "Update Chapter", class: "primary-button" %>
                 </div>
             <% end %>
         </div>
