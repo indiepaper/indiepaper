@@ -1,7 +1,9 @@
 defmodule IndiePaperWeb.ReadController do
   use IndiePaperWeb, :controller
 
-  alias IndiePaper.{Books, Chapters}
+  action_fallback IndiePaperWeb.FallbackController
+
+  alias IndiePaper.{Books, Chapters, Marketplace}
 
   def index(conn, %{"book_id" => book_id}) do
     book = Books.get_book!(book_id) |> Books.with_assoc(draft: :chapters)
@@ -14,10 +16,12 @@ defmodule IndiePaperWeb.ReadController do
     book = Books.get_book!(book_id) |> Books.with_assoc(draft: :chapters)
     chapter = Chapters.get_chapter!(chapter_id)
 
-    render(conn, "show.html",
-      book: book,
-      chapters: book.draft.chapters,
-      current_chapter: chapter
-    )
+    with :ok <- Bodyguard.permit(Marketplace, :can_read, conn.assigns.current_author, book) do
+      render(conn, "show.html",
+        book: book,
+        chapters: book.draft.chapters,
+        current_chapter: chapter
+      )
+    end
   end
 end

@@ -1,4 +1,8 @@
 defmodule IndiePaper.Orders do
+  @behaviour Bodyguard.Policy
+
+  def authorize(_, _, _), do: false
+
   alias IndiePaper.Repo
   import Ecto.Query
 
