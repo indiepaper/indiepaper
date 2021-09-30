@@ -20,6 +20,7 @@ defmodule IndiePaperWeb.AuthorRegistrationController do
           )
 
         conn
+        |> put_flash(:info, "Welcome to IndiePaper. Confirm email to continue.")
         |> AuthorAuth.log_in_author(author)
 
       {:error, %Ecto.Changeset{} = changeset} ->
