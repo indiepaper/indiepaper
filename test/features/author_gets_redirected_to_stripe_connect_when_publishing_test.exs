@@ -4,7 +4,7 @@ defmodule IndiePaperWeb.AuthorGetsRedirectedToStripeConnectWhenPublishingTest do
   alias IndiePaperWeb.Pages.{LoginPage, DashboardPage, DraftPage, StripeConnectPage}
 
   test "author gets redirected to Stripe Connect Page on Publish", %{session: session} do
-    author = insert(:author, account_status: :confirmed)
+    author = insert(:author, stripe_connect_id: nil, account_status: :confirmed)
     book = insert(:book, author: author, status: :pending_publication)
 
     session

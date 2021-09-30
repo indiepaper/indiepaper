@@ -15,4 +15,14 @@ defmodule IndiePaperWeb.Pages.StripeConnectPage.New do
     session
     |> click(button("Connect Stripe"))
   end
+
+  def continue_stripe_connect(session) do
+    session
+    |> click(button("Continue Stripe Connect"))
+  end
+
+  def reset_stripe_connect(session) do
+    session
+    |> click(link("Reset Stripe"))
+  end
 end
