@@ -1,6 +1,8 @@
 defmodule IndiePaperWeb.ProductController do
   use IndiePaperWeb, :controller
 
+  action_fallback IndiePaperWeb.FallbackController
+
   alias IndiePaper.{Products, Books}
 
   def new(conn, %{"book_id" => book_id}) do
@@ -26,14 +28,16 @@ defmodule IndiePaperWeb.ProductController do
     product = Products.get_product!(product_id)
     changeset = Products.change_product(product)
 
-    render(conn, "edit.html", book: book, product: product, changeset: changeset)
+    with :ok <- Bodyguard.permit(Products, :update_product, conn.assigns.current_author, product) do
+      render(conn, "edit.html", book: book, product: product, changeset: changeset)
+    end
   end
 
   def update(conn, %{"book_id" => book_id, "id" => product_id, "product" => product_params}) do
     book = Books.get_book!(book_id) |> Books.with_assoc(:assets)
     product = Products.get_product!(product_id)
 
-    case Products.update_product(product, product_params) do
+    case Products.update_product(conn.assigns.current_author, product, product_params) do
       {:ok, _updated_product} ->
         redirect(conn, to: Routes.dashboard_path(conn, :index))
 

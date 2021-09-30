@@ -48,9 +48,11 @@ defmodule IndiePaper.ProductsTest do
 
   describe "update_product/2" do
     test "updates product with given params" do
-      product = insert(:product)
+      book = insert(:book)
+      product = Enum.at(book.products, 0)
 
-      {:ok, updated_product} = Products.update_product(product, %{title: "Updated Product"})
+      {:ok, updated_product} =
+        Products.update_product(book.author, product, %{title: "Updated Product"})
 
       assert updated_product.title == "Updated Product"
     end
