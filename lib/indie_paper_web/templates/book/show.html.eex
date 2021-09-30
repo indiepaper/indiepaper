@@ -13,7 +13,7 @@
                     <p class="font-black">Buy Now</p>
                 <% end %>
             </div>
-            <div class="py-12 mt-16 w-full text-gray-700 border-t md:px-8 md:mt-20 md:text-gray-600 secondary-text prose-sm border-primary-border md:prose">
+            <div class="py-12 mt-16 w-full text-gray-700 border-t md:px-8 md:mt-20 md:text-gray-600 secondary-text prose border-primary-border">
                 <%= raw(@book.long_description_html) %>
             </div>
         </div>

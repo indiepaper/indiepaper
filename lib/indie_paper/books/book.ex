@@ -34,15 +34,15 @@ defmodule IndiePaper.Books.Book do
 
   @doc false
   def changeset(book, attrs) do
-    changeset =
-      book
-      |> cast(attrs, [:title, :short_description, :long_description_html])
-      |> validate_required([:title, :short_description, :long_description_html])
+    book
+    |> cast(attrs, [:title, :short_description, :long_description_html])
+    |> sanitized_long_description_html()
+    |> validate_required([:title, :short_description, :long_description_html])
+  end
 
-    change(changeset,
-      long_description_html:
-        HtmlSanitizeEx.markdown_html(changeset.changes[:long_description_html])
-    )
+  def sanitized_long_description_html(changeset) do
+    long_description_html = get_field(changeset, :long_description_html)
+    change(changeset, long_description_html: HtmlSanitizeEx.markdown_html(long_description_html))
   end
 
   def initial_draft_changeset(book, attrs) do
