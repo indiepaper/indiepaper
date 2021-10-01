@@ -102,6 +102,7 @@ defmodule IndiePaperWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/:page", PageController, :show
 
     resources "/books", BookController, only: [:show]
   end
