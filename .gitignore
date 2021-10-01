@@ -36,3 +36,7 @@ screenshots/
 
 # Development Secrets
 dev.secret.exs
+
+# Ignore production secrets for fly
+.prod.env
+.dev.env
