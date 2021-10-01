@@ -1,30 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <%= csrf_meta_tag() %>
-    <%= live_title_tag assigns[:page_title] || "IndiePaper", suffix: " · Phoenix Framework" %>
-    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
-    <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
-  </head>
-  <body>
-    <header>
-      <section class="container">
-        <nav>
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-            <% end %>
-          </ul>
-        </nav>
-        <a href="https://phoenixframework.org/" class="phx-logo">
-          <img src={Routes.static_path(@conn, "/images/phoenix.png")} alt="Phoenix Framework Logo"/>
-        </a>
-      </section>
-    </header>
-    <%= @inner_content %>
-  </body>
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <%= csrf_meta_tag() %>
+        <%= live_title_tag assigns[:page_title] || "IndiePaper", suffix: " · IndiePaper" %>
+
+        <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
+        <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/fonts/fonts.css")}/>
+        <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/js/app.js")}></script>
+        <script defer data-domain="indiepaper.me" src="https://plausible.io/js/plausible.js"></script>
+    </head>
+
+    <body class="antialiased font-medium text-gray-800 md:text-primary-text" >
+        <header class="border-b-2 border-orange-400">
+            <div class="flex flex-row justify-between items-center container-box">
+                <%= link "IndiePaper", to: Routes.page_path(@conn, :index), class: "font-bold", "data-test": "title"  %>
+                <div class="flex flex-row items-center space-x-5 md:space-x-8">
+                    <%= if @current_author do %>
+                        <%= link "Dashboard", to: Routes.dashboard_path(@conn, :index), class: "primary-link" %>
+                        <%= link "Sign out", to: Routes.author_session_path(@conn, :delete), method: :delete, class: "primary-link", "data-no-instant": true %>
+                    <% else %>
+                        <%= link "Sign in", to: Routes.author_session_path(@conn, :new) , class: "primary-link"%>
+                        <%= link "Start Writing", to: Routes.author_registration_path(@conn, :new), class: "secondary-button text-sm" %>
+                    <% end %>
+                </div>
+            </div>
+        </header>
+        <%= @inner_content %>
+        <footer class="font-normal bg-white border-t border-b border-primary-border">
+            <div class="flex flex-col justify-between items-start py-8 space-y-4 md:flex-row md:items-center md:space-y-0 container-box">
+                <div class="space-x-6">
+                    <a href="https://twitter.com/indiepaperme" class="inline-block">
+                        <svg class="inline-block mr-1 w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path>
+                        </svg>
+                        twitter
+                    </a>
+                    <a class="inline-block" href="mailto:support@indiepaper.me">
+                        support@indiepaper.me
+                    </a>
+                </div>
+                <p class="">IndiePaper, Inc.</p>
+            </div>
+        </footer>
+    </body>
 </html>

@@ -1,6 +1,10 @@
 defmodule IndiePaperWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :indie_paper
 
+  if Application.get_env(:indie_paper, :sql_sandbox) do
+    plug Phoenix.Ecto.SQL.Sandbox
+  end
+
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
@@ -37,6 +41,14 @@ defmodule IndiePaperWeb.Endpoint do
 
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
+
+  # Stripe Webhook Plugs
+  plug IndiePaperWeb.Plugs.StripeWebhookPlug
+
+  plug Stripe.WebhookPlug,
+    at: "/stripe/webhooks/account",
+    handler: IndiePaperWeb.StripeWebhookHandler,
+    secret: {Application, :get_env, [:stripity_stripe, :account_webhook_signing_secret]}
 
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],

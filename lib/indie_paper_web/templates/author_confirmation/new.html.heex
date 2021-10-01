@@ -1,0 +1,21 @@
+<section class="bg-background">
+    <div class="container-box page-box">
+        <h1 class="page-heading">Resend confirmation instructions</h1>
+
+        <div class="mt-16">
+            <.form let={f} for={:author} action={Routes.author_confirmation_path(@conn, :create)}>
+            <div class="max-w-md form-tight-container">
+                <div class="input-container">
+                    <%= label f, :email, class: "form-label" %>
+                    <%= email_input f, :email, required: true, class: "form-input" %>
+                </div>
+
+                <div class="flex flex-row justify-between items-baseline w-full">
+                    <%= submit "Resend confirmation instructions", class: "submit-button" %>
+                    <%= link "Sign in", to: Routes.author_session_path(@conn, :new), class: "secondary-link text-base" %>
+                </div>
+            </div>
+            </.form>
+        </div>
+    </div>
+</section>

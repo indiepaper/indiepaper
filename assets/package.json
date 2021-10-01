@@ -1,0 +1,21 @@
+{
+  "scripts": {
+    "deploy": "NODE_ENV=production postcss css/app.css -o ../priv/static/assets/app.css"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.3.3",
+    "postcss": "^8.3.6",
+    "postcss-cli": "^8.3.1",
+    "postcss-import": "^14.0.2",
+    "tailwindcss": "^2.2.9"
+  },
+  "dependencies": {
+    "@tailwindcss/forms": "^0.3.3",
+    "@tailwindcss/typography": "^0.4.1",
+    "@tiptap/core": "^2.0.0-beta.103",
+    "@tiptap/html": "^2.0.0-beta.111",
+    "@tiptap/starter-kit": "^2.0.0-beta.102",
+    "alpinejs": "^3.3.2",
+    "instant.page": "^5.1.0"
+  }
+}

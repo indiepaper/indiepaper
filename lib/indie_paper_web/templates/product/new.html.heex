@@ -1,0 +1,12 @@
+<section class="bg-background">
+    <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
+    <div class="container-box page-box">
+        <div class="max-w-2xl">
+            <h1 class="page-heading">Add Product</h1>
+            <p class="page-description">Products are what your readers buy, bundle as many assets as you want with each product.</p>
+            <div class="mt-16">
+                <%= render "_form.html", Map.put(assigns, :action, Routes.book_product_path(@conn, :create, @book)) %>
+            </div>
+        </div>
+    </div>
+</section>

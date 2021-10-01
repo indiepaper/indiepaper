@@ -1,0 +1,27 @@
+<section class="bg-background">
+    <div class="container-box page-box">
+        <div class="max-w-xl">
+            <h1 class="page-heading">Forgot your password?</h1>
+            <p class="page-description">Don't worry, happens to the best of us. Drop your email and if it's in our system we'll send a reset password link to it.</p>
+
+            <div class="mt-16">
+                <.form let={f} for={:author} action={Routes.author_reset_password_path(@conn, :create)}>
+
+                <div class="max-w-md form-tight-container">
+                    <div class="input-container">
+                        <%= label f, :email, class: "form-label" %>
+                        <%= email_input f, :email, required: true, class: "form-input" %>
+                    </div>
+
+                    <div class="flex flex-row justify-between items-baseline w-full">
+                        <%= submit "Reset password", class: "submit-button" %>
+                        <%= link "Sign in", to: Routes.author_session_path(@conn, :new), class: "secondary-link text-base" %>
+                    </div>
+                </div>
+                </.form>
+            </div>
+
+
+        </div>
+    </div>
+</section>
