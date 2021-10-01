@@ -3,6 +3,6 @@ defmodule IndiePaperWeb.Pages.Components.DashboardNavBar do
 
   def click_create_new(session) do
     session
-    |> click(link("Create new"))
+    |> click(data("test", "create-new", text: "Create new"))
   end
 end
