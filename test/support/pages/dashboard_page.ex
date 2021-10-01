@@ -6,6 +6,11 @@ defmodule IndiePaperWeb.Pages.DashboardPage do
     |> visit(Routes.dashboard_path(@endpoint, :index))
   end
 
+  def click_preview(session) do
+    session
+    |> click(link("Preview"))
+  end
+
   def has_title?(session) do
     session
     |> assert_has(data("test", "title", text: "Your Books"))
