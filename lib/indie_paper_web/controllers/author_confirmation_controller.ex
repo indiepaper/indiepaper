@@ -44,7 +44,7 @@ defmodule IndiePaperWeb.AuthorConfirmationController do
     case Authors.confirm_author(token) do
       {:ok, _} ->
         conn
-        |> put_flash(:info, "Author confirmed successfully.")
+        |> put_flash(:info, "Your account has been confirmed successfully.")
         |> redirect(
           to: if(conn.assigns.current_author, do: Routes.dashboard_path(conn, :index), else: "/")
         )
