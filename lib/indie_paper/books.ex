@@ -78,4 +78,9 @@ defmodule IndiePaper.Books do
     book_with_author = book |> with_assoc(:author)
     book_with_author.author
   end
+
+  def has_one_published_book?(author) do
+    from(b in Book, where: b.author_id == ^author.id and b.status == :published)
+    |> Repo.aggregate(:count) > 0
+  end
 end

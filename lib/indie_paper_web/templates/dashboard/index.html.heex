@@ -29,6 +29,67 @@
             <h1 data-test="title" class="page-heading">Your Books</h1>
             <p class="page-description">your current drafts and published books appear here. Write them with love and care they deserve</p>
 
+            <%= if not IndiePaper.Books.has_one_published_book?(@current_author) do %>
+                <div class="mt-8 mb-12">
+                    <div class="p-0 primary-card">
+                        <div class="p-6">
+                            <h3 class="text-lg">Welcome to IndiePaper, Let's get started.</h3>
+                            <p class="text-sm secondary-text">Creating a book is simple as creating a blog post. Follow the steps to get your first book published and ready for sale.</p>
+                        </div>
+                        <div class="flex flex-col py-3 px-6 space-y-3 w-full border-t md:flex-row md:justify-between md:items-center md:space-y-0 border-secondary-border">
+                            <div class="flex flex-row items-center space-x-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <div>
+                                    <h4>Create and edit draft</h4>
+                                    <p class="text-sm secondary-text">Start by creating a draft.</p>
+                                </div>
+                            </div>
+                            <%= link to: Routes.book_path(@conn, :new), class: "secondary-link" do %>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <p>Create new</p>
+                            <% end %>
+                        </div>
+                        <div class="flex flex-col py-3 px-6 space-y-3 w-full border-t md:flex-row md:justify-between md:items-center md:space-y-0 border-secondary-border">
+                            <div class="flex flex-row items-center space-x-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <div>
+                                    <h4>Update book listing</h4>
+                                    <p class="text-sm secondary-text">Finish the info to be shown on the listing page.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col py-3 px-6 space-y-3 w-full border-t md:flex-row md:justify-between md:items-center md:space-y-0 border-secondary-border">
+                            <div class="flex flex-row items-center space-x-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <div>
+                                    <h4>Connect Stripe</h4>
+                                    <p class="text-sm secondary-text">Connect Stripe to start selling your book. Your earnings will be deposited weekly.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col py-3 px-6 space-y-3 w-full border-t md:flex-row md:justify-between md:items-center md:space-y-0 border-secondary-border">
+                            <div class="flex flex-row items-center space-x-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <div>
+                                    <h4>Publish your book</h4>
+                                    <p class="text-sm secondary-text">Hit publish and share your generated store page with your readers.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+
             <div class="mt-8 space-y-12 md:space-y-16">
                 <%= for book <- @books do %>
                     <div class="items-stretch p-0 primary-card">
