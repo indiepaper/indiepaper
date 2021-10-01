@@ -1,4 +1,9 @@
 defmodule IndiePaper.Drafts do
+  @behaviour Bodyguard.Policy
+
+  def authorize(:edit_draft, %{id: author_id}, %{book: %{author_id: author_id}}), do: true
+  def authorize(_, _, _), do: false
+
   alias IndiePaper.Repo
 
   alias IndiePaper.Drafts.Draft

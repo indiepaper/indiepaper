@@ -75,7 +75,7 @@ defmodule IndiePaperWeb.AuthorConfirmationControllerTest do
 
       conn = post(conn, Routes.author_confirmation_path(conn, :update, token))
       assert redirected_to(conn) == "/"
-      assert get_flash(conn, :info) =~ "Author confirmed successfully"
+      assert get_flash(conn, :info) =~ "confirmed"
       assert Authors.get_author!(author.id).confirmed_at
       refute get_session(conn, :author_token)
       assert Repo.all(Authors.AuthorToken) == []

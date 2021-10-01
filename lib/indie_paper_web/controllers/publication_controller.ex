@@ -9,7 +9,10 @@ defmodule IndiePaperWeb.PublicationController do
     case Publication.publish_book(book) do
       {:ok, book} ->
         conn
-        |> put_flash(:info, "#{book.title} has been published. Share it with your readers.")
+        |> put_flash(
+          :info,
+          "#{book.title} has been published. Share it with your readers and we'll take care of the rest."
+        )
         |> redirect(to: Routes.book_path(conn, :show, book))
     end
   end

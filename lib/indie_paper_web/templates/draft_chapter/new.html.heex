@@ -2,10 +2,10 @@
     <div class="container-box page-box">
         <div class="max-w-xl">
         <h1 class="page-heading">Add Chapter</h1>
-        <p class="page-description">I know this is kind of wierd to create a chapter on a separate page, but bear with me this will change once we refactor our editor.</p>
+        <p class="page-description">It's kind of weird to create a chapter on a separate page, but once we rebuild the editor, it will be taken care of.</p>
         </div>
 
-        <div class="mt-12 max-w-2xl">
+        <div class="mt-12 max-w-lg">
             <%= form_for @changeset, Routes.draft_draft_chapter_path(@conn, :create, @draft), fn f -> %>
 
                 <%= if @changeset.action do %>

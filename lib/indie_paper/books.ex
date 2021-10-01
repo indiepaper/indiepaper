@@ -1,4 +1,9 @@
 defmodule IndiePaper.Books do
+  @behaviour Bodyguard.Policy
+
+  def authorize(:update_book, %{id: author_id}, %{author_id: author_id}), do: true
+  def authorize(_, _, _), do: false
+
   alias IndiePaper.Repo
   import Ecto.Query
 
@@ -38,10 +43,12 @@ defmodule IndiePaper.Books do
     end
   end
 
-  def update_book(book, book_params) do
-    book
-    |> Book.changeset(book_params)
-    |> Repo.update()
+  def update_book(current_author, book, book_params) do
+    with :ok <- Bodyguard.permit(__MODULE__, :update_book, current_author, book) do
+      book
+      |> Book.changeset(book_params)
+      |> Repo.update()
+    end
   end
 
   def get_book!(book_id), do: Repo.get!(Book, book_id)
@@ -70,5 +77,10 @@ defmodule IndiePaper.Books do
   def get_author(book) do
     book_with_author = book |> with_assoc(:author)
     book_with_author.author
+  end
+
+  def has_one_published_book?(author) do
+    from(b in Book, where: b.author_id == ^author.id and b.status == :published)
+    |> Repo.aggregate(:count) > 0
   end
 end

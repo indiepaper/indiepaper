@@ -2,7 +2,7 @@
     <div class="container-box page-box">
         <div class="max-w-xl">
             <h1 class="page-heading">Edit Chapter</h1>
-            <p class="page-description">I know this is kind of wierd to edit a chapter on a separate page, but bear with me this will change once we refactor our editor.</p>
+            <p class="page-description">It's kind of weird to edit a chapter on a separate page, but once we rebuild the editor, it will be taken care of.</p>
         </div>
 
         <div class="mt-12 max-w-2xl">
@@ -22,7 +22,7 @@
                             <%= error_tag f, :title %>
                         </p>
                     </div>
-                    <%= submit "Add Chapter", class: "primary-button" %>
+                    <%= submit "Update Chapter", class: "primary-button" %>
                 </div>
             <% end %>
         </div>

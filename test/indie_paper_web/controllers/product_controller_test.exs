@@ -16,6 +16,22 @@ defmodule IndiePaperWeb.ProductControllerTest do
     end
   end
 
+  describe "edit/2" do
+    test "rejects unauthorized request to edit", %{conn: conn} do
+      [product1, product2] = insert_pair(:product)
+      book1 = insert(:book, products: [product1])
+      book2 = insert(:book, products: [product2])
+
+      response =
+        conn
+        |> log_in_author(book1.author)
+        |> get(Routes.book_product_path(conn, :edit, book2, product2))
+        |> redirected_to(302)
+
+      assert response =~ "/"
+    end
+  end
+
   describe "update/2" do
     test "shows error when amount is not present", %{conn: conn} do
       book = insert(:book)

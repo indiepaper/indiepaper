@@ -27,6 +27,9 @@ defmodule IndiePaper.PaymentHandlerTest do
     end
   end
 
+  describe "delete_stripe_connect_account" do
+  end
+
   describe "get_checkout_session_url/1" do
     test "returns the stripe checkout session url" do
       book = insert(:book)

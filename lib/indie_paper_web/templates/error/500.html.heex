@@ -5,31 +5,28 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        <%= csrf_meta_tag() %>
-        <%= live_title_tag assigns[:page_title] || "IndiePaper", suffix: " · IndiePaper" %>
+        <title>IndiePaper - Internal Server Error</title>
 
         <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
         <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/fonts/fonts.css")}/>
-        <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/js/app.js")}></script>
-        <script defer data-domain="indiepaper.me" src="https://plausible.io/js/plausible.js"></script>
     </head>
 
     <body class="antialiased font-medium text-gray-800 md:text-primary-text" >
         <header class="border-b-2 border-orange-400">
             <div class="flex flex-row justify-between items-center container-box">
                 <%= link "IndiePaper", to: Routes.page_path(@conn, :index), class: "font-bold", "data-test": "title"  %>
-                <div class="flex flex-row items-center space-x-5 md:space-x-8">
-                    <%= if @current_author do %>
-                        <%= link "Dashboard", to: Routes.dashboard_path(@conn, :index), class: "primary-link" %>
-                        <%= link "Sign out", to: Routes.author_session_path(@conn, :delete), method: :delete, class: "primary-link", "data-no-instant": true %>
-                    <% else %>
-                        <%= link "Sign in", to: Routes.author_session_path(@conn, :new) , class: "primary-link"%>
-                        <%= link "Start Writing", to: Routes.author_registration_path(@conn, :new), class: "secondary-button text-sm" %>
-                    <% end %>
-                </div>
             </div>
         </header>
-        <%= @inner_content %>
+        <div class="flex flex-col justify-center items-center py-48 text-center container-box page-box">
+            <h1 class="text-6xl font-black"> - Server Error -</h1>
+            <p class="mt-8 text-lg font-bold">Seems like we missed up and that too big time. We will be notified automatically, but contact Support if the issue persists</p>
+            <%= link to: Routes.page_path(@conn, :index),  class: "primary-link flex flex-row items-center mt-16 space-x-2" do %>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
+                </svg>
+                <p class="-mt-1">go home</p>
+            <% end %>
+        </div>
         <footer class="font-normal bg-white border-t border-b border-primary-border">
             <div class="flex flex-col justify-between items-start py-8 space-y-4 md:flex-row md:items-center md:space-y-0 container-box">
                 <div class="space-x-6">

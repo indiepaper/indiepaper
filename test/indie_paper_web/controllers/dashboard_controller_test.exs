@@ -11,7 +11,7 @@ defmodule IndiePaperWeb.DashboardControllerTest do
         |> get(Routes.dashboard_path(conn, :index))
         |> html_response(200)
 
-      refute response =~ "Connect Stripe"
+      refute response =~ "Connect Stripe</a>"
     end
   end
 end

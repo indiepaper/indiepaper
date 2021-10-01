@@ -77,7 +77,8 @@ defmodule IndiePaperWeb.Router do
   scope "/", IndiePaperWeb do
     pipe_through [:browser, :require_authenticated_author, :account_status_confirmed]
 
-    resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:new, :create]
+    resources "/profile/stripe/connect", ProfileStripeConnectController,
+      only: [:new, :create, :delete]
   end
 
   scope "/", IndiePaperWeb do
