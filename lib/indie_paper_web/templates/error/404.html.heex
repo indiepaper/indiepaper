@@ -16,7 +16,7 @@
                 <%= link "IndiePaper", to: Routes.page_path(@conn, :index), class: "font-bold", "data-test": "title"  %>
             </div>
         </header>
-        <div class="flex flex-col justify-center items-center py-48 text-center container-box page-box">
+        <div class="flex flex-col justify-center items-center py-48 max-w-3xl text-center container-box page-box">
             <h1 class="text-6xl font-black"> - 404 -</h1>
             <p class="mt-8 text-lg font-bold">Looks like we can't find what you're looking for.</p>
             <%= link to: Routes.page_path(@conn, :index),  class: "primary-link flex flex-row items-center mt-16 space-x-2" do %>
