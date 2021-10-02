@@ -3,7 +3,8 @@
         <div class="max-w-3xl text-center">
             <h1 class="text-3xl font-black text-gray-800 md:text-5xl">Heyy Authors, meet your new home.</h1>
             <p class="mt-6 text-gray-700 md:mt-8 md:text-lg">Writing is hard, making that into a finished book is way way harder, you have to juggle a multitude of tools to create your book. Write your book in our editor, and we'll typeset it, publish it, make it print ready, setup a storefront for it, and pay you out weekly.</p>
-            <%= link to: Routes.author_registration_path(@conn, :new), class: "flex font-medium items-center justify-center inline-flex mt-10 space-x-2 bg-gradient-to-r from-orange-400 shadow via-orange-500 to-orange-600 px-8 py-3 text-white rounded-full shadow-sm border border-orange-600" do %>
+            <%= link to: Routes.author_registration_path(@conn, :new),
+            class: "flex font-medium items-center justify-center inline-flex mt-10 space-x-2 bg-gradient-to-r from-orange-400 shadow via-orange-500 to-orange-600 px-8 py-3 text-white rounded-full shadow-md hover:shadow-lg transistion border-orange-600" do %>
                 <p class="font-bold">Start Writing</p>
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -85,7 +86,7 @@
     <div class="pt-20 pb-16 max-w-3xl text-center container-box">
         <h3 class="text-2xl font-black md:text-3xl">We know you love it, you're readers will love it too.</h3>
         <p class="mt-2 text-lg text-gray-600">Your books want to make you more money. Your readers want to read more of your books, just let them do their thing.</p>
-        <%= link to: Routes.author_registration_path(@conn, :new), class: "flex font-medium items-center justify-center inline-flex mt-10 space-x-2 bg-gradient-to-r from-orange-400 shadow via-orange-500 to-orange-600 px-8 py-3 text-white rounded-full shadow-sm border border-orange-600" do %>
+        <%= link to: Routes.author_registration_path(@conn, :new), class: "flex font-medium items-center justify-center inline-flex mt-10 space-x-2 bg-gradient-to-r from-orange-400 shadow via-orange-500 to-orange-600 px-8 py-3 text-white rounded-full shadow-md hover:shadow-lg transistion border-orange-600" do %>
             <p class="font-bold">Continue Writing</p>
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
