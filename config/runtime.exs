@@ -15,8 +15,8 @@ if config_env() == :prod do
       """
 
   config :indie_paper, IndiePaper.Repo,
-    # ssl: true,
-    socket_options: [:inet6],
+    ssl: true,
+    # socket_options: [:inet6],
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
