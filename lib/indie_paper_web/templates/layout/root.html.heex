@@ -8,6 +8,23 @@
         <%= csrf_meta_tag() %>
         <%= live_title_tag assigns[:page_title] || "IndiePaper", suffix: " · IndiePaper" %>
 
+        <meta name="title" content="IndiePaper, the best way to make and sell beautiful books">
+        <meta name="description" content="IndiePaper is a place for authors to write, edit, publish and sell their books. Just write and we'll take care of the rest, taking your manuscript to beautiful self-published books to the hands of your readers.">
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://indiepaper.me/">
+        <meta property="og:title" content="IndiePaper, the best way to make and sell beautiful books">
+        <meta property="og:description" content="IndiePaper is a place for authors to write, edit, publish and sell their books. Just write and we'll take care of the rest, taking your manuscript to beautiful self-published books to the hands of your readers.">
+        <meta property="og:image" content={Routes.static_url(@conn, "/images/og-image.png")}>
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://indiepaper.me/">
+        <meta property="twitter:title" content="IndiePaper, the best way to make and sell beautiful books">
+        <meta property="twitter:description" content="IndiePaper is a place for authors to write, edit, publish and sell their books. Just write and we'll take care of the rest, taking your manuscript to beautiful self-published books to the hands of your readers.">
+        <meta property="twitter:image" content={Routes.static_url(@conn, "/images/og-image.png")}>
+
         <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
         <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/fonts/fonts.css")}/>
         <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/js/app.js")}></script>
