@@ -14,6 +14,7 @@
                 <div class="form-tight-container">
                     <div class={"mt-4 input-container #{if IndiePaper.Authors.has_stripe_connect_id?(@current_author), do: 'hidden'}"}>
                         <%= label f, :country_code, "Country", class: "input-label" %>
+                        <span class="input-label-info">Select the country of your bank account to recieve payouts.</span>
                         <%= select f, :country_code, IndiePaper.PaymentHandler.StripeHandler.stripe_connect_enabled_countries(), class: "form-input"%>
                     </div>
 
