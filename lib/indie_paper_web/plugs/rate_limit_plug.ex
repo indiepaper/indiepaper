@@ -3,10 +3,16 @@ defmodule IndiePaperWeb.Plugs.RateLimitPlug do
 
   alias IndiePaperWeb.Router.Helpers, as: Routes
 
+  @rate_limit_enabled? Application.compile_env(:indie_paper, :rate_limit_plug_enabled, true)
+
   def rate_limit(conn, opts \\ []) do
-    case check_rate(conn, opts) do
-      {:ok, _count} -> conn
-      {:error, _count} -> render_error(conn)
+    if @rate_limit_enabled? do
+      case check_rate(conn, opts) do
+        {:ok, _count} -> conn
+        {:error, _count} -> render_error(conn)
+      end
+    else
+      conn
     end
   end
 
