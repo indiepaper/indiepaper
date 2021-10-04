@@ -2,7 +2,9 @@ defmodule IndiePaperWeb.PageController do
   use IndiePaperWeb, :controller
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    render(conn, "index.html",
+      page_title: "IndiePaper, the best way to make and sell beautiful books"
+    )
   end
 
   def show(conn, %{"page" => "privacy-policy"}) do

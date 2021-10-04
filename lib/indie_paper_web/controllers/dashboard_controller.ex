@@ -5,6 +5,6 @@ defmodule IndiePaperWeb.DashboardController do
 
   def index(%{assigns: %{current_author: current_author}} = conn, _params) do
     books = Books.list_books(current_author) |> Books.with_assoc([:draft, :products])
-    render(conn, "index.html", books: books)
+    render(conn, "index.html", books: books, page_title: "Dashboard")
   end
 end
