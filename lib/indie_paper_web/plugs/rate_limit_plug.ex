@@ -10,10 +10,19 @@ defmodule IndiePaperWeb.Plugs.RateLimitPlug do
     end
   end
 
-  defp check_rate(conn, opts) do
-    interval_milliseconds = opts[:interval_seconds] * 1000
-    max_requests = opts[:max_requests]
-    ExRated.check_rate(bucket_name(conn), interval_milliseconds, max_requests)
+  defp check_rate(conn, options) do
+    interval_milliseconds = options[:interval_seconds] * 1000
+    max_requests = options[:max_requests]
+    bucket_name = options[:bucket_name] || bucket_name(conn)
+
+    ExRated.check_rate(bucket_name, interval_milliseconds, max_requests)
+  end
+
+  def rate_limit_authentication(conn, options \\ []) do
+    options =
+      Keyword.merge(options, bucket_name: "authentication:" <> conn.params["author"]["email"])
+
+    rate_limit(conn, options)
   end
 
   # Bucket name should be a combination of ip address and request path, like so:
