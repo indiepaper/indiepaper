@@ -42,6 +42,12 @@ defmodule IndiePaperWeb.Router do
       interval_seconds: 60 * 60
   end
 
+  pipeline :stripe_connect_rate_limit do
+    plug :rate_limit_authenticated,
+      max_requests: 3,
+      interval_seconds: 60 * 60 * 24
+  end
+
   scope "/stripe/webhooks", IndiePaperWeb do
     post "/connect", StripeWebhookController, :connect
   end
@@ -105,10 +111,20 @@ defmodule IndiePaperWeb.Router do
   end
 
   scope "/", IndiePaperWeb do
+    pipe_through [
+      :browser,
+      :require_authenticated_author,
+      :account_status_confirmed,
+      :stripe_connect_rate_limit
+    ]
+
+    resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:delete]
+  end
+
+  scope "/", IndiePaperWeb do
     pipe_through [:browser, :require_authenticated_author, :account_status_confirmed]
 
-    resources "/profile/stripe/connect", ProfileStripeConnectController,
-      only: [:new, :create, :delete]
+    resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:new, :create]
   end
 
   scope "/", IndiePaperWeb do

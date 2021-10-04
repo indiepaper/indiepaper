@@ -25,6 +25,13 @@ defmodule IndiePaperWeb.Plugs.RateLimitPlug do
     rate_limit(conn, options)
   end
 
+  def rate_limit_authenticated(conn, options \\ []) do
+    options =
+      Keyword.merge(options, bucket_name: "authenticated:" <> conn.assigns.current_author.email)
+
+    rate_limit(conn, options)
+  end
+
   # Bucket name should be a combination of ip address and request path, like so:
   #
   # "127.0.0.1:/api/v1/authorizations"
