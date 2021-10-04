@@ -27,7 +27,7 @@ defmodule IndiePaper.Books do
     |> Book.initial_draft_changeset(params)
     |> Book.changeset(%{
       short_description: "Short description about your book",
-      long_description_html: "<h1>You love your book, let the world know</h1>"
+      long_description_html: "<h2>You love your book, let the world know</h2>"
     })
     |> Repo.insert()
   end
