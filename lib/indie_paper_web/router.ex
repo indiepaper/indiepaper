@@ -2,6 +2,7 @@ defmodule IndiePaperWeb.Router do
   use IndiePaperWeb, :router
 
   import IndiePaperWeb.AuthorAuth
+  import IndiePaperWeb.Plugs.RateLimitPlug
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -25,16 +26,26 @@ defmodule IndiePaperWeb.Router do
     plug IndiePaperWeb.Plugs.EnsureAccountStatusPlug, [:confirmed, :payment_connected]
   end
 
+  pipeline :generic_rate_limit do
+    plug :rate_limit,
+      max_requests: 8,
+      interval_seconds: 60 * 60
+  end
+
   scope "/stripe/webhooks", IndiePaperWeb do
     post "/connect", StripeWebhookController, :connect
   end
 
   ## Authentication routes
   scope "/", IndiePaperWeb do
-    pipe_through [:browser, :redirect_if_author_is_authenticated]
+    pipe_through [:browser, :redirect_if_author_is_authenticated, :generic_rate_limit]
 
     get "/auth/:provider", AuthorOauthController, :request
     get "/auth/:provider/callback", AuthorOauthController, :callback
+  end
+
+  scope "/", IndiePaperWeb do
+    pipe_through [:browser, :redirect_if_author_is_authenticated]
 
     get "/secure/sign-up", AuthorRegistrationController, :new
     post "/secure/sign-up", AuthorRegistrationController, :create
