@@ -38,7 +38,7 @@ defmodule IndiePaperWeb.Router do
       interval_seconds: 60 * 60
 
     plug :rate_limit_authentication,
-      max_requests: 4,
+      max_requests: 6,
       interval_seconds: 60 * 60
   end
 
