@@ -2,6 +2,7 @@ defmodule IndiePaperWeb.Router do
   use IndiePaperWeb, :router
 
   import IndiePaperWeb.AuthorAuth
+  import IndiePaperWeb.Plugs.RateLimitPlug
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -25,23 +26,52 @@ defmodule IndiePaperWeb.Router do
     plug IndiePaperWeb.Plugs.EnsureAccountStatusPlug, [:confirmed, :payment_connected]
   end
 
+  pipeline :generic_rate_limit_with_ip do
+    plug :rate_limit,
+      max_requests: 8,
+      interval_seconds: 60 * 60
+  end
+
+  pipeline :authentication_rate_limit_with_email do
+    plug :rate_limit,
+      max_requests: 8,
+      interval_seconds: 60 * 60
+
+    plug :rate_limit_authentication,
+      max_requests: 4,
+      interval_seconds: 60 * 60
+  end
+
   scope "/stripe/webhooks", IndiePaperWeb do
     post "/connect", StripeWebhookController, :connect
   end
 
   ## Authentication routes
   scope "/", IndiePaperWeb do
-    pipe_through [:browser, :redirect_if_author_is_authenticated]
+    pipe_through [:browser, :redirect_if_author_is_authenticated, :generic_rate_limit_with_ip]
 
     get "/auth/:provider", AuthorOauthController, :request
     get "/auth/:provider/callback", AuthorOauthController, :callback
+  end
+
+  scope "/", IndiePaperWeb do
+    pipe_through [
+      :browser,
+      :redirect_if_author_is_authenticated,
+      :authentication_rate_limit_with_email
+    ]
+
+    post "/secure/sign-up", AuthorRegistrationController, :create
+    post "/secure/sign-in", AuthorSessionController, :create
+    post "/secure/reset_password", AuthorResetPasswordController, :create
+  end
+
+  scope "/", IndiePaperWeb do
+    pipe_through [:browser, :redirect_if_author_is_authenticated]
 
     get "/secure/sign-up", AuthorRegistrationController, :new
-    post "/secure/sign-up", AuthorRegistrationController, :create
     get "/secure/sign-in", AuthorSessionController, :new
-    post "/secure/sign-in", AuthorSessionController, :create
     get "/secure/reset_password", AuthorResetPasswordController, :new
-    post "/secure/reset_password", AuthorResetPasswordController, :create
     get "/secure/reset_password/:token", AuthorResetPasswordController, :edit
     put "/secure/reset_password/:token", AuthorResetPasswordController, :update
   end
