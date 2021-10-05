@@ -3,10 +3,16 @@ defmodule IndiePaperWeb.Plugs.RateLimitPlug do
 
   alias IndiePaperWeb.Router.Helpers, as: Routes
 
+  @rate_limit_enabled? Application.compile_env(:indie_paper, :rate_limit_plug_enabled, true)
+
   def rate_limit(conn, opts \\ []) do
-    case check_rate(conn, opts) do
+    if @rate_limit_enabled? do
+      case check_rate(conn, opts) do
       {:ok, _count} -> conn
       {:error, _count} -> render_error(conn, opts[:interval_seconds])
+      end
+    else
+  conn
     end
   end
 
@@ -21,6 +27,13 @@ defmodule IndiePaperWeb.Plugs.RateLimitPlug do
   def rate_limit_authentication(conn, options \\ []) do
     options =
       Keyword.merge(options, bucket_name: "authentication:" <> conn.params["author"]["email"])
+
+    rate_limit(conn, options)
+  end
+
+  def rate_limit_authenticated(conn, options \\ []) do
+    options =
+      Keyword.merge(options, bucket_name: "authenticated:" <> conn.assigns.current_author.email)
 
     rate_limit(conn, options)
   end

@@ -40,3 +40,7 @@ config :wallaby, driver: Wallaby.Chrome
 config :stripity_stripe,
   api_base_url: "http://localhost:12111/v1/",
   api_key: "sk_test_thisisaboguskey"
+
+# Disable rate limit in testing
+config :indie_paper,
+  rate_limit_plug_enabled: false

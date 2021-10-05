@@ -39,8 +39,7 @@ if config_env() == :prod do
     url: [host: indie_paper_deploy_domain, port: 443, scheme: "https"],
     check_origin: [
       "https://#{app_name}.fly.dev",
-      "https://#{indie_paper_deploy_domain}",
-      "https://www.#{indie_paper_deploy_domain}"
+      "https://*.#{indie_paper_deploy_domain}"
     ],
     http: [
       # Enable IPv6 and bind on all interfaces.
@@ -50,7 +49,8 @@ if config_env() == :prod do
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
       port: String.to_integer(System.get_env("PORT") || "4000")
     ],
-    secret_key_base: secret_key_base
+    secret_key_base: secret_key_base,
+    cache_static_manifest: "priv/static/cache_manifest.json"
 
   # Stripe Config
   config :stripity_stripe,
