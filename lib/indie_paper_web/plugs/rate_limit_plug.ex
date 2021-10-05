@@ -8,11 +8,11 @@ defmodule IndiePaperWeb.Plugs.RateLimitPlug do
   def rate_limit(conn, opts \\ []) do
     if @rate_limit_enabled? do
       case check_rate(conn, opts) do
-      {:ok, _count} -> conn
-      {:error, _count} -> render_error(conn, opts[:interval_seconds])
+        {:ok, _count} -> conn
+        {:error, _count} -> render_error(conn, opts[:interval_seconds])
       end
     else
-  conn
+      conn
     end
   end
 
