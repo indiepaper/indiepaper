@@ -85,4 +85,13 @@ defmodule IndiePaper.MixProject do
       ]
     ]
   end
+
+  defp releases do
+    [
+      indie_paper: [
+        include_executables_for: [:unix],
+        cookie: "7LByVvfN4jjQ4yN49USEyzGGfe-wRqDy_wh4VrwZeWwEfST5P2GvMw=="
+      ]
+    ]
+  end
 end
