@@ -1,4 +1,4 @@
-name: Deploy develop branch to indiepaper-dev on fly
+name: Deploy develop branch to indiepaper-development on fly
 on:
   push:
     branches:

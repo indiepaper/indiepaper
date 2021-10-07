@@ -1,4 +1,4 @@
-name: Deploy master branch to indiepaper-prod on fly
+name: Deploy master branch to indiepaper-production on fly
 on:
   push:
     branches:
