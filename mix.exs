@@ -10,7 +10,8 @@ defmodule IndiePaper.MixProject do
       compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      releases: releases()
     ]
   end
 
@@ -82,6 +83,15 @@ defmodule IndiePaper.MixProject do
         "cmd --cd assets npm run deploy",
         "esbuild default --minify",
         "phx.digest"
+      ]
+    ]
+  end
+
+  defp releases do
+    [
+      indie_paper: [
+        include_executables_for: [:unix],
+        cookie: "7LByVvfN4jjQ4yN49USEyzGGfe-wRqDy_wh4VrwZeWwEfST5P2GvMw=="
       ]
     ]
   end
