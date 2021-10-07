@@ -15,6 +15,14 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
         transfers: %{
           requested: true
         }
+      },
+      settings: %{
+        payouts: %{
+          schedule: %{
+            interval: "daily",
+            delay_days: 14
+          }
+        }
       }
     }
 
