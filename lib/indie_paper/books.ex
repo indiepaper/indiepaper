@@ -9,6 +9,7 @@ defmodule IndiePaper.Books do
 
   alias IndiePaper.Books.Book
   alias IndiePaper.Drafts
+  alias IndiePaper.Chapters
 
   def list_books(author) do
     Book
@@ -82,5 +83,11 @@ defmodule IndiePaper.Books do
   def has_one_published_book?(author) do
     from(b in Book, where: b.author_id == ^author.id and b.status == :published)
     |> Repo.aggregate(:count) > 0
+  end
+
+  def get_published_chapters(book) do
+    book_with_draft = book |> with_assoc(:draft)
+    chapters = Chapters.list_chapters(book_with_draft.draft)
+    chapters |> Enum.filter(fn c -> not is_nil(c.published_content_json) end)
   end
 end
