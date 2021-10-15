@@ -6,8 +6,9 @@ defmodule IndiePaperWeb.ReadController do
   alias IndiePaper.{Books, Chapters, Marketplace}
 
   def index(conn, %{"book_id" => book_id}) do
-    book = Books.get_book!(book_id) |> Books.with_assoc(draft: :chapters)
-    chapter = Enum.at(book.draft.chapters, 0)
+    book = Books.get_book!(book_id)
+    published_chapters = Books.get_published_chapters(book)
+    chapter = Enum.at(published_chapters, 0)
 
     redirect(conn, to: Routes.book_read_path(conn, :show, book, chapter))
   end
