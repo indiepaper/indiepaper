@@ -38,6 +38,9 @@ defmodule IndiePaper.Books.Book do
     |> cast(attrs, [:title, :short_description, :long_description_html])
     |> sanitized_long_description_html()
     |> validate_required([:title, :short_description, :long_description_html])
+    |> validate_length(:title, max: 100)
+    |> validate_length(:short_description, max: 1200)
+    |> validate_length(:long_description_html, max: 1200 * 6)
   end
 
   def sanitized_long_description_html(changeset) do
