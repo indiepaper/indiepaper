@@ -13,13 +13,15 @@ defmodule IndiePaperWeb.ReadController do
   end
 
   def show(conn, %{"book_id" => book_id, "id" => chapter_id}) do
-    book = Books.get_book!(book_id) |> Books.with_assoc(draft: :chapters)
+    book = Books.get_book!(book_id) |> Books.with_assoc(:draft)
+
+    published_chapters = Books.get_published_chapters(book)
     chapter = Chapters.get_chapter!(chapter_id)
 
     with :ok <- Bodyguard.permit(Marketplace, :can_read, conn.assigns.current_author, book) do
       render(conn, "show.html",
         book: book,
-        chapters: book.draft.chapters,
+        chapters: published_chapters,
         current_chapter: chapter
       )
     end

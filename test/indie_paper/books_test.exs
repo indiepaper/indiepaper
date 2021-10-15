@@ -97,4 +97,17 @@ defmodule IndiePaper.BooksTest do
       assert author.id == book.author.id
     end
   end
+
+  describe "get_published_chapters/1" do
+    test "returns the only published chapters" do
+      chapter = insert(:chapter, published_content_json: nil)
+      [chapter1, chapter2] = insert_pair(:chapter)
+      book = insert(:book, draft: build(:draft, chapters: [chapter1, chapter2, chapter]))
+
+      published_chapters = Books.get_published_chapters(book)
+
+      refute Enum.any?(published_chapters, fn pc -> pc.id == chapter.id end)
+      assert Enum.find(published_chapters, fn pc -> pc.id == chapter2.id end)
+    end
+  end
 end
