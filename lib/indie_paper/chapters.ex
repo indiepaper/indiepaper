@@ -66,6 +66,6 @@ defmodule IndiePaper.Chapters do
   end
 
   def list_chapters(draft) do
-    Repo.all(from c in Chapter, where: c.draft_id == ^draft.id)
+    Repo.all(from c in Chapter, where: c.draft_id == ^draft.id, order_by: c.chapter_index)
   end
 end

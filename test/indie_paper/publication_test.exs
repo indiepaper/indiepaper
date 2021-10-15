@@ -13,7 +13,7 @@ defmodule IndiePaper.PublicationTest do
       book = book |> Books.with_assoc(:draft)
       chapters = Chapters.list_chapters(book.draft)
 
-      Enum.each(chapters, fn {chapter} ->
+      Enum.each(chapters, fn chapter ->
         assert chapter.content_json == chapter.published_content_json
       end)
     end
