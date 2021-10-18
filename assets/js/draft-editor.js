@@ -11,9 +11,6 @@ const app = new Vue({
     return {
       editor: null,
       content: "Hey bitch",
-      isThrottling: false,
-      isEditorLoading: false,
-      isEditorError: false,
       isActive(type, opts = {}) {
         return this.editor?.isActive(type, opts);
       },
