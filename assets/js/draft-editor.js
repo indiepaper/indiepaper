@@ -14,8 +14,8 @@ const app = new Vue({
       isThrottling: false,
       isEditorLoading: false,
       isEditorError: false,
-      isActive() {
-        return false;
+      isActive(type, opts = {}) {
+        return this.editor?.isActive(type, opts);
       },
       selectedChapterId: "",
       draftId: "",
