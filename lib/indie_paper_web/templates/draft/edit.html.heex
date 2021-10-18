@@ -1,131 +1,134 @@
-<section class="bg-background" x-data={"draftEditor(chapterContentJSON, '#{@draft.id}','#{@first_chapter.id}', '#{Phoenix.Controller.get_csrf_token()}')"}>
-    <div class="bg-white border-b border-primary-border">
-        <div class="container-box">
-            <div class="flex flex-col items-start space-y-8 md:flex-row md:justify-between md:items-center md:space-y-0">
-                <div>
-                    <h1 data-test="title" class="page-heading"><%= @draft.book.title %></h1>
-                </div>
-                <div class="flex flex-row justify-between items-center space-x-6 w-full md:w-auto">
-                    <%= link to: Routes.book_path(@conn, :edit, @draft.book), class: "secondary-link text-sm md:w-auto md:text-sm" do %>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
-                        </svg>
-                        <p>Update listing</p>
-                    <% end %>
-                    <%= link "Publish", to: Routes.book_publication_path(@conn, :create, @draft.book), method: :post, class: "primary-button md:w-auto md:text-sm" %>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="pt-20 page-box container-box">
-        <div x-cloak x-show="isEditorError" class="flex flex-col items-start py-4 px-6 mt-4 mb-16 space-y-4 text-white bg-red-400 md:flex-row md:justify-between md:items-center md:space-y-0 error-box">
-            <div class="flex flex-row items-center space-x-2">
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
-                <p>Oops, an error occured while saving chapter.</p>
-            </div>
-            <button @click="saveCurrentChapterContentJson()"  class="text-sm text-gray-900 border-0 secondary-button">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-                <span>Try again</span></button>
-        </div>
-        <div class="flex flex-col items-stretch space-y-12 md:flex-row md:items-stretch md:space-y-0" >
-            <div class="flex flex-col md:pt-8 md:pr-6 md:pb-12 md:w-64">
-                <div class="space-y-6">
-                    <div class="flex flex-row justify-between items-center">
-                        <div>
-                            <p>Chapters</p>
-                        </div>
-                        <%= link to: Routes.draft_draft_chapter_path(@conn, :new, @draft), class: "px-3 text-xs secondary-link" do %>
+<section x-ignore id="draft-editor" class="bg-background">
+    <template>
+        <div class="bg-white border-b border-primary-border">
+            <div class="container-box">
+                <div class="flex flex-col items-start space-y-8 md:flex-row md:justify-between md:items-center md:space-y-0">
+                    <div>
+                        <h1 data-test="title" class="page-heading"><%= @draft.book.title %></h1>
+                    </div>
+                    <div class="flex flex-row justify-between items-center space-x-6 w-full md:w-auto">
+                        <%= link to: Routes.book_path(@conn, :edit, @draft.book), class: "secondary-link text-sm md:w-auto md:text-sm" do %>
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
                             </svg>
-                            <p>Add</p>
+                            <p>Update listing</p>
                         <% end %>
+                        <%= link "Publish", to: Routes.book_publication_path(@conn, :create, @draft.book), method: :post, class: "primary-button md:w-auto md:text-sm" %>
                     </div>
-                    <div class="space-y-4">
-                        <%= for chapter <- @draft.chapters do %>
-                            <div class="flex flex-row justify-between items-center pr-2 space-x-2 rounded-md hover:bg-warm-gray-100"
-                                 :class={"{'bg-warm-gray-100' : selectedChapterId === '#{chapter.id}'}"}
-                            >
-                                <button @click={"selectChapter('#{chapter.id}')"}
-                                        class="block py-2 px-6 w-full text-left rounded-md hover:bg-warm-gray-100"
-                                        :class={"{'bg-warm-gray-100' : selectedChapterId === '#{chapter.id}'}"} data-test="chapter-title">
-                                    <%= chapter.title %>
-                                </button>
-                                <%= link to: Routes.draft_draft_chapter_path(@conn, :edit, @draft, chapter) do %>
-                                    <div
-                                        :class={"{'!block' : selectedChapterId === '#{chapter.id}'}"}
-                                        class={"secondary-link px-2 hidden"}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                        </svg>
-                                    </div>
-                                <% end %>
-                            </div>
-                        <% end %>
-                    </div>
-                </div>
-            </div>
-            <div class="flex-1 p-0 bg-white rounded-lg border border-primary-border">
-                <div class="flex flex-col items-stretch" >
-                    <div class="flex sticky top-0 z-50 flex-row items-center py-4 px-8 space-x-1 bg-white rounded-t-lg border-b border-primary-border">
-                        <button
-                            @click="toggleBold()"
-                            class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
-                            :class="{ 'text-white bg-gray-800' : isActive('bold', updatedAt) }"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current" ><path fill="none" d="M0 0h24v24H0z"/><path d="M8 11h4.5a2.5 2.5 0 1 0 0-5H8v5zm10 4.5a4.5 4.5 0 0 1-4.5 4.5H6V4h6.5a4.5 4.5 0 0 1 3.256 7.606A4.498 4.498 0 0 1 18 15.5zM8 13v5h5.5a2.5 2.5 0 1 0 0-5H8z"/></svg>
-                        </button>
-                        <button
-                            class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
-                            @click="toggleItalic()"
-                            :class="{ 'text-white bg-gray-800' : isActive('italic', updatedAt) }"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 20H7v-2h2.927l2.116-12H9V4h8v2h-2.927l-2.116 12H15z"/></svg>
-                        </button>
-                        <span class="px-1"></span>
-                        <button
-                            class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
-                            @click="toggleHeading(1)"
-                            :class="{ 'text-white bg-gray-800' : isActive('heading', { level: 1 }, updatedAt) }"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0H24V24H0z"/><path d="M13 20h-2v-7H4v7H2V4h2v7h7V4h2v16zm8-12v12h-2v-9.796l-2 .536V8.67L19.5 8H21z"/></svg>
-                        </button>
-                        <button
-                            class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
-                            @click="toggleHeading(2)"
-                            :class="{ 'text-white bg-gray-800' : isActive('heading', { level: 2 }, updatedAt) }"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0H24V24H0z"/><path d="M4 4v7h7V4h2v16h-2v-7H4v7H2V4h2zm14.5 4c2.071 0 3.75 1.679 3.75 3.75 0 .857-.288 1.648-.772 2.28l-.148.18L18.034 18H22v2h-7v-1.556l4.82-5.546c.268-.307.43-.709.43-1.148 0-.966-.784-1.75-1.75-1.75-.918 0-1.671.707-1.744 1.606l-.006.144h-2C14.75 9.679 16.429 8 18.5 8z"/></svg>
-                        </button>
-                        <button
-                            class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
-                            @click="toggleHeading(3)"
-                            :class="{ 'text-white bg-gray-800' : isActive('heading', { level: 3 }, updatedAt) }"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0H24V24H0z"/><path d="M22 8l-.002 2-2.505 2.883c1.59.435 2.757 1.89 2.757 3.617 0 2.071-1.679 3.75-3.75 3.75-1.826 0-3.347-1.305-3.682-3.033l1.964-.382c.156.806.866 1.415 1.718 1.415.966 0 1.75-.784 1.75-1.75s-.784-1.75-1.75-1.75c-.286 0-.556.069-.794.19l-1.307-1.547L19.35 10H15V8h7zM4 4v7h7V4h2v16h-2v-7H4v7H2V4h2z"/></svg>
-                        </button>
-                        <span class="flex-1"></span>
-                        <div class="flex flex-row items-center text-sm secondary-link">
-                            <svg x-show="isEditorLoading" class="mr-2 -ml-1 w-4 h-4 text-gray-600 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="py-8 px-8 prose min-h-[720px] font-normal" x-ref="editorReference"></div>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="pt-20 page-box container-box">
+            <div x-cloak x-show="isEditorError" class="flex flex-col items-start py-4 px-6 mt-4 mb-16 space-y-4 text-white bg-red-400 md:flex-row md:justify-between md:items-center md:space-y-0 error-box">
+                <div class="flex flex-row items-center space-x-2">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <p>Oops, an error occured while saving chapter.</p>
+                </div>
+                <button @click="saveCurrentChapterContentJson()"  class="text-sm text-gray-900 border-0 secondary-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    <span>Try again</span></button>
+            </div>
+            <div class="flex flex-col items-stretch space-y-12 md:flex-row md:items-stretch md:space-y-0" >
+                <div class="flex flex-col md:pt-8 md:pr-6 md:pb-12 md:w-64">
+                    <div class="space-y-6">
+                        <div class="flex flex-row justify-between items-center">
+                            <div>
+                                <p>Chapters</p>
+                            </div>
+                            <%= link to: Routes.draft_draft_chapter_path(@conn, :new, @draft), class: "px-3 text-xs secondary-link" do %>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <p>Add</p>
+                            <% end %>
+                        </div>
+                        <div class="space-y-4">
+                            <%= for chapter <- @draft.chapters do %>
+                                <div class="flex flex-row justify-between items-center pr-2 space-x-2 rounded-md hover:bg-warm-gray-100"
+                                     :class={"{'bg-warm-gray-100' : selectedChapterId === '#{chapter.id}'}"}
+                                >
+                                    <button @click={"selectChapter('#{chapter.id}')"}
+                                            class="block py-2 px-6 w-full text-left rounded-md hover:bg-warm-gray-100"
+                                            :class={"{'bg-warm-gray-100' : selectedChapterId === '#{chapter.id}'}"} data-test="chapter-title">
+                                        <%= chapter.title %>
+                                    </button>
+                                    <%= link to: Routes.draft_draft_chapter_path(@conn, :edit, @draft, chapter) do %>
+                                        <div
+                                            :class={"{'!block' : selectedChapterId === '#{chapter.id}'}"}
+                                            class={"secondary-link px-2 hidden"}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                        </div>
+                                    <% end %>
+                                </div>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 p-0 bg-white rounded-lg border border-primary-border">
+                    <div class="flex flex-col items-stretch" >
+                        <div class="flex sticky top-0 z-50 flex-row items-center py-4 px-8 space-x-1 bg-white rounded-t-lg border-b border-primary-border">
+                            <button
+                                @click="editor.chain().toggleBold().focus().run();"
+                                class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
+                                :class="{ 'text-white bg-gray-800' : isActive('bold', updatedAt) }"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current" ><path fill="none" d="M0 0h24v24H0z"/><path d="M8 11h4.5a2.5 2.5 0 1 0 0-5H8v5zm10 4.5a4.5 4.5 0 0 1-4.5 4.5H6V4h6.5a4.5 4.5 0 0 1 3.256 7.606A4.498 4.498 0 0 1 18 15.5zM8 13v5h5.5a2.5 2.5 0 1 0 0-5H8z"/></svg>
+                            </button>
+                            <button
+                                class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
+                                @click="editor.chain().toggleItalic().focus().run();"
+                                :class="{ 'text-white bg-gray-800' : isActive('italic', updatedAt) }"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 20H7v-2h2.927l2.116-12H9V4h8v2h-2.927l-2.116 12H15z"/></svg>
+                            </button>
+                            <span class="px-1"></span>
+                            <button
+                                class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
+                                @click="editor.chain().toggleHeading({ level: 1 }).focus().run()"
+                                :class="{ 'text-white bg-gray-800' : isActive('heading', { level: 1 }, updatedAt) }"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0H24V24H0z"/><path d="M13 20h-2v-7H4v7H2V4h2v7h7V4h2v16zm8-12v12h-2v-9.796l-2 .536V8.67L19.5 8H21z"/></svg>
+                            </button>
+                            <button
+                                class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
+                                @click="editor.chain().toggleHeading({ level: 2 }).focus().run()"
+                                :class="{ 'text-white bg-gray-800' : isActive('heading', { level: 2 }, updatedAt) }"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0H24V24H0z"/><path d="M4 4v7h7V4h2v16h-2v-7H4v7H2V4h2zm14.5 4c2.071 0 3.75 1.679 3.75 3.75 0 .857-.288 1.648-.772 2.28l-.148.18L18.034 18H22v2h-7v-1.556l4.82-5.546c.268-.307.43-.709.43-1.148 0-.966-.784-1.75-1.75-1.75-.918 0-1.671.707-1.744 1.606l-.006.144h-2C14.75 9.679 16.429 8 18.5 8z"/></svg>
+                            </button>
+                            <button
+                                class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
+                                @click="editor.chain().toggleHeading({ level: 3 }).focus().run()"
+                                :class="{ 'text-white bg-gray-800' : isActive('heading', { level: 3 }, updatedAt) }"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0H24V24H0z"/><path d="M22 8l-.002 2-2.505 2.883c1.59.435 2.757 1.89 2.757 3.617 0 2.071-1.679 3.75-3.75 3.75-1.826 0-3.347-1.305-3.682-3.033l1.964-.382c.156.806.866 1.415 1.718 1.415.966 0 1.75-.784 1.75-1.75s-.784-1.75-1.75-1.75c-.286 0-.556.069-.794.19l-1.307-1.547L19.35 10H15V8h7zM4 4v7h7V4h2v16h-2v-7H4v7H2V4h2z"/></svg>
+                            </button>
+                            <span class="flex-1"></span>
+                            <div class="flex flex-row items-center text-sm secondary-link">
+                                <svg x-show="isEditorLoading" class="mr-2 -ml-1 w-4 h-4 text-gray-600 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <editor-content v-model="content" class="py-8 px-8 prose min-h-[720px] font-normal" :editor="editor" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
 </section>
 
 <script phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/js/draft-editor.js")}></script>
+
 <script type="text/javascript">
  const chapterContentJSON = <%= raw(Jason.encode!(@first_chapter.content_json)) %>
 </script>

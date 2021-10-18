@@ -1,6 +1,44 @@
-import { Editor } from "@tiptap/core";
+import { Editor, EditorContent } from "@tiptap/vue-2";
 import StarterKit from "@tiptap/starter-kit";
+import Vue from "vue/dist/vue.common.prod";
 
+const app = new Vue({
+  el: "#draft-editor",
+  components: {
+    EditorContent,
+  },
+  data() {
+    return {
+      editor: null,
+      content: "Hey bitch",
+      isThrottling: false,
+      isEditorLoading: false,
+      isEditorError: false,
+      isActive() {
+        return false;
+      },
+      selectedChapterId: "",
+      draftId: "",
+      updatedAt: Date.now(),
+    };
+  },
+  mounted() {
+    this.editor = new Editor({
+      content: this.content,
+      extensions: [StarterKit],
+      editorProps: {
+        attributes: {
+          class: "focus:outline-none",
+        },
+      },
+    });
+  },
+  beforeDestroy() {
+    this.editor.destroy();
+  },
+});
+
+/*
 function debounce(func, wait, immediate) {
   var timeout;
   return function () {
@@ -118,3 +156,4 @@ document.addEventListener("alpine:init", () => {
     }
   );
 });
+*/
