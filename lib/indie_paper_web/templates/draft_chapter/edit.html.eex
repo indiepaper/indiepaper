@@ -5,7 +5,7 @@
             <p class="page-description">It's kind of weird to edit a chapter on a separate page, but once we rebuild the editor, it will be taken care of.</p>
         </div>
 
-        <div class="mt-12 max-w-2xl">
+        <div class="mt-12 max-w-lg">
             <%= form_for @changeset, Routes.draft_draft_chapter_path(@conn, :update, @draft, @chapter), fn f -> %>
 
                 <%= if @changeset.action do %>
