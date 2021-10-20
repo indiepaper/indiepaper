@@ -11,6 +11,7 @@ const app = new Vue({
   data: {
     editor: null,
     selectedChapterId: initialChapterId,
+    isEditingSelectedChapter: false,
     isDraftChapterLoading: false,
     draftChapters: draftChapters,
     isDraftLoading: false,
