@@ -16,7 +16,7 @@ defmodule IndiePaperWeb.DraftChapterController do
     {:ok, chapter} =
       Chapters.create_chapter(
         draft,
-        Map.put(%{"title" => "Chapter"}, "chapter_index", last_chapter.chapter_index + 1)
+        Map.put(%{"title" => "New Chapter"}, "chapter_index", last_chapter.chapter_index + 1)
       )
 
     json(conn, %{chapter: chapter})

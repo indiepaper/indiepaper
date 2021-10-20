@@ -16,7 +16,7 @@ defmodule IndiePaper.Chapters do
       Map.put(
         params,
         "content_json",
-        placeholder_content_json(params["title"], "Test Content")
+        placeholder_content_json(params["title"], "Awesome content for your chapter")
       )
     )
     |> Repo.insert()
