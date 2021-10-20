@@ -11,9 +11,9 @@ const app = new Vue({
   data: {
     editor: null,
     selectedChapterId: initialChapterId,
-    draftChapterLoading: false,
+    isDraftChapterLoading: false,
     draftChapters: draftChapters,
-    draftLoading: false,
+    isDraftLoading: false,
     draftId: draftId,
     csrfToken: csrfToken,
     content: null,
@@ -29,19 +29,19 @@ const app = new Vue({
   },
   methods: {
     selectChapter(chapter) {
-      this.draftLoading = true;
+      this.isDraftLoading = true;
       this.selectedChapterId = chapter.id;
       axios
         .get(`/drafts/${this.draftId}/chapters/${this.selectedChapterId}`)
         .then((res) => this.editor.commands.setContent(res.data.contentJSON))
-        .finally(() => (this.draftLoading = false));
+        .finally(() => (this.isDraftLoading = false));
     },
     addDraftChapter() {
-      this.draftChapterLoading = true;
+      this.isDraftChapterLoading = true;
       axios
         .post(`/drafts/${this.draftId}/chapters/`)
         .then((res) => this.draftChapters.push(res.data.chapter))
-        .finally(() => (this.draftChapterLoading = false));
+        .finally(() => (this.isDraftChapterLoading = false));
     },
   },
   mounted() {

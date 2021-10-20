@@ -27,7 +27,7 @@
                                 <p>Chapters</p>
                             </div>
                             <button :disabled="draftChapterLoading" @click="addDraftChapter()" class="px-3 text-xs secondary-link">
-                                <svg v-if="draftChapterLoading" class="w-4 h-4 text-gray-600 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <svg v-if="isDraftChapterLoading" class="w-4 h-4 text-gray-600 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
@@ -42,6 +42,13 @@
                                  :class="{'bg-warm-gray-100' : selectedChapterId === chapter.id}">
                                 <button @click="selectChapter(chapter)" data-test="chapter-title" class="block py-2 px-6 w-full text-left rounded-md hover:bg-warm-gray-100">
                                     {{chapter.title}}
+                                </button>
+                                <button
+                                    class={"secondary-link px-2 hidden"}
+                                    :class={"{'!block' : selectedChapterId === chapter.id}"}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    </svg>
                                 </button>
                             </div>
                         </div>
@@ -89,7 +96,7 @@
                             </button>
                             <span class="flex-1"></span>
                             <div class="flex flex-row items-center text-sm secondary-link">
-                                <svg v-if="draftLoading" class="mr-2 -ml-1 w-4 h-4 text-gray-600 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <svg v-if="isDraftLoading" class="mr-2 -ml-1 w-4 h-4 text-gray-600 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
