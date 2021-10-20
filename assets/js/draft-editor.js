@@ -12,6 +12,7 @@ const app = new Vue({
     editor: null,
     draftChapterLoading: false,
     draftChapters: draftChapters,
+    draftLoading: false,
     draftId: draftId,
     csrfToken: csrfToken,
     content: null,
@@ -27,9 +28,11 @@ const app = new Vue({
   },
   methods: {
     selectChapter(chapter) {
+      this.draftLoading = true;
       axios
         .get(`/drafts/${this.draftId}/chapters/${chapter.id}`)
-        .then((res) => this.editor.commands.setContent(res.data.contentJSON));
+        .then((res) => this.editor.commands.setContent(res.data.contentJSON))
+        .finally(() => (this.draftLoading = false));
     },
     addDraftChapter() {
       this.draftChapterLoading = true;
