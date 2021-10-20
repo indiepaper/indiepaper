@@ -38,7 +38,8 @@
                             </button>
                         </div>
                         <div class="space-y-4" v-for="chapter in sortedDraftChapters" :key="chapter.id">
-                            <div class="flex flex-row justify-between items-center pr-2 space-x-2 rounded-md hover:bg-warm-gray-100">
+                            <div class="flex flex-row justify-between items-center pr-2 space-x-2 rounded-md hover:bg-warm-gray-100"
+                                 :class="{'bg-warm-gray-100' : selectedChapterId === chapter.id}">
                                 <button @click="selectChapter(chapter)" data-test="chapter-title" class="block py-2 px-6 w-full text-left rounded-md hover:bg-warm-gray-100">
                                     {{chapter.title}}
                                 </button>
@@ -107,6 +108,7 @@
  const draftChapters = <%= raw(Jason.encode!(@draft.chapters)) %>;
  const draftId = "<%= @draft.id %>";
  const csrfToken = "<%= Phoenix.Controller.get_csrf_token() %>";
+ const initialChapterId = "<%= @first_chapter.id %>";
 </script>
 
 <script phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/js/draft-editor.js")}></script>

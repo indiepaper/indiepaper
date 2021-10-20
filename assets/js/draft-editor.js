@@ -10,6 +10,7 @@ const app = new Vue({
   },
   data: {
     editor: null,
+    selectedChapterId: initialChapterId,
     draftChapterLoading: false,
     draftChapters: draftChapters,
     draftLoading: false,
@@ -29,8 +30,9 @@ const app = new Vue({
   methods: {
     selectChapter(chapter) {
       this.draftLoading = true;
+      this.selectedChapterId = chapter.id;
       axios
-        .get(`/drafts/${this.draftId}/chapters/${chapter.id}`)
+        .get(`/drafts/${this.draftId}/chapters/${this.selectedChapterId}`)
         .then((res) => this.editor.commands.setContent(res.data.contentJSON))
         .finally(() => (this.draftLoading = false));
     },
