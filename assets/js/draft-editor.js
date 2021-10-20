@@ -10,6 +10,7 @@ const app = new Vue({
   },
   data: {
     editor: null,
+    draftChapterLoading: false,
     draftChapters: draftChapters,
     draftId: draftId,
     csrfToken: csrfToken,
@@ -26,9 +27,11 @@ const app = new Vue({
   },
   methods: {
     addDraftChapter() {
+      this.draftChapterLoading = true;
       axios
         .post(`/drafts/${this.draftId}/chapters/`)
-        .then((res) => this.draftChapters.push(res.data.chapter));
+        .then((res) => this.draftChapters.push(res.data.chapter))
+        .finally(() => (this.draftChapterLoading = false));
     },
   },
   mounted() {
