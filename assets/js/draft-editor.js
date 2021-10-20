@@ -9,6 +9,7 @@ const app = new Vue({
   },
   data: {
     editor: null,
+    draftChapters: draftChapters,
     content: null,
     isActive(type, opts = {}) {
       return this.editor?.isActive(type, opts);

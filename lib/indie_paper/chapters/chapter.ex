@@ -4,6 +4,7 @@ defmodule IndiePaper.Chapters.Chapter do
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
+  @derive {Jason.Encoder, only: [:title, :id]}
   schema "chapters" do
     field :title, :string
     field :draft_id, :binary_id
