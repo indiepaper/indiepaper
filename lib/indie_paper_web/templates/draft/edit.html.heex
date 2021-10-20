@@ -57,7 +57,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex-1 p-0 bg-white rounded-lg border border-primary-border">
+                <div class="flex-1 p-0 bg-white rounded-lg border border-primary-border" data-content={Jason.encode!(@first_chapter.content_json)}>
+
                     <div class="flex flex-col items-stretch" >
                         <div class="flex sticky top-0 z-50 flex-row items-center py-4 px-8 space-x-1 bg-white rounded-t-lg border-b border-primary-border">
                             <button
@@ -112,8 +113,8 @@
     </template>
 </section>
 
-<script phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/js/draft-editor.js")}></script>
-
 <script type="text/javascript">
  const chapterContentJSON = <%= raw(Jason.encode!(@first_chapter.content_json)) %>
 </script>
+
+<script phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/js/draft-editor.js")}></script>

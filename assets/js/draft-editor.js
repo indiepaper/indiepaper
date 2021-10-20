@@ -7,26 +7,27 @@ const app = new Vue({
   components: {
     EditorContent,
   },
-  data() {
-    return {
-      editor: null,
-      content: "Hey bitch",
-      isActive(type, opts = {}) {
-        return this.editor?.isActive(type, opts);
-      },
-      selectedChapterId: "",
-      draftId: "",
-      updatedAt: Date.now(),
-    };
+  data: {
+    editor: null,
+    content: null,
+    isActive(type, opts = {}) {
+      return this.editor?.isActive(type, opts);
+    },
+    selectedChapterId: "",
+    draftId: "",
+    updatedAt: Date.now(),
   },
   mounted() {
     this.editor = new Editor({
-      content: this.content,
+      content: chapterContentJSON,
       extensions: [StarterKit],
       editorProps: {
         attributes: {
           class: "focus:outline-none",
         },
+      },
+      onUpdate: () => {
+        this.content = this.editor.getJSON();
       },
     });
   },
