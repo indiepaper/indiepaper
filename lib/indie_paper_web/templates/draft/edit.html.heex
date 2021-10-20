@@ -39,7 +39,7 @@
                         </div>
                         <div class="space-y-4" v-for="chapter in sortedDraftChapters" :key="chapter.id">
                             <div class="flex flex-row justify-between items-center pr-2 space-x-2 rounded-md hover:bg-warm-gray-100">
-                                <button data-test="chapter-title" class="block py-2 px-6 w-full text-left rounded-md hover:bg-warm-gray-100">
+                                <button @click="selectChapter(chapter)" data-test="chapter-title" class="block py-2 px-6 w-full text-left rounded-md hover:bg-warm-gray-100">
                                     {{chapter.title}}
                                 </button>
                             </div>

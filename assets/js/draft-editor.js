@@ -26,6 +26,11 @@ const app = new Vue({
     },
   },
   methods: {
+    selectChapter(chapter) {
+      axios
+        .get(`/drafts/${this.draftId}/chapters/${chapter.id}`)
+        .then((res) => this.editor.commands.setContent(res.data.contentJSON));
+    },
     addDraftChapter() {
       this.draftChapterLoading = true;
       axios

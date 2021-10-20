@@ -24,7 +24,7 @@ defmodule IndiePaperWeb.DraftChapterController do
 
   def show(conn, %{"draft_id" => _draft_id, "id" => id}) do
     chapter = Chapters.get_chapter!(id)
-    json(conn, chapter.content_json)
+    json(conn, %{"contentJSON" => chapter.content_json})
   end
 
   def edit(conn, %{"draft_id" => draft_id, "id" => id}) do
