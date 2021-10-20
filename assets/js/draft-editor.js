@@ -1,6 +1,7 @@
 import { Editor, EditorContent } from "@tiptap/vue-2";
 import StarterKit from "@tiptap/starter-kit";
-import Vue from "vue/dist/vue.common.prod";
+import Vue from "vue/dist/vue.common.dev";
+import axios from "axios";
 
 const app = new Vue({
   el: "#draft-editor",
@@ -10,15 +11,30 @@ const app = new Vue({
   data: {
     editor: null,
     draftChapters: draftChapters,
+    draftId: draftId,
+    csrfToken: csrfToken,
     content: null,
     isActive(type, opts = {}) {
       return this.editor?.isActive(type, opts);
     },
-    selectedChapterId: "",
-    draftId: "",
     updatedAt: Date.now(),
   },
+  computed: {
+    sortedDraftChapters() {
+      return this.draftChapters.sort((dc) => dc.chapter_index);
+    },
+  },
+  methods: {
+    addDraftChapter() {
+      axios
+        .post(`/drafts/${this.draftId}/chapters/`)
+        .then((res) => this.draftChapters.push(res.data.chapter));
+    },
+  },
   mounted() {
+    axios.defaults.withCredentials = true;
+    axios.defaults.headers["X-CSRF-TOKEN"] = this.csrfToken;
+
     this.editor = new Editor({
       content: chapterContentJSON,
       extensions: [StarterKit],

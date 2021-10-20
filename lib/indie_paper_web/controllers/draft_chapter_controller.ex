@@ -9,20 +9,17 @@ defmodule IndiePaperWeb.DraftChapterController do
     render(conn, "new.html", changeset: changeset, draft: draft)
   end
 
-  def create(conn, %{"draft_id" => draft_id, "chapter" => chapter_params}) do
+  def create(conn, %{"draft_id" => draft_id}) do
     draft = Drafts.get_draft!(draft_id) |> Drafts.with_assoc(:chapters)
     last_chapter = Drafts.get_last_chapter(draft)
 
-    case Chapters.create_chapter(
-           draft,
-           Map.put(chapter_params, "chapter_index", last_chapter.chapter_index + 1)
-         ) do
-      {:ok, _chapter} ->
-        redirect(conn, to: Routes.draft_path(conn, :edit, draft))
+    {:ok, chapter} =
+      Chapters.create_chapter(
+        draft,
+        Map.put(%{"title" => "Chapter"}, "chapter_index", last_chapter.chapter_index + 1)
+      )
 
-      {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset, draft: draft)
-    end
+    json(conn, %{chapter: chapter})
   end
 
   def show(conn, %{"draft_id" => _draft_id, "id" => id}) do
