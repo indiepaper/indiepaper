@@ -10,7 +10,11 @@ defmodule IndiePaperWeb.DraftController do
     first_chapter = Drafts.get_first_chapter(draft)
 
     with :ok <- Bodyguard.permit(Drafts, :edit_draft, conn.assigns.current_author, draft) do
-      render(conn, "edit.html", draft: draft, first_chapter: first_chapter)
+      render(conn, "edit.html",
+        draft: draft,
+        first_chapter: first_chapter,
+        page_title: draft.book.title
+      )
     end
   end
 end
