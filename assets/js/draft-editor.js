@@ -3,6 +3,15 @@ import Document from "@tiptap/extension-document";
 import StarterKit from "@tiptap/starter-kit";
 import Vue from "vue/dist/vue.common.dev";
 import axios from "axios";
+import jp from "jsonpath";
+
+function truncateString(str, num) {
+  if (str.length > num) {
+    return str.slice(0, num) + "...";
+  } else {
+    return str;
+  }
+}
 
 const CustomDocument = Document.extend({
   content: "heading block*",
@@ -37,6 +46,16 @@ const app = new Vue({
   watch: {
     selectedChapterId(value) {
       this.isEditingSelectedChapter = false;
+    },
+    content(contentJSON) {
+      const title = getChapterTitle(contentJSON);
+      if (title) {
+        this.draftChapters.forEach((c, index) => {
+          if (c.id === this.selectedChapterId) {
+            c.title = truncateString(title, 30);
+          }
+        });
+      }
     },
   },
   methods: {
@@ -83,6 +102,11 @@ const app = new Vue({
     this.editor.destroy();
   },
 });
+
+function getChapterTitle(contentJSON) {
+  const title = jp.value(contentJSON, "$.content[0].content[0].text");
+  return title;
+}
 
 /*
 function debounce(func, wait, immediate) {

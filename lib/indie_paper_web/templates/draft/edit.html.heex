@@ -40,27 +40,8 @@
                         <div class="space-y-4" v-for="chapter in sortedDraftChapters" :key="chapter.id">
                             <div class="flex flex-row justify-between items-center pr-2 space-x-2 rounded-md hover:bg-warm-gray-100"
                                  :class="{'bg-warm-gray-100' : selectedChapterId === chapter.id}">
-                                <input type="text" :value="chapter.title" v-if="isEditingSelectedChapter && selectedChapterId === chapter.id" class="!py-1.5 !px-6 form-input" />
-                                <button v-else @click="selectChapter(chapter)" data-test="chapter-title" class="block py-2 px-6 w-full text-left rounded-md hover:bg-warm-gray-100">
+                                <button @click="selectChapter(chapter)" data-test="chapter-title" class="block py-2 px-6 w-full text-left rounded-md hover:bg-warm-gray-100">
                                     {{chapter.title}}
-                                </button>
-                                <button
-                                    v-if="isEditingSelectedChapter"
-                                    @click="isEditingSelectedChapter = true"
-                                    class={"secondary-link px-2 hidden"}
-                                    :class={"{'!block' : selectedChapterId === chapter.id}"}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                    </svg>
-                                </button>
-                                <button
-                                    v-else
-                                    @click="isEditingSelectedChapter = true"
-                                    class={"secondary-link px-2 hidden"}
-                                    :class={"{'!block' : selectedChapterId === chapter.id}"}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                    </svg>
                                 </button>
                             </div>
                         </div>
