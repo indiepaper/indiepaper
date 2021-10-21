@@ -1,6 +1,5 @@
 import { Editor, EditorContent } from "@tiptap/vue-2";
 import Document from "@tiptap/extension-document";
-import Placeholder from "@tiptap/extension-placeholder";
 import StarterKit from "@tiptap/starter-kit";
 import Vue from "vue/dist/vue.common.dev";
 import axios from "axios";
@@ -69,15 +68,6 @@ const app = new Vue({
         StarterKit.configure({
           document: false,
         }),
-        Placeholder.configure({
-          placeholder: ({ node }) => {
-            if (node.type.name === "heading") {
-              return "New Chapter";
-            }
-
-            return "Add your chapter content here";
-          },
-        }),
       ],
       editorProps: {
         attributes: {
@@ -86,7 +76,6 @@ const app = new Vue({
       },
       onUpdate: () => {
         this.content = this.editor.getJSON();
-        console.log(this.content);
       },
     });
   },
