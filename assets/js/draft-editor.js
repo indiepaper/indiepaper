@@ -12,6 +12,7 @@ const app = new Vue({
     editor: null,
     selectedChapterId: initialChapterId,
     isEditingSelectedChapter: false,
+    editedChapterTitle: "",
     isDraftChapterLoading: false,
     draftChapters: draftChapters,
     isDraftLoading: false,
@@ -28,10 +29,16 @@ const app = new Vue({
       return this.draftChapters.sort((dc) => dc.chapter_index);
     },
   },
+  watch: {
+    selectedChapterId(value) {
+      this.isEditingSelectedChapter = false;
+    },
+  },
   methods: {
     selectChapter(chapter) {
       this.isDraftLoading = true;
       this.selectedChapterId = chapter.id;
+
       axios
         .get(`/drafts/${this.draftId}/chapters/${this.selectedChapterId}`)
         .then((res) => this.editor.commands.setContent(res.data.contentJSON))
