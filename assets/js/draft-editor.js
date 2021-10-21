@@ -1,7 +1,13 @@
 import { Editor, EditorContent } from "@tiptap/vue-2";
+import Document from "@tiptap/extension-document";
+import Placeholder from "@tiptap/extension-placeholder";
 import StarterKit from "@tiptap/starter-kit";
 import Vue from "vue/dist/vue.common.dev";
 import axios from "axios";
+
+const CustomDocument = Document.extend({
+  content: "heading block*",
+});
 
 const app = new Vue({
   el: "#draft-editor",
@@ -58,7 +64,21 @@ const app = new Vue({
 
     this.editor = new Editor({
       content: chapterContentJSON,
-      extensions: [StarterKit],
+      extensions: [
+        CustomDocument,
+        StarterKit.configure({
+          document: false,
+        }),
+        Placeholder.configure({
+          placeholder: ({ node }) => {
+            if (node.type.name === "heading") {
+              return "New Chapter";
+            }
+
+            return "Add your chapter content here";
+          },
+        }),
+      ],
       editorProps: {
         attributes: {
           class: "focus:outline-none",
@@ -66,6 +86,7 @@ const app = new Vue({
       },
       onUpdate: () => {
         this.content = this.editor.getJSON();
+        console.log(this.content);
       },
     });
   },
