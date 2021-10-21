@@ -6,11 +6,7 @@ import axios from "axios";
 import jp from "jsonpath";
 
 function truncateString(str, num) {
-  if (str.length > num) {
-    return str.slice(0, num) + "...";
-  } else {
-    return str;
-  }
+  return str.slice(0, num);
 }
 
 const CustomDocument = Document.extend({
@@ -49,10 +45,11 @@ const app = new Vue({
     },
     content(contentJSON) {
       const title = getChapterTitle(contentJSON);
+
       if (title) {
         this.draftChapters.forEach((c, index) => {
           if (c.id === this.selectedChapterId) {
-            c.title = truncateString(title, 30);
+            c.title = truncateString(title, 64);
           }
         });
       }
