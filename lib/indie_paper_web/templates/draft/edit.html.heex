@@ -26,7 +26,7 @@
                             <div>
                                 <p>Chapters</p>
                             </div>
-                            <button :disabled="isDraftChapterLoading" @click="addDraftChapter()" class="px-3 text-xs secondary-link">
+                            <button :disabled="isDraftChapterLoading" @click="addDraftChapter()" class="py-2 px-3 text-xs rounded-md secondary-link">
                                 <svg v-if="isDraftChapterLoading" class="w-4 h-4 text-gray-600 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -40,7 +40,7 @@
                         <div class="space-y-4" v-for="chapter in sortedDraftChapters" :key="chapter.id">
                             <div class="flex flex-row justify-between items-center pr-2 space-x-2 rounded-md hover:bg-warm-gray-100"
                                  :class="{'bg-warm-gray-100' : selectedChapterId === chapter.id}">
-                                <button @click="selectChapter(chapter)" data-test="chapter-title" class="block py-2 px-6 w-full text-left rounded-md hover:bg-warm-gray-100">
+                                <button @click="selectChapter(chapter)" data-test="chapter-title" class="inline-block py-2 px-6 w-full text-left whitespace-normal break-words rounded-md hover:bg-warm-gray-100">
                                     {{chapter.title}}
                                 </button>
                             </div>

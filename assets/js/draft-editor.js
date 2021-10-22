@@ -5,8 +5,8 @@ import Vue from "vue/dist/vue.common.dev";
 import axios from "axios";
 import jp from "jsonpath";
 
-function truncateString(str, num) {
-  return str.slice(0, num);
+function truncateWords(str, num) {
+  return str.split(" ").slice(0, num).join(" ");
 }
 
 const CustomDocument = Document.extend({
@@ -49,7 +49,7 @@ const app = new Vue({
       if (title) {
         this.draftChapters.forEach((c, index) => {
           if (c.id === this.selectedChapterId) {
-            c.title = truncateString(title, 64);
+            c.title = truncateWords(title, 8);
           }
         });
       }
