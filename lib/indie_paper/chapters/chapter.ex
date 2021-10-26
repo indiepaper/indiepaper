@@ -4,6 +4,7 @@ defmodule IndiePaper.Chapters.Chapter do
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
+  @derive {Jason.Encoder, only: [:title, :id, :chapter_index]}
   schema "chapters" do
     field :title, :string
     field :draft_id, :binary_id
@@ -20,5 +21,6 @@ defmodule IndiePaper.Chapters.Chapter do
     |> cast(attrs, [:title, :chapter_index, :content_json])
     |> validate_required([:title, :chapter_index, :content_json])
     |> validate_number(:chapter_index, greater_than_or_equal_to: 0)
+    |> validate_length(:title, max: 30)
   end
 end

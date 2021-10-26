@@ -55,4 +55,25 @@ defmodule IndiePaper.ChaptersTest do
       refute Enum.find(chapters, fn ch -> ch.id == chapter.id end)
     end
   end
+
+  describe "get_title_from_content_json" do
+    test "gets the chapter title from content json" do
+      chapter =
+        insert(:chapter,
+          content_json: Chapters.placeholder_content_json("Test Title", "Test Content")
+        )
+
+      title = Chapters.get_title_from_content_json(chapter.content_json)
+
+      assert title == "Test Title"
+    end
+
+    test "returns nil when no title exists" do
+      chapter = insert(:chapter, content_json: %{})
+
+      title = Chapters.get_title_from_content_json(chapter.content_json)
+
+      assert title == nil
+    end
+  end
 end
