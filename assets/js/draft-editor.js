@@ -91,7 +91,10 @@ const app = new Vue({
 
       axios
         .get(`/drafts/${this.draftId}/chapters/${this.selectedChapterId}`)
-        .then((res) => this.editor.commands.setContent(res.data.contentJSON))
+        .then((res) => {
+          this.persistedContent = this.content = res.data.contentJSON;
+          this.editor.commands.setContent(res.data.contentJSON);
+        })
         .finally(() => (this.isDraftLoading = false));
     },
     addDraftChapter() {
