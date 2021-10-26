@@ -54,7 +54,14 @@ defmodule IndiePaperWeb.DraftChapterController do
     chapter = Chapters.get_chapter!(id)
     {:ok, updated_content_json} = JSONPatch.patch(chapter.content_json, delta)
 
-    {:ok, _chapter} = Chapters.update_chapter(chapter, %{content_json: updated_content_json})
+    title = Chapters.get_title_from_content_json(updated_content_json)
+
+    {:ok, _chapter} =
+      Chapters.update_chapter(chapter, %{
+        content_json: updated_content_json,
+        title: title || chapter.title
+      })
+
     json(conn, %{})
   end
 end

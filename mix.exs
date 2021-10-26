@@ -64,7 +64,8 @@ defmodule IndiePaper.MixProject do
       {:ueberauth_twitter, "~> 0.4"},
       {:html_sanitize_ex, "~> 1.4"},
       {:ex_rated, "~> 2.0"},
-      {:json_patch, "~> 0.8.0"}
+      {:json_patch, "~> 0.8.0"},
+      {:exjsonpath, "~> 0.1"}
     ]
   end
 

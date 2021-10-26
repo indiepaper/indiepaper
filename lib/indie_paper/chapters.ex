@@ -68,4 +68,11 @@ defmodule IndiePaper.Chapters do
   def list_chapters(draft) do
     Repo.all(from c in Chapter, where: c.draft_id == ^draft.id, order_by: c.chapter_index)
   end
+
+  def get_title_from_content_json(content_json) do
+    case ExJSONPath.eval(content_json, "$.content[0].content[0].text") do
+      {:ok, [title]} -> title |> String.slice(0..30)
+      _ -> nil
+    end
+  end
 end
