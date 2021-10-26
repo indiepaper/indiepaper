@@ -4,6 +4,8 @@ import StarterKit from "@tiptap/starter-kit";
 import Vue from "vue/dist/vue.common.dev";
 import axios from "axios";
 import jp from "jsonpath";
+import throttle from "lodash.throttle";
+import * as fastjsonpatch from "fast-json-patch";
 
 function truncateWords(str, num) {
   return str.split(" ").slice(0, num).join(" ");
@@ -12,6 +14,10 @@ function truncateWords(str, num) {
 const CustomDocument = Document.extend({
   content: "heading block*",
 });
+
+function getRawJSON(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
 
 const app = new Vue({
   el: "#draft-editor",
@@ -28,7 +34,8 @@ const app = new Vue({
     isDraftLoading: false,
     draftId: draftId,
     csrfToken: csrfToken,
-    content: null,
+    content: {},
+    persistedContent: {},
     isActive(type, opts = {}) {
       return this.editor?.isActive(type, opts);
     },
@@ -53,9 +60,23 @@ const app = new Vue({
           }
         });
       }
+
+      this.persistContent(contentJSON);
     },
   },
   methods: {
+    persistContent: throttle(function (contentJSON) {
+      this.isDraftLoading = true;
+
+      const delta = fastjsonpatch.compare(this.persistedContent, contentJSON);
+
+      axios
+        .patch(`/drafts/${this.draftId}/chapters/${this.selectedChapterId}`, {
+          delta: delta,
+        })
+        .then((res) => (this.previousContent = contentJSON))
+        .finally(() => (this.isDraftLoading = false));
+    }, 100),
     selectChapter(chapter) {
       this.isDraftLoading = true;
       this.selectedChapterId = chapter.id;
