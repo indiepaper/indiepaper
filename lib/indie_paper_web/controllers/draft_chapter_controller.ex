@@ -62,6 +62,7 @@ defmodule IndiePaperWeb.DraftChapterController do
         title: title || chapter.title
       })
 
-    json(conn, %{})
+    conn
+    |> json(%{})
   end
 end

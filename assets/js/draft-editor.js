@@ -26,6 +26,7 @@ const app = new Vue({
   },
   data: {
     editor: null,
+    isEditorError: false,
     selectedChapterId: initialChapterId,
     isEditingSelectedChapter: false,
     editedChapterTitle: "",
@@ -65,6 +66,9 @@ const app = new Vue({
     },
   },
   methods: {
+    retryPersistContent() {
+      this.persistContent(this.content);
+    },
     persistContent: throttle(function (contentJSON) {
       this.isDraftLoading = true;
 
@@ -74,7 +78,11 @@ const app = new Vue({
         .patch(`/drafts/${this.draftId}/chapters/${this.selectedChapterId}`, {
           delta: delta,
         })
-        .then((res) => (this.persistedContent = contentJSON))
+        .then((res) => {
+          this.persistedContent = contentJSON;
+          this.isEditorError = false;
+        })
+        .catch(() => (this.isEditorError = true))
         .finally(() => (this.isDraftLoading = false));
     }, 100),
     selectChapter(chapter) {
