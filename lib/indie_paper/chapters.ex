@@ -71,7 +71,7 @@ defmodule IndiePaper.Chapters do
 
   def get_title_from_content_json(content_json) do
     case ExJSONPath.eval(content_json, "$.content[0].content[0].text") do
-      {:ok, [title]} -> title |> String.slice(0..30)
+      {:ok, [title]} -> title |> String.slice(0..29)
       _ -> nil
     end
   end
