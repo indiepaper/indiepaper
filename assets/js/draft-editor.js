@@ -74,7 +74,7 @@ const app = new Vue({
         .patch(`/drafts/${this.draftId}/chapters/${this.selectedChapterId}`, {
           delta: delta,
         })
-        .then((res) => (this.previousContent = contentJSON))
+        .then((res) => (this.persistedContent = contentJSON))
         .finally(() => (this.isDraftLoading = false));
     }, 100),
     selectChapter(chapter) {
@@ -97,6 +97,8 @@ const app = new Vue({
   mounted() {
     axios.defaults.withCredentials = true;
     axios.defaults.headers["X-CSRF-TOKEN"] = this.csrfToken;
+
+    this.presistedContent = this.content = chapterContentJSON;
 
     this.editor = new Editor({
       content: chapterContentJSON,
