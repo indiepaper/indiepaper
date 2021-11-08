@@ -66,7 +66,7 @@ defmodule IndiePaperWeb.Router do
 
     post "/secure/sign-up", AuthorRegistrationController, :create
     post "/secure/sign-in", AuthorSessionController, :create
-    post "/secure/reset_password", AuthorResetPasswordController, :create
+    post "/secure/reset-password", AuthorResetPasswordController, :create
   end
 
   scope "/", IndiePaperWeb do
@@ -77,9 +77,9 @@ defmodule IndiePaperWeb.Router do
 
     get "/secure/sign-up", AuthorRegistrationController, :new
     get "/secure/sign-in", AuthorSessionController, :new
-    get "/secure/reset_password", AuthorResetPasswordController, :new
-    get "/secure/reset_password/:token", AuthorResetPasswordController, :edit
-    put "/secure/reset_password/:token", AuthorResetPasswordController, :update
+    get "/secure/reset-password", AuthorResetPasswordController, :new
+    get "/secure/reset-password/:token", AuthorResetPasswordController, :edit
+    put "/secure/reset-password/:token", AuthorResetPasswordController, :update
   end
 
   scope "/", IndiePaperWeb do

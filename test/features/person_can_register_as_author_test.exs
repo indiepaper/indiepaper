@@ -15,7 +15,7 @@ defmodule IndiePaperWeb.Feature.PersonCanRegisterAsAuthorTest do
     |> NavBar.has_sign_out?()
   end
 
-  test "person can register as author with Socials", %{session: session} do
+  test "person can register as author with socials", %{session: session} do
     session
     |> RegisterPage.visit_page()
     |> RegisterPage.has_sign_up_with_google?()
