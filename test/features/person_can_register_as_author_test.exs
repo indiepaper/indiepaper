@@ -1,7 +1,7 @@
 defmodule IndiePaperWeb.Feature.PersonCanRegisterAsAuthorTest do
   use IndiePaperWeb.FeatureCase, async: true
 
-  alias IndiePaperWeb.Pages.{Components.NavBar, DashboardPage, RegisterPage}
+  alias IndiePaperWeb.Pages.{Components.NavBar, DashboardPage, RegisterPage, AccountSetupPage}
 
   test "person can register as author", %{session: session} do
     author = params_for(:author)
@@ -9,6 +9,11 @@ defmodule IndiePaperWeb.Feature.PersonCanRegisterAsAuthorTest do
     session
     |> RegisterPage.visit_page()
     |> RegisterPage.sign_up(email: author.email, password: author.password)
+    |> AccountSetupPage.setup_account(
+      first_name: author.first_name,
+      last_name: author.last_name,
+      username: author.username
+    )
     |> DashboardPage.has_title?()
     |> DashboardPage.click_resend_confirmation_email()
     |> DashboardPage.has_confirmation_email_text?()

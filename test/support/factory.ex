@@ -86,6 +86,9 @@ defmodule IndiePaper.Factory do
 
   def author_factory do
     %IndiePaper.Authors.Author{
+      first_name: sequence("First name"),
+      last_name: sequence("Last name"),
+      username: sequence("author"),
       email: sequence(:email, &"author#{&1}@email.com"),
       stripe_connect_id: sequence(:stripe_connect_id, &"acc_stripeacc#{&1}"),
       is_payment_connected: true,
