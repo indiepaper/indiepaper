@@ -17,6 +17,10 @@ defmodule IndiePaper.Authors.Author do
     field :is_payment_connected, :boolean, default: false
     field :stripe_connect_id, :string
 
+    field :username, :string, null: false
+    field :first_name, :string, null: false
+    field :last_name, :string
+
     has_many :books, IndiePaper.Books.Book
     has_many :orders, IndiePaper.Orders.Order, foreign_key: :customer_id
 

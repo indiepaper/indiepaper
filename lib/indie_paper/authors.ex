@@ -405,4 +405,10 @@ defmodule IndiePaper.Authors do
 
   def is_created?(%{account_status: :created}), do: true
   def is_created?(_), do: false
+
+  def generate_random_username do
+    IndiePaper.Utils.username_matrix()
+    |> Enum.map(fn names -> Enum.random(names) end)
+    |> Enum.join("-")
+  end
 end
