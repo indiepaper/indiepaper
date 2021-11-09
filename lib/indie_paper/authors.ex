@@ -427,7 +427,13 @@ defmodule IndiePaper.Authors do
     "#{base_username}-#{salt}"
   end
 
-  def change_profile(author, attrs \\ %{}) do
+  def change_author_profile(author, attrs \\ %{}) do
     Author.profile_changeset(author, attrs)
+  end
+
+  def update_author_profile(author, params) do
+    author
+    |> Author.profile_changeset(params)
+    |> Repo.update()
   end
 end

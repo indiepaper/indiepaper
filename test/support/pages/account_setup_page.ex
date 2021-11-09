@@ -6,5 +6,6 @@ defmodule IndiePaperWeb.Pages.AccountSetupPage do
     |> fill_in(text_field("Username"), with: username)
     |> fill_in(text_field("First name"), with: first_name)
     |> fill_in(text_field("Last name"), with: last_name)
+    |> click(button("Finish Profile Setup"))
   end
 end

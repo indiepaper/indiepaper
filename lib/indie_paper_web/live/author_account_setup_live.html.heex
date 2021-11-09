@@ -1,4 +1,4 @@
-<.form let={f} for={@changeset} phx-change="validate" phx-submit="save">
+<.form let={f} for={@changeset} phx-change="validate" phx-submit="finish_profile_setup">
   <%= label f, :username %>
   <%= text_input f, :username %>
 
@@ -8,5 +8,5 @@
   <%= label f, :last_name %>
   <%= text_input f, :last_name %>
 
-  <%= submit "Save" %>
+  <%= submit "Finish Profile Setup" %>
 </.form>
