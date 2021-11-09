@@ -6,7 +6,7 @@ defmodule IndiePaperWeb.AuthorAccountSetupLive do
   @impl Phoenix.LiveView
   def mount(_params, %{"author_token" => author_token}, socket) do
     current_author = Authors.get_author_by_session_token(author_token)
-    changeset = Authors.change_account_setup(current_author)
+    changeset = Authors.change_profile(current_author)
 
     {:ok,
      socket

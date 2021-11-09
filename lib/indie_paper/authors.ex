@@ -77,13 +77,13 @@ defmodule IndiePaper.Authors do
   def register_author(attrs) do
     %Author{}
     |> Author.registration_changeset(attrs)
-    |> account_setup_author_changeset()
+    |> default_profile_changeset()
     |> Repo.insert()
   end
 
-  def account_setup_author_changeset(author) do
+  def default_profile_changeset(author) do
     author
-    |> Author.account_setup_changeset(%{
+    |> Author.profile_changeset(%{
       "username" => generate_random_username(),
       "first_name" => generate_random_username()
     })
@@ -375,7 +375,7 @@ defmodule IndiePaper.Authors do
       _ ->
         %Author{}
         |> Author.registration_changeset(attrs)
-        |> account_setup_author_changeset()
+        |> default_profile_changeset()
         |> Author.confirm_changeset()
         |> Repo.insert()
     end
@@ -427,7 +427,7 @@ defmodule IndiePaper.Authors do
     "#{base_username}-#{salt}"
   end
 
-  def change_account_setup(author, attrs \\ %{}) do
-    Author.account_setup_changeset(author, attrs)
+  def change_profile(author, attrs \\ %{}) do
+    Author.profile_changeset(author, attrs)
   end
 end
