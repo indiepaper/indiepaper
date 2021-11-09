@@ -7,23 +7,22 @@
                 <.form let={f} for={@changeset} phx-change="validate" phx-submit="finish_profile_setup">
 
                 <div class="form-tight-container">
+                    <div class="flex flex-col space-y-6 w-full md:flex-row md:space-y-0 md:space-x-4">
+                        <div class="input-container">
+                            <%= label f, :first_name, class: "input-label" %>
+                            <%= text_input f, :first_name, class: "form-input" %>
+                            <p class="input-error">
+                                <%= error_tag f, :first_name %>
+                            </p>
+                        </div>
 
-                    <div class="flex flex-row space-x-4">
-                    <div class="input-container">
-                        <%= label f, :first_name, class: "input-label" %>
-                        <%= text_input f, :first_name, class: "form-input" %>
-                        <p class="input-error">
-                            <%= error_tag f, :first_name %>
-                        </p>
-                    </div>
-
-                    <div class="input-container">
-                        <%= label f, :last_name , class: "input-label" %>
-                        <%= text_input f, :last_name, class: "form-input" %>
-                        <p class="input-error">
-                            <%= error_tag f, :last_name %>
-                        </p>
-                    </div>
+                        <div class="input-container">
+                            <%= label f, :last_name , class: "input-label" %>
+                            <%= text_input f, :last_name, class: "form-input" %>
+                            <p class="input-error">
+                                <%= error_tag f, :last_name %>
+                            </p>
+                        </div>
                     </div>
 
                     <div class="input-container">
