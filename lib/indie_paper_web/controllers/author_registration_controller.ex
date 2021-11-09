@@ -22,7 +22,7 @@ defmodule IndiePaperWeb.AuthorRegistrationController do
         conn
         |> put_flash(:info, "Welcome to IndiePaper. Confirm email to continue.")
         |> AuthorAuth.log_in_author_without_redirect(author)
-        |> redirect(to: Routes.live_path(conn, IndiePaperWeb.AuthorAccountSetupLive))
+        |> redirect(to: Routes.live_path(conn, IndiePaperWeb.AuthorProfileSetupLive))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
