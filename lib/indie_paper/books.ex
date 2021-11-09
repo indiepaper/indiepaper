@@ -92,6 +92,10 @@ defmodule IndiePaper.Books do
   end
 
   def get_published_books(author) do
-    from(b in Book, where: b.author_id == ^author.id and b.status == :published) |> Repo.all()
+    from(b in Book,
+      where: b.author_id == ^author.id and b.status == :published,
+      order_by: [desc: :updated_at]
+    )
+    |> Repo.all()
   end
 end
