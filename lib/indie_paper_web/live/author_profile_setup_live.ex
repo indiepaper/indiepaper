@@ -1,4 +1,4 @@
-defmodule IndiePaperWeb.AuthorAccountSetupLive do
+defmodule IndiePaperWeb.AuthorProfileSetupLive do
   use IndiePaperWeb, :live_view
 
   alias IndiePaper.Authors
