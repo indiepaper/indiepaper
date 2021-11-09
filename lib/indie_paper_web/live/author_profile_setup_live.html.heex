@@ -1,0 +1,48 @@
+<section class="bg-background">
+    <div class="md:py-24 container-box page-box">
+        <div class="mx-auto max-w-md">
+            <h1 class="page-heading">Finish Setting up your Profile.</h1>
+            <p class="page-description">Feel free to skip this and come back to it anytime.</p>
+            <div class="mt-12">
+                <.form let={f} for={@changeset} phx-change="validate" phx-submit="finish_profile_setup">
+
+                <div class="form-tight-container">
+                    <div class="flex flex-col space-y-6 w-full md:flex-row md:space-y-0 md:space-x-4">
+                        <div class="input-container">
+                            <%= label f, :first_name, class: "input-label" %>
+                            <%= text_input f, :first_name, class: "form-input" %>
+                            <p class="input-error">
+                                <%= error_tag f, :first_name %>
+                            </p>
+                        </div>
+
+                        <div class="input-container">
+                            <%= label f, :last_name , class: "input-label" %>
+                            <%= text_input f, :last_name, class: "form-input" %>
+                            <p class="input-error">
+                                <%= error_tag f, :last_name %>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="input-container">
+                        <%= label f, :username, class: "input-label" %>
+                        <%= text_input f, :username, class: "form-input" %>
+
+                        <p class="input-error">
+                            <%= error_tag f, :username %>
+                        </p>
+                    </div>
+
+                    <div class="pt-1 w-full">
+                        <%= submit class: "submit-button space-x-2 py-3 w-full" do %>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0h24v24H0z"/><path d="M10 11V8l5 4-5 4v-3H1v-2h9zm-7.542 4h2.124A8.003 8.003 0 0 0 20 12 8 8 0 0 0 4.582 9H2.458C3.732 4.943 7.522 2 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10c-4.478 0-8.268-2.943-9.542-7z"/></svg>
+                            <p>Finish Profile Setup</p>
+                        <% end %>
+                    </div>
+                </div>
+                </.form>
+            </div>
+        </div>
+    </div>
+</section>

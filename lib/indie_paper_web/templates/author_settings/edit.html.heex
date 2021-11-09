@@ -1,53 +1,88 @@
-<h1>Settings</h1>
+<section class="bg-background">
+    <div class="container-box page-box">
+        <div class="max-w-md">
+            <h1 class="page-heading">Settings</h1>
+            <p class="page-description">Change your account email and password here</p>
 
-<h3>Change email</h3>
+            <div class="mt-16">
+                <h2 class="font-bold">Change Email</h2>
+                <.form let={f} for={@email_changeset} action={Routes.author_settings_path(@conn, :update)} id="update_email">
+                <%= if @email_changeset.action do %>
+                    <div class="mt-4 form-error-box">
+                        <p>Oops, something went wrong! Please check the errors below.</p>
+                    </div>
+                <% end %>
 
-<.form let={f} for={@email_changeset} action={Routes.author_settings_path(@conn, :update)} id="update_email">
-  <%= if @email_changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+                <%= hidden_input f, :action, name: "action", value: "update_email" %>
+
+
+                <div class="mt-4 form-tight-container">
+                    <div class="input-container">
+                        <%= label f, :email, class: "input-label"  %>
+                        <%= email_input f, :email, required: true, class: "form-input" %>
+
+                        <div class="input-error">
+                            <%= error_tag f, :email %>
+                        </div>
+                    </div>
+
+                    <div class="input-container">
+                        <%= label f, :current_password, for: "current_password_for_email", class: "input-label" %>
+                        <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_email", class: "form-input" %>
+                        <div class="input-error">
+                            <%= error_tag f, :current_password %>
+                        </div>
+                    </div>
+
+                    <div>
+                        <%= submit "Change email", class: "submit-button" %>
+                    </div>
+                </div>
+                </.form>
+            </div>
+
+            <div class="mt-16">
+                <h2 class="font-bold">Change Password</h2>
+                <.form let={f} for={@password_changeset} action={Routes.author_settings_path(@conn, :update)} id="update_password">
+                <%= if @password_changeset.action do %>
+                    <div class="mt-4 form-error-box">
+                        <p>Oops, something went wrong! Please check the errors below.</p>
+                    </div>
+                <% end %>
+
+                <%= hidden_input f, :action, name: "action", value: "update_password" %>
+
+                <div class="mt-4 form-tight-container">
+                    <div class="input-container">
+                        <%= label f, :password, "New password", class: "input-label" %>
+                        <%= password_input f, :password, required: true, class: "form-input" %>
+                        <div class="input-error">
+                            <%= error_tag f, :password %>
+                        </div>
+                    </div>
+
+                    <div class="input-container">
+                        <%= label f, :password_confirmation, "Confirm new password", class: "input-label" %>
+                        <%= password_input f, :password_confirmation, required: true, class: "form-input" %>
+                        <div class="input-error">
+                            <%= error_tag f, :password_confirmation %>
+                        </div>
+                    </div>
+
+                    <div class="input-container">
+                        <%= label f, :current_password, for: "current_password_for_password", class: "input-label" %>
+                        <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_password", class: "form-input" %>
+                        <div class="input-error">
+                            <%= error_tag f, :current_password %>
+                        </div>
+                    </div>
+
+                    <div>
+                        <%= submit "Change password", class: "submit-button" %>
+                    </div>
+                </div>
+                </.form>
+            </div>
+        </div>
     </div>
-  <% end %>
-
-  <%= hidden_input f, :action, name: "action", value: "update_email" %>
-
-  <%= label f, :email %>
-  <%= email_input f, :email, required: true %>
-  <%= error_tag f, :email %>
-
-  <%= label f, :current_password, for: "current_password_for_email" %>
-  <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_email" %>
-  <%= error_tag f, :current_password %>
-
-  <div>
-    <%= submit "Change email" %>
-  </div>
-</.form>
-
-<h3>Change password</h3>
-
-<.form let={f} for={@password_changeset} action={Routes.author_settings_path(@conn, :update)} id="update_password">
-  <%= if @password_changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
-
-  <%= hidden_input f, :action, name: "action", value: "update_password" %>
-
-  <%= label f, :password, "New password" %>
-  <%= password_input f, :password, required: true %>
-  <%= error_tag f, :password %>
-
-  <%= label f, :password_confirmation, "Confirm new password" %>
-  <%= password_input f, :password_confirmation, required: true %>
-  <%= error_tag f, :password_confirmation %>
-
-  <%= label f, :current_password, for: "current_password_for_password" %>
-  <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_password" %>
-  <%= error_tag f, :current_password %>
-
-  <div>
-    <%= submit "Change password" %>
-  </div>
-</.form>
+</section>

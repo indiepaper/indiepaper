@@ -67,8 +67,6 @@ const app = new Vue({
   },
   methods: {
     persistContent: throttle(function (contentJSON) {
-      this.isDraftLoading = true;
-
       const delta = fastjsonpatch.compare(this.persistedContent, contentJSON);
 
       axios
@@ -79,9 +77,8 @@ const app = new Vue({
           this.persistedContent = contentJSON;
           this.isEditorError = false;
         })
-        .catch(() => (this.isEditorError = true))
-        .finally(() => (this.isDraftLoading = false));
-    }, 100),
+        .catch(() => (this.isEditorError = true));
+    }, 160),
     selectChapter(chapter) {
       this.isDraftLoading = true;
       this.selectedChapterId = chapter.id;

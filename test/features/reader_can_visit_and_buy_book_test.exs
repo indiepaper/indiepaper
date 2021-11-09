@@ -1,7 +1,7 @@
 defmodule IndiePaperWeb.Feature.ReaderCanVisitAndBuyBookTest do
   use IndiePaperWeb.FeatureCase, async: true
 
-  alias IndiePaperWeb.Pages.{BookPage, LoginPage, DashboardOrderPage}
+  alias IndiePaperWeb.Pages.{BookPage, LoginPage, DashboardOrderPage, AuthorPage}
 
   test "reader can visit book page and buy book", %{session: session} do
     book = insert(:book)
@@ -45,5 +45,17 @@ defmodule IndiePaperWeb.Feature.ReaderCanVisitAndBuyBookTest do
     |> BookPage.Show.visit_page(book)
     |> BookPage.Show.click_buy_button()
     |> BookPage.Show.has_blocked_message?()
+  end
+
+  test "reader can see more books by the author", %{session: session} do
+    book = insert(:book)
+    customer = insert(:author)
+
+    session
+    |> LoginPage.visit_page()
+    |> LoginPage.login(email: customer.email, password: customer.password)
+    |> BookPage.Show.visit_page(book)
+    |> BookPage.Show.click_author_name?(book.author.first_name)
+    |> AuthorPage.Show.has_book_title?(book.title)
   end
 end

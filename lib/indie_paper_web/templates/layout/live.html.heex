@@ -1,21 +1,21 @@
 <main>
     <%= if not is_nil(live_flash(@flash, :info)) do %>
-        <div class="py-4 bg-green-100">
-            <div class="flex flex-row items-center py-0 space-x-2 container-box md:justify-left">
+        <div class="py-4 -mt-1 text-gray-50 bg-gray-700">
+            <div class="flex flex-row justify-center items-center py-0 space-x-2 container-box">
                 <div class="">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                     </svg>
                 </div>
-                <p class="text-sm font-medium text-green-900" role="alert"
+                <p class="text-sm font-medium text-center" role="alert"
                    phx-click="lv:clear-flash"
                    phx-value-key="info"><%= live_flash(@flash, :info) %></p>
             </div>
         </div>
     <% end %>
     <%= if not is_nil(live_flash(@flash, :error)) do %>
-        <div class="py-4 bg-red-400">
-            <div class="flex flex-row items-center py-0 space-x-2 text-red-50 container-box md:justify-left">
+        <div class="py-4 -mt-1 bg-red-500">
+            <div class="flex flex-row justify-center items-center py-0 space-x-2 text-white container-box">
                 <div class="">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -27,6 +27,5 @@
             </div>
         </div>
     <% end %>
-
     <%= @inner_content %>
 </main>

@@ -25,15 +25,20 @@ defmodule IndiePaperWeb.AuthorAuth do
   if you are not using LiveView.
   """
   def log_in_author(conn, author, params \\ %{}) do
-    token = Authors.generate_author_session_token(author)
     author_return_to = get_session(conn, :author_return_to)
+
+    log_in_author_without_redirect(conn, author, params)
+    |> redirect(to: author_return_to || signed_in_path(conn))
+  end
+
+  def log_in_author_without_redirect(conn, author, params \\ %{}) do
+    token = Authors.generate_author_session_token(author)
 
     conn
     |> renew_session()
     |> put_session(:author_token, token)
     |> put_session(:live_socket_id, "authors_sessions:#{Base.url_encode64(token)}")
     |> maybe_write_remember_me_cookie(token, params)
-    |> redirect(to: author_return_to || signed_in_path(conn))
   end
 
   defp maybe_write_remember_me_cookie(conn, token, %{"remember_me" => "true"}) do
@@ -145,5 +150,5 @@ defmodule IndiePaperWeb.AuthorAuth do
 
   defp maybe_store_return_to(conn), do: conn
 
-  defp signed_in_path(conn), do: Routes.dashboard_path(conn, :index)
+  def signed_in_path(conn), do: Routes.dashboard_path(conn, :index)
 end

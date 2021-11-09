@@ -17,6 +17,10 @@ defmodule IndiePaper.Authors.Author do
     field :is_payment_connected, :boolean, default: false
     field :stripe_connect_id, :string
 
+    field :username, :string, null: false
+    field :first_name, :string, null: false
+    field :last_name, :string
+
     has_many :books, IndiePaper.Books.Book
     has_many :orders, IndiePaper.Orders.Order, foreign_key: :customer_id
 
@@ -153,5 +157,13 @@ defmodule IndiePaper.Authors.Author do
     author
     |> cast(attrs, [:stripe_connect_id, :is_payment_connected, :account_status])
     |> unique_constraint([:stripe_connect_id])
+  end
+
+  def profile_changeset(author, attrs) do
+    author
+    |> cast(attrs, [:username, :first_name, :last_name])
+    |> validate_required([:username, :first_name])
+    |> unsafe_validate_unique(:username, IndiePaper.Repo)
+    |> unique_constraint(:username)
   end
 end

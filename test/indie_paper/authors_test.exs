@@ -99,6 +99,16 @@ defmodule IndiePaper.AuthorsTest do
 
       assert author.account_status == :created
     end
+
+    test "sets the username and first_name field from the given email" do
+      author_params =
+        params_for(:author, email: "testauthor@gmail.com", username: nil, first_name: nil)
+
+      {:ok, author} = Authors.register_author(author_params)
+
+      assert author.username
+      assert author.first_name
+    end
   end
 
   describe "change_author_registration/2" do

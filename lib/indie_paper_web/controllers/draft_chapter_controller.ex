@@ -23,17 +23,24 @@ defmodule IndiePaperWeb.DraftChapterController do
 
   def update(conn, %{"id" => id, "delta" => delta}) do
     chapter = Chapters.get_chapter!(id)
-    {:ok, updated_content_json} = JSONPatch.patch(chapter.content_json, delta)
 
-    title = Chapters.get_title_from_content_json(updated_content_json)
+    case JSONPatch.patch(chapter.content_json, delta) do
+      {:ok, updated_content_json} ->
+        title = Chapters.get_title_from_content_json(updated_content_json)
 
-    {:ok, _chapter} =
-      Chapters.update_chapter(chapter, %{
-        content_json: updated_content_json,
-        title: title || chapter.title
-      })
+        {:ok, _chapter} =
+          Chapters.update_chapter(chapter, %{
+            content_json: updated_content_json,
+            title: title || chapter.title
+          })
 
-    conn
-    |> json(%{})
+        conn
+        |> json(%{})
+
+      {:error, _, _} ->
+        conn
+        |> put_status(500)
+        |> json(%{})
+    end
   end
 end

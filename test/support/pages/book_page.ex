@@ -35,6 +35,11 @@ defmodule IndiePaperWeb.Pages.BookPage.Show do
     |> assert_has(link("Buy Now"))
   end
 
+  def click_author_name?(session, name) do
+    session
+    |> click(link(name))
+  end
+
   def has_book_title?(session, title) do
     session
     |> assert_has(data("test", "title", text: title))

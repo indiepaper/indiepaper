@@ -88,6 +88,7 @@ defmodule IndiePaperWeb do
       import Phoenix.View
 
       import IndiePaperWeb.ErrorHelpers
+      import IndiePaperWeb.InputHelpers
       import IndiePaperWeb.Gettext
       alias IndiePaperWeb.Router.Helpers, as: Routes
     end

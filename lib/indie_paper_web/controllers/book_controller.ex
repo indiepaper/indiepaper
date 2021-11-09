@@ -49,7 +49,7 @@ defmodule IndiePaperWeb.BookController do
   end
 
   def show(conn, %{"id" => book_id}) do
-    book = Books.get_book!(book_id)
+    book = Books.get_book!(book_id) |> Books.with_assoc(:author)
     render(conn, "show.html", book: book)
   end
 end
