@@ -149,7 +149,10 @@ defmodule IndiePaperWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    get "/:page", PageController, :show
+    get "/privacy-policy", PageController, :privacy_policy
+    get "/terms-of-service", PageController, :terms_of_service
+
+    get "/:author", AuthorPageController, :show
 
     resources "/books", BookController, only: [:show]
   end

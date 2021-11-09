@@ -446,4 +446,8 @@ defmodule IndiePaper.Authors do
     |> Author.profile_changeset(params)
     |> Repo.update()
   end
+
+  def get_full_name(author) do
+    "#{author.first_name} #{author.last_name}"
+  end
 end

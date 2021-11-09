@@ -3,6 +3,7 @@
         <div class="mx-auto max-w-4xl">
             <div class="flex flex-col items-start md:px-8">
                 <h1 class="text-4xl font-black text-gray-800 md:text-6xl" data-test="title"><%= @book.title %></h1>
+                <p>written by <%= link IndiePaper.Authors.get_full_name(@book.author), to: Routes.author_page_path(@conn, :show, @book.author) %></p>
                 <div class="mt-8 max-w-xl text-gray-600 secondary-text">
                     <p class=""><%= @book.short_description %></p>
                 </div>

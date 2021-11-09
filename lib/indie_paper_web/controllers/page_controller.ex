@@ -40,11 +40,11 @@ defmodule IndiePaperWeb.PageController do
     )
   end
 
-  def show(conn, %{"page" => "privacy-policy"}) do
+  def privacy_policy(conn, _params) do
     render(conn, "privacy-policy.html")
   end
 
-  def show(conn, %{"page" => "terms-of-service"}) do
+  def terms_of_service(conn, _params) do
     render(conn, "terms-of-service.html")
   end
 end
