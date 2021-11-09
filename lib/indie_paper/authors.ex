@@ -422,7 +422,11 @@ defmodule IndiePaper.Authors do
       |> Enum.map(fn names -> Enum.random(names) end)
       |> Enum.join("-")
 
-    salt = :crypto.strong_rand_bytes(4) |> Base.url_encode64() |> binary_part(0, 4)
+    salt =
+      :crypto.strong_rand_bytes(4)
+      |> Base.url_encode64()
+      |> binary_part(0, 4)
+      |> String.downcase()
 
     "#{base_username}-#{salt}"
   end
