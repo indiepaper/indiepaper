@@ -407,8 +407,13 @@ defmodule IndiePaper.Authors do
   def is_created?(_), do: false
 
   def generate_random_username do
-    IndiePaper.Utils.username_matrix()
-    |> Enum.map(fn names -> Enum.random(names) end)
-    |> Enum.join("-")
+    base_username =
+      IndiePaper.Utils.username_matrix()
+      |> Enum.map(fn names -> Enum.random(names) end)
+      |> Enum.join("-")
+
+    salt = :crypto.strong_rand_bytes(4) |> Base.url_encode64() |> binary_part(0, 4)
+
+    "#{base_username}-#{salt}"
   end
 end
