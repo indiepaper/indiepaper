@@ -3,9 +3,9 @@
         <div class="mx-auto max-w-4xl">
             <div class="flex flex-col items-start md:px-8">
                 <h1 class="text-2xl font-black text-gray-800 md:text-4xl" data-test="title"><%= @book.title %></h1>
-                <p>written by <%= link IndiePaper.Authors.get_full_name(@book.author), to: Routes.author_page_path(@conn, :show, @book.author) %></p>
+                <p class="mt-2 secondary-text">written by <%= link IndiePaper.Authors.get_full_name(@book.author), to: Routes.author_page_path(@conn, :show, @book.author), class: "primary-link inline-block" %></p>
                 <div class="mt-8 max-w-3xl text-gray-600 secondary-text">
-                    <p class=""><%= @book.short_description %></p>
+                    <p><%= @book.short_description %></p>
                 </div>
                 <%= link to: Routes.book_checkout_path(@conn, :new, @book), class: "flex flex-row justify-center items-center py-4 px-12 mt-8 space-x-3 bg-gradient-to-br from-gray-700 via-gray-900 to-black rounded-lg border-none shadow-sm md:mt-12 border-dark-border primary-button", "data-no-instant": "" do %>
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
