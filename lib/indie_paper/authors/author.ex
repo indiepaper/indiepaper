@@ -51,6 +51,13 @@ defmodule IndiePaper.Authors.Author do
     |> validate_password(opts)
   end
 
+  def account_setup_changeset(author, attrs) do
+    author
+    |> cast(attrs, [:username, :first_name, :last_name])
+    |> validate_required([:username, :first_name])
+    |> unique_constraint(:username)
+  end
+
   defp validate_email(changeset) do
     changeset
     |> validate_required([:email])
