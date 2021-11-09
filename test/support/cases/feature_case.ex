@@ -8,11 +8,8 @@ defmodule IndiePaperWeb.FeatureCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(IndiePaper.Repo)
-
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(IndiePaper.Repo, {:shared, self()})
-    end
+    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(IndiePaper.Repo, shared: not tags[:async])
+    on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
 
     metadata = Phoenix.Ecto.SQL.Sandbox.metadata_for(IndiePaper.Repo, self())
     {:ok, session} = Wallaby.start_session(metadata: metadata)

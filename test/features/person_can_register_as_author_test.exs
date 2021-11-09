@@ -1,5 +1,5 @@
 defmodule IndiePaperWeb.Feature.PersonCanRegisterAsAuthorTest do
-  use IndiePaperWeb.FeatureCase, async: true
+  use IndiePaperWeb.FeatureCase, async: false
 
   alias IndiePaperWeb.Pages.{Components.NavBar, DashboardPage, RegisterPage, AccountSetupPage}
 
@@ -9,7 +9,6 @@ defmodule IndiePaperWeb.Feature.PersonCanRegisterAsAuthorTest do
     session
     |> RegisterPage.visit_page()
     |> RegisterPage.sign_up(email: author.email, password: author.password)
-    |> take_screenshot()
     |> AccountSetupPage.setup_account(
       first_name: author.first_name,
       last_name: author.last_name,

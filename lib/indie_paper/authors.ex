@@ -426,4 +426,8 @@ defmodule IndiePaper.Authors do
 
     "#{base_username}-#{salt}"
   end
+
+  def change_account_setup(author, attrs \\ %{}) do
+    Author.account_setup_changeset(author, attrs)
+  end
 end
