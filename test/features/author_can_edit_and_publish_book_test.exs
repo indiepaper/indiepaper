@@ -37,7 +37,6 @@ defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
     |> DraftPage.Edit.click_publish()
     |> BookPage.Show.has_book_title?(book.title)
     |> DashboardPage.visit_page()
-    |> DashboardPage.click_preview()
     |> BookPage.Read.has_book_title?(book.title)
   end
 
