@@ -77,15 +77,21 @@ defmodule IndiePaper.Authors do
   def register_author(attrs) do
     %Author{}
     |> Author.registration_changeset(attrs)
-    |> default_profile_changeset()
+    |> default_profile_changeset(attrs["email"])
     |> Repo.insert()
   end
 
-  def default_profile_changeset(author) do
+  def default_profile_changeset(author, nil) do
+    default_profile_changeset(author, generate_random_username())
+  end
+
+  def default_profile_changeset(author, email) do
+    name_from_email = String.split(email, "@") |> Enum.at(0) |> String.capitalize()
+
     author
     |> Author.profile_changeset(%{
       "username" => generate_random_username(),
-      "first_name" => generate_random_username()
+      "first_name" => name_from_email
     })
   end
 
@@ -375,7 +381,7 @@ defmodule IndiePaper.Authors do
       _ ->
         %Author{}
         |> Author.registration_changeset(attrs)
-        |> default_profile_changeset()
+        |> default_profile_changeset(attrs.email)
         |> Author.confirm_changeset()
         |> Repo.insert()
     end
