@@ -40,6 +40,10 @@
     @apply border-primary-border focus:ring-0 w-full rounded-lg focus:outline-none focus:border-warm-gray-500;
   }
 
+  .form-input-error {
+    @apply !border-primary-error;
+  }
+
   .input-label {
     @apply mb-1;
   }
