@@ -90,4 +90,8 @@ defmodule IndiePaper.Books do
     chapters = Chapters.list_chapters(book_with_draft.draft)
     chapters |> Enum.filter(fn c -> not is_nil(c.published_content_json) end)
   end
+
+  def get_published_books(author) do
+    from(b in Book, where: b.author_id == ^author.id and b.status == :published) |> Repo.all()
+  end
 end

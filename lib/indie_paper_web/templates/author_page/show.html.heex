@@ -1,0 +1,3 @@
+<%= for book <- @books do %>
+    <%= link book.title, to: Routes.book_path(@conn, :show, book) %>
+    <% end %>

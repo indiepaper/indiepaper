@@ -110,4 +110,18 @@ defmodule IndiePaper.BooksTest do
       assert Enum.find(published_chapters, fn pc -> pc.id == chapter2.id end)
     end
   end
+
+  describe "get_published_books" do
+    test "returns published books of given author" do
+      author = insert(:author)
+      [book1, book2] = insert_pair(:book, author: author, status: :published)
+      book3 = insert(:book, status: :pending_publication, author: author)
+
+      books = Books.get_published_books(author)
+
+      assert Enum.find(books, fn book -> book.id == book1.id end)
+      assert Enum.find(books, fn book -> book.id == book2.id end)
+      refute Enum.find(books, fn book -> book.id == book3.id end)
+    end
+  end
 end
