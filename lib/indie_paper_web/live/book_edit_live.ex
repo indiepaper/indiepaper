@@ -22,6 +22,7 @@ defmodule IndiePaperWeb.BookEditLive do
     IndiePaperWeb.BookView.render("edit.html", assigns)
   end
 
+  @impl Phoenix.LiveView
   def handle_event("validate", %{"book" => book_params}, socket) do
     changeset =
       socket.assigns.book
@@ -31,19 +32,24 @@ defmodule IndiePaperWeb.BookEditLive do
     {:noreply, socket |> assign(:changeset, changeset)}
   end
 
+  @impl Phoenix.LiveView
   def handle_event("update_book_listing", %{"book" => book_params}, socket) do
     case Books.update_book(socket.assigns.current_author, socket.assigns.book, book_params) do
       {:ok, updated_book} ->
         socket =
           redirect(
             socket,
-            to: Routes.dashboard_path(socket, :index)
+            to:
+              if(Books.is_published?(updated_book),
+                do: Routes.book_path(socket, :show, updated_book),
+                else: Routes.dashboard_path(socket, :index)
+              )
           )
 
         {:noreply, socket}
 
-      {:error, _changeset} ->
-        {:noreply, socket}
+      {:error, changeset} ->
+        {:noreply, socket |> assign(:changeset, changeset)}
     end
   end
 end
