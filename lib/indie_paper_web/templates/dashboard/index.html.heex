@@ -112,8 +112,8 @@
                         </div>
                         <div class="p-6">
                             <%= link to: (if IndiePaper.Books.is_published?(book), do: Routes.book_path(@conn, :show, book), else: Routes.live_path(@conn, IndiePaperWeb.BookEditLive, book)) , class: "block" do %>
-                                <h2 data-test="book-title" class="text-lg font-semibold"><%= book.title %></h2>
-                                <h2 data-test="book-title" class="mt-1 secondary-text"><%= book.short_description %></h2>
+                                <h2 data-test="book-title" class="text-lg font-medium"><%= book.title %></h2>
+                                <h2 data-test="book-title" class="mt-1 text-sm secondary-text"><%= book.short_description %></h2>
                             <% end %>
                             <div class="flex flex-row mt-8 space-x-6 text-secondary-text">
                                 <%= link to: Routes.draft_path(@conn, :edit, book.draft), class: "secondary-link"  do %>
