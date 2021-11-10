@@ -17,13 +17,13 @@
 
                 <div class="input-container">
                     <%= label f, :short_description, class: "input-label"  %>
-                    <%= textarea f, :short_description, class: "form-input min-h-[120px]"  %>
+                    <%= textarea f, :short_description, class: "form-input min-h-[160px]"  %>
                     <p class="input-error">
                         <%= error_tag f, :short_description %>
                     </p>
                 </div>
 
-                <div class="input-container" x-data={"bookLongDescriptionHtmlEditor()"}>
+                <div phx-update="ignore" class="input-container" x-data={"bookLongDescriptionHtmlEditor()"}>
                     <%= label f, :long_description_html, "Long description",  class: "input-label" %>
                     <%= hidden_input f, :long_description_html, class: "form-input", "x-model": "longDescriptionHtml", "x-ref": "longDescriptionHtmlReference"  %>
                     <div class="bg-white rounded-lg border border-primary-border" >
