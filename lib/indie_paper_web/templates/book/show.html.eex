@@ -10,7 +10,6 @@
                     </svg>
                     <p class="font-black">Buy Now</p>
                 <% end %>
-
                 <div class="mt-8 max-w-3xl text-gray-600 secondary-text">
                     <p><%= @book.short_description %></p>
                 </div>
