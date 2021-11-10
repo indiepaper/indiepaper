@@ -16,6 +16,16 @@
                 </div>
 
                 <div class="input-container">
+                    <label class="input-label">Promo Images</label>
+                    <%= live_file_input @uploads.promo_image, class: "mt-1" %>
+                    <div class="flex flex-row mt-4 space-x-4">
+                    <%= for entry <- @uploads.promo_image.entries do  %>
+                        <%= live_img_preview entry, class: "w-56 h-56 rounded-md" %>
+                    <% end %>
+                    </div>
+                </div>
+
+                <div class="input-container">
                     <%= label f, :short_description, class: "input-label"  %>
                     <%= textarea f, :short_description, class: "form-input min-h-[160px] mt-1"  %>
                     <p class="input-error">

@@ -14,7 +14,8 @@ defmodule IndiePaperWeb.BookEditLive do
      socket
      |> assign(:current_author, current_author)
      |> assign(:book, book)
-     |> assign(:changeset, changeset)}
+     |> assign(:changeset, changeset)
+     |> allow_upload(:promo_image, accept: ~w(.png .jpeg .jpg), max_entries: 2)}
   end
 
   @impl Phoenix.LiveView
