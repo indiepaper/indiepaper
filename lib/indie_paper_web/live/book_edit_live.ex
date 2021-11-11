@@ -25,7 +25,12 @@ defmodule IndiePaperWeb.BookEditLive do
   defp presign_upload(entry, socket) do
     key = "public/promo_images/#{entry.uuid}"
 
-    {:ok, url, fields} = IndiePaper.Services.S3Handler.generate_presigned_url(key)
+    {:ok, url, fields} =
+      IndiePaper.Services.S3Handler.generate_presigned_url(
+        key: key,
+        content_type: entry.client_type,
+        max_file_size: socket.assigns.uploads.promo_image.max_file_size
+      )
 
     meta = %{uploader: "S3", key: key, url: url, fields: fields}
     {:ok, meta, socket}
