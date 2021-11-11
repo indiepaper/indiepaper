@@ -69,17 +69,11 @@
                 <div class="input-container" x-data="{}">
                     <p class="input-label">Promo Images</p>
 
+
                     <%= if not Enum.empty?(@uploads.promo_image.entries) do %>
                         <div class="flex flex-col mt-4 mb-8 space-y-8">
                             <%= for entry <- @uploads.promo_image.entries do  %>
                                 <div>
-                                    <div class="flex flex-col space-y-2">
-                                        <%= for err <- upload_errors(@uploads.promo_image, entry) do %>
-                                            <div class="error-box">
-                                                <p><%= error_to_string(err) %></p>
-                                            </div>
-                                        <% end %>
-                                    </div>
                                     <div class="flex flex-row items-center jusitfy-between">
                                         <p><%= entry.client_name %></p>
                                         <div class="flex-1">
@@ -98,6 +92,14 @@
                             <% end %>
                         </div>
                     <% end %>
+
+                    <div class="flex flex-col space-y-2">
+                        <%= for {_ref, err} <- @uploads.promo_image.errors do %>
+                            <div class="error-box">
+                                <p><%= error_to_string(err) %></p>
+                            </div>
+                        <% end %>
+                    </div>
 
                     <label class="block flex flex-row justify-center items-center p-4 mt-2 space-x-2 bg-white rounded-lg border cursor-pointer border-primary-border">
                         <%= live_file_input @uploads.promo_image, class: "hidden" %>
