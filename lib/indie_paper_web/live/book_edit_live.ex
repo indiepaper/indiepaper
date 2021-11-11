@@ -53,4 +53,9 @@ defmodule IndiePaperWeb.BookEditLive do
         {:noreply, socket |> assign(:changeset, changeset)}
     end
   end
+
+  @impl Phoenix.LiveView
+  def handle_event("cancel-upload", %{"ref" => ref}, socket) do
+    {:noreply, cancel_upload(socket, :promo_image, ref)}
+  end
 end
