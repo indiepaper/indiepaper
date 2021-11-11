@@ -23,6 +23,7 @@ defmodule IndiePaper.Books.Book do
 
     field :short_description, :string
     field :long_description_html, :string
+    field :promo_images, {:array, :string}, null: false, default: []
 
     has_one :draft, IndiePaper.Drafts.Draft
     has_many :products, IndiePaper.Products.Product
