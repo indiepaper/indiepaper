@@ -60,6 +60,16 @@ config :ueberauth, Ueberauth,
     twitter: {Ueberauth.Strategy.Twitter, []}
   ]
 
+# Setup EX_AWS
+config :ex_aws,
+  debug_requests: true,
+  json_codec: Jason
+
+config :ex_aws, :s3,
+  scheme: "https://",
+  host: "nyc3.digitaloceanspaces.com",
+  region: "nyc3"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

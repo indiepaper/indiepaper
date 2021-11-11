@@ -17,8 +17,18 @@ defmodule IndiePaperWeb.BookEditLive do
      |> assign(:changeset, changeset)
      |> allow_upload(:promo_image,
        accept: ~w(.png .jpeg .jpg),
-       max_entries: 1
+       max_entries: 1,
+       external: &presign_upload/2
      )}
+  end
+
+  defp presign_upload(entry, socket) do
+    key = "public/promo_images/#{entry.uuid}"
+
+    {:ok, url, fields} = IndiePaper.Services.S3Handler.generate_presigned_url(key)
+
+    meta = %{uploader: "S3", key: key, url: url, fields: fields}
+    {:ok, meta, socket}
   end
 
   @impl Phoenix.LiveView
