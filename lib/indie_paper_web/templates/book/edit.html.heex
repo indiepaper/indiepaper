@@ -69,34 +69,43 @@
                 <div class="input-container" x-data="{}">
                     <p class="input-label">Promo Images</p>
 
-                    <label class="block flex flex-row justify-center items-center p-4 mt-1 space-x-2 bg-white rounded-lg border cursor-pointer border-primary-border">
+                    <%= if not Enum.empty?(@uploads.promo_image.entries) do %>
+                        <div class="flex flex-col mt-4 mb-8 space-y-8">
+                            <%= for entry <- @uploads.promo_image.entries do  %>
+                                <div>
+                                    <div class="flex flex-col space-y-2">
+                                        <%= for err <- upload_errors(@uploads.promo_image, entry) do %>
+                                            <div class="error-box">
+                                                <p><%= error_to_string(err) %></p>
+                                            </div>
+                                        <% end %>
+                                    </div>
+                                    <div class="flex flex-row items-center jusitfy-between">
+                                        <p><%= entry.client_name %></p>
+                                        <div class="flex-1">
+                                        </div>
+                                        <a href="#" phx-click="cancel-upload" phx-value-ref={entry.ref} aria-label="cancel" class="text-sm rounded-full secondary-link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            <span>Cancel</span>
+                                        </a>
+                                    </div>
+                                    <div class="relative w-full aspect-w-3 aspect-h-2">
+                                        <%= live_img_preview entry, class: "object-cover rounded-lg mt-2" %>
+                                    </div>
+                                </div>
+                            <% end %>
+                        </div>
+                    <% end %>
+
+                    <label class="block flex flex-row justify-center items-center p-4 mt-2 space-x-2 bg-white rounded-lg border cursor-pointer border-primary-border">
                         <%= live_file_input @uploads.promo_image, class: "hidden" %>
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                         </svg>
                         <span>Upload Images</span>
                     </label>
-
-                    <div class="flex flex-col mt-8 space-y-8">
-                        <%= for entry <- @uploads.promo_image.entries do  %>
-                            <div>
-                                <div class="flex flex-row items-center jusitfy-between">
-                                    <p><%= entry.client_name %></p>
-                                    <div class="flex-1">
-                                    </div>
-                                    <a href="#" phx-click="cancel-upload" phx-value-ref={entry.ref} aria-label="cancel" class="text-sm rounded-full secondary-link">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        <span>Cancel</span>
-                                    </a>
-                                </div>
-                                <div class="relative w-full aspect-w-3 aspect-h-2">
-                                    <%= live_img_preview entry, class: "object-cover rounded-lg mt-2" %>
-                                </div>
-                            </div>
-                        <% end %>
-                    </div>
                 </div>
 
                 <%= submit "Update Listing", class: "primary-button" %>
