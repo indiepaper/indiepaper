@@ -74,7 +74,7 @@
                             <%= for entry <- @uploads.promo_image.entries do  %>
                                 <div>
                                     <div class="flex flex-row items-center jusitfy-between">
-                                        <p><%= entry.client_name %></p>
+                                        <p><%= entry.client_name %>, <%= entry.progress %>%</p>
                                         <div class="flex-1">
                                         </div>
                                         <a href="#" phx-click="cancel-upload" phx-value-ref={entry.ref} aria-label="cancel" class="text-sm rounded-full secondary-link">
@@ -86,6 +86,13 @@
                                     </div>
                                     <div class="relative w-full aspect-w-3 aspect-h-2">
                                         <%= live_img_preview entry, class: "object-cover rounded-lg mt-2" %>
+                                    </div>
+                                    <div class="flex flex-col space-y-2">
+                                        <%= for err <- upload_errors(@uploads.promo_image, entry) do %>
+                                            <div class="error-box">
+                                                <p class=""><%= error_to_string(err) %></p>
+                                            </div>
+                                        <% end %>
                                     </div>
                                 </div>
                             <% end %>
