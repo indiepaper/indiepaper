@@ -23,7 +23,8 @@ defmodule IndiePaperWeb.BookEditLive do
   end
 
   defp presign_upload(entry, socket) do
-    key = "public/promo_images/#{entry.uuid}"
+    book = socket.assigns.book
+    key = "public/promo_images/#{book.id}/#{entry.client_name}"
 
     {:ok, url, fields} =
       IndiePaper.Services.S3Handler.generate_presigned_url(
