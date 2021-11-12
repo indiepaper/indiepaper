@@ -5,6 +5,14 @@ defmodule IndiePaper.Services.S3Handler do
   @secret_access_key Application.get_env(:ex_aws, :secret_access_key)
   @bucket_name Application.get_env(:ex_aws, :bucket_name)
 
+  def print_module_attrs() do
+    IO.inspect(@region)
+    IO.inspect(@host)
+    IO.inspect(@access_key_id)
+    IO.inspect(@secret_access_key)
+    IO.inspect(@bucket_name)
+  end
+
   def generate_presigned_post(key: key, content_type: content_type, max_file_size: max_file_size) do
     config = %{
       region: @region,
