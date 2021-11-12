@@ -83,28 +83,30 @@ defmodule IndiePaperWeb.BookEditLive do
         Enum.member?(socket.assigns.promo_images, p)
       end)
 
-    {:ok, _} = ExternalAssetHandler.delete_assets(deleted_promo_images)
+    with {:ok, _} <- ExternalAssetHandler.delete_assets(deleted_promo_images),
+         {:ok, updated_book} <-
+           Books.update_book(
+             socket.assigns.current_author,
+             socket.assigns.book,
+             book_params_with_promo_images
+           ) do
+      socket =
+        redirect(
+          socket,
+          to:
+            if(Books.is_published?(updated_book),
+              do: Routes.book_path(socket, :show, updated_book),
+              else: Routes.dashboard_path(socket, :index)
+            )
+        )
 
-    case Books.update_book(
-           socket.assigns.current_author,
-           socket.assigns.book,
-           book_params_with_promo_images
-         ) do
-      {:ok, updated_book} ->
-        socket =
-          redirect(
-            socket,
-            to:
-              if(Books.is_published?(updated_book),
-                do: Routes.book_path(socket, :show, updated_book),
-                else: Routes.dashboard_path(socket, :index)
-              )
-          )
-
-        {:noreply, socket}
-
+      {:noreply, socket}
+    else
       {:error, changeset} ->
         {:noreply, socket |> assign(:changeset, changeset)}
+
+      _ ->
+        {:noreply, socket}
     end
   end
 
