@@ -3,6 +3,7 @@ defmodule IndiePaperWeb.BookEditLive do
 
   alias IndiePaper.Books
   alias IndiePaper.Authors
+  alias IndiePaper.ExternalAssetHandler
 
   @impl Phoenix.LiveView
   def mount(%{"id" => book_id}, %{"author_token" => author_token}, socket) do
@@ -22,20 +23,15 @@ defmodule IndiePaperWeb.BookEditLive do
      )}
   end
 
-  defp ext(entry) do
-    [ext | _] = MIME.extensions(entry.client_type)
-    ext
-  end
-
   defp file_key(book, entry) do
-    "public/promo_images/#{book.id}/#{entry.uuid}.#{ext(entry)}"
+    "public/promo_images/#{book.id}/#{entry.uuid}.#{ExternalAssetHandler.file_ext(entry)}"
   end
 
   defp presign_upload(entry, socket) do
     book = socket.assigns.book
 
     {:ok, url, fields} =
-      IndiePaper.Services.S3Handler.generate_presigned_url(
+      ExternalAssetHandler.presigned_post(
         key: file_key(book, entry),
         content_type: entry.client_type,
         max_file_size: socket.assigns.uploads.promo_image.max_file_size

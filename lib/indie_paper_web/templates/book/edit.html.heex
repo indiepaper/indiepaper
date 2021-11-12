@@ -70,7 +70,7 @@
                     <p class="input-label">Promo Image</p>
                     <%= for promo_image <- @book.promo_images do %>
                         <div class="mt-4 mb-4 w-full aspect-w-3 aspect-h-2">
-                            <img src={IndiePaper.Services.S3Handler.get_url(promo_image)} alt="Promo Image" class="object-cover rounded-lg" />
+                            <img src={IndiePaper.ExternalAssetHandler.get_url(promo_image)} alt="Promo Image" class="object-cover rounded-lg" />
                         </div>
                     <% end %>
 
