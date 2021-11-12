@@ -98,4 +98,12 @@ defmodule IndiePaper.Books do
     )
     |> Repo.all()
   end
+
+  def has_promo_images?(book) do
+    not Enum.empty?(book.promo_images)
+  end
+
+  def first_promo_image(book) do
+    Enum.at(book.promo_images, 0)
+  end
 end

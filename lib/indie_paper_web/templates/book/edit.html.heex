@@ -2,78 +2,140 @@
     <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
     <div class="container-box page-box">
         <h1 class="page-heading" data-test="title">Edit Book Listing</h1>
-        <p class="page-description">Edit the listing of the book</p>
+        <p class="max-w-xl page-description">Your listing page is shown to your readers and act as an homepage for your book.</p>
 
         <div class="mt-12 max-w-2xl">
-            <%= form_for @changeset, Routes.book_path(@conn, :update, @book), fn f -> %>
-                <%= if @changeset.action do %>
-                    <div class="form-error-box">
-                        <p>Oops, Something went wrong. Please check errors below</p>
-                    </div>
-                <% end %>
+            <.form let={f} for={@changeset} phx-change="validate" phx-submit="update_book_listing" id="book-edit-form">
+            <div class="space-y-10 form-container">
+                <div class="input-container">
+                    <%= label f, :title, class: "input-label"  %>
+                    <%= text_input f, :title, class: "form-input mt-1"  %>
+                    <p class="input-error">
+                        <%= error_tag f, :title %>
+                    </p>
+                </div>
 
-                <div class="space-y-10 form-container">
-                    <div class="input-container">
-                        <%= label f, :title, class: "input-label"  %>
-                        <%= text_input f, :title, class: "form-input"  %>
-                        <p class="input-error">
-                            <%= error_tag f, :title %>
-                        </p>
-                    </div>
+                <div class="input-container">
+                    <%= label f, :short_description, class: "input-label"  %>
+                    <%= textarea f, :short_description, class: "form-input min-h-[160px] mt-1"  %>
+                    <p class="input-error">
+                        <%= error_tag f, :short_description %>
+                    </p>
+                </div>
 
-                    <div class="input-container">
-                        <%= label f, :short_description, class: "input-label"  %>
-                        <%= textarea f, :short_description, class: "form-input min-h-[120px]"  %>
-                        <p class="input-error">
-                            <%= error_tag f, :short_description %>
-                        </p>
+                <div class="input-container" x-data={"bookLongDescriptionHtmlEditor()"}>
+                    <%= label f, :long_description_html, "Long description",  class: "input-label" %>
+                    <%= hidden_input f, :long_description_html, class: "form-input", "x-model": "longDescriptionHtml", "x-ref": "longDescriptionHtmlReference"  %>
+                    <div phx-update="ignore" class="mt-2 bg-white rounded-lg border border-primary-border" >
+                        <div class="flex flex-col items-stretch" >
+                            <div class="flex flex-row items-center text-gray-600 border-b border-primary-border">
+                                <button
+                                    class="py-3 px-3 !rounded-b-none rounded-l-lg border-r border-primary-border"
+                                    @click.prevent="toggleHeading(2)"
+                                    :class="{ 'bg-gray-900 text-gray-50' : isActive('heading', { level: 2 }, updatedAt) }"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0H24V24H0z"/><path d="M4 4v7h7V4h2v16h-2v-7H4v7H2V4h2zm14.5 4c2.071 0 3.75 1.679 3.75 3.75 0 .857-.288 1.648-.772 2.28l-.148.18L18.034 18H22v2h-7v-1.556l4.82-5.546c.268-.307.43-.709.43-1.148 0-.966-.784-1.75-1.75-1.75-.918 0-1.671.707-1.744 1.606l-.006.144h-2C14.75 9.679 16.429 8 18.5 8z"/></svg>
+                                </button>
+                                <button
+                                    class="py-3 px-3 border-r border-primary-border"
+                                    @click.prevent="toggleHeading(3)"
+                                    :class="{ 'bg-gray-900 text-gray-50' : isActive('heading', { level: 3 }, updatedAt) }"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0H24V24H0z"/><path d="M22 8l-.002 2-2.505 2.883c1.59.435 2.757 1.89 2.757 3.617 0 2.071-1.679 3.75-3.75 3.75-1.826 0-3.347-1.305-3.682-3.033l1.964-.382c.156.806.866 1.415 1.718 1.415.966 0 1.75-.784 1.75-1.75s-.784-1.75-1.75-1.75c-.286 0-.556.069-.794.19l-1.307-1.547L19.35 10H15V8h7zM4 4v7h7V4h2v16h-2v-7H4v7H2V4h2z"/></svg>
+                                </button>
+                                <button
+                                    class="py-3 px-2 border-r border-primary-border"
+                                    @click.prevent="toggleBold()"
+                                    :class="{ 'bg-gray-900 text-gray-50' : isActive('bold', updatedAt) }"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current" ><path fill="none" d="M0 0h24v24H0z"/><path d="M8 11h4.5a2.5 2.5 0 1 0 0-5H8v5zm10 4.5a4.5 4.5 0 0 1-4.5 4.5H6V4h6.5a4.5 4.5 0 0 1 3.256 7.606A4.498 4.498 0 0 1 18 15.5zM8 13v5h5.5a2.5 2.5 0 1 0 0-5H8z"/></svg>
+                                </button>
+                                <button
+                                    class="py-3 px-2 border-r border-primary-border"
+                                    @click.prevent="toggleItalic()"
+                                    :class="{ 'bg-gray-900 text-gray-50' : isActive('italic', updatedAt) }"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 20H7v-2h2.927l2.116-12H9V4h8v2h-2.927l-2.116 12H15z"/></svg>
+                                </button>
+                            </div>
+                            <div class="py-4 px-6 prose min-h-[360px]" x-ref="editorReference"></div>
+                        </div>
                     </div>
+                    <p class="input-error">
+                        <%= error_tag f, :long_description_html %>
+                    </p>
+                </div>
 
-                    <div class="input-container" x-data={"bookLongDescriptionHtmlEditor()"}>
-                        <%= label f, :long_description_html, "Long description",  class: "input-label" %>
-                        <%= hidden_input f, :long_description_html, class: "form-input", "x-model": "longDescriptionHtml", "x-ref": "longDescriptionHtmlReference"  %>
-                        <div class="bg-white rounded-lg border border-primary-border" >
-                            <div class="flex flex-col items-stretch" >
-                                <div class="flex flex-row items-center py-4 px-6 space-x-4 text-gray-600 border-b hover:text-gray-800 border-primary-border">
-                                    <button
-                                        @click.prevent="toggleBold()"
-                                        :class="{ 'border-b-2 border-gray-800 pb-1' : isActive('bold', updatedAt) }"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current" ><path fill="none" d="M0 0h24v24H0z"/><path d="M8 11h4.5a2.5 2.5 0 1 0 0-5H8v5zm10 4.5a4.5 4.5 0 0 1-4.5 4.5H6V4h6.5a4.5 4.5 0 0 1 3.256 7.606A4.498 4.498 0 0 1 18 15.5zM8 13v5h5.5a2.5 2.5 0 1 0 0-5H8z"/></svg>
-                                    </button>
-                                    <button
-                                        @click.prevent="toggleItalic()"
-                                        :class="{ 'border-b-2 border-gray-800 pb-1' : isActive('italic', updatedAt) }"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 20H7v-2h2.927l2.116-12H9V4h8v2h-2.927l-2.116 12H15z"/></svg>
-                                    </button>
-                                    <span></span>
-                                    <button
-                                        @click.prevent="toggleHeading(2)"
-                                        :class="{ 'border-b-2 border-gray-800 pb-1' : isActive('heading', { level: 2 }, updatedAt) }"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0H24V24H0z"/><path d="M4 4v7h7V4h2v16h-2v-7H4v7H2V4h2zm14.5 4c2.071 0 3.75 1.679 3.75 3.75 0 .857-.288 1.648-.772 2.28l-.148.18L18.034 18H22v2h-7v-1.556l4.82-5.546c.268-.307.43-.709.43-1.148 0-.966-.784-1.75-1.75-1.75-.918 0-1.671.707-1.744 1.606l-.006.144h-2C14.75 9.679 16.429 8 18.5 8z"/></svg>
-                                    </button>
-                                    <button
-                                        @click.prevent="toggleHeading(3)"
-                                        :class="{ 'border-b-2 border-gray-800 pb-1' : isActive('heading', { level: 3 }, updatedAt) }"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0H24V24H0z"/><path d="M22 8l-.002 2-2.505 2.883c1.59.435 2.757 1.89 2.757 3.617 0 2.071-1.679 3.75-3.75 3.75-1.826 0-3.347-1.305-3.682-3.033l1.964-.382c.156.806.866 1.415 1.718 1.415.966 0 1.75-.784 1.75-1.75s-.784-1.75-1.75-1.75c-.286 0-.556.069-.794.19l-1.307-1.547L19.35 10H15V8h7zM4 4v7h7V4h2v16h-2v-7H4v7H2V4h2z"/></svg>
-                                    </button>
-                                </div>
-                                <div class="py-4 px-6 prose min-h-[360px]" x-ref="editorReference"></div>
+                <div class="input-container" x-data="{}">
+                    <p class="input-label">Promo Image</p>
+                    <%= for promo_image <- @promo_images do %>
+                        <div class="my-4">
+                            <div class="flex flex-row justify-end items-center">
+                                <a href="#" phx-click="remove-promo-image" phx-value-promo-image={promo_image} aria-label="remove" class="text-sm rounded-full secondary-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span>Remove</span>
+                                </a>
+                            </div>
+                            <div class="mt-2 w-full aspect-w-3 aspect-h-2">
+                                <img src={IndiePaper.ExternalAssetHandler.get_url(promo_image)} alt="Promo Image" class="object-cover rounded-lg" />
                             </div>
                         </div>
-                        <p class="input-error">
-                            <%= error_tag f, :long_description_html %>
-                        </p>
+                    <% end %>
+
+                    <%= if not Enum.empty?(@uploads.promo_image.entries) do %>
+                        <div class="flex flex-col mt-4 mb-8 space-y-8">
+                            <%= for entry <- @uploads.promo_image.entries do  %>
+                                <div>
+                                    <div class="flex flex-row items-center jusitfy-between">
+                                        <p><%= entry.client_name %>, <%= entry.progress %>%</p>
+                                        <div class="flex-1">
+                                        </div>
+                                        <a href="#" phx-click="cancel-upload" phx-value-ref={entry.ref} aria-label="cancel" class="text-sm rounded-full secondary-link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            <span>Cancel</span>
+                                        </a>
+                                    </div>
+                                    <div class="w-full aspect-w-3 aspect-h-2">
+                                        <%= live_img_preview entry, class: "object-cover rounded-lg mt-2" %>
+                                    </div>
+                                    <div class="flex flex-col space-y-2">
+                                        <%= for err <- upload_errors(@uploads.promo_image, entry) do %>
+                                            <div class="error-box">
+                                                <p class=""><%= error_to_string(err) %></p>
+                                            </div>
+                                        <% end %>
+                                    </div>
+                                </div>
+                            <% end %>
+                        </div>
+                    <% end %>
+
+                    <div class="flex flex-col space-y-2">
+                        <%= for {_ref, err} <- @uploads.promo_image.errors do %>
+                            <div class="error-box">
+                                <p><%= error_to_string(err) %></p>
+                            </div>
+                        <% end %>
                     </div>
 
-                    <%= submit "Update Listing", class: "primary-button" %>
+                    <label class="block flex flex-row justify-center items-center p-4 mt-2 space-x-2 bg-white rounded-lg border cursor-pointer border-primary-border">
+                        <%= live_file_input @uploads.promo_image, class: "hidden" %>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Upload Images</span>
+                    </label>
                 </div>
-            <% end %>
+
+                <%= submit "Update Listing", class: "primary-button" %>
+            </div>
+            </.form>
         </div>
     </div>
 </section>
 
-<script phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/js/book-long-description-html-editor.js")}></script>
+<script phx-track-static type="text/javascript" src={Routes.static_path(@socket, "/assets/js/book-long-description-html-editor.js")}></script>

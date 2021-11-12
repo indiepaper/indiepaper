@@ -39,8 +39,8 @@ defmodule IndiePaperWeb.AuthorProfileSetupLive do
         socket = socket |> redirect(to: IndiePaperWeb.AuthorAuth.signed_in_path(socket))
         {:noreply, socket}
 
-      {:error, _} ->
-        {:noreply, socket}
+      {:error, changeset} ->
+        {:noreply, socket |> assign(:changeset, changeset)}
     end
   end
 end

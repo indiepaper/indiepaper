@@ -1,5 +1,5 @@
 defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
-  use IndiePaperWeb.FeatureCase, async: true
+  use IndiePaperWeb.FeatureCase
 
   alias IndiePaper.Products
   alias IndiePaperWeb.Pages.{DraftPage, LoginPage, DashboardPage, BookPage, ProductPage}

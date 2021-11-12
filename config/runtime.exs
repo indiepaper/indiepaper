@@ -83,6 +83,12 @@ if config_env() == :prod do
     adapter: Swoosh.Adapters.Postmark,
     api_key: System.get_env("SWOOSH_POSTMARK_API_KEY")
 
+  # EXAWS Config
+  config :ex_aws,
+    access_key_id: System.get_env("SPACES_ACCESS_KEY_ID"),
+    secret_access_key: System.get_env("SPACES_SECRET_ACCESS_KEY"),
+    bucket_name: System.get_env("SPACES_BUCKET_NAME")
+
   # ## Using releases
   #
   # If you are doing OTP releases, you need to instruct Phoenix
