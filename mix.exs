@@ -67,7 +67,7 @@ defmodule IndiePaper.MixProject do
       {:json_patch, "~> 0.8.0"},
       {:exjsonpath, "~> 0.1"},
       {:ex_aws, "~> 2.1"},
-      {:ex_aws_s3, git: "https://github.com/ex-aws/ex_aws_s3", branch: "main"},
+      {:ex_aws_s3, "~> 2.0"},
       {:sweet_xml, "~> 0.6"}
     ]
   end
