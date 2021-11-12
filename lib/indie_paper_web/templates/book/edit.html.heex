@@ -68,6 +68,11 @@
 
                 <div class="input-container" x-data="{}">
                     <p class="input-label">Promo Image</p>
+                    <%= for promo_image <- @book.promo_images do %>
+                        <div class="mt-4 mb-4 w-full aspect-w-3 aspect-h-2">
+                            <img src={IndiePaper.Services.S3Handler.get_url(promo_image)} alt="Promo Image" class="object-cover rounded-lg" />
+                        </div>
+                    <% end %>
 
                     <%= if not Enum.empty?(@uploads.promo_image.entries) do %>
                         <div class="flex flex-col mt-4 mb-8 space-y-8">
@@ -84,7 +89,7 @@
                                             <span>Cancel</span>
                                         </a>
                                     </div>
-                                    <div class="relative w-full aspect-w-3 aspect-h-2">
+                                    <div class="w-full aspect-w-3 aspect-h-2">
                                         <%= live_img_preview entry, class: "object-cover rounded-lg mt-2" %>
                                     </div>
                                     <div class="flex flex-col space-y-2">

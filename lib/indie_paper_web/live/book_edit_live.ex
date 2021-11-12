@@ -22,24 +22,43 @@ defmodule IndiePaperWeb.BookEditLive do
      )}
   end
 
+  defp ext(entry) do
+    [ext | _] = MIME.extensions(entry.client_type)
+    ext
+  end
+
+  defp file_key(book, entry) do
+    "public/promo_images/#{book.id}/#{entry.uuid}.#{ext(entry)}"
+  end
+
   defp presign_upload(entry, socket) do
     book = socket.assigns.book
-    key = "public/promo_images/#{book.id}/#{entry.client_name}"
 
     {:ok, url, fields} =
       IndiePaper.Services.S3Handler.generate_presigned_url(
-        key: key,
+        key: file_key(book, entry),
         content_type: entry.client_type,
         max_file_size: socket.assigns.uploads.promo_image.max_file_size
       )
 
-    meta = %{uploader: "S3", key: key, url: url, fields: fields}
+    meta = %{uploader: "S3", key: file_key(book, entry), url: url, fields: fields}
     {:ok, meta, socket}
   end
 
   @impl Phoenix.LiveView
   def render(assigns) do
     IndiePaperWeb.BookView.render("edit.html", assigns)
+  end
+
+  defp put_promo_images(socket, book, params) do
+    {completed, []} = uploaded_entries(socket, :promo_image)
+
+    urls =
+      for entry <- completed do
+        file_key(book, entry)
+      end
+
+    Map.put(params, "promo_images", urls)
   end
 
   @impl Phoenix.LiveView
@@ -54,7 +73,13 @@ defmodule IndiePaperWeb.BookEditLive do
 
   @impl Phoenix.LiveView
   def handle_event("update_book_listing", %{"book" => book_params}, socket) do
-    case Books.update_book(socket.assigns.current_author, socket.assigns.book, book_params) do
+    book_params_with_promo_images = put_promo_images(socket, socket.assigns.book, book_params)
+
+    case Books.update_book(
+           socket.assigns.current_author,
+           socket.assigns.book,
+           book_params_with_promo_images
+         ) do
       {:ok, updated_book} ->
         socket =
           redirect(

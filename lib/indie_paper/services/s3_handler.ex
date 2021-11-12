@@ -23,6 +23,10 @@ defmodule IndiePaper.Services.S3Handler do
     {:ok, "https://#{@bucket_name}.#{@host}", fields}
   end
 
+  def get_url(file) do
+    "https://#{@bucket_name}.#{@host}/#{file}"
+  end
+
   def sign_form_upload(config, bucket, opts) do
     key = Keyword.fetch!(opts, :key)
     max_file_size = Keyword.fetch!(opts, :max_file_size)

@@ -36,7 +36,7 @@ defmodule IndiePaper.Books.Book do
   @doc false
   def changeset(book, attrs) do
     book
-    |> cast(attrs, [:title, :short_description, :long_description_html])
+    |> cast(attrs, [:title, :short_description, :long_description_html, :promo_images])
     |> sanitized_long_description_html()
     |> validate_required([:title, :short_description, :long_description_html])
     |> validate_length(:title, max: 100)
