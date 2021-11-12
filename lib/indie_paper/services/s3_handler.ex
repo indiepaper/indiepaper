@@ -27,6 +27,10 @@ defmodule IndiePaper.Services.S3Handler do
     "https://#{@bucket_name}.#{@host}/#{file}"
   end
 
+  def delete_objects(objects) do
+    ExAws.S3.delete_all_objects(@bucket_name, objects) |> ExAws.request()
+  end
+
   def sign_form_upload(config, bucket, opts) do
     key = Keyword.fetch!(opts, :key)
     max_file_size = Keyword.fetch!(opts, :max_file_size)

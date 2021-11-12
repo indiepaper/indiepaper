@@ -78,6 +78,13 @@ defmodule IndiePaperWeb.BookEditLive do
   def handle_event("update_book_listing", %{"book" => book_params}, socket) do
     book_params_with_promo_images = put_promo_images(socket, socket.assigns.book, book_params)
 
+    deleted_promo_images =
+      Enum.reject(socket.assigns.book.promo_images, fn p ->
+        Enum.member?(socket.assigns.promo_images, p)
+      end)
+
+    {:ok, _} = ExternalAssetHandler.delete_assets(deleted_promo_images)
+
     case Books.update_book(
            socket.assigns.current_author,
            socket.assigns.book,

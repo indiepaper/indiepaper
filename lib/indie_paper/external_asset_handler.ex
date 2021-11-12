@@ -17,4 +17,8 @@ defmodule IndiePaper.ExternalAssetHandler do
     [ext | _] = MIME.extensions(entry.client_type)
     ext
   end
+
+  def delete_assets(assets_list) do
+    S3Handler.delete_objects(assets_list)
+  end
 end
