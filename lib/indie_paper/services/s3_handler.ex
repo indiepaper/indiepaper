@@ -1,42 +1,35 @@
 defmodule IndiePaper.Services.S3Handler do
   @region Application.get_env(:ex_aws, :s3)[:region]
   @host Application.get_env(:ex_aws, :s3)[:host]
-  @access_key_id Application.get_env(:ex_aws, :access_key_id)
-  @secret_access_key Application.get_env(:ex_aws, :secret_access_key)
-  @bucket_name Application.get_env(:ex_aws, :bucket_name)
 
-  def print_module_attrs() do
-    IO.inspect(@region)
-    IO.inspect(@host)
-    IO.inspect(@access_key_id)
-    IO.inspect(@secret_access_key)
-    IO.inspect(@bucket_name)
-  end
+  defp bucket_name(), do: Application.get_env(:ex_aws, :bucket_name)
+  defp access_key_id(), do: Application.get_env(:ex_aws, :access_key_id)
+  defp secret_access_key(), do: Application.get_env(:ex_aws, :secret_access_key)
 
   def generate_presigned_post(key: key, content_type: content_type, max_file_size: max_file_size) do
     config = %{
       region: @region,
-      access_key_id: @access_key_id,
-      secret_access_key: @secret_access_key
+      access_key_id: access_key_id(),
+      secret_access_key: secret_access_key()
     }
 
     {:ok, fields} =
-      sign_form_upload(config, @bucket_name,
+      sign_form_upload(config, bucket_name(),
         key: key,
         content_type: content_type,
         max_file_size: max_file_size,
         expires_in: :timer.hours(1)
       )
 
-    {:ok, "https://#{@bucket_name}.#{@host}", fields}
+    {:ok, "https://#{bucket_name()}.#{@host}", fields}
   end
 
   def get_url(file) do
-    "https://#{@bucket_name}.#{@host}/#{file}"
+    "https://#{bucket_name()}.#{@host}/#{file}"
   end
 
   def delete_objects(objects) do
-    ExAws.S3.delete_all_objects(@bucket_name, objects) |> ExAws.request()
+    ExAws.S3.delete_all_objects(bucket_name(), objects) |> ExAws.request()
   end
 
   def sign_form_upload(config, bucket, opts) do
