@@ -16,6 +16,7 @@ defmodule IndiePaperWeb.BookEditLive do
      |> assign(:current_author, current_author)
      |> assign(:book, book)
      |> assign(:changeset, changeset)
+     |> assign(:promo_images, book.promo_images)
      |> allow_upload(:promo_image,
        accept: ~w(.png .jpeg .jpg),
        max_entries: 1,
@@ -54,7 +55,13 @@ defmodule IndiePaperWeb.BookEditLive do
         file_key(book, entry)
       end
 
-    Map.put(params, "promo_images", urls)
+    Map.put(params, "promo_images", urls ++ socket.assigns.promo_images)
+  end
+
+  @impl Phoenix.LiveView
+  def handle_event("remove-promo-image", %{"promo-image" => promo_image}, socket) do
+    promo_images = Enum.reject(socket.assigns.promo_images, fn p -> p === promo_image end)
+    {:noreply, socket |> assign(:promo_images, promo_images)}
   end
 
   @impl Phoenix.LiveView

@@ -68,9 +68,19 @@
 
                 <div class="input-container" x-data="{}">
                     <p class="input-label">Promo Image</p>
-                    <%= for promo_image <- @book.promo_images do %>
-                        <div class="mt-4 mb-4 w-full aspect-w-3 aspect-h-2">
-                            <img src={IndiePaper.ExternalAssetHandler.get_url(promo_image)} alt="Promo Image" class="object-cover rounded-lg" />
+                    <%= for promo_image <- @promo_images do %>
+                        <div class="my-4">
+                            <div class="flex flex-row justify-end items-center">
+                                <a href="#" phx-click="remove-promo-image" phx-value-promo-image={promo_image} aria-label="remove" class="text-sm rounded-full secondary-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span>Remove</span>
+                                </a>
+                            </div>
+                            <div class="mt-2 w-full aspect-w-3 aspect-h-2">
+                                <img src={IndiePaper.ExternalAssetHandler.get_url(promo_image)} alt="Promo Image" class="object-cover rounded-lg" />
+                            </div>
                         </div>
                     <% end %>
 
