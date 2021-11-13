@@ -20,7 +20,7 @@
         <header class="border-b-2 border-orange-400">
             <div class="flex flex-row justify-between items-center max-w-none container-box">
                 <%= link "IndiePaper", to: Routes.page_path(@conn, :index), class: "font-bold", "data-test": "title"  %>
-                <div class="flex flex-row items-center space-x-4">
+                <div class="flex flex-row items-center space-x-3">
                     <%= if @current_author do %>
                         <%= link "Dashboard", to: Routes.dashboard_path(@conn, :index), class: "primary-link hover:bg-warm-gray-100 focus:bg-warm-gray-100 px-4 py-2 rounded-full" %>
                         <div x-data="{profileOpen: false}" class="relative ml-3">
@@ -43,7 +43,7 @@
                                 <a href="#" class="block py-2 px-6 hover:bg-warm-gray-100 primary-link">Library</a>
                                 <a href="#" class="block py-2 px-6 border-t hover:bg-warm-gray-100 primary-link border-secondary-border">Profile</a>
                                 <a href="#" class="block py-2 px-6 hover:bg-warm-gray-100 primary-link">Settings</a>
-                                <%= link "Sign out", to: Routes.author_session_path(@conn, :delete), method: :delete, class: "primary-link block border-t border-secondary-border py-2 px-6 hover:bg-warm-gray-100", "data-no-instant": true, "role": "menuitem" %>
+                                <%= link "Sign out", to: Routes.author_session_path(@conn, :delete), method: :delete, class: "primary-link block border-t border-secondary-border py-2 px-6 hover:bg-warm-gray-100", "data-no-instant": true, role: "menuitem" %>
                             </div>
                         </div>
                 </div>
