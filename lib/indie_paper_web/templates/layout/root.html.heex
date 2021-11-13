@@ -18,12 +18,35 @@
 
     <body class="antialiased font-medium text-gray-800 md:text-primary-text" >
         <header class="border-b-2 border-orange-400">
-            <div class="flex flex-row justify-between items-center max-w-none container-box">
+            <div class="flex flex-row justify-between items-center container-box">
                 <%= link "IndiePaper", to: Routes.page_path(@conn, :index), class: "font-bold", "data-test": "title"  %>
-                <div class="flex flex-row items-center space-x-6 md:space-x-8">
+                <div class="flex flex-row items-center space-x-6">
+                    <a href="#">Explore</a>
                     <%= if @current_author do %>
-                        <%= link "Dashboard", to: Routes.dashboard_path(@conn, :index), class: "primary-link" %>
-                        <%= link "Sign out", to: Routes.author_session_path(@conn, :delete), method: :delete, class: "primary-link", "data-no-instant": true %>
+                        <div x-data="{profileOpen: false}" class="relative ml-3">
+                            <div>
+                                <button @click="profileOpen = !profileOpen" type="button" class="flex items-center max-w-xs text-sm bg-gray-800 rounded-full ring-2 ring-white ring-offset-2 ring-offset-gray-800 focus:outline-none" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                    <span class="sr-only">Open user menu</span>
+                                    <img class="w-8 h-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                                </button>
+                            </div>
+
+                            <!--
+                                 Dropdown menu, show/hide based on menu state.
+
+                                 Entering: "transition ease-out duration-100"
+                                 From: "transform opacity-0 scale-95"
+                                 To: "transform opacity-100 scale-100"
+                                 Leaving: "transition ease-in duration-75"
+                                 From: "transform opacity-100 scale-100"
+                                 To: "transform opacity-0 scale-95"
+                            -->
+                            <div @click.outside="profileOpen = false" x-show="profileOpen" class="absolute right-0 py-1 mt-2 w-48 bg-white rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                                <%= link "Dashboard", to: Routes.dashboard_path(@conn, :index), class: "primary-link block py-2 px-4 hover:bg-warm-gray-50", "role": "menuitem" %>
+                                <%= link "Sign out", to: Routes.author_session_path(@conn, :delete), method: :delete, class: "primary-link block py-2 px-4 hover:bg-warm-gray-50", "data-no-instant": true, "role": "menuitem" %>
+                            </div>
+                        </div>
+                </div>
                     <% else %>
                         <%= link "Sign in", to: Routes.author_session_path(@conn, :new) , class: "primary-link"%>
                         <%= link "Start Writing", to: Routes.author_registration_path(@conn, :new), class: "secondary-button text-sm" %>
