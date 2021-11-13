@@ -18,11 +18,11 @@
 
     <body class="antialiased font-medium text-gray-800 md:text-primary-text" >
         <header class="border-b-2 border-orange-400">
-            <div class="flex flex-row justify-between items-center container-box">
+            <div class="flex flex-row justify-between items-center max-w-none container-box">
                 <%= link "IndiePaper", to: Routes.page_path(@conn, :index), class: "font-bold", "data-test": "title"  %>
-                <div class="flex flex-row items-center space-x-6">
-                    <a href="#">Explore</a>
+                <div class="flex flex-row items-center space-x-6 md:space-x-8">
                     <%= if @current_author do %>
+                        <%= link "Dashboard", to: Routes.dashboard_path(@conn, :index), class: "primary-link", "role": "menuitem" %>
                         <div x-data="{profileOpen: false}" class="relative ml-3">
                             <div>
                                 <button @click="profileOpen = !profileOpen" type="button" class="flex items-center max-w-xs text-sm bg-gray-800 rounded-full ring-2 ring-white ring-offset-2 ring-offset-gray-800 focus:outline-none" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
@@ -42,8 +42,7 @@
                                  To: "transform opacity-0 scale-95"
                             -->
                             <div @click.outside="profileOpen = false" x-show="profileOpen" class="absolute right-0 py-1 mt-2 w-48 bg-white rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                                <%= link "Dashboard", to: Routes.dashboard_path(@conn, :index), class: "primary-link block py-2 px-4 hover:bg-warm-gray-50", "role": "menuitem" %>
-                                <%= link "Sign out", to: Routes.author_session_path(@conn, :delete), method: :delete, class: "primary-link block py-2 px-4 hover:bg-warm-gray-50", "data-no-instant": true, "role": "menuitem" %>
+                                <%= link "Sign out", to: Routes.author_session_path(@conn, :delete), method: :delete, class: "primary-link block py-2 px-6 hover:bg-warm-gray-50", "data-no-instant": true, "role": "menuitem" %>
                             </div>
                         </div>
                 </div>
