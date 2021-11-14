@@ -89,12 +89,12 @@ topbar.config({ barColors: { 0: "#FB923C" } });
 
 window.addEventListener("phx:page-loading-start", () => {
   clearTimeout(progressTimeout);
-  progressTimeout = setTimeout(topbar.show, 100);
+  progressTimeout = setTimeout(topbar.show, 0);
 });
 
 window.addEventListener("phx:page-loading-stop", () => {
   clearTimeout(progressTimeout);
-  progressTimeout = setTimeout(topbar.hide, 100);
+  progressTimeout = setTimeout(topbar.hide, 0);
 });
 
 // connect if there are any LiveViews on the page
