@@ -136,7 +136,7 @@ defmodule IndiePaperWeb.Router do
       resources "/checkout", CheckoutController, only: [:new]
     end
 
-    live "/books/:id/edit", BookEditLive
+    live "/books/:id/edit", BookEditLive, :edit
 
     resources "/drafts", DraftController, only: [:edit] do
       resources "/chapters", DraftChapterController, only: [:update, :create, :show]
