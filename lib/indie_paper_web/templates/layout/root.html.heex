@@ -18,7 +18,7 @@
 
     <body class="antialiased font-medium text-gray-800 md:text-primary-text" >
         <header class="border-b-2 border-orange-400">
-            <div class="flex flex-row justify-between items-center max-w-none container-box">
+            <div class="flex flex-row justify-between items-center container-box">
                 <%= link "IndiePaper", to: Routes.page_path(@conn, :index), class: "font-bold", "data-test": "title"  %>
                 <div class="flex flex-row items-center space-x-3">
                     <%= if @current_author do %>
@@ -74,15 +74,17 @@
                         </div>
                 </div>
                     <% else %>
-                        <%= link "Sign in", to: Routes.author_session_path(@conn, :new) , class: "primary-link"%>
-                        <%= link "Start Writing", to: Routes.author_registration_path(@conn, :new), class: "secondary-button text-sm" %>
-                    <% end %>
+                <div class="flex flex-row items-center space-x-6">
+                    <%= link "Sign in", to: Routes.author_session_path(@conn, :new) , class: "primary-link"%>
+                    <%= link "Start Writing", to: Routes.author_registration_path(@conn, :new), class: "secondary-button text-sm" %>
                 </div>
+                    <% end %>
+            </div>
             </div>
         </header>
         <%= @inner_content %>
         <footer class="font-normal bg-white border-t border-b border-primary-border">
-            <div class="flex flex-col justify-between items-start py-8 space-y-8 max-w-none md:flex-row md:space-y-0 container-box">
+            <div class="flex flex-col justify-between items-start py-8 space-y-8 md:flex-row md:space-y-0 container-box">
                 <div class="flex flex-col items-start space-y-6 md:space-y-8">
                     <div class="space-x-6">
                         <a href="https://twitter.com/indiepaperme" class="inline-block">
@@ -96,10 +98,10 @@
                         </a>
                     </div>
                     <div class="flex flex-row items-center space-x-1">
-                        <a class="inline-block font-normal primary-link" href="/privacy-policy">
+                        <a class="inline-block font-normal" href="/privacy-policy">
                             Privacy &
                         </a>
-                        <a class="inline-block font-normal primary-link" href="/terms-of-service">
+                        <a class="inline-block font-normal" href="/terms-of-service">
                             Terms of Service
                         </a>
                     </div>
