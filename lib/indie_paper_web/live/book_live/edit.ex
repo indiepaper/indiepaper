@@ -1,4 +1,4 @@
-defmodule IndiePaperWeb.BookEditLive do
+defmodule IndiePaperWeb.BookLive.Edit do
   use IndiePaperWeb, :live_view
 
   alias IndiePaper.Books
