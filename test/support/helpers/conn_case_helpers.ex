@@ -8,7 +8,7 @@ defmodule IndiePaperWeb.ConnCaseHelpers do
   test context.
   """
   def register_and_log_in_author(%{conn: conn}) do
-    author = IndiePaper.AuthorsFixtures.author_fixture(:author)
+    author = IndiePaper.AuthorsFixtures.author_fixture()
     %{conn: log_in_author(conn, author), author: author}
   end
 
