@@ -3,6 +3,7 @@ defmodule IndiePaperWeb.Feature.PersonCanRegisterAsAuthorTest do
 
   alias IndiePaperWeb.Pages.{Components.NavBar, DashboardPage, RegisterPage, AccountSetupPage}
 
+  @tag :skip
   test "person can register as author", %{session: session} do
     author = params_for(:author)
 
