@@ -18,6 +18,7 @@ defmodule IndiePaperWeb.Pages.Components.NavBar do
 
   def has_sign_out?(session) do
     session
+    |> click(data("test", "navbar-profile"))
     |> assert_has(link("Sign out"))
   end
 

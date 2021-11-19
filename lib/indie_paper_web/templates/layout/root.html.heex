@@ -20,9 +20,9 @@
         <header class="border-b-2 border-orange-400">
             <div class="flex flex-row justify-between items-center container-box">
                 <%= link "IndiePaper", to: Routes.page_path(@conn, :index), class: "font-bold", "data-test": "title"  %>
-                <div class="flex flex-row items-center space-x-3">
+                <div class="flex flex-row items-center space-x-6 md:space-x-8">
                     <%= if @current_author do %>
-                        <%= link "Dashboard", to: Routes.dashboard_path(@conn, :index), class: "primary-link hover:bg-warm-gray-100 focus:bg-warm-gray-100 px-4 py-2 rounded-full" %>
+                        <%= link "Dashboard", to: Routes.dashboard_path(@conn, :index), class: "primary-link" %>
                         <div x-data="{profileOpen: false}" class="relative ml-3">
                             <div>
                                 <button data-test="navbar-profile" @click="profileOpen = !profileOpen" type="button" class="flex items-center max-w-xs text-sm bg-gray-800 rounded-full ring-2 ring-white ring-offset-2 ring-offset-gray-800 focus:outline-none" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
