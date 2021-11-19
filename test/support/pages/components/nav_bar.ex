@@ -23,6 +23,7 @@ defmodule IndiePaperWeb.Pages.Components.NavBar do
 
   def click_sign_out(session) do
     session
+    |> click(data("test", "navbar-profile"))
     |> click(link("Sign out"))
   end
 
