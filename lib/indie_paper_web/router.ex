@@ -144,7 +144,8 @@ defmodule IndiePaperWeb.Router do
 
     resources "/dashboard", DashboardController, only: [:index]
 
-    resources "/dashboard/orders", DashboardOrderController, only: [:index]
+    live "/dashboard/library", DashboardLibraryLive, :index
+    # resources "/dashboard/orders", DashboardOrderController, only: [:index]
   end
 
   scope "/", IndiePaperWeb do
