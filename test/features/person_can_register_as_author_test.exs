@@ -14,7 +14,6 @@ defmodule IndiePaperWeb.Feature.PersonCanRegisterAsAuthorTest do
       last_name: author.last_name,
       username: author.username
     )
-    |> take_screenshot()
     |> DashboardPage.has_title?()
     |> DashboardPage.click_resend_confirmation_email()
     |> DashboardPage.has_confirmation_email_text?()
