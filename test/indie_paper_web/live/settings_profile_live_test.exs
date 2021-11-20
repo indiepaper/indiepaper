@@ -16,10 +16,25 @@ defmodule IndiePaperWeb.SettingsProfileLiveTest do
     {:ok, view, _html} = live(conn, settings_profile_path(conn))
 
     view
-    |> form("[data-test=profile-form]", %{author: %{username: "testusername"}})
+    |> form(profile_form(), %{author: %{username: "testusername"}})
     |> render_submit()
 
     assert render(view) =~ "has already been taken"
+  end
+
+  test "shows validation error when data is invalid", %{conn: conn} do
+    {:ok, view, _html} = live(conn, settings_profile_path(conn))
+
+    html =
+      view
+      |> form(profile_form(), %{author: %{first_name: nil}})
+      |> render_change()
+
+    assert html =~ "can&#39;t be blank"
+  end
+
+  defp profile_form() do
+    "[data-test=profile-form]"
   end
 
   defp settings_profile_path(conn) do

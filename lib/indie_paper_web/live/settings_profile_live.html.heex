@@ -1,5 +1,5 @@
 
-<.form let={f} for={@changeset} data-test="profile-form" phx-submit="update_profile">
+<.form let={f} for={@changeset} data-test="profile-form" phx-submit="update_profile" phx-change="validate">
 <%= label f, :username %>
 <%= text_input f, :username %>
 <%= error_tag f, :username %>

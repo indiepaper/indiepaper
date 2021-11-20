@@ -12,6 +12,15 @@ defmodule IndiePaperWeb.SettingsProfileLive do
   end
 
   @impl true
+  def handle_event("validate", %{"author" => author_params}, socket) do
+    changeset =
+      AuthorProfile.change_profile(socket.assigns.current_author, author_params)
+      |> Map.put(:action, :update)
+
+    {:noreply, assign(socket, changeset: changeset)}
+  end
+
+  @impl true
   def handle_event("update_profile", %{"author" => author_params}, socket) do
     case AuthorProfile.update_profile(socket.assigns.current_author, author_params) do
       {:ok, _author} ->
