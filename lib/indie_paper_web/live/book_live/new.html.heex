@@ -1,0 +1,28 @@
+<section class="bg-background">
+    <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
+    <div class="container-box page-box">
+        <h1 class="page-heading" data-test="title">Create a new Book</h1>
+        <p class="max-w-2xl page-description">Create a book, setup the title. Don't fret these settings can be changed afterwards.</p>
+
+        <div class="mt-12 max-w-2xl">
+            <.form for={@changeset} let={f} data-test="new-book-form" phx-submit="create_book">
+            <%= if @form_submit_error do %>
+                <div class="form-error-box">
+                    <p>Oops, Something went wrong. Please check errors below</p>
+                </div>
+            <% end %>
+
+            <div class="form-tight-container">
+                <div class="input-container">
+                    <%= label f, :title, class: "input-label"  %>
+                    <%= text_input f, :title, class: "form-input"  %>
+                    <p class="input-error">
+                        <%= error_tag f, :title %>
+                    </p>
+                </div>
+                <%= submit "Create Book", class: "primary-button" %>
+            </div>
+            </.form>
+        </div>
+    </div>
+</section>

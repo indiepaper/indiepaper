@@ -21,15 +21,6 @@ defmodule IndiePaperWeb.BookController do
     end
   end
 
-  def edit(conn, %{"id" => book_id}) do
-    book = Books.get_book!(book_id)
-    changeset = Books.change_book(book)
-
-    with :ok <- Bodyguard.permit(Books, :update_book, conn.assigns.current_author, book) do
-      render(conn, "edit.html", book: book, changeset: changeset)
-    end
-  end
-
   def show(conn, %{"id" => book_id}) do
     book = Books.get_book!(book_id) |> Books.with_assoc(:author)
     render(conn, "show.html", book: book)

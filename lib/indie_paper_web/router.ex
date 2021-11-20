@@ -132,7 +132,9 @@ defmodule IndiePaperWeb.Router do
     scope "/", IndiePaperWeb do
       pipe_through [:browser, :require_authenticated_author]
 
-      resources "/books", BookController, only: [:new, :create] do
+      live "/books/new", BookLive.New, :new
+
+      resources "/books", BookController do
         resources "/read", ReadController, only: [:index, :show]
         resources "/checkout", CheckoutController, only: [:new]
       end
