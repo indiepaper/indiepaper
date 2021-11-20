@@ -39,6 +39,13 @@ defmodule IndiePaperWeb.DashboardLibraryLiveTest do
     refute view |> library_book(payment_pending_order.book) |> has_element?()
   end
 
+  test "show payment banner when returning from stripe", %{conn: conn} do
+    {:ok, _view, html} =
+      live(conn, Routes.dashboard_library_path(conn, :index, stripe_checkout_success: true))
+
+    assert html =~ "purchase has been succesfully completed"
+  end
+
   defp library_book(view, book) do
     element(view, "[data-test=book-#{book.id}]", book.title)
   end
