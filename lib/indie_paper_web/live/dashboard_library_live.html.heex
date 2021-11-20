@@ -1,11 +1,12 @@
 <section class="bg-background">
     <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
     <div class="container-box page-box">
-        <h1 class="page-heading">Your Library</h1>
-        <p class="page-description">
-            books that you have purchased will show up here.
-        </p>
-            <div class="mt-8 space-y-12">
+        <div class="max-w-2xl">
+            <h1 class="page-heading">Your Library</h1>
+            <p class="page-description">
+                books that you have purchased will show up here.
+            </p>
+            <div class="mt-12 space-y-12">
                 <%= for order <- @orders do %>
                     <div class="items-stretch p-0 primary-card" data-test={"book-#{order.book.id}"}>
                         <div class="flex flex-row justify-between items-center py-3 px-6 border-b border-secondary-border">
@@ -46,5 +47,6 @@
                     </div>
                 <% end %>
             </div>
+        </div>
     </div>
 </section>

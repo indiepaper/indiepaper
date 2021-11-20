@@ -23,6 +23,14 @@ defmodule IndiePaperWeb.DashboardLibraryLiveTest do
     refute view |> library_book(order3.book) |> has_element?()
   end
 
+  test "show payment completed orders only", %{conn: conn, author: author} do
+    payment_pending_order = insert(:order, customer: author, status: :payment_pending)
+
+    {:ok, view, _html} = live(conn, dashboard_library_path(conn))
+
+    refute view |> library_book(payment_pending_order.book) |> has_element?()
+  end
+
   defp library_book(view, book) do
     element(view, "[data-test=book-#{book.id}]", book.title)
   end

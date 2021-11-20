@@ -8,10 +8,20 @@ defmodule IndiePaper.Orders do
 
   alias IndiePaper.Orders.{Order, LineItem}
 
-  def list_orders(%IndiePaper.Authors.Author{} = customer) do
+  defp list_orders_query(%IndiePaper.Authors.Author{} = customer) do
     Order
     |> Bodyguard.scope(customer)
     |> order_by(desc: :updated_at)
+  end
+
+  def list_orders(%IndiePaper.Authors.Author{} = customer) do
+    list_orders_query(customer)
+    |> Repo.all()
+  end
+
+  def list_payment_completed_orders(customer) do
+    list_orders_query(customer)
+    |> where(status: :payment_completed)
     |> Repo.all()
   end
 
