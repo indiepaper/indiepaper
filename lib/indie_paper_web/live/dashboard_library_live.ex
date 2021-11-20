@@ -1,8 +1,6 @@
 defmodule IndiePaperWeb.DashboardLibraryLive do
   use IndiePaperWeb, :live_view
 
-  on_mount IndiePaperWeb.AuthorLiveAuth
-
   alias IndiePaper.BookLibrary
 
   @impl true

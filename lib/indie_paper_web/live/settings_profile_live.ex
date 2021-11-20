@@ -1,8 +1,6 @@
 defmodule IndiePaperWeb.SettingsProfileLive do
   use IndiePaperWeb, :live_view
 
-  on_mount IndiePaperWeb.AuthorLiveAuth
-
   alias IndiePaper.AuthorProfile
 
   @impl true

@@ -128,26 +128,28 @@ defmodule IndiePaperWeb.Router do
     resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:new, :create]
   end
 
-  scope "/", IndiePaperWeb do
-    pipe_through [:browser, :require_authenticated_author]
+  live_session :require_authenticated_author, on_mount: IndiePaperWeb.AuthorLiveAuth do
+    scope "/", IndiePaperWeb do
+      pipe_through [:browser, :require_authenticated_author]
 
-    resources "/books", BookController, only: [:new, :create] do
-      resources "/read", ReadController, only: [:index, :show]
-      resources "/checkout", CheckoutController, only: [:new]
+      resources "/books", BookController, only: [:new, :create] do
+        resources "/read", ReadController, only: [:index, :show]
+        resources "/checkout", CheckoutController, only: [:new]
+      end
+
+      live "/books/:id/edit", BookLive.Edit, :edit
+
+      resources "/drafts", DraftController, only: [:edit] do
+        resources "/chapters", DraftChapterController, only: [:update, :create, :show]
+      end
+
+      resources "/dashboard", DashboardController, only: [:index]
+
+      live "/dashboard/library", DashboardLibraryLive, :index
+      # resources "/dashboard/orders", DashboardOrderController, only: [:index]
+
+      live "/settings/profile", SettingsProfileLive, :edit
     end
-
-    live "/books/:id/edit", BookLive.Edit, :edit
-
-    resources "/drafts", DraftController, only: [:edit] do
-      resources "/chapters", DraftChapterController, only: [:update, :create, :show]
-    end
-
-    resources "/dashboard", DashboardController, only: [:index]
-
-    live "/dashboard/library", DashboardLibraryLive, :index
-    # resources "/dashboard/orders", DashboardOrderController, only: [:index]
-
-    live "/settings/profile", SettingsProfileLive, :edit
   end
 
   scope "/", IndiePaperWeb do
