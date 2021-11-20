@@ -6,7 +6,10 @@ defmodule IndiePaperWeb.SettingsProfileLive do
   @impl true
   def mount(_, _session, socket) do
     changeset = AuthorProfile.change_profile(socket.assigns.current_author)
-    {:ok, assign(socket, changeset: changeset, form_error: false)}
+
+    {:ok,
+     assign(socket, changeset: changeset, form_error: false)
+     |> allow_upload(:profile_picture, accept: ~w(.jpg .jpeg), max_entries: 1)}
   end
 
   @impl true

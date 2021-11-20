@@ -3,7 +3,7 @@ defmodule IndiePaper.Repo.Migrations.AddAvatarToAuthors do
 
   def change do
     alter table(:authors) do
-      add :avatar, :string
+      add :profile_picture, :string
     end
   end
 end
