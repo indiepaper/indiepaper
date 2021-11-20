@@ -2,22 +2,19 @@
     <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
     <div class="container-box page-box">
         <div class="max-w-2xl">
-            <h1 class="page-heading">Your Orders</h1>
-            <p class="page-description">The books you have bought will show up here</p>
-            <div class="mt-8 space-y-12">
+            <h1 class="page-heading">Your Library</h1>
+            <p class="page-description">
+                books that you have purchased will show up here.
+            </p>
+            <div class="mt-12 space-y-12">
                 <%= for order <- @orders do %>
-                    <div class="items-stretch p-0 primary-card">
+                    <div class="items-stretch p-0 primary-card" data-test={"book-#{order.book.id}"}>
                         <div class="flex flex-row justify-between items-center py-3 px-6 border-b border-secondary-border">
-                            <%= if IndiePaper.Orders.is_payment_completed?(order) do %>
-                                <span data-test="order-status" class="py-1 px-2 text-xs text-green-800 bg-green-100 rounded-lg border border-green-200"><%= Phoenix.Naming.humanize(order.status) %></span>
-                            <% else %>
-                                <span data-test="order-status" class="py-1 px-2 text-xs text-warm-gray-600 bg-warm-gray-100 rounded-lg border border-warm-gray-200"><%= Phoenix.Naming.humanize(order.status) %></span>
-                            <% end %>
-
+                            <%= link IndiePaper.Authors.get_full_name(order.book.author), to: Routes.author_page_path(@socket, :show, order.book.author), class: "primary-link text-sm"  %>
                             <p data-test="order-amount"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(order.amount) %></p>
                         </div>
                         <div class="p-6">
-                            <%= link to: Routes.book_path(@conn, :show, order.book) do %>
+                            <%= link to: Routes.book_path(@socket, :show, order.book) do %>
                                 <h2 data-test="order-book-title" class="text-lg"><%= order.book.title %></h2>
                                 <h2 data-test="book-title" class="mt-1 text-sm secondary-text"><%= order.book.short_description %></h2>
                             <% end %>
@@ -27,7 +24,7 @@
                             <div>
                                 <div>
                                     <%= for line_item <- order.line_items do %>
-                                        <%= link to: Routes.book_read_path(@conn, :index, order.book), id: "read-online-link" do %>
+                                        <%= link to: Routes.book_read_path(@socket, :index, order.book), id: "read-online-link" do %>
                                             <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-light-border">
                                                 <div>
                                                     <p data-test="order-product-title"><%= line_item.product.title %></p>

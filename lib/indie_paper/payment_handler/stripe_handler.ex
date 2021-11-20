@@ -83,7 +83,7 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
            },
            mode: "payment",
            success_url:
-             Routes.dashboard_order_url(Endpoint, :index, stripe_checkout_success: true),
+             Routes.dashboard_library_url(Endpoint, :index, stripe_checkout_success: true),
            cancel_url: Routes.dashboard_url(Endpoint, :index)
          }) do
       {:ok, stripe_checkout_session} ->

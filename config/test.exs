@@ -44,3 +44,9 @@ config :stripity_stripe,
 # Disable rate limit in testing
 config :indie_paper,
   rate_limit_plug_enabled: false
+
+# Mock S3 testing
+config :ex_aws,
+  access_key_id: "AccessKey",
+  secret_access_key: "SecretAccessKey",
+  bucket_name: "indiepaper-local"

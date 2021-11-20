@@ -8,7 +8,7 @@ module.exports = {
     extend: {
       colors: {
         background: colors.warmGray[50],
-        "primary-text": colors.gray[800],
+        "primary-text": colors.gray[700],
         "secondary-text": colors.gray[500],
         "primary-border": colors.warmGray[300],
         "dark-border": colors.warmGray[500],

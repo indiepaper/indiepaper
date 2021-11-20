@@ -1,8 +1,8 @@
 <section class="bg-background">
     <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
     <div class="container-box page-box">
-        <h1 class="page-heading" data-test="title">Publish Draft</h1>
-        <p class="page-description">Publish draft as book, fill out the details of the book.</p>
+        <h1 class="page-heading" data-test="title">Create a new Book</h1>
+        <p class="max-w-2xl page-description">Create a book, setup the title. Don't fret these settings can be changed afterwards.</p>
 
         <div class="mt-12 max-w-2xl">
             <%= form_for @changeset, Routes.book_path(@conn, :create), fn f -> %>

@@ -25,7 +25,7 @@ import "phoenix_html";
 import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
-import "instant.page";
+// import "instant.page";
 
 import Alpine from "alpinejs";
 window.Alpine = Alpine;
@@ -89,12 +89,12 @@ topbar.config({ barColors: { 0: "#FB923C" } });
 
 window.addEventListener("phx:page-loading-start", () => {
   clearTimeout(progressTimeout);
-  progressTimeout = setTimeout(topbar.show, 100);
+  progressTimeout = setTimeout(topbar.show, 0);
 });
 
 window.addEventListener("phx:page-loading-stop", () => {
   clearTimeout(progressTimeout);
-  progressTimeout = setTimeout(topbar.hide, 100);
+  progressTimeout = setTimeout(topbar.hide, 0);
 });
 
 // connect if there are any LiveViews on the page

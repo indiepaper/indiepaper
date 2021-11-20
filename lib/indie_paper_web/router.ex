@@ -136,7 +136,7 @@ defmodule IndiePaperWeb.Router do
       resources "/checkout", CheckoutController, only: [:new]
     end
 
-    live "/books/:id/edit", BookEditLive
+    live "/books/:id/edit", BookLive.Edit, :edit
 
     resources "/drafts", DraftController, only: [:edit] do
       resources "/chapters", DraftChapterController, only: [:update, :create, :show]
@@ -144,7 +144,8 @@ defmodule IndiePaperWeb.Router do
 
     resources "/dashboard", DashboardController, only: [:index]
 
-    resources "/dashboard/orders", DashboardOrderController, only: [:index]
+    live "/dashboard/library", DashboardLibraryLive, :index
+    # resources "/dashboard/orders", DashboardOrderController, only: [:index]
   end
 
   scope "/", IndiePaperWeb do
@@ -154,7 +155,7 @@ defmodule IndiePaperWeb.Router do
     get "/privacy-policy", PageController, :privacy_policy
     get "/terms-of-service", PageController, :terms_of_service
 
-    get "/:author", AuthorPageController, :show
+    get "/:id", AuthorPageController, :show
 
     resources "/books", BookController, only: [:show]
   end
