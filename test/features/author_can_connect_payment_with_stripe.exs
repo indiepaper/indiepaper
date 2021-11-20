@@ -1,5 +1,5 @@
 defmodule IndiePaperWeb.Feature.AuthorCanConnectPaymentWithStripeTest do
-  use IndiePaperWeb.FeatureCase, async: true
+  use IndiePaperWeb.FeatureCase
 
   alias IndiePaperWeb.Pages.{LoginPage, DashboardPage, StripeConnectPage}
 

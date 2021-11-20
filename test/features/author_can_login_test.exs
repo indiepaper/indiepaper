@@ -1,5 +1,5 @@
 defmodule IndiePaperWeb.Feature.AuthorCanLoginTest do
-  use IndiePaperWeb.FeatureCase, async: true
+  use IndiePaperWeb.FeatureCase
 
   alias IndiePaperWeb.Pages.{HomePage, LoginPage, DashboardPage}
   alias IndiePaperWeb.Pages.Components.NavBar
