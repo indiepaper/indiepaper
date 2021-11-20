@@ -20,6 +20,7 @@ defmodule IndiePaper.Authors.Author do
     field :username, :string, null: false
     field :first_name, :string, null: false
     field :last_name, :string
+    field :avatar, :string
 
     has_many :books, IndiePaper.Books.Book
     has_many :orders, IndiePaper.Orders.Order, foreign_key: :customer_id
@@ -161,7 +162,7 @@ defmodule IndiePaper.Authors.Author do
 
   def profile_changeset(author, attrs) do
     author
-    |> cast(attrs, [:username, :first_name, :last_name])
+    |> cast(attrs, [:username, :first_name, :last_name, :avatar])
     |> validate_required([:username, :first_name])
     |> validate_length(:username, min: 3, max: 32)
     |> validate_format(:username, ~r/^[a-zA-Z0-9\_\-]+$/)
