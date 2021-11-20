@@ -86,9 +86,9 @@ defmodule IndiePaperWeb.Router do
     pipe_through [:browser, :require_authenticated_author]
 
     live "/secure/finish", AuthorProfileSetupLive
-    get "/authors/settings", AuthorSettingsController, :edit
-    put "/authors/settings", AuthorSettingsController, :update
-    get "/authors/settings/confirm_email/:token", AuthorSettingsController, :confirm_email
+    get "/secure/settings", AuthorSettingsController, :edit
+    put "/secure/settings", AuthorSettingsController, :update
+    get "/secure/settings/confirm_email/:token", AuthorSettingsController, :confirm_email
   end
 
   scope "/", IndiePaperWeb do
