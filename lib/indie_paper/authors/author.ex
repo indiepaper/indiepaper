@@ -165,6 +165,7 @@ defmodule IndiePaper.Authors.Author do
     |> validate_required([:username, :first_name])
     |> validate_length(:username, min: 3, max: 32)
     |> validate_format(:username, ~r/^[a-zA-Z0-9\_\-]+$/)
+    |> update_change(:username, &String.downcase/1)
     |> validate_length(:first_name, max: 128)
     |> validate_length(:last_name, max: 128)
     |> unsafe_validate_unique(:username, IndiePaper.Repo)
