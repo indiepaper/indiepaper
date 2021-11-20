@@ -9,7 +9,7 @@ defmodule IndiePaperWeb.SettingsProfileLive do
 
     {:ok,
      assign(socket, changeset: changeset, form_error: false)
-     |> allow_upload(:profile_picture, accept: ~w(.jpg .jpeg), max_entries: 1)}
+     |> allow_upload(:profile_picture, accept: ~w(.jpg .jpeg .png), max_entries: 1)}
   end
 
   @impl true
