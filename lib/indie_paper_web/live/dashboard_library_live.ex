@@ -2,14 +2,11 @@ defmodule IndiePaperWeb.DashboardLibraryLive do
   use IndiePaperWeb, :live_view
 
   alias IndiePaper.BookLibrary
-  alias IndiePaper.Authors
 
   @impl true
-  def mount(_, %{"author_token" => author_token}, socket) do
-    current_author = Authors.get_author_by_session_token(author_token)
-
-    orders = BookLibrary.list_payment_completed_orders(current_author)
-    {:ok, socket |> assign(current_author: current_author, orders: orders)}
+  def mount(_, _, socket) do
+    orders = BookLibrary.list_payment_completed_orders(socket.assigns.current_author)
+    {:ok, socket |> assign(orders: orders)}
   end
 
   @impl true

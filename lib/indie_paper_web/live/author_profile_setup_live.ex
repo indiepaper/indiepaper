@@ -1,16 +1,16 @@
 defmodule IndiePaperWeb.AuthorProfileSetupLive do
   use IndiePaperWeb, :live_view
 
-  alias IndiePaper.Authors
+  on_mount IndiePaperWeb.AuthorLiveAuth
+
+  alias IndiePaper.AuthorProfile
 
   @impl Phoenix.LiveView
-  def mount(_params, %{"author_token" => author_token}, socket) do
-    current_author = Authors.get_author_by_session_token(author_token)
-    changeset = Authors.change_author_profile(current_author)
+  def mount(_params, _, socket) do
+    changeset = AuthorProfile.change_profile(socket.assigns.current_author)
 
     {:ok,
      socket
-     |> assign(:current_author, current_author)
      |> assign(:changeset, changeset)}
   end
 
@@ -22,7 +22,7 @@ defmodule IndiePaperWeb.AuthorProfileSetupLive do
       ) do
     changeset =
       current_author
-      |> Authors.change_author_profile(author_params)
+      |> AuthorProfile.change_profile(author_params)
       |> Map.put(:action, :validate)
 
     {:noreply, socket |> assign(:changeset, changeset)}
@@ -34,7 +34,7 @@ defmodule IndiePaperWeb.AuthorProfileSetupLive do
         %{"author" => author_params},
         %{assigns: %{current_author: current_author}} = socket
       ) do
-    case Authors.update_author_profile(current_author, author_params) do
+    case AuthorProfile.update_profile(current_author, author_params) do
       {:ok, _author} ->
         socket = socket |> redirect(to: IndiePaperWeb.AuthorAuth.signed_in_path(socket))
         {:noreply, socket}

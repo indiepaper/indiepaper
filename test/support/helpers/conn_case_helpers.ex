@@ -1,4 +1,6 @@
 defmodule IndiePaperWeb.ConnCaseHelpers do
+  import IndiePaper.Factory
+
   @doc """
   Setup helper that registers and logs in authors.
 
@@ -10,6 +12,18 @@ defmodule IndiePaperWeb.ConnCaseHelpers do
   def register_and_log_in_author(%{conn: conn}) do
     author = IndiePaper.AuthorsFixtures.author_fixture()
     %{conn: log_in_author(conn, author), author: author}
+  end
+
+  @doc """
+  Logs a factor `author` into the `conn`.
+
+  It returns an updated `conn`.
+  """
+  def create_and_log_in_author(conn) do
+    author = insert(:author)
+
+    conn
+    |> log_in_author(author)
   end
 
   @doc """
