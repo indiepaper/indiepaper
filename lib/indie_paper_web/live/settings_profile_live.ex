@@ -8,7 +8,7 @@ defmodule IndiePaperWeb.SettingsProfileLive do
   @impl true
   def mount(_, _session, socket) do
     changeset = AuthorProfile.change_profile(socket.assigns.current_author)
-    {:ok, assign(socket, changeset: changeset)}
+    {:ok, assign(socket, changeset: changeset, form_error: false)}
   end
 
   @impl true
@@ -27,7 +27,7 @@ defmodule IndiePaperWeb.SettingsProfileLive do
         {:noreply, socket |> redirect(to: Routes.dashboard_path(socket, :index))}
 
       {:error, changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
+        {:noreply, assign(socket, changeset: changeset, form_error: true)}
     end
   end
 end

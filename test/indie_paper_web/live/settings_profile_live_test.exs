@@ -16,11 +16,13 @@ defmodule IndiePaperWeb.SettingsProfileLiveTest do
       insert(:author, username: "testusername")
       {:ok, view, _html} = live(conn, settings_profile_path(conn))
 
-      view
-      |> form(profile_form(), %{author: %{username: "testusername"}})
-      |> render_submit()
+      html =
+        view
+        |> form(profile_form(), %{author: %{username: "testusername"}})
+        |> render_submit()
 
-      assert render(view) =~ "has already been taken"
+      assert html =~ "has already been taken"
+      assert html =~ "Oops"
     end
 
     test "shows validation error when data is invalid", %{conn: conn} do
