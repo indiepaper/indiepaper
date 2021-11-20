@@ -22,7 +22,7 @@ defmodule IndiePaperWeb.SettingsProfileLive do
   def handle_event("update_profile", %{"author" => author_params}, socket) do
     case AuthorProfile.update_profile(socket.assigns.current_author, author_params) do
       {:ok, _author} ->
-        {:noreply, socket |> push_redirect(to: Routes.dashboard_path(socket, :index))}
+        {:noreply, socket |> redirect(to: Routes.dashboard_path(socket, :index))}
 
       {:error, changeset} ->
         {:noreply, assign(socket, changeset: changeset, form_error: true)}
