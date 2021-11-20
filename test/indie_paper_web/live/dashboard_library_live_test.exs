@@ -19,6 +19,14 @@ defmodule IndiePaperWeb.DashboardLibraryLiveTest do
     {:ok, view, _html} = live(conn, dashboard_library_path(conn))
 
     assert view |> library_book(order1.book) |> has_element?()
+
+    assert view
+           |> element(
+             "[data-test=book-#{order1.book.id}]",
+             IndiePaper.Authors.get_full_name(order1.book.author)
+           )
+           |> has_element?()
+
     assert view |> library_book(order2.book) |> has_element?()
     refute view |> library_book(order3.book) |> has_element?()
   end

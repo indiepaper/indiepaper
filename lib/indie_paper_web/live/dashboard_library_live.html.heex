@@ -10,12 +10,7 @@
                 <%= for order <- @orders do %>
                     <div class="items-stretch p-0 primary-card" data-test={"book-#{order.book.id}"}>
                         <div class="flex flex-row justify-between items-center py-3 px-6 border-b border-secondary-border">
-                            <%= if IndiePaper.Orders.is_payment_completed?(order) do %>
-                                <span data-test="order-status" class="py-1 px-2 text-xs text-green-800 bg-green-100 rounded-lg border border-green-200"><%= Phoenix.Naming.humanize(order.status) %></span>
-                            <% else %>
-                                <span data-test="order-status" class="py-1 px-2 text-xs text-warm-gray-600 bg-warm-gray-100 rounded-lg border border-warm-gray-200"><%= Phoenix.Naming.humanize(order.status) %></span>
-                            <% end %>
-
+                            <%= link IndiePaper.Authors.get_full_name(order.book.author), to: Routes.author_page_path(@socket, :show, order.book.author), class: "primary-link text-sm"  %>
                             <p data-test="order-amount"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(order.amount) %></p>
                         </div>
                         <div class="p-6">

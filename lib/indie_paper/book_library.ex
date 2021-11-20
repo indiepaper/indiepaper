@@ -3,11 +3,14 @@ defmodule IndiePaper.BookLibrary do
 
   def get_orders(customer) do
     Orders.list_orders(customer)
-    |> Orders.with_assoc([:book, [line_items: [product: :assets]]])
+    |> load_order_assoc()
   end
 
   def list_payment_completed_orders(customer) do
     Orders.list_payment_completed_orders(customer)
-    |> Orders.with_assoc([:book, [line_items: [product: :assets]]])
+    |> load_order_assoc()
   end
+
+  defp load_order_assoc(orders),
+    do: orders |> Orders.with_assoc([[book: :author], [line_items: [product: :assets]]])
 end
