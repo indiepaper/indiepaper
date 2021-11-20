@@ -22,4 +22,14 @@ defmodule IndiePaperWeb.BookLive.New do
         {:noreply, assign(socket, changeset: changeset, form_submit_error: true)}
     end
   end
+
+  @impl true
+  def handle_event("validate", %{"book" => book_params}, socket) do
+    changeset =
+      %Books.Book{}
+      |> Books.change_book(book_params)
+      |> Map.put(:action, :validate)
+
+    {:noreply, assign(socket, changeset: changeset)}
+  end
 end
