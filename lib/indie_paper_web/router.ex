@@ -143,7 +143,7 @@ defmodule IndiePaperWeb.Router do
         resources "/chapters", DraftChapterController, only: [:update, :create, :show]
       end
 
-      resources "/dashboard", DashboardController, only: [:index]
+      live "/dashboard", DashboardLive, :index
 
       live "/dashboard/library", DashboardLibraryLive, :index
       # resources "/dashboard/orders", DashboardOrderController, only: [:index]

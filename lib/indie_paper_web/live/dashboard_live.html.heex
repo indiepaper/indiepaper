@@ -1,0 +1,169 @@
+<section class="bg-background">
+    <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
+
+    <%= if IndiePaper.Authors.is_created?(@current_author) do %>
+        <section class="shadow-inner bg-accent">
+            <div class="flex flex-col items-start space-y-3 md:flex-row md:justify-start md:items-center md:py-5 md:space-y-0 md:space-x-4 container-box">
+                <p class="text-sm text-white">Confirm your email to start Publishing your drafts.</p>
+                <%= link to: Routes.author_confirmation_path(@socket, :new), class: "text-xs border-accent secondary-button", "data-no-instant": "" do %>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                    </svg>
+                    <p>Resend Confirmation Email</p>
+                <% end %>
+            </div>
+        </section>
+    <% end %>
+
+    <div class="container-box page-box">
+        <%= if IndiePaper.Authors.is_confirmed?(@current_author) do %>
+            <div class="inline-block py-4 px-6 mb-16 -mt-8 shadow-none primary-card">
+                <div class="flex flex-col items-start space-y-4 text-sm md:flex-row md:items-center md:space-y-0 md:space-x-6">
+                    <p>Connect your Stripe account to Start Selling your books.</p>
+                    <%= link "Connect Stripe", to: Routes.profile_stripe_connect_path(@socket, :new), class: "secondary-button" %>
+                </div>
+            </div>
+        <% end %>
+
+        <div class="max-w-2xl">
+            <h1 data-test="title" class="page-heading">Your Books</h1>
+            <p class="page-description">your current drafts and published books appear here. Write them with love and care they deserve</p>
+
+            <%= if not IndiePaper.Books.has_one_published_book?(@current_author) do %>
+                <div class="mt-8 mb-12">
+                    <div class="p-0 primary-card">
+                        <div class="p-6">
+                            <h3 class="text-lg">Welcome to IndiePaper, Let's get started.</h3>
+                            <p class="text-sm secondary-text">Creating a book is simple as creating a blog post. Follow the steps to get your first book published and ready for sale.</p>
+                        </div>
+                        <div class="flex flex-col py-3 px-6 space-y-3 w-full border-t md:flex-row md:justify-between md:items-center md:space-y-0 border-secondary-border">
+                            <div class="flex flex-row items-center space-x-3">
+                                <div><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg></div>
+                                <div>
+                                    <h4>Create and edit draft</h4>
+                                    <p class="text-sm secondary-text">Start by creating a draft.</p>
+                                </div>
+                            </div>
+                            <%= link to: Routes.book_path(@socket, :new), class: "secondary-button text-sm" do %>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <p>Create new</p>
+                            <% end %>
+                        </div>
+                        <div class="flex flex-col py-3 px-6 space-y-3 w-full border-t md:flex-row md:justify-between md:items-center md:space-y-0 border-secondary-border">
+                            <div class="flex flex-row items-center space-x-3">
+                                <div><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg></div>
+                                <div>
+                                    <h4>Update book listing</h4>
+                                    <p class="text-sm secondary-text">Finish the info to be shown on the listing page.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col py-3 px-6 space-y-3 w-full border-t md:flex-row md:justify-between md:items-center md:space-y-0 border-secondary-border">
+                            <div class="flex flex-row items-center space-x-3">
+                                <div><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg></div>
+                                <div>
+                                    <h4>Connect Stripe</h4>
+                                    <p class="text-sm secondary-text">Connect Stripe to start selling your book. Your earnings will be deposited weekly.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col py-3 px-6 space-y-3 w-full border-t md:flex-row md:justify-between md:items-center md:space-y-0 border-secondary-border">
+                            <div class="flex flex-row items-center space-x-3">
+                                <div><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg></div>
+                                <div>
+                                    <h4>Publish your book</h4>
+                                    <p class="text-sm secondary-text">Hit publish and share your generated store page with your readers.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+
+            <div class="mt-8 space-y-12 md:space-y-16">
+                <%= for book <- @books do %>
+                    <div class="items-stretch p-0 primary-card">
+                        <div class="flex flex-row justify-between items-center py-3 px-6 border-b border-secondary-border">
+                            <%= if IndiePaper.Books.is_pending_publication?(book)  do %>
+                                <span class="py-1 px-2 text-xs text-warm-gray-700 bg-warm-gray-100 rounded-lg border border-warm-gray-200" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
+                            <% end %>
+                            <%= if IndiePaper.Books.is_published?(book)  do %>
+                                <span class="py-1 px-2 text-xs text-green-700 bg-green-100 rounded-lg border border-green-200" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
+                            <% end %>
+                            <%= if IndiePaper.Books.is_published?(book) do %>
+                                <%= link to: Routes.book_path(@socket, :show, book), class: "secondary-link" do %>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                    <p>View</p>
+                                <% end %>
+                            <% end %>
+                        </div>
+                        <div class="p-6">
+                            <%= link to: (if IndiePaper.Books.is_published?(book), do: Routes.book_path(@socket, :show, book), else: Routes.draft_path(@socket, :edit, book.draft)) , class: "block" do %>
+                                <%= if IndiePaper.Books.has_promo_images?(book) do %>
+                                    <div class="mb-6 aspect-h-1 aspect-w-1 sm:aspect-w-3">
+                                        <img src={IndiePaper.ExternalAssetHandler.get_url(IndiePaper.Books.first_promo_image(book))} alt="Book Promo Image" class="object-cover rounded-lg" />
+                                    </div>
+                                <% end %>
+                                <h2 data-test="book-title" class="text-lg font-semibold"><%= book.title %></h2>
+                                <p data-test="book-title" class="mt-1 text-sm secondary-text"><%= book.short_description %></p>
+                            <% end %>
+                            <div class="flex flex-row mt-8 space-x-6 text-secondary-text">
+                                <%= link to: Routes.draft_path(@socket, :edit, book.draft), class: "secondary-link"  do %>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    </svg>
+                                    <p>Edit draft</p>
+                                <% end %>
+                                <%= link to: Routes.book_edit_path(@socket, :edit, book), class: "secondary-link" do %>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                                    </svg>
+                                    <p>Update listing</p>
+                                <% end %>
+                            </div>
+                        </div>
+
+                        <%= if IndiePaper.Books.is_published?(book)  do %>
+                            <div class="">
+                                <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-primary-border">
+                                    <p>Products</p>
+                                </div>
+                                <div>
+                                    <%= for product <- book.products do %>
+                                        <%= link to: Routes.book_product_path(@socket, :edit, book, product), "data-test": "product-edit" do %>
+                                            <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-lightest-border">
+                                                <div>
+                                                    <p data-test="product-title"><%= product.title %></p>
+                                                    <p class="text-sm secondary-text"><%= product.description %></p>
+                                                </div>
+                                                <div class="flex flex-row items-center space-x-1.5">
+                                                    <p data-test="product-price"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(product.price) %></p>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        <% end %>
+                                    <% end %>
+                                </div>
+                            </div>
+                        <% end %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</section>
