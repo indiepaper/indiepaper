@@ -7,6 +7,7 @@ defmodule IndiePaper.Authors do
   alias IndiePaper.Repo
 
   alias IndiePaper.Authors.{Author, AuthorToken, AuthorNotifier}
+  alias IndiePaper.AuthorProfile
 
   ## Database getters
 
@@ -77,22 +78,8 @@ defmodule IndiePaper.Authors do
   def register_author(attrs) do
     %Author{}
     |> Author.registration_changeset(attrs)
-    |> default_profile_changeset(attrs["email"])
+    |> AuthorProfile.default_profile_changeset(attrs["email"])
     |> Repo.insert()
-  end
-
-  def default_profile_changeset(author, nil) do
-    default_profile_changeset(author, generate_random_username())
-  end
-
-  def default_profile_changeset(author, email) do
-    name_from_email = String.split(email, "@") |> Enum.at(0) |> String.capitalize()
-
-    author
-    |> Author.profile_changeset(%{
-      "username" => generate_random_username(),
-      "first_name" => name_from_email
-    })
   end
 
   @doc """
@@ -381,7 +368,7 @@ defmodule IndiePaper.Authors do
       _ ->
         %Author{}
         |> Author.registration_changeset(attrs)
-        |> default_profile_changeset(attrs.email)
+        |> AuthorProfile.default_profile_changeset(attrs.email)
         |> Author.confirm_changeset()
         |> Repo.insert()
     end
@@ -421,31 +408,6 @@ defmodule IndiePaper.Authors do
 
   def is_created?(%{account_status: :created}), do: true
   def is_created?(_), do: false
-
-  def generate_random_username do
-    base_username =
-      IndiePaper.Utils.username_matrix()
-      |> Enum.map(fn names -> Enum.random(names) end)
-      |> Enum.join("-")
-
-    salt =
-      :crypto.strong_rand_bytes(4)
-      |> Base.url_encode64()
-      |> binary_part(0, 4)
-      |> String.downcase()
-
-    "#{base_username}-#{salt}"
-  end
-
-  def change_author_profile(author, attrs \\ %{}) do
-    Author.profile_changeset(author, attrs)
-  end
-
-  def update_author_profile(author, params) do
-    author
-    |> Author.profile_changeset(params)
-    |> Repo.update()
-  end
 
   def get_full_name(author) do
     "#{author.first_name} #{author.last_name}"
