@@ -11,9 +11,15 @@ defmodule IndiePaperWeb.BookLive.New do
 
   @impl true
   def handle_event("create_book", %{"book" => book_params}, socket) do
-    {:ok, book} = Books.create_book_with_draft(socket.assigns.current_author, book_params)
-    book_with_draft = Books.with_assoc(book, :draft)
+    case Books.create_book_with_draft(socket.assigns.current_author, book_params) do
+      {:ok, book} ->
+        book_with_draft = Books.with_assoc(book, :draft)
 
-    {:noreply, socket |> redirect(to: Routes.draft_path(socket, :edit, book_with_draft.draft))}
+        {:noreply,
+         socket |> redirect(to: Routes.draft_path(socket, :edit, book_with_draft.draft))}
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, changeset: changeset, form_submit_error: true)}
+    end
   end
 end
