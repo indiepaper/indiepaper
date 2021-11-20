@@ -1,14 +1,48 @@
+<section class="bg-background">
+    <div class="container-box page-box">
+        <h1 class="page-heading">Profile Settings</h1>
+        <p class="page-description">
+            change your username and name here.
+        </p>
+        <div class="mt-12 max-w-xl">
+            <.form let={f} for={@changeset} data-test="profile-form" phx-submit="update_profile" phx-change="validate">
+            <div class="form-container">
+                <div class="flex flex-col space-y-6 w-full md:flex-row md:space-y-0 md:space-x-4">
+                    <div class="input-container">
+                        <%= label f, :first_name, class: "input-label" %>
+                        <%= text_input f, :first_name, class: "form-input" %>
+                        <p class="input-error">
+                            <%= error_tag f, :first_name %>
+                        </p>
+                    </div>
 
-<.form let={f} for={@changeset} data-test="profile-form" phx-submit="update_profile" phx-change="validate">
-<%= label f, :username %>
-<%= text_input f, :username %>
-<%= error_tag f, :username %>
+                    <div class="input-container">
+                        <%= label f, :last_name , class: "input-label" %>
+                        <%= text_input f, :last_name, class: "form-input" %>
+                        <p class="input-error">
+                            <%= error_tag f, :last_name %>
+                        </p>
+                    </div>
+                </div>
 
-<%= label f, :first_name %>
-<%= text_input f, :first_name %>
-<%= error_tag f, :first_name %>
+                <div class="input-container">
+                    <%= label f, :username, class: "input-label" %>
+                    <%= text_input f, :username, class: "form-input" %>
 
-<%= label f, :last_name %>
-<%= text_input f, :last_name %>
-<%= error_tag f, :last_name %>
-</.form>
+                    <p class="input-error">
+                        <%= error_tag f, :username %>
+                    </p>
+                </div>
+
+                <div>
+                    <%= submit class: "submit-button space-x-2 w-full" do %>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0h24v24H0z"/><path d="M10 11V8l5 4-5 4v-3H1v-2h9zm-7.542 4h2.124A8.003 8.003 0 0 0 20 12 8 8 0 0 0 4.582 9H2.458C3.732 4.943 7.522 2 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10c-4.478 0-8.268-2.943-9.542-7z"/></svg>
+                        <p>Update Profile</p>
+                    <% end %>
+                </div>
+            </div>
+            </.form>
+        </div>
+
+    </div>
+</section>
