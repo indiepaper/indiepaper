@@ -1,0 +1,11 @@
+
+<.form let={f} for={@changeset} data-test="profile-form" phx-submit="update_profile">
+<%= label f, :username %>
+<%= text_input f, :username %>
+
+<%= label f, :first_name %>
+<%= text_input f, :first_name %>
+
+<%= label f, :last_name %>
+<%= text_input f, :last_name %>
+</.form>
