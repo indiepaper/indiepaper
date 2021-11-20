@@ -5,7 +5,7 @@
             <p class="page-description">Change your account email and password here</p>
 
             <div class="mt-16">
-                <h2 class="font-bold">Change Email</h2>
+                <h2 class="text-lg font-bold">Change Email</h2>
                 <.form let={f} for={@email_changeset} action={Routes.author_settings_path(@conn, :update)} id="update_email">
                 <%= if @email_changeset.action do %>
                     <div class="mt-4 form-error-box">
@@ -41,8 +41,8 @@
                 </.form>
             </div>
 
-            <div class="mt-16">
-                <h2 class="font-bold">Change Password</h2>
+            <div class="mt-20">
+                <h2 class="text-lg font-bold">Change Password</h2>
                 <.form let={f} for={@password_changeset} action={Routes.author_settings_path(@conn, :update)} id="update_password">
                 <%= if @password_changeset.action do %>
                     <div class="mt-4 form-error-box">
