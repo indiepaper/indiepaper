@@ -163,6 +163,7 @@ defmodule IndiePaper.Authors.Author do
     author
     |> cast(attrs, [:username, :first_name, :last_name])
     |> validate_required([:username, :first_name])
+    |> validate_length(:username, min: 3, max: 32)
     |> unsafe_validate_unique(:username, IndiePaper.Repo)
     |> unique_constraint(:username)
   end
