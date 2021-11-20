@@ -13,7 +13,12 @@ defmodule IndiePaperWeb.SettingsProfileLive do
 
   @impl true
   def handle_event("update_profile", %{"author" => author_params}, socket) do
-    {:ok, _author} = AuthorProfile.update_profile(socket.assigns.current_author, author_params)
-    {:noreply, socket |> redirect(to: Routes.dashboard_path(socket, :index))}
+    case AuthorProfile.update_profile(socket.assigns.current_author, author_params) do
+      {:ok, _author} ->
+        {:noreply, socket |> redirect(to: Routes.dashboard_path(socket, :index))}
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, changeset: changeset)}
+    end
   end
 end
