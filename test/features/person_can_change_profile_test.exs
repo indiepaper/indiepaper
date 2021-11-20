@@ -10,7 +10,7 @@ defmodule IndiePaperWeb.Feature.PersonCanChangeProfileTest do
 
     {:ok, view, _html} = live(conn, Routes.settings_profile_path(conn, :edit))
 
-    {:ok, conn} =
+    {:ok, _view, html} =
       view
       |> form("[data-test=profile-form]", %{
         author: %{
@@ -21,8 +21,6 @@ defmodule IndiePaperWeb.Feature.PersonCanChangeProfileTest do
       })
       |> render_submit()
       |> follow_redirect(conn, Routes.dashboard_path(conn, :index))
-
-    html = conn |> html_response(200)
 
     assert html =~ first_name
     assert html =~ last_name
