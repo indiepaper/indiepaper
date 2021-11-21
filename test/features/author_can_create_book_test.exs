@@ -1,5 +1,5 @@
 defmodule IndiePaperWeb.Feature.AuthorCanCreateBookTest do
-  use IndiePaperWeb.FeatureCase
+  use IndiePaperWeb.FeatureCase, async: false
 
   alias IndiePaperWeb.Pages.{
     DraftPage,

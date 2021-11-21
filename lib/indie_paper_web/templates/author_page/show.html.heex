@@ -7,7 +7,7 @@
                     <%= link to: Routes.book_path(@conn, :show, book), class: "w-full" do %>
                         <%= if IndiePaper.Books.has_promo_images?(book) do %>
                             <div class="mb-6 aspect-h-1 aspect-w-1 sm:aspect-w-3">
-                                <img src={IndiePaper.ExternalAssetHandler.get_url(IndiePaper.Books.first_promo_image(book))} alt="Book Promo Image" class="object-cover rounded-lg" />
+                                <img src={IndiePaper.ExternalAssetHandler.get_public_url(IndiePaper.Books.first_promo_image(book))} alt="Book Promo Image" class="object-cover rounded-lg" />
                             </div>
                         <% end %>
                         <p class="text-lg font-semibold"><%= book.title %></p>

@@ -1,5 +1,5 @@
 defmodule IndiePaperWeb.Features.AuthorCanCreateProductsForSaleTest do
-  use IndiePaperWeb.FeatureCase
+  use IndiePaperWeb.FeatureCase, async: false
 
   alias IndiePaperWeb.Pages.{LoginPage, DashboardPage, BookPage, ProductPage}
 

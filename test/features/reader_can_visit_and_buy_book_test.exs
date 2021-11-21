@@ -1,5 +1,5 @@
 defmodule IndiePaperWeb.Feature.ReaderCanVisitAndBuyBookTest do
-  use IndiePaperWeb.FeatureCase
+  use IndiePaperWeb.FeatureCase, async: false
 
   alias IndiePaperWeb.Pages.{BookPage, LoginPage, DashboardLibraryPage, AuthorPage}
 
