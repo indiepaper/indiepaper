@@ -5,4 +5,9 @@ defmodule IndiePaperWeb.UploadHelpers do
 
   def error_to_string(:external_client_failure),
     do: "An unexpected error occured while uploading the file."
+
+  def file_ext(entry) do
+    [ext | _] = MIME.extensions(entry.client_type)
+    ext
+  end
 end
