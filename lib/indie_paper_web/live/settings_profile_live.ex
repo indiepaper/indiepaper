@@ -5,6 +5,7 @@ defmodule IndiePaperWeb.SettingsProfileLive do
 
   alias IndiePaper.AuthorProfile
   alias IndiePaper.ExternalAssetHandler
+  alias IndiePaper.ImageHandler
 
   @impl true
   def mount(_, _session, socket) do
@@ -70,12 +71,16 @@ defmodule IndiePaperWeb.SettingsProfileLive do
 
   defp consume_profile_picture(socket, author) do
     consume_uploaded_entries(socket, :profile_picture, fn %{path: path}, entry ->
-      file = File.read!(path)
+      image_file =
+        ImageHandler.open(path)
+        |> ImageHandler.resize_to_square(400)
+        |> ImageHandler.save_in_place()
+        |> ImageHandler.to_file()
 
       {:ok, _} =
         ExternalAssetHandler.upload_file(
           author.profile_picture,
-          file,
+          image_file,
           entry.client_type,
           :public_read
         )
