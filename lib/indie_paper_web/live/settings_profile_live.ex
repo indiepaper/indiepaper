@@ -38,7 +38,9 @@ defmodule IndiePaperWeb.SettingsProfileLive do
          {:ok, _} <- maybe_remove_profile_picture(socket.assigns.current_author, updated_author),
          {:ok, _author} <-
            consume_profile_picture(socket, updated_author) do
-      {:noreply, socket |> redirect(to: Routes.dashboard_path(socket, :index))}
+      {:noreply,
+       socket
+       |> redirect(to: Routes.dashboard_path(socket, :index))}
     else
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset, form_error: true)}
@@ -75,7 +77,7 @@ defmodule IndiePaperWeb.SettingsProfileLive do
         ImageHandler.open(path)
         |> ImageHandler.resize_to_square(400)
         |> ImageHandler.save_in_place()
-        |> ImageHandler.to_file()
+        |> ImageHandler.to_file!()
 
       {:ok, _} =
         ExternalAssetHandler.upload_file(
