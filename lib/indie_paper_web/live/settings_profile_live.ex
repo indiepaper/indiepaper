@@ -27,19 +27,44 @@ defmodule IndiePaperWeb.SettingsProfileLive do
   @impl true
   def handle_event("update_profile", %{"author" => author_params}, socket) do
     author_params_with_profile_picture =
-      put_profile_picture(socket, socket.assigns.current_author, author_params)
+      maybe_put_profile_picture(socket, socket.assigns.current_author, author_params)
 
-    with {:ok, author} <-
+    with {:ok, updated_author} <-
            AuthorProfile.update_profile(
              socket.assigns.current_author,
              author_params_with_profile_picture
            ),
-         {:ok, _updated_author} <-
-           consume_profile_picture(socket, author) do
+         {:ok, _} <- maybe_remove_profile_picture(socket.assigns.current_author, updated_author),
+         {:ok, _author} <-
+           consume_profile_picture(socket, updated_author) do
       {:noreply, socket |> redirect(to: Routes.dashboard_path(socket, :index))}
     else
-      {:error, changeset} ->
+      {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset, form_error: true)}
+
+      {:error, _} ->
+        {:noreply,
+         put_flash(
+           socket,
+           :error,
+           "There was an errow while removing your old profile picture. Try again after some time."
+         )}
+    end
+  end
+
+  defp maybe_remove_profile_picture(
+         %{profile_picture: profile_picture},
+         %{profile_picture: profile_picture} = updated_author
+       ),
+       do: {:ok, updated_author}
+
+  defp maybe_remove_profile_picture(
+         %{profile_picture: old_profile_picture} = old_author,
+         updated_author
+       ) do
+    case ExternalAssetHandler.delete_asset(old_profile_picture) do
+      {:ok, _} -> {:ok, updated_author}
+      {:error, _} -> {:error, old_author}
     end
   end
 
@@ -59,7 +84,7 @@ defmodule IndiePaperWeb.SettingsProfileLive do
     {:ok, author}
   end
 
-  defp put_profile_picture(socket, author, params) do
+  defp maybe_put_profile_picture(socket, author, params) do
     {completed, []} = uploaded_entries(socket, :profile_picture)
     entry = List.first(completed)
 

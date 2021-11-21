@@ -20,4 +20,8 @@ defmodule IndiePaper.ExternalAssetHandler do
   def delete_assets(assets_list) do
     S3Handler.delete_objects(assets_list)
   end
+
+  def delete_asset(asset) do
+    S3Handler.delete_object(asset)
+  end
 end
