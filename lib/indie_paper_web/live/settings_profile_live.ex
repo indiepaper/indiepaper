@@ -1,6 +1,8 @@
 defmodule IndiePaperWeb.SettingsProfileLive do
   use IndiePaperWeb, :live_view
 
+  import IndiePaperWeb.UploadHelpers
+
   alias IndiePaper.AuthorProfile
 
   @impl true
