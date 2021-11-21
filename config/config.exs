@@ -67,7 +67,7 @@ config :ex_aws,
 
 config :ex_aws, :s3,
   scheme: "https://",
-  host: "nyc3.digitaloceanspaces.com",
+  host: "nyc3.cdn.digitaloceanspaces.com",
   region: "nyc3"
 
 # Import environment specific config. This must remain at the bottom
