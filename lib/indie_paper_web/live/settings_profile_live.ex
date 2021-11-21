@@ -63,7 +63,11 @@ defmodule IndiePaperWeb.SettingsProfileLive do
     {completed, []} = uploaded_entries(socket, :profile_picture)
     entry = List.first(completed)
 
-    Map.put(params, "profile_picture", profile_picture_key(author, entry))
+    if entry do
+      Map.put(params, "profile_picture", profile_picture_key(author, entry))
+    else
+      params
+    end
   end
 
   defp profile_picture_key(author, entry) do

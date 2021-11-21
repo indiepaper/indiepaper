@@ -20,7 +20,10 @@ defmodule IndiePaper.Authors.Author do
     field :username, :string, null: false
     field :first_name, :string, null: false
     field :last_name, :string
-    field :profile_picture, :string
+
+    field :profile_picture, :string,
+      null: false,
+      default: "public/profile_pictures/placeholder.png"
 
     has_many :books, IndiePaper.Books.Book
     has_many :orders, IndiePaper.Orders.Order, foreign_key: :customer_id
