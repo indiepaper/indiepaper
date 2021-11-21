@@ -47,12 +47,13 @@ defmodule IndiePaperWeb.SettingsProfileLive do
     consume_uploaded_entries(socket, :profile_picture, fn %{path: path}, entry ->
       file = File.read!(path)
 
-      ExternalAssetHandler.upload_file(
-        author.profile_picture,
-        file,
-        entry.client_type,
-        :public_read
-      )
+      {:ok, _} =
+        ExternalAssetHandler.upload_file(
+          author.profile_picture,
+          file,
+          entry.client_type,
+          :public_read
+        )
     end)
 
     {:ok, author}

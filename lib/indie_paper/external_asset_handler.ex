@@ -13,8 +13,8 @@ defmodule IndiePaper.ExternalAssetHandler do
     S3Handler.upload_file(path, file, content_type: content_type, permission: permission)
   end
 
-  def get_url(asset) do
-    S3Handler.get_url(asset)
+  def get_public_url(asset) do
+    S3Handler.get_public_read_url(asset)
   end
 
   def delete_assets(assets_list) do

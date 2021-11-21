@@ -35,7 +35,7 @@ defmodule IndiePaper.Services.S3Handler do
     |> ExAws.request()
   end
 
-  def get_url(file) do
+  def get_public_read_url(file) do
     "https://#{bucket_name()}.#{@host}/#{file}"
   end
 
