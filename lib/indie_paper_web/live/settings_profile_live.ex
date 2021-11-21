@@ -11,7 +11,7 @@ defmodule IndiePaperWeb.SettingsProfileLive do
 
     {:ok,
      assign(socket, changeset: changeset, form_error: false)
-     |> allow_upload(:profile_picture, accept: ~w(.jpg .jpeg .png), max_entries: 1)}
+     |> allow_upload(:profile_picture, accept: ~w(.jpg .jpeg .png))}
   end
 
   @impl true
@@ -25,6 +25,11 @@ defmodule IndiePaperWeb.SettingsProfileLive do
 
   @impl true
   def handle_event("update_profile", %{"author" => author_params}, socket) do
+    uploaded_files =
+      consume_uploaded_entries(socket, :profile_picture, fn %{path: path}, _entry ->
+        nil
+      end)
+
     case AuthorProfile.update_profile(socket.assigns.current_author, author_params) do
       {:ok, _author} ->
         {:noreply, socket |> redirect(to: Routes.dashboard_path(socket, :index))}

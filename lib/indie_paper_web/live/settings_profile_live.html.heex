@@ -20,9 +20,13 @@
                         <label class="flex overflow-hidden relative justify-center items-center mt-2 w-56 h-56 bg-gray-400 rounded-lg border cursor-pointer border-primary-border">
                             <%= if entry = List.first(@uploads.profile_picture.entries) do %>
                                 <%= live_img_preview List.first(@uploads.profile_picture.entries), class: "object-cover rounded-lg absolute inset-0 w-full h-full mix-blend-overlay" %>
+                                <%= if entry.progress > 0  do %>
                                 <div class="flex absolute bottom-0 justify-center items-center w-full h-8 bg-white border-t border-primary-border">
-                                    <p class="text-sm">Uploading <%= entry.progress %>%</p>
+                                    <p class="text-sm">
+                                        Uploading <%= entry.progress %>%
+                                    </p>
                                 </div>
+                            <% end %>
                             <% end %>
                             <div class="flex absolute justify-center items-center p-2 w-12 h-12 text-white bg-gray-600 rounded-full shadow-lg opacity-50">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -33,7 +37,7 @@
                         </label>
                         <%= if entry = List.first(@uploads.profile_picture.entries) do %>
                             <%= for error <- upload_errors(@uploads.profile_picture, entry) do %>
-                                <p class="input-error"><%= error_to_string(error) %></p>
+                                <p class="pt-1 input-error"><%= error_to_string(error) %></p>
                             <% end %>
                         <% end %>
                     </div>
