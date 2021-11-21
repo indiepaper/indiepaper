@@ -90,8 +90,6 @@ defmodule IndiePaperWeb.BookLive.Edit do
              socket.assigns.book,
              book_params_with_promo_images
            ) do
-      consume_uploaded_entries(socket, :promo_image, fn _, _entry -> nil end)
-
       socket =
         redirect(
           socket,
