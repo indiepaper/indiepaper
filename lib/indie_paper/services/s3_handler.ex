@@ -24,6 +24,17 @@ defmodule IndiePaper.Services.S3Handler do
     {:ok, "https://#{bucket_name()}.#{@host}", fields}
   end
 
+  def upload_file(path, file, opts \\ []) do
+    content_type = Keyword.get(opts, :content_type, "application/octect-stream")
+    permission = Keyword.get(opts, :permission, :private)
+
+    ExAws.S3.put_object(bucket_name(), path, file,
+      content_type: content_type,
+      acl: permission
+    )
+    |> ExAws.request()
+  end
+
   def get_url(file) do
     "https://#{bucket_name()}.#{@host}/#{file}"
   end

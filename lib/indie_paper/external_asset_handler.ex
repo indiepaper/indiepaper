@@ -9,6 +9,10 @@ defmodule IndiePaper.ExternalAssetHandler do
     )
   end
 
+  def upload_file(path, file, content_type, permission \\ :private) do
+    S3Handler.upload_file(path, file, content_type: content_type, permission: permission)
+  end
+
   def get_url(asset) do
     S3Handler.get_url(asset)
   end

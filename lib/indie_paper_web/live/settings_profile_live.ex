@@ -4,6 +4,7 @@ defmodule IndiePaperWeb.SettingsProfileLive do
   import IndiePaperWeb.UploadHelpers
 
   alias IndiePaper.AuthorProfile
+  alias IndiePaper.ExternalAssetHandler
 
   @impl true
   def mount(_, _session, socket) do
@@ -28,16 +29,33 @@ defmodule IndiePaperWeb.SettingsProfileLive do
     author_params_with_profile_picture =
       put_profile_picture(socket, socket.assigns.current_author, author_params)
 
-    case AuthorProfile.update_profile(
-           socket.assigns.current_author,
-           author_params_with_profile_picture
-         ) do
-      {:ok, _author} ->
-        {:noreply, socket |> redirect(to: Routes.dashboard_path(socket, :index))}
-
+    with {:ok, author} <-
+           AuthorProfile.update_profile(
+             socket.assigns.current_author,
+             author_params_with_profile_picture
+           ),
+         {:ok, _updated_author} <-
+           consume_profile_picture(socket, author) do
+      {:noreply, socket |> redirect(to: Routes.dashboard_path(socket, :index))}
+    else
       {:error, changeset} ->
         {:noreply, assign(socket, changeset: changeset, form_error: true)}
     end
+  end
+
+  defp consume_profile_picture(socket, author) do
+    consume_uploaded_entries(socket, :profile_picture, fn %{path: path}, entry ->
+      file = File.read!(path)
+
+      ExternalAssetHandler.upload_file(
+        author.profile_picture,
+        file,
+        entry.client_type,
+        :public_read
+      )
+    end)
+
+    {:ok, author}
   end
 
   defp put_profile_picture(socket, author, params) do
