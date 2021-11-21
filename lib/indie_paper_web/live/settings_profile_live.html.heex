@@ -72,9 +72,7 @@
                     </div>
 
                     <div>
-                        <%= submit class: "submit-button" do %>
-                            <p>Update Profile</p>
-                        <% end %>
+                        <%= submit "Update Profile", class: "submit-button", phx_disable_with: "Updating Profile ..."  %>
                     </div>
                 </div>
                 </.form>
