@@ -4,7 +4,7 @@ defmodule IndiePaperWeb.AuthorLiveAuth do
   alias IndiePaper.Authors
   alias IndiePaperWeb.Router.Helpers, as: Routes
 
-  def mount(_, %{"author_token" => author_token}, socket) do
+  def on_mount(:default, _, %{"author_token" => author_token}, socket) do
     socket =
       assign_new(socket, :current_author, fn ->
         Authors.get_author_by_session_token(author_token)
