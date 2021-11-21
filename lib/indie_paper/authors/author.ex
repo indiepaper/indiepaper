@@ -21,6 +21,10 @@ defmodule IndiePaper.Authors.Author do
     field :first_name, :string, null: false
     field :last_name, :string
 
+    field :profile_picture, :string,
+      null: false,
+      default: "public/profile_pictures/placeholder.png"
+
     has_many :books, IndiePaper.Books.Book
     has_many :orders, IndiePaper.Orders.Order, foreign_key: :customer_id
 
@@ -161,10 +165,11 @@ defmodule IndiePaper.Authors.Author do
 
   def profile_changeset(author, attrs) do
     author
-    |> cast(attrs, [:username, :first_name, :last_name])
+    |> cast(attrs, [:username, :first_name, :last_name, :profile_picture])
     |> validate_required([:username, :first_name])
     |> validate_length(:username, min: 3, max: 32)
     |> validate_format(:username, ~r/^[a-zA-Z0-9\_\-]+$/)
+    |> update_change(:username, &String.downcase/1)
     |> validate_length(:first_name, max: 128)
     |> validate_length(:last_name, max: 128)
     |> unsafe_validate_unique(:username, IndiePaper.Repo)

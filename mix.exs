@@ -68,7 +68,8 @@ defmodule IndiePaper.MixProject do
       {:exjsonpath, "~> 0.1"},
       {:ex_aws, "~> 2.1"},
       {:ex_aws_s3, "~> 2.0"},
-      {:sweet_xml, "~> 0.6"}
+      {:sweet_xml, "~> 0.6"},
+      {:mogrify, "~> 0.9.1"}
     ]
   end
 

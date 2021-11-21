@@ -5,7 +5,7 @@
                 <div class="flex flex-col space-y-8 w-full">
                     <%= for promo_image <- @book.promo_images do %>
                         <div class="aspect-w-3 aspect-h-2">
-                            <img src={IndiePaper.ExternalAssetHandler.get_url(promo_image)} alt="Promo Image" class="object-cover rounded-lg" />
+                            <img src={IndiePaper.ExternalAssetHandler.get_public_url(promo_image)} alt="Promo Image" class="object-cover rounded-lg" />
                         </div>
                     <% end %>
                 </div>

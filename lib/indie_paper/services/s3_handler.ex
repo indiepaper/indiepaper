@@ -24,12 +24,27 @@ defmodule IndiePaper.Services.S3Handler do
     {:ok, "https://#{bucket_name()}.#{@host}", fields}
   end
 
-  def get_url(file) do
+  def upload_file(path, file, opts \\ []) do
+    content_type = Keyword.get(opts, :content_type, "application/octect-stream")
+    permission = Keyword.get(opts, :permission, :private)
+
+    ExAws.S3.put_object(bucket_name(), path, file,
+      content_type: content_type,
+      acl: permission
+    )
+    |> ExAws.request()
+  end
+
+  def get_public_read_url(file) do
     "https://#{bucket_name()}.#{@host}/#{file}"
   end
 
   def delete_objects(objects) do
     ExAws.S3.delete_all_objects(bucket_name(), objects) |> ExAws.request()
+  end
+
+  def delete_object(object) do
+    ExAws.S3.delete_object(bucket_name(), object) |> ExAws.request()
   end
 
   def sign_form_upload(config, bucket, opts) do

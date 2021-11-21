@@ -22,7 +22,7 @@ defmodule IndiePaperWeb.Feature.PersonCanChangeProfileTest do
       |> render_submit()
       |> follow_redirect(conn, Routes.dashboard_path(conn, :index))
 
-    html = conn |> html_response(200)
+    html = html_response(conn, 200)
 
     assert html =~ first_name
     assert html =~ last_name

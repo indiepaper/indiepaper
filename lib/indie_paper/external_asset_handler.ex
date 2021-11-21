@@ -9,16 +9,19 @@ defmodule IndiePaper.ExternalAssetHandler do
     )
   end
 
-  def get_url(asset) do
-    S3Handler.get_url(asset)
+  def upload_file(path, file, content_type, permission \\ :private) do
+    S3Handler.upload_file(path, file, content_type: content_type, permission: permission)
   end
 
-  def file_ext(entry) do
-    [ext | _] = MIME.extensions(entry.client_type)
-    ext
+  def get_public_url(asset) do
+    S3Handler.get_public_read_url(asset)
   end
 
   def delete_assets(assets_list) do
     S3Handler.delete_objects(assets_list)
+  end
+
+  def delete_asset(asset) do
+    S3Handler.delete_object(asset)
   end
 end

@@ -1,6 +1,8 @@
 defmodule IndiePaperWeb.BookLive.Edit do
   use IndiePaperWeb, :live_view
 
+  import IndiePaperWeb.UploadHelpers
+
   alias IndiePaper.Books
   alias IndiePaper.Authors
   alias IndiePaper.ExternalAssetHandler
@@ -25,7 +27,7 @@ defmodule IndiePaperWeb.BookLive.Edit do
   end
 
   defp file_key(book, entry) do
-    "public/promo_images/#{book.id}/#{entry.uuid}.#{ExternalAssetHandler.file_ext(entry)}"
+    "public/promo_images/#{book.id}/#{entry.uuid}.#{file_ext(entry)}"
   end
 
   defp presign_upload(entry, socket) do
