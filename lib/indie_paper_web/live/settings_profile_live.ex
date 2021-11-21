@@ -56,6 +56,12 @@ defmodule IndiePaperWeb.SettingsProfileLive do
   end
 
   defp maybe_remove_profile_picture(
+         %{profile_picture: "public/profile_pictures/placeholder.png"},
+         updated_author
+       ),
+       do: {:ok, updated_author}
+
+  defp maybe_remove_profile_picture(
          %{profile_picture: profile_picture},
          %{profile_picture: profile_picture} = updated_author
        ),
