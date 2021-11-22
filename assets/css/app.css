@@ -9,7 +9,7 @@
   }
 
   .page-box {
-    @apply py-16 md:py-20;
+    @apply py-20 md:py-24;
   }
 
   .page-heading {
