@@ -111,8 +111,6 @@ defmodule IndiePaperWeb.Router do
         :require_account_status_payment_connected
       ]
 
-      live "/dashboard/memberships", DashboardMembershipsLive, :index
-
       resources "/books", BookController, only: [] do
         resources "/publication", PublicationController, only: [:create]
         resources "/products", ProductController, only: [:create, :edit, :update]
@@ -138,6 +136,16 @@ defmodule IndiePaperWeb.Router do
   end
 
   live_session :require_authenticated_author, on_mount: IndiePaperWeb.AuthorLiveAuth do
+    scope "/", IndiePaperWeb do
+      pipe_through [
+        :browser,
+        :require_authenticated_author,
+        :require_account_status_payment_connected
+      ]
+
+      live "/dashboard/memberships", DashboardMembershipsLive, :index
+    end
+
     scope "/", IndiePaperWeb do
       pipe_through [:browser, :require_authenticated_author]
 
