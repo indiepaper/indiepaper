@@ -18,11 +18,11 @@ defmodule IndiePaperWeb.Router do
     plug :accepts, ["json"]
   end
 
-  pipeline :account_status_payment_connected do
+  pipeline :require_account_status_payment_connected do
     plug IndiePaperWeb.Plugs.EnsureAccountStatusPlug, [:payment_connected]
   end
 
-  pipeline :account_status_confirmed do
+  pipeline :require_account_status_confirmed do
     plug IndiePaperWeb.Plugs.EnsureAccountStatusPlug, [:confirmed, :payment_connected]
   end
 
@@ -102,12 +102,21 @@ defmodule IndiePaperWeb.Router do
   end
 
   # App Specific Routes
-  scope "/", IndiePaperWeb do
-    pipe_through [:browser, :require_authenticated_author, :account_status_payment_connected]
+  live_session :require_account_status_payment_connected,
+    on_mount: {IndiePaperWeb.AuthorLiveAuth, :require_account_status_payment_connected} do
+    scope "/", IndiePaperWeb do
+      pipe_through [
+        :browser,
+        :require_authenticated_author,
+        :require_account_status_payment_connected
+      ]
 
-    resources "/books", BookController, only: [] do
-      resources "/publication", PublicationController, only: [:create]
-      resources "/products", ProductController, only: [:create, :edit, :update]
+      live "/dashboard/memberships", DashboardMembershipsLive, :index
+
+      resources "/books", BookController, only: [] do
+        resources "/publication", PublicationController, only: [:create]
+        resources "/products", ProductController, only: [:create, :edit, :update]
+      end
     end
   end
 
@@ -115,7 +124,7 @@ defmodule IndiePaperWeb.Router do
     pipe_through [
       :browser,
       :require_authenticated_author,
-      :account_status_confirmed,
+      :require_account_status_confirmed,
       :stripe_connect_rate_limit
     ]
 
@@ -123,7 +132,7 @@ defmodule IndiePaperWeb.Router do
   end
 
   scope "/", IndiePaperWeb do
-    pipe_through [:browser, :require_authenticated_author, :account_status_confirmed]
+    pipe_through [:browser, :require_authenticated_author, :require_account_status_confirmed]
 
     resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:new, :create]
   end
