@@ -1,6 +1,7 @@
 defmodule IndiePaper.Services.S3Handler do
   @region Application.get_env(:ex_aws, :s3)[:region]
   @host Application.get_env(:ex_aws, :s3)[:host]
+  @cdn_host Application.get_env(:ex_aws, :s3)[:cdn_host]
 
   defp bucket_name(), do: Application.get_env(:ex_aws, :bucket_name)
   defp access_key_id(), do: Application.get_env(:ex_aws, :access_key_id)
@@ -36,7 +37,7 @@ defmodule IndiePaper.Services.S3Handler do
   end
 
   def get_public_read_url(file) do
-    "https://#{bucket_name()}.#{@host}/#{file}"
+    "https://#{bucket_name()}.#{@cdn_host}/#{file}"
   end
 
   def delete_objects(objects) do
