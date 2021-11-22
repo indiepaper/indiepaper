@@ -17,11 +17,9 @@ defmodule IndiePaperWeb.AuthorLiveAuth do
   def on_mount(
         :require_account_status_payment_connected,
         _,
-        %{"author_token" => author_token},
+        _,
         socket
       ) do
-    socket = assign_current_author(socket, author_token)
-
     if Authors.is_payment_connected?(socket.assigns.current_author) do
       {:cont, socket}
     else
@@ -31,7 +29,7 @@ defmodule IndiePaperWeb.AuthorLiveAuth do
          :info,
          "Connect with your Stripe Account to Publish and start recieving payments"
        )
-       |> redirect(to: Routes.author_registration_path(socket, :new))}
+       |> redirect(to: Routes.profile_stripe_connect_path(socket, :new))}
     end
   end
 
