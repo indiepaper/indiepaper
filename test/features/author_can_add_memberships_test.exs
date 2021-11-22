@@ -12,13 +12,13 @@ defmodule IndiePaperWeb.Feature.AuthorCanAddMembershipsTest do
 
     {:ok, view, _html} = live(conn, Routes.dashboard_path(conn, :index))
 
-    {:ok, _view, html} =
+    {:ok, view, _html} =
       view
       |> element(memberships_link())
       |> render_click()
       |> follow_redirect(conn, Routes.dashboard_memberships_path(conn, :index))
 
-    assert html =~ "Memberships"
+    assert view |> element(".page-heading", "Memberships") |> has_element?()
   end
 
   test "readers cannot see memberships", %{conn: conn} do
