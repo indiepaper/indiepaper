@@ -25,7 +25,13 @@ defmodule IndiePaperWeb.AuthorLiveAuth do
     if Authors.is_payment_connected?(socket.assigns.current_author) do
       {:cont, socket}
     else
-      {:halt, redirect(socket, to: Routes.author_registration_path(socket, :new))}
+      {:halt,
+       socket
+       |> put_flash(
+         :info,
+         "Connect with your Stripe Account to Publish and start recieving payments"
+       )
+       |> redirect(to: Routes.author_registration_path(socket, :new))}
     end
   end
 
