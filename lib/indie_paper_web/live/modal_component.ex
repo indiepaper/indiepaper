@@ -6,13 +6,13 @@ defmodule IndiePaperWeb.ModalComponent do
     ~H"""
     <div
       id={@id}
-      class="phx-modal"
+      class="fixed opacity-100 w-100 h-100 z-20 inset-0 bg-gray-600 bg-opacity-70 inset-x-0 bottom-0 md:inset-y-0 overflow-y-scroll rounded-xl flex flex-row items-end md:items-center justify-center"
       phx-capture-click="close"
       phx-window-keydown="close"
       phx-key="escape"
       phx-target={@myself}
       phx-page-loading>
-      <div class="fixed z-50 opacity-100 shadow-xl rounded-b-none md:rounded-b-xl p-0 bg-white inset-x-0 bottom-0 md:inset-y-0 container-box overflow-y-scroll m-auto md:h-3/4 md:w-4/5 max-w-6xl rounded-xl">
+      <div class="bg-white w-full md:w-auto md:inline-block rounded-xl overflow-hidden max-w-6xl max-h-[740px]">
         <div class="w-full flex flex-row items-end justify-end p-4 border-b border-primary-border bg-background">
         <%= live_patch to: @return_to, class: "border rounded-full border-primary-border bg-white p-2 hover:bg-primary hover:text-white" do %>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
