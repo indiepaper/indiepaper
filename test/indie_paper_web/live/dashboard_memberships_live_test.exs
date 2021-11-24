@@ -12,7 +12,7 @@ defmodule IndiePaperWeb.DashboardMembershipsLiveTest do
 
     {:ok, view, _html} = live(conn, dashboard_memberships_path(conn))
 
-    assert create_new_tier_when_empty_button(view) |> has_element?()
+    assert element(view, create_new_tier_when_empty()) |> has_element?()
   end
 
   test "authors without payment_connected get redirected to Stripe page", %{conn: conn} do
@@ -23,23 +23,36 @@ defmodule IndiePaperWeb.DashboardMembershipsLiveTest do
     |> follow_redirect(conn, Routes.profile_stripe_connect_path(conn, :new))
   end
 
-  test "author can create a new membership tier", %{conn: conn} do
-    author = insert(:author, membership_tiers: [])
-    membership_tier_params = params_for(:membership_tier)
+  test "author can click on create new tier", %{conn: conn} do
+    author = insert(:author)
     conn = conn |> log_in_author(author)
     {:ok, view, _html} = live(conn, dashboard_memberships_path(conn))
 
     view
-    |> create_new_tier_when_empty_button()
+    |> element(create_new_tier_when_empty())
     |> render_click()
-    |> follow_redirect(conn, Routes.dashboard_memberships_path(conn, :new))
-    |> form("[data-test=membership-tier-form]", %{"membership_tier" => membership_tier_params})
+
+    assert has_element?(view, membership_tier_form())
+  end
+
+  test "author can create a new membership tier", %{conn: conn} do
+    author = insert(:author, membership_tiers: [])
+    membership_tier_params = params_for(:membership_tier)
+    conn = conn |> log_in_author(author)
+    {:ok, view, _html} = live(conn, Routes.dashboard_memberships_path(conn, :new))
+
+    view
+    |> form(membership_tier_form(),
+      membership_tier: membership_tier_params
+    )
     |> render_submit()
     |> follow_redirect(conn, dashboard_memberships_path(conn))
   end
 
   defp dashboard_memberships_path(conn), do: Routes.dashboard_memberships_path(conn, :index)
 
-  defp create_new_tier_when_empty_button(view),
-    do: element(view, "[data-test=create-new-tier-when-empty-button")
+  defp create_new_tier_when_empty(),
+    do: "[data-test=create-new-tier-when-empty"
+
+  defp membership_tier_form(), do: "[data-test=membership-tier-form]"
 end

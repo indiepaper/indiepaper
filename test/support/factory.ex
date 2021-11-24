@@ -102,7 +102,7 @@ defmodule IndiePaper.Factory do
   def membership_tier_factory do
     %IndiePaper.MembershipTiers.MembershipTier{
       author: build(:author),
-      amount: Money.new(1400)
+      amount: Money.new(400)
     }
   end
 end

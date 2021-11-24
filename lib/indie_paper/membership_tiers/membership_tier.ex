@@ -14,7 +14,7 @@ defmodule IndiePaper.MembershipTiers.MembershipTier do
   @doc false
   def changeset(membership_tier, attrs) do
     membership_tier
-    |> cast(attrs, [:amount, :author_id])
-    |> validate_required([:amount, :author_id])
+    |> cast(attrs, [:amount])
+    |> validate_required([:amount])
   end
 end
