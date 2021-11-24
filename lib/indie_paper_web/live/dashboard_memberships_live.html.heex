@@ -1,12 +1,12 @@
 <section class="bg-background">
     <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
     <div class="container-box page-box">
-        <div class="">
+        <div>
             <h1 class="page-heading">Memberships</h1>
             <p class="page-description">
                 manage your membership tiers here. Your readers can subscribe to you via these tiers.
             </p>
-            <div class="grid grid-cols-1 gap-8 p-4 mt-12 bg-warm-gray-100 rounded-lg border sm:grid-cols-2 md:py-8 md:px-8 lg:grid-cols-3 border-primary-border">
+            <div class="grid overflow-hidden grid-cols-1 gap-8 p-4 mt-12 bg-warm-gray-100 rounded-lg border sm:grid-cols-2 md:py-8 md:px-8 lg:grid-cols-3 border-primary-border">
                 <div class="p-8 bg-white rounded-lg">
                     <h3 class="font-bold">Tier 1</h3>
                     <p class="mt-4"><span class="text-2xl font-bold">15$</span> / month</p>
@@ -18,6 +18,7 @@
                             <li>Nur für Einzelpersonen (Sammel- und Funktions-E-Mail-Adressen nur über Team-Abo möglich)</li>
                         </ul>
                     </div>
+                    <button class="py-3 px-6 mt-8 w-full rounded-full hover:text-white secondary-button hover:bg-primary">Join</button>
                 </div>
                 <div class="p-8 bg-white rounded-lg">
                     <h3 class="font-bold">Tier 1</h3>
@@ -30,6 +31,9 @@
                             <li>Nur für Einzelpersonen (Sammel- und Funktions-E-Mail-Adressen nur über Team-Abo möglich)</li>
                         </ul>
                     </div>
+                    <button class="py-3 px-6 mt-8 w-full rounded-full primary-button">
+                        <span>Join</span>
+                    </button>
                 </div>
                 <div class="p-8 bg-white rounded-lg">
                     <h3 class="font-bold">Tier 1</h3>
@@ -42,6 +46,7 @@
                             <li>Nur für Einzelpersonen (Sammel- und Funktions-E-Mail-Adressen nur über Team-Abo möglich)</li>
                         </ul>
                     </div>
+                    <button class="py-3 px-6 mt-8 w-full rounded-full hover:text-white secondary-button hover:bg-primary">Join</button>
                 </div>
             </div>
         </div>
