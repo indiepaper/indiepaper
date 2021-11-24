@@ -5,5 +5,6 @@ defmodule IndiePaperWeb.DashboardMembershipsLive do
 
   @impl true
   def mount(_, _, socket) do
+    {:ok, socket |> assign(page_title: "Memberships")}
   end
 end

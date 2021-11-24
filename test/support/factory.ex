@@ -99,7 +99,7 @@ defmodule IndiePaper.Factory do
     |> Ecto.Changeset.apply_changes()
   end
 
-  def membership_tier do
+  def membership_tier_factory do
     %IndiePaper.MembershipTiers.MembershipTier{
       author: build(:author),
       amount: Money.new(1400)

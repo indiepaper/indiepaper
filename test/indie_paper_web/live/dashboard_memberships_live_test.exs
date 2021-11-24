@@ -12,7 +12,7 @@ defmodule IndiePaperWeb.DashboardMembershipsLiveTest do
 
     {:ok, view, _html} = live(conn, dashboard_memberships_path(conn))
 
-    assert element(view, "[data-test=create-new-tier-button-when-empty]") |> has_element?()
+    assert create_new_tier_when_empty_button(view) |> has_element?()
   end
 
   test "authors without payment_connected get redirected to Stripe page", %{conn: conn} do
@@ -24,7 +24,22 @@ defmodule IndiePaperWeb.DashboardMembershipsLiveTest do
   end
 
   test "author can create a new membership tier", %{conn: conn} do
+    author = insert(:author, membership_tiers: [])
+    membership_tier_params = params_for(:membership_tier)
+    conn = conn |> log_in_author(author)
+    {:ok, view, _html} = live(conn, dashboard_memberships_path(conn))
+
+    view
+    |> create_new_tier_when_empty_button()
+    |> render_click()
+    |> follow_redirect(conn, Routes.dashboard_memberships_path(conn, :new))
+    |> form("[data-test=membership-tier-form]", %{"membership_tier" => membership_tier_params})
+    |> render_submit()
+    |> follow_redirect(conn, dashboard_memberships_path(conn))
   end
 
   defp dashboard_memberships_path(conn), do: Routes.dashboard_memberships_path(conn, :index)
+
+  defp create_new_tier_when_empty_button(view),
+    do: element(view, "[data-test=create-new-tier-when-empty-button")
 end
