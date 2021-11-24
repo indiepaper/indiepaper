@@ -6,6 +6,12 @@ module.exports = {
   purge: ["./js/**/*.js", "../lib/*_web/**/*.*ex"],
   theme: {
     extend: {
+      maxHeight: {
+        0: "0",
+        "1/4": "25%",
+        "1/2": "50%",
+        "3/4": "75%",
+      },
       colors: {
         background: colors.warmGray[50],
         "primary-text": colors.gray[700],
