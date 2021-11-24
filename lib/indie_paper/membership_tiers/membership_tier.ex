@@ -5,7 +5,7 @@ defmodule IndiePaper.MembershipTiers.MembershipTier do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "membership_tiers" do
-    field :amount, :string
+    field :amount, Money.Ecto.Amount.Type
     belongs_to :author, IndiePaper.Authors.Author
 
     timestamps()
