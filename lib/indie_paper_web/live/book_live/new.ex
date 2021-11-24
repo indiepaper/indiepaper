@@ -6,7 +6,9 @@ defmodule IndiePaperWeb.BookLive.New do
   @impl true
   def mount(_, _session, socket) do
     changeset = Books.change_book(%Books.Book{})
-    {:ok, assign(socket, changeset: changeset, form_submit_error: false)}
+
+    {:ok,
+     assign(socket, changeset: changeset, form_submit_error: false, page_title: "Create new book")}
   end
 
   @impl true

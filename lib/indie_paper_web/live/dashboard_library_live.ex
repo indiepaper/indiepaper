@@ -6,7 +6,7 @@ defmodule IndiePaperWeb.DashboardLibraryLive do
   @impl true
   def mount(_, _, socket) do
     orders = BookLibrary.list_payment_completed_orders(socket.assigns.current_author)
-    {:ok, socket |> assign(orders: orders)}
+    {:ok, socket |> assign(orders: orders, page_title: "Library")}
   end
 
   @impl true

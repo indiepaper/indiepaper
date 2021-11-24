@@ -71,14 +71,14 @@
                                     <p>Sign out</p>
                                 <% end %>
                             </div>
-                </div>
+                        </div>
                     <% else %>
-                <div class="flex flex-row items-center space-x-6">
-                    <%= link "Sign in", to: Routes.author_session_path(@conn, :new) , class: "primary-link"%>
-                    <%= link "Start Writing", to: Routes.author_registration_path(@conn, :new), class: "secondary-button text-sm" %>
-                </div>
+                        <div class="flex flex-row items-center space-x-6">
+                            <%= link "Sign in", to: Routes.author_session_path(@conn, :new) , class: "primary-link"%>
+                            <%= link "Start Writing", to: Routes.author_registration_path(@conn, :new), class: "secondary-button text-sm" %>
+                        </div>
                     <% end %>
-            </div>
+                </div>
             </div>
         </header>
         <%= @inner_content %>

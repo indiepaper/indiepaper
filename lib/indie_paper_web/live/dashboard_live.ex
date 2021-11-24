@@ -8,6 +8,6 @@ defmodule IndiePaperWeb.DashboardLive do
     books =
       Books.list_books(socket.assigns.current_author) |> Books.with_assoc([:draft, :products])
 
-    {:ok, assign(socket, books: books)}
+    {:ok, assign(socket, books: books, page_title: "Dashboard")}
   end
 end
