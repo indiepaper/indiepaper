@@ -98,4 +98,11 @@ defmodule IndiePaper.Factory do
     |> Ecto.Changeset.put_change(:password, "longpassword123")
     |> Ecto.Changeset.apply_changes()
   end
+
+  def membership_tier do
+    %IndiePaper.MembershipTiers.MembershipTier{
+      author: build(:author),
+      amount: Money.new(1400)
+    }
+  end
 end
