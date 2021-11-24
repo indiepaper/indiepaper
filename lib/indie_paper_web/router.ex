@@ -151,7 +151,7 @@ defmodule IndiePaperWeb.Router do
 
       live "/books/new", BookLive.New, :new
 
-      resources "/books", BookController, only: [:show] do
+      resources "/books", BookController, only: [] do
         resources "/read", ReadController, only: [:index, :show]
         resources "/checkout", CheckoutController, only: [:new]
       end
