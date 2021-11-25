@@ -22,6 +22,8 @@ defmodule IndiePaper.MembershipTiers.MembershipTier do
     membership_tier
     |> cast(attrs, [:amount, :title, :description_html])
     |> validate_required([:amount, :title, :description_html])
+    |> validate_length(:title, min: 3, max: 32)
+    |> validate_length(:description_html, min: 4, max: 512)
     |> validate_money(:amount)
   end
 
