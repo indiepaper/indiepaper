@@ -101,6 +101,9 @@ defmodule IndiePaper.Factory do
 
   def membership_tier_factory do
     %IndiePaper.MembershipTiers.MembershipTier{
+      title: sequence("Tier"),
+      description_html:
+        "<p>Description about the membership that makes everything worthwhile.</p>",
       author: build(:author),
       amount: Money.new(400)
     }

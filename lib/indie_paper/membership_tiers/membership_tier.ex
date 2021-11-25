@@ -5,7 +5,10 @@ defmodule IndiePaper.MembershipTiers.MembershipTier do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "membership_tiers" do
+    field :title, :string, nil: false
+    field :description_html, :string, nil: false
     field :amount, Money.Ecto.Amount.Type
+
     belongs_to :author, IndiePaper.Authors.Author
 
     timestamps()
@@ -14,7 +17,7 @@ defmodule IndiePaper.MembershipTiers.MembershipTier do
   @doc false
   def changeset(membership_tier, attrs) do
     membership_tier
-    |> cast(attrs, [:amount])
-    |> validate_required([:amount])
+    |> cast(attrs, [:amount, :title, :description_html])
+    |> validate_required([:amount, :title, :description_html])
   end
 end

@@ -8,14 +8,29 @@
         id="membership-tier-form"
         data-test="membership-tier-form"
         phx-target={@myself}
-        phx-submit="save">
+        phx-submit="save"
+        phx-change="validate">
 
-        <div class="form-container">
+        <div class="form-tight-container">
+            <div class="input-container">
+                <%= label f, :title, class: "input-label"  %>
+                <%= text_input f, :title, class: "form-input" %>
+                <p class="input-error">
+                    <%= error_tag f, :title %>
+                </p>
+            </div>
             <div class="input-container">
                 <%= label f, :amount, class: "input-label"  %>
                 <%= text_input f, :amount, class: "form-input", placeholder: "$15.00"  %>
                 <p class="input-error">
                     <%= error_tag f, :amount %>
+                </p>
+            </div>
+            <div class="input-container">
+                <%= label f, :description_html, class: "input-label"  %>
+                <%= textarea f, :description_html, class: "form-input" %>
+                <p class="input-error">
+                    <%= error_tag f, :description_html %>
                 </p>
             </div>
             <%= submit "Save", phx_disable_with: "Saving...", class: "submit-button w-full py-3" %>

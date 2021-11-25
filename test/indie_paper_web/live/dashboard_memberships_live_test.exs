@@ -41,12 +41,21 @@ defmodule IndiePaperWeb.DashboardMembershipsLiveTest do
     conn = conn |> log_in_author(author)
     {:ok, view, _html} = live(conn, Routes.dashboard_memberships_path(conn, :new))
 
-    view
-    |> form(membership_tier_form(),
-      membership_tier: membership_tier_params
-    )
-    |> render_submit()
-    |> follow_redirect(conn, dashboard_memberships_path(conn))
+    assert view
+           |> form(membership_tier_form(),
+             membership_tier: %{}
+           )
+           |> render_change() =~ "can&#39;t be blank"
+
+    {:ok, _, html} =
+      view
+      |> form(membership_tier_form(),
+        membership_tier: membership_tier_params
+      )
+      |> render_submit()
+      |> follow_redirect(conn, dashboard_memberships_path(conn))
+
+    assert html =~ membership_tier_params[:title]
   end
 
   defp dashboard_memberships_path(conn), do: Routes.dashboard_memberships_path(conn, :index)
