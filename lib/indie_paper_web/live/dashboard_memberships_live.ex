@@ -7,7 +7,12 @@ defmodule IndiePaperWeb.DashboardMembershipsLive do
 
   @impl true
   def mount(_, _, socket) do
-    {:ok, socket |> assign(page_title: "Memberships")}
+    {:ok,
+     socket
+     |> assign(
+       page_title: "Memberships",
+       membership_tiers: MembershipTiers.list_membership_tiers(socket.assigns.current_author)
+     )}
   end
 
   @impl true

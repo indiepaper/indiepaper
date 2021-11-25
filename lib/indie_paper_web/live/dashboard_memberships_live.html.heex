@@ -27,6 +27,7 @@
                     <span> Create new tier</span>
                 </button>
             </div>
+            <%= if Enum.empty?(@membership_tiers) do %>
             <div class="flex flex-col justify-center items-center p-4 py-16 mt-8 text-center bg-warm-gray-100 rounded-lg border md:p-16 border-primary-border">
                 <div class="flex flex-col justify-center items-center max-w-lg">
                     <h3 class="mt-8 text-lg font-bold">Create Memberships for your Readers to subscribe to</h3>
@@ -39,53 +40,20 @@
                     <% end %>
                 </div>
             </div>
-            <div class="grid hidden overflow-hidden relative grid-cols-1 gap-8 p-4 mt-4 bg-warm-gray-100 rounded-lg border sm:grid-cols-2 md:py-8 md:px-8 lg:grid-cols-3 border-primary-border">
-                <div class="absolute inset-0 bg-gray-700 opacity-40 mix-blend-multiply">
-                </div>
-                <div class="p-8 bg-white rounded-lg">
-                    <h3 class="font-bold">Tier 1</h3>
-                    <p class="mt-4"><span class="text-2xl font-bold">15$</span> / month</p>
-                    <div class="mt-8 prose-sm">
-                        <p>This is the best tier to ever happen to people and it makes you want to just love yourself fully.</p>
-                        <ul>
-                            <li>Social Media Briefings</li>
-                            <li>Slack-Gruppe, Archiv & Lectures</li>
-                            <li>Nur für Einzelpersonen (Sammel- und Funktions-E-Mail-Adressen nur über Team-Abo möglich)</li>
-                        </ul>
+            <% else %>
+            <div class="grid overflow-hidden relative grid-cols-1 gap-8 p-4 mt-4 bg-warm-gray-100 rounded-lg border sm:grid-cols-2 md:py-8 md:px-8 lg:grid-cols-3 border-primary-border">
+                <%= for membership_tier <- @membership_tiers do %>
+                    <div class="p-8 bg-white rounded-lg">
+                        <h3 class="font-bold"><%= membership_tier.title %></h3>
+                        <p class="mt-4"><span class="text-2xl font-bold"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(membership_tier.amount) %></span> / month</p>
+                        <div class="mt-8 prose-sm">
+                            <%= raw(membership_tier.description_html) %>
+                        </div>
+                        <button class="py-3 px-6 mt-8 w-full rounded-full hover:text-white secondary-button hover:bg-primary">Join</button>
                     </div>
-                    <button class="py-3 px-6 mt-8 w-full rounded-full hover:text-white secondary-button hover:bg-primary">Join</button>
-                </div>
-                <div class="p-8 bg-white rounded-lg">
-                    <h3 class="font-bold">Tier 1</h3>
-                    <p class="mt-4"><span class="text-2xl font-bold">15$</span> / month</p>
-                    <div class="mt-8 prose-sm">
-                        <p>This is the best tier to ever happen to people and it makes you want to just love yourself fully.</p>
-                        <ul>
-                            <li>Social Media Briefings</li>
-                            <li>Slack-Gruppe, Archiv & Lectures</li>
-                            <li>Nur für Einzelpersonen (Sammel- und Funktions-E-Mail-Adressen nur über Team-Abo möglich)</li>
-                        </ul>
-                    </div>
-                    <button class="py-3 px-6 mt-8 w-full rounded-full secondary-button">
-                        <span>Join</span>
-                    </button>
-                </div>
-                <div class="p-8 bg-white rounded-lg">
-                    <h3 class="font-bold">Tier 1</h3>
-                    <p class="mt-4"><span class="text-2xl font-bold">15$</span> / month</p>
-                    <div class="mt-8 prose-sm">
-                        <p>This is the best tier to ever happen to people and it makes you want to just love yourself fully.</p>
-                        <ul>
-                            <li>Social Media Briefings</li>
-                            <li>Slack-Gruppe, Archiv & Lectures</li>
-                            <li>Nur für Einzelpersonen (Sammel- und Funktions-E-Mail-Adressen nur über Team-Abo möglich)</li>
-                        </ul>
-                    </div>
-                    <button class="py-3 px-6 mt-8 w-full rounded-full secondary-button">
-                        <span>Join</span>
-                    </button>
-                </div>
+                <% end %>
             </div>
+            <% end %>
         </div>
     </div>
 </section>

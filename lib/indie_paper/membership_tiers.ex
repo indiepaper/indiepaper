@@ -1,6 +1,15 @@
 defmodule IndiePaper.MembershipTiers do
+  @behaviour Bodyguard.Policy
+  def authorize(_, _, _), do: false
+
   alias IndiePaper.Repo
   alias IndiePaper.MembershipTiers.MembershipTier
+
+  def list_membership_tiers(author) do
+    MembershipTier
+    |> Bodyguard.scope(author)
+    |> Repo.all()
+  end
 
   def new_membership_tier(), do: %MembershipTier{}
 

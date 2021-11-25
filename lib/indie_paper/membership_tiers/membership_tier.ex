@@ -1,6 +1,9 @@
 defmodule IndiePaper.MembershipTiers.MembershipTier do
+  @behaviour Bodyguard.Schema
+
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query, only: [from: 2]
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -19,5 +22,9 @@ defmodule IndiePaper.MembershipTiers.MembershipTier do
     membership_tier
     |> cast(attrs, [:amount, :title, :description_html])
     |> validate_required([:amount, :title, :description_html])
+  end
+
+  def scope(query, %IndiePaper.Authors.Author{id: author_id}, _) do
+    from p in query, where: p.author_id == ^author_id
   end
 end
