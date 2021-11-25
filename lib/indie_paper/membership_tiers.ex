@@ -1,5 +1,8 @@
 defmodule IndiePaper.MembershipTiers do
   @behaviour Bodyguard.Policy
+
+  def authorize(:update_membership_tier, %{id: author_id}, %{author_id: author_id}), do: true
+
   def authorize(_, _, _), do: false
 
   alias IndiePaper.Repo
@@ -26,9 +29,12 @@ defmodule IndiePaper.MembershipTiers do
     |> Repo.insert()
   end
 
-  def update_membership_tier(_current_author, membership_tier, params) do
-    membership_tier
-    |> MembershipTier.changeset(params)
-    |> Repo.update()
+  def update_membership_tier(current_author, membership_tier, params) do
+    with :ok <-
+           Bodyguard.permit!(__MODULE__, :update_membership_tier, current_author, membership_tier) do
+      membership_tier
+      |> MembershipTier.changeset(params)
+      |> Repo.update()
+    end
   end
 end
