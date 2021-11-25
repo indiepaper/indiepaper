@@ -22,9 +22,17 @@ defmodule IndiePaper.MembershipTiers.MembershipTier do
     membership_tier
     |> cast(attrs, [:amount, :title, :description_html])
     |> validate_required([:amount, :title, :description_html])
+    |> validate_money(:amount)
   end
 
   def scope(query, %IndiePaper.Authors.Author{id: author_id}, _) do
     from p in query, where: p.author_id == ^author_id
+  end
+
+  defp validate_money(changeset, field) do
+    validate_change(changeset, field, fn
+      _, %Money{amount: amount} when amount > 0 -> []
+      _, _ -> [amount: "must be greater than 0"]
+    end)
   end
 end

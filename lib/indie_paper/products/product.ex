@@ -28,7 +28,7 @@ defmodule IndiePaper.Products.Product do
     |> Ecto.Changeset.put_assoc(:assets, [asset])
   end
 
-  defp validate_money(changeset, field) do
+  def validate_money(changeset, field) do
     validate_change(changeset, field, fn
       _, %Money{amount: amount} when amount > 0 -> []
       _, _ -> [price: "must be greater than 0"]
