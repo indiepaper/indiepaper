@@ -29,9 +29,16 @@
                 </p>
             </div>
         </div>
-            <div class="input-container">
+            <div class="input-container" phx-hook="SimpleTipTapHtmlEditor"
+                 id="membership-tier-form-description-html"
+                 data-content-html-element-id="membership-tier-form_description_html"
+                 data-editor-element-id="membership-tier-form-tiptap-editor">
                 <%= label f, :description_html, "Description", class: "input-label"  %>
-                <%= textarea f, :description_html, class: "form-input min-h-[120px]" %>
+                <%= textarea f, :description_html, class: "form-input min-h-[120px] hidden" %>
+                <div class="mt-2 bg-white rounded-lg border border-primary-border" phx-update="ignore">
+                    <div id="membership-tier-form-tiptap-editor" class="px-4 prose">
+                    </div>
+                </div>
                 <p class="input-error">
                     <%= error_tag f, :description_html %>
                 </p>

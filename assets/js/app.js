@@ -25,7 +25,9 @@ import "phoenix_html";
 import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
-// import "instant.page";
+import "instant.page";
+
+import { setupSimpleTipTapHtmlEditor } from "./simple-tip-tap-html-editor";
 
 import Alpine from "alpinejs";
 window.Alpine = Alpine;
@@ -35,9 +37,16 @@ let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
 
-let hooks = {};
-let Uploaders = {};
+let Hooks = {};
+Hooks.SimpleTipTapHtmlEditor = {
+  mounted() {
+    const contentHTMLElementId = this.el.dataset.contentHtmlElementId;
+    const editorElementId = this.el.dataset.editorElementId;
+    setupSimpleTipTapHtmlEditor(contentHTMLElementId, editorElementId);
+  },
+};
 
+let Uploaders = {};
 Uploaders.S3 = function (entries, onViewError) {
   entries.forEach((entry) => {
     let formData = new FormData();
@@ -65,7 +74,7 @@ Uploaders.S3 = function (entries, onViewError) {
 
 let liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
-  hooks: hooks,
+  hooks: Hooks,
   uploaders: Uploaders,
   dom: {
     onBeforeElUpdated(from, to) {
