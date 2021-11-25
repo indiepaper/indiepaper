@@ -6,7 +6,7 @@ defmodule IndiePaperWeb.ModalComponent do
     ~H"""
     <div
       id={@id}
-      class="fixed opacity-100 w-100 h-100 z-20 inset-0 bg-gray-600 bg-opacity-70 inset-x-0 bottom-0 md:inset-y-0 overflow-y-scroll flex flex-row items-end md:items-center justify-center"
+      class="fixed w-screen h-screen z-30 inset-0 bg-gray-600 bg-opacity-70 inset-x-0 bottom-0 md:inset-y-0 overflow-y-hidden flex flex-row items-end md:items-center justify-center"
       phx-capture-click="close"
       phx-window-keydown="close"
       phx-key="escape"
