@@ -47,8 +47,8 @@
                     <%= for membership_tier <- @membership_tiers do %>
                         <div class="p-8 bg-white rounded-xl border shadow-sm border-secondary-border">
                             <h3 class="font-bold"><%= membership_tier.title %></h3>
-                            <p class="mt-2"><span class="text-2xl font-bold"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(membership_tier.amount) %></span> / month</p>
-                            <div class="mt-8 prose-sm">
+                            <p class="mt-2"><span class="text-2xl font-bold"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(membership_tier.amount) %></span> / <span class="text-secondary-text">month</span></p>
+                            <div class="mt-8 prose-sm secondary-text">
                                 <%= raw(membership_tier.description_html) %>
                             </div>
                         </div>
