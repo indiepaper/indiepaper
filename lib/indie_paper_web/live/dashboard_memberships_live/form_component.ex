@@ -12,15 +12,18 @@ defmodule IndiePaperWeb.DashboardMembershipsLive.FormComponent do
 
   @impl true
   def handle_event("save", %{"membership_tier" => membership_tier_params}, socket) do
-    {:ok, _membership_tier} =
-      MembershipTiers.create_membership_tier(
-        socket.assigns.current_author,
-        membership_tier_params
-      )
+    case MembershipTiers.create_membership_tier(
+           socket.assigns.current_author,
+           membership_tier_params
+         ) do
+      {:ok, _} ->
+        {:noreply,
+         put_flash(socket, :info, "New Membership tier created successfully.")
+         |> push_redirect(to: Routes.dashboard_memberships_path(socket, :index))}
 
-    {:noreply,
-     put_flash(socket, :info, "Membership tier created successfully.")
-     |> push_redirect(to: Routes.dashboard_memberships_path(socket, :index))}
+      {:error, changeset} ->
+        {:noreply, assign(socket, changeset: changeset)}
+    end
   end
 
   @impl true

@@ -31,4 +31,6 @@ defmodule IndiePaperWeb.DashboardMembershipsLive do
     |> assign(:page_title, "Listing Products")
     |> assign(:membership_tier, nil)
   end
+
+  def is_membership_tiers_empty?(membership_tiers), do: Enum.empty?(membership_tiers)
 end

@@ -20,39 +20,40 @@
                         manage your membership tiers here. Your readers can subscribe to you via these tiers.
                     </p>
                 </div>
-                <button class="hidden rounded-full primary-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span> Create new tier</span>
-                </button>
-            </div>
-            <%= if Enum.empty?(@membership_tiers) do %>
-            <div class="flex flex-col justify-center items-center p-4 py-16 mt-8 text-center bg-warm-gray-100 rounded-lg border md:p-16 border-primary-border">
-                <div class="flex flex-col justify-center items-center max-w-lg">
-                    <h3 class="mt-8 text-lg font-bold">Create Memberships for your Readers to subscribe to</h3>
-                    <p class="mt-2 text-sm text-secondary-text">Memberships enable you to get predictive monthly income while you write your books. Give your super readers access to your serial novels and your community all through memberships.</p>
-                    <%= live_patch to: Routes.dashboard_memberships_path(@socket, :new),  class: "mt-8 rounded-full primary-button", data: [test: "create-new-tier-when-empty"] do %>
+                <%= if not is_membership_tiers_empty?(@membership_tiers) do %>
+                    <%= live_patch to: Routes.dashboard_memberships_path(@socket, :new),  class: "rounded-full primary-button" do %>
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <span> Create new tier</span>
                     <% end %>
-                </div>
-            </div>
-            <% else %>
-            <div class="grid overflow-hidden relative grid-cols-1 gap-8 p-4 mt-4 bg-warm-gray-100 rounded-lg border sm:grid-cols-2 md:py-8 md:px-8 lg:grid-cols-3 border-primary-border">
-                <%= for membership_tier <- @membership_tiers do %>
-                    <div class="p-8 bg-white rounded-lg">
-                        <h3 class="font-bold"><%= membership_tier.title %></h3>
-                        <p class="mt-4"><span class="text-2xl font-bold"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(membership_tier.amount) %></span> / month</p>
-                        <div class="mt-8 prose-sm">
-                            <%= raw(membership_tier.description_html) %>
-                        </div>
-                        <button class="py-3 px-6 mt-8 w-full rounded-full hover:text-white secondary-button hover:bg-primary">Join</button>
-                    </div>
                 <% end %>
             </div>
+            <%= if is_membership_tiers_empty?(@membership_tiers) do %>
+                <div class="flex flex-col justify-center items-center p-4 py-16 mt-8 text-center bg-warm-gray-100 rounded-lg md:p-16 border-primary-border">
+                    <div class="flex flex-col justify-center items-center max-w-lg">
+                        <h3 class="mt-8 text-lg font-bold">Create Memberships for your Readers to subscribe to</h3>
+                        <p class="mt-2 text-sm text-secondary-text">Memberships enable you to get predictive monthly income while you write your books. Give your super readers access to your serial novels and your community all through memberships.</p>
+                        <%= live_patch to: Routes.dashboard_memberships_path(@socket, :new),  class: "mt-8 rounded-full primary-button", data: [test: "create-new-tier-when-empty"] do %>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span> Create new tier</span>
+                        <% end %>
+                    </div>
+                </div>
+            <% else %>
+                <div class="grid overflow-hidden relative grid-cols-1 gap-8 p-4 mt-4 bg-warm-gray-100 rounded-lg border sm:grid-cols-2 md:py-8 md:px-8 lg:grid-cols-3 border-primary-border">
+                    <%= for membership_tier <- @membership_tiers do %>
+                        <div class="p-8 bg-white rounded-xl border shadow-sm border-secondary-border">
+                            <h3 class="font-bold"><%= membership_tier.title %></h3>
+                            <p class="mt-2"><span class="text-2xl font-bold"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(membership_tier.amount) %></span> / month</p>
+                            <div class="mt-8 prose-sm">
+                                <%= raw(membership_tier.description_html) %>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
             <% end %>
         </div>
     </div>
