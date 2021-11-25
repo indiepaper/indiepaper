@@ -26,6 +26,12 @@ defmodule IndiePaperWeb.DashboardMembershipsLive do
     |> assign(:membership_tier, MembershipTiers.new_membership_tier())
   end
 
+  defp apply_action(socket, :edit, %{"id" => membership_tier_id}) do
+    socket
+    |> assign(:page_title, "Edit Membership Tier")
+    |> assign(:membership_tier, MembershipTiers.get_membership_tier!(membership_tier_id))
+  end
+
   defp apply_action(socket, :index, _params) do
     socket
     |> assign(:page_title, "Listing Products")

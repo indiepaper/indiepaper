@@ -11,6 +11,8 @@ defmodule IndiePaper.MembershipTiers do
     |> Repo.all()
   end
 
+  def get_membership_tier!(id), do: Repo.get!(MembershipTier, id)
+
   def new_membership_tier(), do: %MembershipTier{}
 
   def change_membership_tier(membership_tier = %MembershipTier{}, attrs \\ %{}) do
@@ -22,5 +24,11 @@ defmodule IndiePaper.MembershipTiers do
     Ecto.build_assoc(current_author, :membership_tiers)
     |> MembershipTier.changeset(params)
     |> Repo.insert()
+  end
+
+  def update_membership_tier(_current_author, membership_tier, params) do
+    membership_tier
+    |> MembershipTier.changeset(params)
+    |> Repo.update()
   end
 end

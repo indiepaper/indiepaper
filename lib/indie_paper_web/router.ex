@@ -145,6 +145,7 @@ defmodule IndiePaperWeb.Router do
 
       live "/dashboard/memberships", DashboardMembershipsLive, :index
       live "/dashboard/memberships/new", DashboardMembershipsLive, :new
+      live "/dashboard/memberships/:id/edit", DashboardMembershipsLive, :edit
     end
 
     scope "/", IndiePaperWeb do

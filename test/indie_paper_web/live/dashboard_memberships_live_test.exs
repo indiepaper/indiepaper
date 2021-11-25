@@ -80,6 +80,37 @@ defmodule IndiePaperWeb.DashboardMembershipsLiveTest do
     assert render(view) =~ "can&#39;t be blank"
   end
 
+  test "author can edit already existing membership", %{conn: conn} do
+    membership_tier = insert(:membership_tier)
+    conn = conn |> log_in_author(membership_tier.author)
+    {:ok, view, _html} = live(conn, Routes.dashboard_memberships_path(conn, :new))
+
+    view
+    |> element("[data-test=membership-tier-edit-#{membership_tier.id}]")
+    |> render_click()
+
+    assert has_element?(view, membership_tier_form())
+  end
+
+  test "author can edit a new membership tier", %{conn: conn} do
+    membership_tier = insert(:membership_tier)
+    conn = conn |> log_in_author(membership_tier.author)
+
+    {:ok, view, _html} =
+      live(conn, Routes.dashboard_memberships_path(conn, :edit, membership_tier))
+
+    {:ok, _, html} =
+      view
+      |> form(membership_tier_form(),
+        membership_tier: %{title: "Updated Title"}
+      )
+      |> render_submit()
+      |> follow_redirect(conn, dashboard_memberships_path(conn))
+
+    assert html =~ "Updated Title"
+    refute html =~ membership_tier.title
+  end
+
   defp dashboard_memberships_path(conn), do: Routes.dashboard_memberships_path(conn, :index)
 
   defp create_new_tier_when_empty(),
