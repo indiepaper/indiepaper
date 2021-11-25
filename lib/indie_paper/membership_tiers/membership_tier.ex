@@ -32,7 +32,10 @@ defmodule IndiePaper.MembershipTiers.MembershipTier do
   end
 
   defp validate_money(changeset, field) do
+    IO.inspect(changeset)
+
     validate_change(changeset, field, fn
+      _, %Money{amount: amount} when amount >= 1000 * 100 -> [amount: "must be less than $1000"]
       _, %Money{amount: amount} when amount > 0 -> []
       _, _ -> [amount: "must be greater than 0"]
     end)
