@@ -11,7 +11,18 @@ export function setupSimpleTipTapHtmlEditor(
   window.tipTapHtmlEditor = new Editor({
     element: editorElement,
     content: contentHTMLElement.value,
-    extensions: [StarterKit],
+    extensions: [
+      StarterKit.configure({
+        blockquote: false,
+        codeBlock: false,
+        heading: false,
+        horizontalRule: false,
+        bold: false,
+        code: false,
+        italic: false,
+        strike: false,
+      }),
+    ],
     onUpdate({ editor }) {
       contentHTMLElement.value = editor.getHTML();
     },

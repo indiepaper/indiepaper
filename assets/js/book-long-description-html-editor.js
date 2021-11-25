@@ -32,7 +32,13 @@ document.addEventListener("alpine:init", () => {
         editor = new Editor({
           element: this.$refs.editorReference,
           content: _this.longDescriptionHtml,
-          extensions: [StarterKit],
+          extensions: [
+            StarterKit.configure({
+              heading: {
+                levels: [2, 3],
+              },
+            }),
+          ],
           onCreate({ editor }) {
             _this.updatedAt = Date.now();
           },
