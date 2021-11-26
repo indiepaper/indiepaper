@@ -3,6 +3,7 @@ defmodule IndiePaperWeb.AuthorPageController do
 
   alias IndiePaper.Authors
   alias IndiePaper.Books
+  alias IndiePaper.MembershipTiers
 
   def show(conn, %{"username" => username}) do
     case Authors.get_author_by_username(username) do
@@ -11,8 +12,13 @@ defmodule IndiePaperWeb.AuthorPageController do
 
       author ->
         published_books = Books.get_published_books(author)
+        membership_tiers = MembershipTiers.list_membership_tiers(author)
 
-        render(conn, "show.html", author: author, books: published_books)
+        render(conn, "show.html",
+          author: author,
+          books: published_books,
+          membership_tiers: membership_tiers
+        )
     end
   end
 end

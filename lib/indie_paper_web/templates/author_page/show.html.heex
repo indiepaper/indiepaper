@@ -12,6 +12,11 @@
             </div>
         </div>
     </div>
+    <div class="container-box">
+        <%= for membership_tier <- @membership_tiers do %>
+            <h4><%= membership_tier.title %></h4>
+        <% end %>
+    </div>
     <div class="border-t bg-background border-primary-border">
         <div class="page-box container-box">
             <div class="mx-auto space-y-12 w-full max-w-2xl">
