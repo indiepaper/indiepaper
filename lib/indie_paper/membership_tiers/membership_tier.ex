@@ -10,7 +10,10 @@ defmodule IndiePaper.MembershipTiers.MembershipTier do
   schema "membership_tiers" do
     field :title, :string, nil: false
     field :description_html, :string, nil: false
-    field :amount, Money.Ecto.Amount.Type
+    field :amount, Money.Ecto.Amount.Type, nil: false, default: Money.new(100)
+
+    field :stripe_product_id, :string, nil: false
+    field :stripe_price_id, :string, nil: false
 
     belongs_to :author, IndiePaper.Authors.Author
 
@@ -20,8 +23,14 @@ defmodule IndiePaper.MembershipTiers.MembershipTier do
   @doc false
   def changeset(membership_tier, attrs) do
     membership_tier
-    |> cast(attrs, [:amount, :title, :description_html])
-    |> validate_required([:amount, :title, :description_html])
+    |> cast(attrs, [:amount, :title, :description_html, :stripe_product_id, :stripe_price_id])
+    |> validate_required([
+      :amount,
+      :title,
+      :description_html,
+      :stripe_product_id,
+      :stripe_price_id
+    ])
     |> validate_length(:title, min: 3, max: 32)
     |> validate_length(:description_html, min: 4, max: 512)
     |> validate_money(:amount)
@@ -34,8 +43,8 @@ defmodule IndiePaper.MembershipTiers.MembershipTier do
   defp validate_money(changeset, field) do
     validate_change(changeset, field, fn
       _, %Money{amount: amount} when amount >= 1000 * 100 -> [amount: "must be less than $1000"]
-      _, %Money{amount: amount} when amount > 0 -> []
-      _, _ -> [amount: "must be greater than 0"]
+      _, %Money{amount: amount} when amount > 1 * 100 -> []
+      _, _ -> [amount: "must be greater than $1.00"]
     end)
   end
 end

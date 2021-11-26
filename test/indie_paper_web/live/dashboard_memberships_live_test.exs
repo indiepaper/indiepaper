@@ -37,7 +37,10 @@ defmodule IndiePaperWeb.DashboardMembershipsLiveTest do
 
   test "author can create a new membership tier", %{conn: conn} do
     author = insert(:author, membership_tiers: [])
-    membership_tier_params = params_for(:membership_tier)
+
+    membership_tier_params =
+      params_for(:membership_tier, stripe_price_id: nil, stripe_product_id: nil)
+
     conn = conn |> log_in_author(author)
     {:ok, view, _html} = live(conn, Routes.dashboard_memberships_path(conn, :new))
 

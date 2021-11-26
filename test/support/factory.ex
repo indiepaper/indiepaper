@@ -105,7 +105,9 @@ defmodule IndiePaper.Factory do
       description_html:
         "<p>Description about the membership that makes everything worthwhile.</p>",
       author: build(:author),
-      amount: Money.new(400)
+      amount: Money.new(400),
+      stripe_price_id: sequence("stripe_price_"),
+      stripe_product_id: sequence("stripe_product")
     }
   end
 end
