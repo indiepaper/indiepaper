@@ -30,26 +30,28 @@
             </div>
         </div>
     <% end %>
-    <div class="mt-16 border-t bg-background border-primary-border">
-        <div class="py-16 container-box">
-            <div class="mx-auto max-w-2xl">
-                <h3 class="page-heading">Published Books</h3>
-            </div>
-            <div class="mx-auto mt-8 space-y-12 w-full max-w-2xl">
-                <%= for book <- @books do %>
-                    <div class="primary-card">
-                        <%= link to: Routes.book_path(@conn, :show, book), class: "w-full" do %>
-                            <%= if IndiePaper.Books.has_promo_images?(book) do %>
-                                <div class="mb-6 aspect-h-1 aspect-w-1 sm:aspect-w-3">
-                                    <img src={IndiePaper.ExternalAssetHandler.get_public_url(IndiePaper.Books.first_promo_image(book))} alt="Book Promo Image" class="object-cover rounded-lg" />
-                                </div>
+    <%= if IndiePaper.Authors.is_payment_connected?(@author) do %>
+        <div class="mt-16 border-t bg-background border-primary-border">
+            <div class="py-16 container-box">
+                <div class="mx-auto max-w-2xl">
+                    <h3 class="page-heading">Published Books</h3>
+                </div>
+                <div class="mx-auto mt-8 space-y-12 w-full max-w-2xl">
+                    <%= for book <- @books do %>
+                        <div class="primary-card">
+                            <%= link to: Routes.book_path(@conn, :show, book), class: "w-full" do %>
+                                <%= if IndiePaper.Books.has_promo_images?(book) do %>
+                                    <div class="mb-6 aspect-h-1 aspect-w-1 sm:aspect-w-3">
+                                        <img src={IndiePaper.ExternalAssetHandler.get_public_url(IndiePaper.Books.first_promo_image(book))} alt="Book Promo Image" class="object-cover rounded-lg" />
+                                    </div>
+                                <% end %>
+                                <p class="text-lg font-semibold"><%= book.title %></p>
+                                <p class="mt-2 secondary-text"><%= book.short_description %></p>
                             <% end %>
-                            <p class="text-lg font-semibold"><%= book.title %></p>
-                            <p class="mt-2 secondary-text"><%= book.short_description %></p>
-                        <% end %>
-                    </div>
-                <% end %>
+                        </div>
+                    <% end %>
+                </div>
             </div>
         </div>
-    </div>
+    <% end %>
 </section>
