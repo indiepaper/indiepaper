@@ -29,7 +29,10 @@
     <% end %>
     <div class="mt-16 border-t bg-background border-primary-border">
         <div class="py-16 container-box">
-            <div class="mx-auto space-y-12 w-full max-w-2xl">
+            <div class="mx-auto max-w-2xl">
+                <h3 class="page-heading">Published Books</h3>
+            </div>
+            <div class="mx-auto mt-8 space-y-12 w-full max-w-2xl">
                 <%= for book <- @books do %>
                     <div class="primary-card">
                         <%= link to: Routes.book_path(@conn, :show, book), class: "w-full" do %>
