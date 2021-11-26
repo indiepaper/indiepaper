@@ -4,6 +4,7 @@ defmodule IndiePaper.MembershipTiers do
   def authorize(:update_membership_tier, %{id: author_id}, %{author_id: author_id}), do: true
 
   def authorize(_, _, _), do: false
+  import Ecto.Query
 
   alias IndiePaper.Repo
   alias IndiePaper.PaymentHandler
@@ -12,6 +13,7 @@ defmodule IndiePaper.MembershipTiers do
   def list_membership_tiers(author) do
     MembershipTier
     |> Bodyguard.scope(author)
+    |> order_by(asc: :amount)
     |> Repo.all()
   end
 
