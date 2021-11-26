@@ -24,7 +24,7 @@ defmodule IndiePaper.MembershipTiers do
     |> MembershipTier.changeset(attrs)
   end
 
-  def create_membership_tier(current_author, params) do
+  def create_membership_tier_multi(current_author, params) do
     membership_tier_changeset =
       Ecto.build_assoc(current_author, :membership_tiers)
       |> MembershipTier.changeset(params)
@@ -43,7 +43,14 @@ defmodule IndiePaper.MembershipTiers do
         MembershipTier.stripe_fields_changeset(membership_tier, stripe_fields)
       end
     )
-    |> Repo.transaction()
+  end
+
+  def create_membership_tier(current_author, params) do
+    case create_membership_tier_multi(current_author, params) |> Repo.transaction() do
+      {:ok, %{membership_tier_with_stripe_fields: membership_tier}} -> {:ok, membership_tier}
+      {:error, :membership_tier, changeset, _} -> {:error, changeset}
+      {:error, :stripe_fields, message, _} -> {:error, message}
+    end
   end
 
   def update_membership_tier(current_author, membership_tier, params) do

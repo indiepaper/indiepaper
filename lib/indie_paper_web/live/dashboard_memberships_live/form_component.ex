@@ -35,15 +35,15 @@ defmodule IndiePaperWeb.DashboardMembershipsLive.FormComponent do
          put_flash(socket, :info, "New Membership tier created successfully.")
          |> push_redirect(to: Routes.dashboard_memberships_path(socket, :index))}
 
-      {:error, :membership_tier, changeset, _} ->
+      {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
 
-      {:error, _, _, _} ->
+      {:error, message} ->
         {:noreply,
          put_flash(
            socket,
            :error,
-           "There was an error creating the membership tier. Try again later."
+           message
          )
          |> push_redirect(to: Routes.dashboard_memberships_path(socket, :index))}
     end
