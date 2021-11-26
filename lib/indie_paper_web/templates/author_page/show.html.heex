@@ -12,13 +12,23 @@
             </div>
         </div>
     </div>
-    <div class="container-box">
-        <%= for membership_tier <- @membership_tiers do %>
-            <h4><%= membership_tier.title %></h4>
-        <% end %>
-    </div>
-    <div class="border-t bg-background border-primary-border">
-        <div class="page-box container-box">
+    <%= if not Enum.empty?(@membership_tiers) do %>
+        <div class="container-box">
+            <div class="grid overflow-hidden relative grid-cols-1 gap-8 p-4 bg-warm-gray-100 rounded-lg border sm:grid-cols-2 md:py-8 md:px-8 lg:grid-cols-3 border-primary-border">
+                <%= for membership_tier <- @membership_tiers do %>
+                    <div class="flex flex-col items-start p-8 bg-white rounded-xl border shadow-sm border-secondary-border">
+                        <h3 class="font-bold"><%= membership_tier.title %></h3>
+                        <p class="mt-2"><span class="text-2xl font-bold"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(membership_tier.amount) %></span> / <span class="text-secondary-text">month</span></p>
+                        <div class="flex-1 mt-8 prose-sm secondary-text">
+                            <%= raw(membership_tier.description_html) %>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    <% end %>
+    <div class="mt-16 border-t bg-background border-primary-border">
+        <div class="py-16 container-box">
             <div class="mx-auto space-y-12 w-full max-w-2xl">
                 <%= for book <- @books do %>
                     <div class="primary-card">
