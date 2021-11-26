@@ -3,6 +3,8 @@ defmodule IndiePaperWeb.BookLive.New do
 
   alias IndiePaper.Books
 
+  on_mount IndiePaperWeb.AuthorLiveAuth
+
   @impl true
   def mount(_, _session, socket) do
     changeset = Books.change_book(%Books.Book{})

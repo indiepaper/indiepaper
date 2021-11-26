@@ -1,6 +1,8 @@
 defmodule IndiePaperWeb.SettingsProfileLive do
   use IndiePaperWeb, :live_view
 
+  on_mount IndiePaperWeb.AuthorLiveAuth
+
   import IndiePaperWeb.UploadHelpers
 
   alias IndiePaper.AuthorProfile

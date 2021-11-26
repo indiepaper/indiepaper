@@ -102,19 +102,16 @@ defmodule IndiePaperWeb.Router do
   end
 
   # App Specific Routes
-  live_session :require_account_status_payment_connected,
-    on_mount: {IndiePaperWeb.AuthorLiveAuth, :require_account_status_payment_connected} do
-    scope "/", IndiePaperWeb do
-      pipe_through [
-        :browser,
-        :require_authenticated_author,
-        :require_account_status_payment_connected
-      ]
+  scope "/", IndiePaperWeb do
+    pipe_through [
+      :browser,
+      :require_authenticated_author,
+      :require_account_status_payment_connected
+    ]
 
-      resources "/books", BookController, only: [] do
-        resources "/publication", PublicationController, only: [:create]
-        resources "/products", ProductController, only: [:create, :edit, :update]
-      end
+    resources "/books", BookController, only: [] do
+      resources "/publication", PublicationController, only: [:create]
+      resources "/products", ProductController, only: [:create, :edit, :update]
     end
   end
 
@@ -135,7 +132,7 @@ defmodule IndiePaperWeb.Router do
     resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:new, :create]
   end
 
-  live_session :require_authenticated_author, on_mount: IndiePaperWeb.AuthorLiveAuth do
+  live_session :default do
     scope "/", IndiePaperWeb do
       pipe_through [
         :browser,
