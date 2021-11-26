@@ -416,4 +416,7 @@ defmodule IndiePaper.Authors do
   def get_full_name(author) do
     "#{author.first_name} #{author.last_name}"
   end
+
+  def is_same?(%{id: id}, %{id: id}), do: true
+  def is_same?(_, _), do: false
 end

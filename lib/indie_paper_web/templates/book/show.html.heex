@@ -1,4 +1,7 @@
 <section class="bg-background">
+    <%= if IndiePaper.Authors.is_same?(@current_author, @book.author) do %>
+        <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
+    <% end %>
     <div class="py-24 md:py-32 container-box page-box">
         <div class="mx-auto max-w-3xl">
             <div class="flex flex-col items-start md:px-8">
