@@ -17,11 +17,12 @@ defmodule IndiePaper.MembershipTiersTest do
   describe "create_membership_tier/2" do
     test "creates new membership tier with stripe_product_id and stripe_price_id" do
       membership_tier_params =
-        insert(:membership_tier, stripe_product_id: nil, stripe_price_id: nil)
+        params_for(:membership_tier, stripe_product_id: nil, stripe_price_id: nil)
 
       author = insert(:author)
 
-      membership_tier = MembershipTiers.create_membership_tier(author, membership_tier_params)
+      {:ok, membership_tier} =
+        MembershipTiers.create_membership_tier(author, membership_tier_params)
 
       assert membership_tier.stripe_price_id
       assert membership_tier.stripe_product_id

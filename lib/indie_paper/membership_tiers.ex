@@ -6,6 +6,7 @@ defmodule IndiePaper.MembershipTiers do
   def authorize(_, _, _), do: false
 
   alias IndiePaper.Repo
+  alias IndiePaper.PaymentHandler
   alias IndiePaper.MembershipTiers.MembershipTier
 
   def list_membership_tiers(author) do
@@ -24,9 +25,25 @@ defmodule IndiePaper.MembershipTiers do
   end
 
   def create_membership_tier(current_author, params) do
-    Ecto.build_assoc(current_author, :membership_tiers)
-    |> MembershipTier.changeset(params)
-    |> Repo.insert()
+    membership_tier_changeset =
+      Ecto.build_assoc(current_author, :membership_tiers)
+      |> MembershipTier.changeset(params)
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.insert(:membership_tier, membership_tier_changeset)
+    |> Ecto.Multi.run(:stripe_fields, fn _repo, %{membership_tier: membership_tier} ->
+      PaymentHandler.create_product_with_price(current_author, membership_tier)
+    end)
+    |> Ecto.Multi.update(
+      :membership_tier_with_stripe_fields,
+      fn %{
+           membership_tier: membership_tier,
+           stripe_fields: stripe_fields
+         } ->
+        MembershipTier.stripe_fields_changeset(membership_tier, stripe_fields)
+      end
+    )
+    |> Repo.transaction()
   end
 
   def update_membership_tier(current_author, membership_tier, params) do

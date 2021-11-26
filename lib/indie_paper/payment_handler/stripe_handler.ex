@@ -94,6 +94,23 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
     end
   end
 
+  def create_product(name: name) do
+    Stripe.Product.create(%{
+      name: name
+    })
+  end
+
+  def create_price(product_id: product_id, unit_amount: unit_amount) do
+    Stripe.Price.create(%{
+      unit_amount: unit_amount,
+      product: product_id,
+      currency: "usd",
+      recurring: %{
+        interval: "month"
+      }
+    })
+  end
+
   defp error_message(error, default_message) do
     (error.user_message && error.user_message) || default_message
   end

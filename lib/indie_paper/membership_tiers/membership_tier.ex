@@ -12,8 +12,8 @@ defmodule IndiePaper.MembershipTiers.MembershipTier do
     field :description_html, :string, nil: false
     field :amount, Money.Ecto.Amount.Type, nil: false, default: Money.new(100)
 
-    field :stripe_product_id, :string, nil: false
-    field :stripe_price_id, :string, nil: false
+    field :stripe_product_id, :string
+    field :stripe_price_id, :string
 
     belongs_to :author, IndiePaper.Authors.Author
 
@@ -23,17 +23,21 @@ defmodule IndiePaper.MembershipTiers.MembershipTier do
   @doc false
   def changeset(membership_tier, attrs) do
     membership_tier
-    |> cast(attrs, [:amount, :title, :description_html, :stripe_product_id, :stripe_price_id])
+    |> cast(attrs, [:amount, :title, :description_html])
     |> validate_required([
       :amount,
       :title,
-      :description_html,
-      :stripe_product_id,
-      :stripe_price_id
+      :description_html
     ])
     |> validate_length(:title, min: 3, max: 32)
     |> validate_length(:description_html, min: 4, max: 512)
     |> validate_money(:amount)
+  end
+
+  def stripe_fields_changeset(membership_tier, attrs) do
+    membership_tier
+    |> cast(attrs, [:stripe_product_id, :stripe_price_id])
+    |> validate_required([:stripe_product_id, :stripe_price_id])
   end
 
   def scope(query, %IndiePaper.Authors.Author{id: author_id}, _) do

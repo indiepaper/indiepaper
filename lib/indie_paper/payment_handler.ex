@@ -64,6 +64,23 @@ defmodule IndiePaper.PaymentHandler do
     end
   end
 
+  def create_product_with_price(author, membership_tier) do
+    with {:ok, product} <-
+           StripeHandler.create_product(
+             name: "#{Authors.get_full_name(author)} - #{membership_tier.title}"
+           ),
+         {:ok, price} <-
+           StripeHandler.create_price(
+             product_id: product.id,
+             unit_amount: membership_tier.amount.amount
+           ) do
+      {:ok, %{stripe_product_id: product.id, stripe_price_id: price.id}}
+    else
+      {:error, _} ->
+        {:error, "There was an error communicating with Stripe. Please try again later."}
+    end
+  end
+
   def get_platform_fees(price) do
     MoneyHandler.calculate_percentage(price, 9)
   end
