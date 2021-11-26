@@ -10,7 +10,10 @@
                 <%= for order <- @orders do %>
                     <div class="items-stretch p-0 primary-card" data-test={"book-#{order.book.id}"}>
                         <div class="flex flex-row justify-between items-center py-3 px-6 border-b border-secondary-border">
-                            <%= link IndiePaper.Authors.get_full_name(order.book.author), to: Routes.author_page_path(@socket, :show, order.book.author), class: "primary-link text-sm"  %>
+                            <%= link to: Routes.author_page_path(@socket, :show, order.book.author), class: "py-1 px-2 rounded-full flex flex-row space-x-1.5 border border-primary-border"  do %>
+                                <img class="w-5 h-5 rounded-full" src={IndiePaper.ExternalAssetHandler.get_public_url(order.book.author.profile_picture)} alt="" />
+                                <p class="text-sm"><%= IndiePaper.Authors.get_full_name(order.book.author) %></p>
+                            <% end %>
                             <p data-test="order-amount"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(order.amount) %></p>
                         </div>
                         <div class="p-6">
