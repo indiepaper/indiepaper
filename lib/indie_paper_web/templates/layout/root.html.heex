@@ -41,7 +41,7 @@
                                 x-transition:leave-start="transform opacity-100 scale-100"
                                 x-transition:leave-end="transform opacity-0 scale-95"
                                 class="absolute right-0 z-50 py-1 mt-2 w-64 bg-white rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                                <%= live_redirect to: Routes.settings_profile_path(@conn, :edit), class: "block flex flex-col items-start py-3 px-6 space-y-0 !space-x-0 hover:bg-warm-gray-100 primary-link" do %>
+                                <%= link to: Routes.author_page_path(@conn, :show, @current_author), class: "block flex flex-col items-start py-3 px-6 space-y-0 !space-x-0 hover:bg-warm-gray-100 primary-link" do %>
                                     <p>Signed in as</p>
                                     <div class="flex flex-row items-center space-x-1">
                                         <p class="font-semibold"><%= IndiePaper.Authors.get_full_name(@current_author) %></p>
