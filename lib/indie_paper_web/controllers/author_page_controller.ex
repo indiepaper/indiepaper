@@ -4,10 +4,15 @@ defmodule IndiePaperWeb.AuthorPageController do
   alias IndiePaper.Authors
   alias IndiePaper.Books
 
-  def show(conn, %{"id" => author_id}) do
-    author = Authors.get_author!(author_id)
-    published_books = Books.get_published_books(author)
+  def show(conn, %{"username" => username}) do
+    case Authors.get_author_by_username(username) do
+      nil ->
+        conn |> put_status(404) |> halt()
 
-    render(conn, "show.html", author: author, books: published_books)
+      author ->
+        published_books = Books.get_published_books(author)
+
+        render(conn, "show.html", author: author, books: published_books)
+    end
   end
 end

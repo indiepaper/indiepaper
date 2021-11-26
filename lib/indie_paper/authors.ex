@@ -27,6 +27,10 @@ defmodule IndiePaper.Authors do
     Repo.get_by(Author, email: email)
   end
 
+  def get_author_by_username(username) when is_binary(username) do
+    Repo.get_by(Author, username: username)
+  end
+
   @doc """
   Gets a author by email and password.
 
