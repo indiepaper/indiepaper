@@ -17,11 +17,11 @@
                     </svg>
                     <p class="font-black">Buy Now</p>
                 <% end %>
-                <div class="mt-8 max-w-3xl text-gray-600 secondary-text">
+                <div class="mt-8 text-justify text-gray-600 secondary-text">
                     <p><%= @book.short_description %></p>
                 </div>
             </div>
-            <div class="py-12 mt-16 w-full text-gray-700 border-t md:px-8 md:mt-20 md:text-gray-600 secondary-text prose border-primary-border">
+            <div class="py-12 mt-16 w-full max-w-none text-justify text-gray-700 border-t md:px-8 md:mt-20 md:text-gray-600 secondary-text prose border-primary-border">
                 <%= raw(@book.long_description_html) %>
             </div>
         </div>
