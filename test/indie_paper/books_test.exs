@@ -21,14 +21,12 @@ defmodule IndiePaper.BooksTest do
       assert book.title == book_params[:title]
       assert book.short_description
     end
-  end
 
-  describe "create_book_with_draft/2" do
     test "creates a book and associates draft with it" do
       book_params = params_for(:book)
       author = insert(:author)
 
-      {:ok, book} = Books.create_book_with_draft(author, book_params)
+      {:ok, book} = Books.create_book(author, book_params)
 
       book_with_draft = book |> Books.with_assoc(:draft)
 

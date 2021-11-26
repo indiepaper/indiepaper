@@ -13,7 +13,7 @@ defmodule IndiePaperWeb.BookLive.New do
 
   @impl true
   def handle_event("create_book", %{"book" => book_params}, socket) do
-    case Books.create_book_with_draft(socket.assigns.current_author, book_params) do
+    case Books.create_book(socket.assigns.current_author, book_params) do
       {:ok, book} ->
         book_with_draft = Books.with_assoc(book, :draft)
 

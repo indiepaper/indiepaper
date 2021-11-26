@@ -31,10 +31,7 @@ defmodule IndiePaper.Books do
       long_description_html: "<h2>You love your book, let the world know</h2>"
     })
     |> Repo.insert()
-  end
-
-  def create_book_with_draft(author, params) do
-    case create_book(author, params) do
+    |> case do
       {:ok, book} ->
         Drafts.create_draft_with_placeholder_chapters!(book)
         {:ok, book}
