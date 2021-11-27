@@ -25,7 +25,6 @@ import "phoenix_html";
 import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
-import { setupSimpleTipTapHtmlEditor } from "./simple-tip-tap-html-editor";
 
 import Alpine from "alpinejs";
 window.Alpine = Alpine;
@@ -40,7 +39,11 @@ Hooks.SimpleTipTapHtmlEditor = {
   mounted() {
     const contentHTMLElementId = this.el.dataset.contentHtmlElementId;
     const editorElementId = this.el.dataset.editorElementId;
-    setupSimpleTipTapHtmlEditor(contentHTMLElementId, editorElementId);
+    import("./simple-tip-tap-html-editor").then(
+      ({ setupSimpleTipTapHtmlEditor }) => {
+        setupSimpleTipTapHtmlEditor(contentHTMLElementId, editorElementId);
+      }
+    );
   },
 };
 
@@ -75,18 +78,6 @@ let liveSocket = new LiveSocket("/live", Socket, {
   hooks: Hooks,
   uploaders: Uploaders,
   dom: {
-    onNodeAdded: function (node) {
-      if (node.nodeName === "SCRIPT") {
-        var script = document.createElement("script");
-        //copy over the attributes
-        [...node.attributes].forEach((attr) => {
-          script.setAttribute(attr.nodeName, attr.nodeValue);
-        });
-
-        script.innerHTML = node.innerHTML;
-        node.replaceWith(script);
-      }
-    },
     onBeforeElUpdated(from, to) {
       if (!window.Alpine) return;
 
@@ -98,19 +89,6 @@ let liveSocket = new LiveSocket("/live", Socket, {
         // This should simulate LiveView being aware of Alpine changes.
         window.Alpine.clone(from, to);
       }
-
-      if (from.nodeName === "SCRIPT" && to.nodeName === "SCRIPT") {
-        var script = document.createElement("script");
-        //copy over the attributes
-        [...to.attributes].forEach((attr) => {
-          script.setAttribute(attr.nodeName, attr.nodeValue);
-        });
-
-        script.innerHTML = to.innerHTML;
-        from.replaceWith(script);
-        return false;
-      }
-      return true;
     },
   },
 });
