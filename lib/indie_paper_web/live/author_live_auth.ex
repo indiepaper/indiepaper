@@ -10,7 +10,10 @@ defmodule IndiePaperWeb.AuthorLiveAuth do
     if socket.assigns.current_author do
       {:cont, socket}
     else
-      {:halt, redirect(socket, to: Routes.author_registration_path(socket, :new))}
+      {:halt,
+       socket
+       |> put_flash(:info, "Create an account or Sign in to continue.")
+       |> redirect(to: Routes.author_registration_path(socket, :new))}
     end
   end
 
