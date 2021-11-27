@@ -20,7 +20,7 @@ defmodule IndiePaperWeb.AuthorLiveAuth do
   end
 
   def on_mount(:fetch_current_author, _, _, socket) do
-    {:cont, socket}
+    {:cont, socket |> assign(current_author: nil)}
   end
 
   def on_mount(
