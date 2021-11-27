@@ -47,7 +47,7 @@ Hooks.SimpleTipTapHtmlEditor = {
   },
 };
 
-Hooks.BookDescriptionEditor = {
+Hooks.BookLongDescriptionEditor = {
   mounted() {
     const contentHTMLElementId = this.el.dataset.contentHtmlElementId;
     const editorElementId = this.el.dataset.editorElementId;
