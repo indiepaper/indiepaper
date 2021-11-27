@@ -104,8 +104,12 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
     })
   end
 
-  def get_subscription_checkout_session(price_id: price_id, author: author) do
-    Stripe.Session.create(%{
+  def get_subscription_checkout_session(
+        author: author,
+        price_id: price_id,
+        customer_id: customer_id
+      ) do
+    params = %{
       success_url: Routes.dashboard_library_url(Endpoint, :index, stripe_checkout_success: true),
       cancel_url: Routes.author_page_url(Endpoint, :show, author),
       mode: "subscription",
@@ -115,6 +119,15 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
           price: price_id
         }
       ]
-    })
+    }
+
+    params =
+      if customer_id do
+        Map.put(params, :customer, customer_id)
+      else
+        params
+      end
+
+    Stripe.Session.create(params)
   end
 end
