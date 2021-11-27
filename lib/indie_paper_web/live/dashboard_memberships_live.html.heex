@@ -9,6 +9,7 @@
     %>
 <% end %>
 
+
 <section class="bg-background">
     <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
     <div class="container-box page-box">
@@ -65,3 +66,5 @@
         </div>
     </div>
 </section>
+
+<script phx-track-static type="text/javascript" src={Routes.static_path(@socket, "/assets/js/simple-tip-tap-html-editor.js")}></script>

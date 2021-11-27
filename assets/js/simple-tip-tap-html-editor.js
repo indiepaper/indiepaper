@@ -1,10 +1,10 @@
 import { Editor } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 
-export function setupSimpleTipTapHtmlEditor(
+window.setupSimpleTipTapHtmlEditor = (
   contentHTMLElementId,
   editorElementId
-) {
+) => {
   const contentHTMLElement = document.getElementById(contentHTMLElementId);
   const editorElement = document.getElementById(editorElementId);
 
@@ -32,4 +32,4 @@ export function setupSimpleTipTapHtmlEditor(
       },
     },
   });
-}
+};
