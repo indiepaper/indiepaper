@@ -55,7 +55,7 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
            type: "account_onboarding"
          }) do
       {:ok, stripe_account_link} -> {:ok, stripe_account_link.url}
-      {:error, error} -> {:error, error_message(error, "error creating Stripe Account link")}
+      {:error, error} -> {:error, error}
     end
   end
 
@@ -65,33 +65,26 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
         platform_fees: platform_fees,
         stripe_connect_id: stripe_connect_id
       ) do
-    case Stripe.Session.create(%{
-           payment_method_types: ["card"],
-           line_items: [
-             %{
-               name: item_title,
-               amount: item_amount,
-               currency: "usd",
-               quantity: 1
-             }
-           ],
-           payment_intent_data: %{
-             application_fee_amount: platform_fees,
-             transfer_data: %{
-               destination: stripe_connect_id
-             }
-           },
-           mode: "payment",
-           success_url:
-             Routes.dashboard_library_url(Endpoint, :index, stripe_checkout_success: true),
-           cancel_url: Routes.dashboard_url(Endpoint, :index)
-         }) do
-      {:ok, stripe_checkout_session} ->
-        {:ok, stripe_checkout_session}
-
-      {:error, error} ->
-        {:error, error_message(error, "error creating Stripe Checkout Session.")}
-    end
+    Stripe.Session.create(%{
+      payment_method_types: ["card"],
+      line_items: [
+        %{
+          name: item_title,
+          amount: item_amount,
+          currency: "usd",
+          quantity: 1
+        }
+      ],
+      payment_intent_data: %{
+        application_fee_amount: platform_fees,
+        transfer_data: %{
+          destination: stripe_connect_id
+        }
+      },
+      mode: "payment",
+      success_url: Routes.dashboard_library_url(Endpoint, :index, stripe_checkout_success: true),
+      cancel_url: Routes.dashboard_url(Endpoint, :index)
+    })
   end
 
   def create_product(name: name) do
@@ -111,7 +104,17 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
     })
   end
 
-  defp error_message(error, default_message) do
-    (error.user_message && error.user_message) || default_message
+  def get_subscription_checkout_session(price_id: price_id, author: author) do
+    Stripe.Session.create(%{
+      success_url: Routes.dashboard_library_url(Endpoint, :index, stripe_checkout_success: true),
+      cancel_url: Routes.author_page_url(Endpoint, :show, author),
+      mode: "subscription",
+      line_items: [
+        %{
+          quantity: 1,
+          price: price_id
+        }
+      ]
+    })
   end
 end

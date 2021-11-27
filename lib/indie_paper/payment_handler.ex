@@ -1,6 +1,7 @@
 defmodule IndiePaper.PaymentHandler do
   alias IndiePaper.{Authors, Books, Orders, Orders.OrderNotifier}
   alias IndiePaper.PaymentHandler.{StripeHandler, MoneyHandler}
+  alias IndiePaper.MembershipTiers
 
   def get_stripe_connect_url(%Authors.Author{stripe_connect_id: nil} = author, country_code) do
     with {:ok, stripe_connect_id} <- StripeHandler.create_connect_account(country_code),
@@ -19,6 +20,24 @@ defmodule IndiePaper.PaymentHandler do
   def set_payment_connected(stripe_connect_id) do
     author = Authors.get_by_stripe_connect_id!(stripe_connect_id)
     Authors.set_payment_connected(author)
+  end
+
+  def get_subscription_checkout_session_url(
+        %Authors.Author{} = _reader,
+        %Authors.Author{} = author,
+        %MembershipTiers.MembershipTier{stripe_price_id: stripe_price_id}
+      ) do
+    case StripeHandler.get_subscription_checkout_session(
+           price_id: stripe_price_id,
+           author: author
+         ) do
+      {:ok, stripe_checkout_session} ->
+        {:ok, stripe_checkout_session.url}
+
+      {:error, error} ->
+        {:error,
+         error_message(error, "There was an error contacting Stripe. Please try again later.")}
+    end
   end
 
   def get_checkout_session_url(customer, book) do
@@ -83,5 +102,9 @@ defmodule IndiePaper.PaymentHandler do
 
   def get_platform_fees(price) do
     MoneyHandler.calculate_percentage(price, 9)
+  end
+
+  defp error_message(error, default_message) do
+    (error.user_message && error.user_message) || default_message
   end
 end
