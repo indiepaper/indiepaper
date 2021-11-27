@@ -25,6 +25,7 @@ import "phoenix_html";
 import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
+import { setupSimpleTipTapHtmlEditor } from "./simple-tip-tap-html-editor";
 
 import Alpine from "alpinejs";
 window.Alpine = Alpine;
@@ -39,7 +40,7 @@ Hooks.SimpleTipTapHtmlEditor = {
   mounted() {
     const contentHTMLElementId = this.el.dataset.contentHtmlElementId;
     const editorElementId = this.el.dataset.editorElementId;
-    window.setupSimpleTipTapHtmlEditor(contentHTMLElementId, editorElementId);
+    setupSimpleTipTapHtmlEditor(contentHTMLElementId, editorElementId);
   },
 };
 

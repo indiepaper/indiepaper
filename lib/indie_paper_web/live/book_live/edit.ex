@@ -44,11 +44,6 @@ defmodule IndiePaperWeb.BookLive.Edit do
     {:ok, meta, socket}
   end
 
-  @impl Phoenix.LiveView
-  def render(assigns) do
-    IndiePaperWeb.BookView.render("edit.html", assigns)
-  end
-
   defp put_promo_images(socket, book, params) do
     {completed, []} = uploaded_entries(socket, :promo_image)
 
