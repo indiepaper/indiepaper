@@ -11,7 +11,10 @@ defmodule IndiePaperWeb.AuthorPageLive do
   def mount(%{"username" => username}, _, socket) do
     case Authors.get_author_by_username(username) do
       nil ->
-        {:ok, redirect(socket, "/")}
+        {:ok,
+         socket
+         |> put_flash(:error, "The Author was not found, check the profile url.")
+         |> redirect(to: "/")}
 
       author ->
         published_books = Books.get_published_books(author)
