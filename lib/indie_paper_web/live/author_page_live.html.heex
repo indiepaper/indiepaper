@@ -23,6 +23,9 @@
                         <div class="flex-1 mt-8 prose-sm secondary-text">
                             <%= raw(membership_tier.description_html) %>
                         </div>
+                        <button phx-click="subscribe" phx-value-membership_tier_id={membership_tier.id} class="mt-8 w-full rounded-full hover:text-white secondary-button hover:bg-primary" data-test={"subscribe-#{membership_tier.id}"}>
+                            Subscribe
+                        </button>
                     </div>
                 <% end %>
             </div>

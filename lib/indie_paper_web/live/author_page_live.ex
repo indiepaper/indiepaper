@@ -30,4 +30,24 @@ defmodule IndiePaperWeb.AuthorPageLive do
          )}
     end
   end
+
+  @impl true
+  def handle_event(
+        "subscribe",
+        %{"membership_tier_id" => membership_tier},
+        %{
+          assigns: %{current_author: nil}
+        } = socket
+      ) do
+    membership_tier = MembershipTiers.get_membership_tier!(membership_tier)
+    author = Authors.get_author!(membership_tier.author_id)
+
+    {:noreply,
+     socket
+     |> put_flash(
+       :info,
+       "Create an account or Sign in to subscribe to #{Authors.get_full_name(author)}."
+     )
+     |> redirect(to: Routes.author_registration_path(socket, :new))}
+  end
 end

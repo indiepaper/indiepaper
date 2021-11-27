@@ -12,7 +12,7 @@ defmodule IndiePaperWeb.Feature.ReaderCanSubscribeToAuthorTest do
     {:ok, view, _html} = live(conn, Routes.author_page_path(conn, :show, author))
 
     view
-    |> element("[data-test=subscribe-membership-tier-#{membership_tier.id}]")
+    |> element("[data-test=subscribe-#{membership_tier.id}]")
     |> render_click()
     |> follow_redirect(conn)
   end
