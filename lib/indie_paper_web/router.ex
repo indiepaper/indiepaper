@@ -168,6 +168,12 @@ defmodule IndiePaperWeb.Router do
 
       live "/settings/profile", SettingsProfileLive, :edit
     end
+
+    scope "/", IndiePaperWeb do
+      pipe_through :browser
+
+      live "/:username", AuthorPageLive, :show
+    end
   end
 
   scope "/", IndiePaperWeb do
@@ -176,8 +182,6 @@ defmodule IndiePaperWeb.Router do
     get "/", PageController, :index
     get "/privacy-policy", PageController, :privacy_policy
     get "/terms-of-service", PageController, :terms_of_service
-
-    get "/:username", AuthorPageController, :show
 
     resources "/books", BookController, only: [:show]
   end

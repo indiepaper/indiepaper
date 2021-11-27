@@ -14,6 +14,15 @@ defmodule IndiePaperWeb.AuthorLiveAuth do
     end
   end
 
+  def on_mount(:fetch_current_author, _, %{"author_token" => author_token}, socket) do
+    socket = assign_current_author(socket, author_token)
+    {:cont, socket}
+  end
+
+  def on_mount(:fetch_current_author, _, _, socket) do
+    {:cont, socket}
+  end
+
   def on_mount(
         :require_account_status_payment_connected,
         _,
