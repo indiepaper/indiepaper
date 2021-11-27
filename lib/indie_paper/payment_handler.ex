@@ -86,7 +86,7 @@ defmodule IndiePaper.PaymentHandler do
   def create_product_with_price(author, membership_tier) do
     with {:ok, product} <-
            StripeHandler.create_product(
-             name: "#{membership_tier.title}, #{Authors.get_full_name(author)}"
+             name: "#{Authors.get_full_name(author)} as #{membership_tier.title}"
            ),
          {:ok, price} <-
            StripeHandler.create_price(
