@@ -35,11 +35,18 @@ let csrfToken = document
   .getAttribute("content");
 
 let Hooks = {};
+
 Hooks.SimpleTipTapHtmlEditor = {
   mounted() {
     const contentHTMLElementId = this.el.dataset.contentHtmlElementId;
     const editorElementId = this.el.dataset.editorElementId;
-    window.setupSimpleTipTapHtmlEditor(contentHTMLElementId, editorElementId);
+    Promise.all([
+      import(
+        /* webpackChunkName: "setupSimpleTipTapHtmlEditor" */ "./simple-tip-tap-html-editor"
+      ),
+    ]).then(([{ setupSimpleTipTapHtmlEditor }]) => {
+      setupSimpleTipTapHtmlEditor(contentHTMLElementId, editorElementId);
+    });
   },
 };
 
