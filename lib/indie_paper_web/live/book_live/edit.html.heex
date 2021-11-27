@@ -23,9 +23,13 @@
                     </p>
                 </div>
 
-                <div class="input-container" x-data={"bookLongDescriptionHtmlEditor()"}>
+                <div class="input-container"
+                     id="book-long-description-html"
+                     phx-hook="BookDescriptionEditor"
+                     data-content-html-element-id="book-long-description-html-input"
+                     data-editor-element-id="book-long-description-tiptap-editor">
                     <%= label f, :long_description_html, "Long description",  class: "input-label" %>
-                    <%= hidden_input f, :long_description_html, class: "form-input", "x-model": "longDescriptionHtml", "x-ref": "longDescriptionHtmlReference"  %>
+                    <%= hidden_input f, :long_description_html, class: "form-input", id: "book-long-description-html-input" %>
                     <div phx-update="ignore" class="mt-2 bg-white rounded-lg border border-primary-border" >
                         <div class="flex flex-col items-stretch" >
                             <div class="flex flex-row items-center text-gray-600 border-b border-primary-border">
@@ -58,7 +62,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 20H7v-2h2.927l2.116-12H9V4h8v2h-2.927l-2.116 12H15z"/></svg>
                                 </button>
                             </div>
-                            <div class="py-4 px-6 prose min-h-[360px]" x-ref="editorReference"></div>
+                            <div id="book-long-description-tiptap-editor" class="py-4 px-6 prose min-h-[360px]"></div>
                         </div>
                     </div>
                     <p class="input-error">
@@ -139,5 +143,3 @@
         </div>
     </div>
 </section>
-
-<script phx-track-static type="text/javascript" src={Routes.static_path(@socket, "/assets/js/book-long-description-html-editor.js")}></script>

@@ -47,6 +47,19 @@ Hooks.SimpleTipTapHtmlEditor = {
   },
 };
 
+Hooks.BookDescriptionEditor = {
+  mounted() {
+    const contentHTMLElementId = this.el.dataset.contentHtmlElementId;
+    const editorElementId = this.el.dataset.editorElementId;
+
+    import("./book-description-editor").then(
+      ({ setupBookDescriptionEditor }) => {
+        setupBookDescriptionEditor(contentHTMLElementId, editorElementId);
+      }
+    );
+  },
+};
+
 let Uploaders = {};
 Uploaders.S3 = function (entries, onViewError) {
   entries.forEach((entry) => {
