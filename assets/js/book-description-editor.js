@@ -27,4 +27,24 @@ export function setupBookDescriptionEditor(
       },
     },
   });
+
+  window.toggleHeading = (level) => {
+    window.bookDescriptionEditor
+      .chain()
+      .toggleHeading({ level: level })
+      .focus()
+      .run();
+  };
+
+  window.isActive = (type, opts = {}) => {
+    return window.bookDescriptionEditor.isActive(type, opts);
+  };
+
+  window.toggleBold = () => {
+    window.bookDescriptionEditor.chain().toggleBold().focus().run();
+  };
+
+  window.toggleItalic = () => {
+    window.bookDescriptionEditor.chain().toggleItalic().focus().run();
+  };
 }
