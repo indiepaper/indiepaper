@@ -25,7 +25,8 @@ defmodule IndiePaperWeb.AuthorPageLive do
          |> assign(
            author: author,
            books: published_books,
-           membership_tiers: membership_tiers
+           membership_tiers: membership_tiers,
+           page_title: IndiePaper.Authors.get_full_name(author)
          )}
     end
   end
