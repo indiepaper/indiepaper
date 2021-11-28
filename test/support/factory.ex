@@ -110,4 +110,15 @@ defmodule IndiePaper.Factory do
       stripe_product_id: sequence("stripe_product")
     }
   end
+
+  def reader_author_subscription_factory do
+    author = build(:author)
+
+    %IndiePaper.ReaderAuthorSubscriptions.ReaderAuthorSubscription{
+      author: author,
+      reader: build(:author),
+      membership_tier: build(:membership_tier, author: author),
+      status: :inactive
+    }
+  end
 end

@@ -22,7 +22,7 @@ defmodule IndiePaper.PaymentHandler do
     Authors.set_payment_connected(author)
   end
 
-  def get_subscription_checkout_session_url(
+  def get_subscription_checkout_session(
         %Authors.Author{} = reader,
         %Authors.Author{} = author,
         %MembershipTiers.MembershipTier{stripe_price_id: stripe_price_id}
@@ -33,7 +33,7 @@ defmodule IndiePaper.PaymentHandler do
            customer_id: reader.stripe_customer_id
          ) do
       {:ok, stripe_checkout_session} ->
-        {:ok, stripe_checkout_session.url}
+        {:ok, stripe_checkout_session}
 
       {:error, error} ->
         {:error,

@@ -6,7 +6,7 @@ defmodule IndiePaperWeb.AuthorPageLive do
   alias IndiePaper.Authors
   alias IndiePaper.Books
   alias IndiePaper.MembershipTiers
-  alias IndiePaper.PaymentHandler
+  alias IndiePaper.Subscriptions
 
   @impl true
   def mount(%{"username" => username}, _, socket) do
@@ -61,13 +61,8 @@ defmodule IndiePaperWeb.AuthorPageLive do
         } = socket
       ) do
     membership_tier = MembershipTiers.get_membership_tier!(membership_tier_id)
-    author = Authors.get_author!(membership_tier.author_id)
 
-    case PaymentHandler.get_subscription_checkout_session_url(
-           reader,
-           author,
-           membership_tier
-         ) do
+    case Subscriptions.create_subscription(reader, membership_tier) do
       {:ok, stripe_checkout_session_url} ->
         {:noreply, socket |> redirect(external: stripe_checkout_session_url)}
 
