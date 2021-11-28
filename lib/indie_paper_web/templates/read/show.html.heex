@@ -21,7 +21,7 @@
     </div>
 </section>
 
-<script phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/js/chapter-render.js")}></script>
+<script phx-track-static type="module" src={Routes.static_path(@conn, "/assets/js/chapter-render.js")}></script>
 <script type="text/javascript">
  const publishedContentJSON = <%= raw(Jason.encode!(@current_chapter.published_content_json)) %>
 </script>
