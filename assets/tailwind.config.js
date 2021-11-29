@@ -11,6 +11,7 @@ module.exports = {
         "1/4": "25%",
         "1/2": "50%",
         "3/4": "75%",
+        "4/5": "80%",
       },
       colors: {
         background: colors.warmGray[50],

@@ -12,7 +12,7 @@ defmodule IndiePaperWeb.ModalComponent do
       phx-key="escape"
       phx-target={@myself}
       phx-page-loading>
-      <div class="bg-white w-full md:w-auto max-h-3/4 md:inline-block rounded-t-xl md:rounded-xl overflow-hidden overflow-y-scroll max-w-6xl relative">
+      <div class="bg-white w-full md:w-auto max-h-4/5 md:max-h-3/4 md:inline-block rounded-t-xl md:rounded-xl overflow-hidden overflow-y-scroll max-w-6xl relative">
         <div class="w-full flex flex-row items-end justify-end p-4 border-b border-primary-border rounded-t-xl bg-background sticky top-0">
         <%= live_patch to: @return_to, class: "border rounded-full border-primary-border bg-white p-2 hover:bg-primary hover:text-white" do %>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

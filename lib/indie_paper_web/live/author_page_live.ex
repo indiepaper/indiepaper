@@ -67,9 +67,12 @@ defmodule IndiePaperWeb.AuthorPageLive do
         {:noreply, socket |> redirect(external: stripe_checkout_session_url)}
 
       {:error, message} ->
+        author = Authors.get_author!(membership_tier.author_id)
+
         {:noreply,
          socket
-         |> put_flash(:error, message)}
+         |> put_flash(:error, message)
+         |> redirect(to: Routes.author_page_path(socket, :show, author))}
     end
   end
 end
