@@ -39,7 +39,7 @@
             </div>
         </div>
     <% end %>
-    <%= if IndiePaper.Authors.is_payment_connected?(@author) do %>
+    <%= if not Enum.empty?(@books) do %>
         <div class="mt-16 border-t bg-background border-primary-border">
             <div class="py-16 container-box">
                 <div class="mx-auto max-w-2xl">
