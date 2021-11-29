@@ -42,7 +42,7 @@ defmodule IndiePaperWeb.SettingsProfileLive do
            consume_profile_picture(socket, updated_author) do
       {:noreply,
        socket
-       |> put_flash(:info, "Your Profile has been updated successfully.")
+       |> put_flash(:info, "Your Profile has been successfully updated.")
        |> redirect(to: Routes.author_page_path(socket, :show, updated_author))}
     else
       {:error, %Ecto.Changeset{} = changeset} ->

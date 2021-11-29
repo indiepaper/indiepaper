@@ -12,7 +12,7 @@ defmodule IndiePaperWeb.StripeWebhookHandler do
             object: %{
               id: stripe_checkout_session_id,
               mode: "subscription",
-              metadata: %{reader_id: reader_id, membership_tier_id: membership_tier_id}
+              metadata: %{"reader_id" => reader_id, "membership_tier_id" => membership_tier_id}
             }
           }
         } = event
