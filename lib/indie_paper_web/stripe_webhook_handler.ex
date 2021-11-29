@@ -26,10 +26,6 @@ defmodule IndiePaperWeb.StripeWebhookHandler do
          ) do
       {:ok, _} ->
         {:ok, event}
-
-      {:error, message} ->
-        IO.inspect(message)
-        {:error, event}
     end
   end
 
