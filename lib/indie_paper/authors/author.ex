@@ -165,9 +165,9 @@ defmodule IndiePaper.Authors.Author do
     author
     |> cast(attrs, [
       :stripe_connect_id,
+      :stripe_customer_id,
       :is_payment_connected,
-      :account_status,
-      :stripe_customer_id
+      :account_status
     ])
     |> unique_constraint([:stripe_connect_id])
     |> unique_constraint([:stripe_customer_id])
