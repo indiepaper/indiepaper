@@ -4,8 +4,17 @@
         <div class="max-w-2xl">
             <h1 class="page-heading">Your Library</h1>
             <p class="page-description">
-                books that you have purchased will show up here.
+                books you have purchased and your subscriptions will show up here.
             </p>
+            <%= if not Enum.empty?(@subscriptions) do %>
+                <div class="mt-12 space-y-12">
+                    <%= for subscription <- @subscriptions do %>
+                        <div>
+                            <h3><%= IndiePaper.Authors.get_full_name(subscription.membership_tier.author) %></h3>
+                        </div>
+                    <% end %>
+                </div>
+            <% end %>
             <div class="mt-12 space-y-12">
                 <%= for order <- @orders do %>
                     <div class="items-stretch p-0 primary-card" data-test={"book-#{order.book.id}"}>

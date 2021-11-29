@@ -1,4 +1,5 @@
 defmodule IndiePaper.Subscriptions do
+  alias IndiePaper.Repo
   alias IndiePaper.PaymentHandler
   alias IndiePaper.Authors
   alias IndiePaper.MembershipTiers
@@ -37,5 +38,6 @@ defmodule IndiePaper.Subscriptions do
 
   def list_subscriptions(reader) do
     ReaderAuthorSubscriptions.list_subscriptions_of_reader(reader.id)
+    |> Repo.preload(membership_tier: :author)
   end
 end
