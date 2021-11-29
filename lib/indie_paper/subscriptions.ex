@@ -2,6 +2,7 @@ defmodule IndiePaper.Subscriptions do
   alias IndiePaper.PaymentHandler
   alias IndiePaper.Authors
   alias IndiePaper.MembershipTiers
+  alias IndiePaper.ReaderAuthorSubscriptions
 
   def create_subscription(
         %Authors.Author{id: author_id},
@@ -21,6 +22,16 @@ defmodule IndiePaper.Subscriptions do
 
       result ->
         result
+    end
+  end
+
+  def is_subscribed?(
+        %Authors.Author{id: reader_id} = _reader,
+        %Authors.Author{id: author_id} = _author
+      ) do
+    case ReaderAuthorSubscriptions.get_subscription_by_reader_author_id(reader_id, author_id) do
+      nil -> false
+      _subscription -> true
     end
   end
 end
