@@ -20,11 +20,12 @@ defmodule IndiePaperWeb.Feature.PersonCanChangeProfileTest do
         }
       })
       |> render_submit()
-      |> follow_redirect(conn, Routes.dashboard_path(conn, :index))
+      |> follow_redirect(conn)
 
     html = html_response(conn, 200)
 
     assert html =~ first_name
     assert html =~ last_name
+    assert html =~ username
   end
 end

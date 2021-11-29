@@ -10,11 +10,12 @@ defmodule IndiePaper.ReaderAuthorSubscriptionsTest do
       membership_tier = insert(:membership_tier, author: author)
 
       reader_author_subscription =
-        ReaderAuthorSubscriptions.create_reader_author_subscription!(
-          reader: reader,
-          membership_tier: membership_tier,
+        ReaderAuthorSubscriptions.create_reader_author_subscription!(%{
+          reader_id: reader.id,
+          author_id: author.id,
+          membership_tier_id: membership_tier.id,
           stripe_checkout_session_id: "checkout_session_id"
-        )
+        })
 
       assert reader_author_subscription.author_id == author.id
       assert reader_author_subscription.reader_id == reader.id

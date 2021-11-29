@@ -23,14 +23,18 @@ defmodule IndiePaper.PaymentHandler do
   end
 
   def get_subscription_checkout_session(
-        %Authors.Author{} = reader,
+        %Authors.Author{id: reader_id} = reader,
         %Authors.Author{} = author,
-        %MembershipTiers.MembershipTier{stripe_price_id: stripe_price_id}
+        %MembershipTiers.MembershipTier{id: membership_tier_id, stripe_price_id: stripe_price_id}
       ) do
     case StripeHandler.get_subscription_checkout_session(
            author: author,
            price_id: stripe_price_id,
-           customer_id: reader.stripe_customer_id
+           customer_id: reader.stripe_customer_id,
+           metadata: %{
+             reader_id: reader_id,
+             membership_tier_id: membership_tier_id
+           }
          ) do
       {:ok, stripe_checkout_session} ->
         {:ok, stripe_checkout_session}

@@ -107,7 +107,8 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
   def get_subscription_checkout_session(
         author: author,
         price_id: price_id,
-        customer_id: customer_id
+        customer_id: customer_id,
+        metadata: metadata
       ) do
     params = %{
       success_url: Routes.dashboard_library_url(Endpoint, :index, stripe_checkout_success: true),
@@ -118,7 +119,8 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
           quantity: 1,
           price: price_id
         }
-      ]
+      ],
+      metadata: metadata
     }
 
     params =
