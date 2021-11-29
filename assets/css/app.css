@@ -103,6 +103,10 @@
   .secondary-link {
     @apply base-link text-sm;
   }
+
+  .profile-picture {
+    @apply object-cover w-24 h-24 rounded-full ring-2 ring-white ring-offset-2 ring-offset-gray-800 focus:outline-none;
+  }
 }
 
 /* LiveView specific classes for your customization */

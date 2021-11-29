@@ -40,4 +40,7 @@ defmodule IndiePaper.Subscriptions do
     ReaderAuthorSubscriptions.list_subscriptions_of_reader(reader.id)
     |> Repo.preload(membership_tier: :author)
   end
+
+  def active?(%{status: :active}), do: true
+  def active?(_), do: false
 end
