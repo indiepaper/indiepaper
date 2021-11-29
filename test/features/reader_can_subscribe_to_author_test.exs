@@ -17,8 +17,6 @@ defmodule IndiePaperWeb.Feature.ReaderCanSubscribeToAuthorTest do
     |> render_click()
     |> follow_redirect(conn)
 
-    {:ok, _view, html} = live(conn, Routes.author_page_path(conn, :show, author))
-
     # Mock a webhook event from Stripe
     WebhookHandler.subscription_checkout_session_completed(
       reader_id: reader.id,
@@ -27,6 +25,7 @@ defmodule IndiePaperWeb.Feature.ReaderCanSubscribeToAuthorTest do
       stripe_customer_id: "test_customer_id"
     )
 
+    {:ok, _view, html} = live(conn, Routes.author_page_path(conn, :show, author))
     assert html =~ "Subscribed"
 
     {:ok, view, _html} = live(conn, Routes.dashboard_path(conn, :index))
