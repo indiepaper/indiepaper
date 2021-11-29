@@ -8,7 +8,7 @@ defmodule IndiePaper.Subscriptions do
         %Authors.Author{id: author_id},
         %MembershipTiers.MembershipTier{author_id: author_id}
       ),
-      do: {:error, "You cannot Subscribe to yourself."}
+      do: {:error, "You cannot Subscribe to yourself. Share this page with your readers."}
 
   def create_subscription(
         %Authors.Author{} = reader,
