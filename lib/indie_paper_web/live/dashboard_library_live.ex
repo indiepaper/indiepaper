@@ -18,7 +18,7 @@ defmodule IndiePaperWeb.DashboardLibraryLive do
         put_flash(
           socket,
           :info,
-          "Hoorah! Your purchase has been succesfully completed. You can find the order here."
+          "Hoorah! Your checkout has been succesfully completed. You can find the purchase here."
         )
       else
         socket
