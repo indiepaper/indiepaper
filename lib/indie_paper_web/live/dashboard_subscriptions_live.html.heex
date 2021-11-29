@@ -11,16 +11,17 @@
                             <div class="py-1 px-2 text-sm bg-green-100 rounded-lg"><%= humanize(subscription.status) %></div>
                         <% end %>
                     </div>
-                    <%= live_redirect to: Routes.author_page_path(@socket, :show, subscription.membership_tier.author), class: "flex flex-row justify-between items-center p-6 border-b border-secondary-border" do %>
+                    <%= live_redirect to: Routes.author_page_path(@socket, :show, subscription.membership_tier.author), class: "flex flex-col items-start space-y-4 md:space-y-0 md:space-x-4 md:flex-row md:justify-between md:items-center p-6 border-b border-secondary-border" do %>
                         <img src={IndiePaper.ExternalAssetHandler.get_public_url(subscription.membership_tier.author.profile_picture)} alt="" class="rounded-lg profile-picture" />
-                        <div class="flex flex-col flex-1 items-start pl-6">
+                        <div class="flex flex-col flex-1 items-start">
                             <h4 class="text-lg font-bold md:text-xl"><%= IndiePaper.Authors.get_full_name(subscription.membership_tier.author) %></h4>
-                            <p class="text-secondary-text">@<%= subscription.membership_tier.author.username %></p>
+                            <p class="secondary-text">@<%= subscription.membership_tier.author.username %></p>
                         </div>
                     <% end %>
                     <div class="">
-                        <div class="flex flex-row justify-between items-center py-3 px-6">
+                        <div class="flex flex-col items-start py-3 px-6 md:flex-row md:justify-between md:items-center">
                             <p>Books</p>
+                            <p class="text-sm secondary-text">the books available on your subscription.</p>
                         </div>
                     </div>
                 </div>
