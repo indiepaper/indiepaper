@@ -2,7 +2,7 @@ defmodule IndiePaperWeb.StripeWebhookHandler do
   @behaviour Stripe.WebhookHandler
 
   alias IndiePaper.PaymentHandler
-  alias IndiePaper.ReaderAuthorSubscriptions
+  alias IndiePaper.WebhookHandler
 
   @impl true
   def handle_event(
@@ -12,19 +12,25 @@ defmodule IndiePaperWeb.StripeWebhookHandler do
             object: %{
               id: stripe_checkout_session_id,
               mode: "subscription",
+              customer: stripe_customer_id,
               metadata: %{"reader_id" => reader_id, "membership_tier_id" => membership_tier_id}
             }
           }
         } = event
       ) do
-    ReaderAuthorSubscriptions.create_reader_author_subscription!(%{
-      reader_id: reader_id,
-      membership_tier_id: membership_tier_id,
-      stripe_checkout_session_id: stripe_checkout_session_id,
-      status: :active
-    })
+    case WebhookHandler.subscription_checkout_session_completed(
+           reader_id: reader_id,
+           membership_tier_id: membership_tier_id,
+           stripe_checkout_session_id: stripe_checkout_session_id,
+           stripe_customer_id: stripe_customer_id
+         ) do
+      {:ok, _} ->
+        {:ok, event}
 
-    {:ok, event}
+      {:error, message} ->
+        IO.inspect(message)
+        {:error, event}
+    end
   end
 
   @impl true

@@ -403,6 +403,12 @@ defmodule IndiePaper.Authors do
     })
   end
 
+  def set_stripe_customer_id(reader, stripe_customer_id) do
+    update_author_internal_profile(reader, %{
+      stripe_customer_id: stripe_customer_id
+    })
+  end
+
   def is_payment_connected?(author) do
     author.is_payment_connected
   end
