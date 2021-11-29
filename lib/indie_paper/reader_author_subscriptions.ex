@@ -20,4 +20,8 @@ defmodule IndiePaper.ReaderAuthorSubscriptions do
     )
     |> Repo.one()
   end
+
+  def list_subscriptions_of_reader(reader_id) do
+    from(s in ReaderAuthorSubscription, where: s.reader_id == ^reader_id) |> Repo.all()
+  end
 end

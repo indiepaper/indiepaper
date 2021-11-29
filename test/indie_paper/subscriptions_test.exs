@@ -36,4 +36,21 @@ defmodule IndiePaper.SubscriptionsTest do
       refute Subscriptions.is_subscribed?(membership_tier.author, reader)
     end
   end
+
+  describe "list_subscriptions/1" do
+    test "lists the subscriptions for the current reader" do
+      [reader1, reader2] = insert_pair(:author)
+      membership_tier = insert(:membership_tier)
+
+      insert(:reader_author_subscription,
+        reader: reader1,
+        membership_tier: membership_tier
+      )
+
+      subscriptions = Subscriptions.list_subscriptions(reader1)
+
+      assert Enum.find(subscriptions, fn s -> s.reader_id == reader1.id end)
+      refute Enum.find(subscriptions, fn s -> s.reader_id == reader2.id end)
+    end
+  end
 end

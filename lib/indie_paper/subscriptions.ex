@@ -34,4 +34,8 @@ defmodule IndiePaper.Subscriptions do
       _subscription -> true
     end
   end
+
+  def list_subscriptions(reader) do
+    ReaderAuthorSubscriptions.list_subscriptions_of_reader(reader.id)
+  end
 end

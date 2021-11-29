@@ -4,11 +4,19 @@ defmodule IndiePaperWeb.DashboardLibraryLive do
   on_mount IndiePaperWeb.AuthorLiveAuth
 
   alias IndiePaper.BookLibrary
+  alias IndiePaper.Subscriptions
 
   @impl true
   def mount(_, _, socket) do
     orders = BookLibrary.list_payment_completed_orders(socket.assigns.current_author)
-    {:ok, socket |> assign(orders: orders, page_title: "Library")}
+
+    {:ok,
+     socket
+     |> assign(
+       orders: orders,
+       page_title: "Library",
+       subscriptions: Subscriptions.list_subscriptions(socket.assigns.current_author)
+     )}
   end
 
   @impl true
