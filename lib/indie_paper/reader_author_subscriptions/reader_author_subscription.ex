@@ -9,6 +9,8 @@ defmodule IndiePaper.ReaderAuthorSubscriptions.ReaderAuthorSubscription do
     belongs_to :author, IndiePaper.Authors.Author
     belongs_to :membership_tier, IndiePaper.MembershipTiers.MembershipTier
 
+    field :stripe_checkout_session_id, :string
+
     field :status, Ecto.Enum,
       values: [
         :inactive,
@@ -25,8 +27,20 @@ defmodule IndiePaper.ReaderAuthorSubscriptions.ReaderAuthorSubscription do
   @doc false
   def changeset(reader_author_subscription, attrs) do
     reader_author_subscription
-    |> cast(attrs, [:author_id, :reader_id, :membership_tier_id, :status])
-    |> validate_required([:author_id, :reader_id, :membership_tier_id, :status])
+    |> cast(attrs, [
+      :author_id,
+      :reader_id,
+      :membership_tier_id,
+      :status,
+      :stripe_checkout_session_id
+    ])
+    |> validate_required([
+      :author_id,
+      :reader_id,
+      :membership_tier_id,
+      :status,
+      :stripe_checkout_session_id
+    ])
     |> unique_constraint(:author_id, name: :reader_author_subscriptions_reader_id_author_id_index)
   end
 end

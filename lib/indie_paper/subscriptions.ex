@@ -5,6 +5,12 @@ defmodule IndiePaper.Subscriptions do
   alias IndiePaper.ReaderAuthorSubscriptions
 
   def create_subscription(
+        %Authors.Author{id: author_id},
+        %MembershipTiers.MembershipTier{author_id: author_id}
+      ),
+      do: {:error, "You cannot Subscribe to yourself."}
+
+  def create_subscription(
         %Authors.Author{} = reader,
         %MembershipTiers.MembershipTier{author_id: author_id} = membership_tier
       ) do

@@ -118,7 +118,8 @@ defmodule IndiePaper.Factory do
       author: author,
       reader: build(:author),
       membership_tier: build(:membership_tier, author: author),
-      status: :inactive
+      status: :inactive,
+      stripe_checkout_session_id: sequence("stripe_checkout_session_id")
     }
   end
 end

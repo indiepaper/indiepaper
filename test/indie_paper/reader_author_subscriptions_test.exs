@@ -20,6 +20,7 @@ defmodule IndiePaper.ReaderAuthorSubscriptionsTest do
       assert reader_author_subscription.reader_id == reader.id
       assert reader_author_subscription.membership_tier_id == membership_tier.id
       assert reader_author_subscription.status == :inactive
+      assert reader_author_subscription.stripe_checkout_session_id == "checkout_session_id"
     end
   end
 end
