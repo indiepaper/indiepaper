@@ -40,8 +40,7 @@ defmodule IndiePaper.ReaderAuthorSubscriptions.ReaderAuthorSubscription do
       :author_id,
       :reader_id,
       :membership_tier_id,
-      :status,
-      :stripe_checkout_session_id
+      :status
     ])
     |> unique_constraint(:author_id, name: :reader_author_subscriptions_reader_id_author_id_index)
   end
