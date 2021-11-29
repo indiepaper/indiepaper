@@ -28,7 +28,14 @@ defmodule IndiePaperWeb.Feature.ReaderCanSubscribeToAuthorTest do
 
     assert html =~ "Subscribed"
 
-    {:ok, _view, html} = live(conn, Routes.dashboard_library_path(conn, :index))
+    {:ok, view, _html} = live(conn, Routes.dashboard_path(conn, :index))
+
+    {:ok, _view, html} =
+      view
+      |> element("[data-test=subscriptions-link]")
+      |> render_click()
+      |> follow_redirect(conn)
+
     assert html =~ IndiePaper.Authors.get_full_name(author)
   end
 end

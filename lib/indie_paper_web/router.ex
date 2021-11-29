@@ -164,6 +164,7 @@ defmodule IndiePaperWeb.Router do
       live "/dashboard", DashboardLive, :index
 
       live "/dashboard/library", DashboardLibraryLive, :index
+      live "/dashboard/subscriptions", DashboardSubscriptionsLive, :index
       # resources "/dashboard/orders", DashboardOrderController, only: [:index]
 
       live "/settings/profile", SettingsProfileLive, :edit

@@ -1,0 +1,13 @@
+<section class="bg-background">
+    <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
+    <div class="container-box page-box">
+        <h1 class="page-heading">Subscriptions</h1>
+        <p class="page-description">authors you have subscribed to show up here.</p>
+        <div class="mt-12 space-y-16 max-w-2xl">
+            <%= for subscription <- @subscriptions do %>
+                <div class="primary-card">
+                </div>
+            <% end %>
+        </div>
+    </div>
+</section>
