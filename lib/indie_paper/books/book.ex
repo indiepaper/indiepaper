@@ -21,6 +21,14 @@ defmodule IndiePaper.Books.Book do
       default: :pending_publication,
       nil: false
 
+    field :publishing_type, Ecto.Enum,
+      values: [
+        :vanilla,
+        :serial
+      ],
+      default: :vanilla,
+      nil: false
+
     field :short_description, :string
     field :long_description_html, :string
     field :promo_images, {:array, :string}, null: false, default: []
@@ -51,8 +59,8 @@ defmodule IndiePaper.Books.Book do
 
   def initial_draft_changeset(book, attrs) do
     book
-    |> cast(attrs, [:title])
-    |> validate_required([:title])
+    |> cast(attrs, [:title, :publishing_type])
+    |> validate_required([:title, :publishing_type])
     |> unique_constraint(:title)
   end
 

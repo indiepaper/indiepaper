@@ -7,6 +7,7 @@ defmodule IndiePaper.Factory do
   def book_factory do
     %IndiePaper.Books.Book{
       title: sequence("Book Title"),
+      publishing_type: :vanilla,
       short_description: "Really long and short description",
       long_description_html:
         "<h3>Book Description Html</h3><p>This is the description of the description</p>",

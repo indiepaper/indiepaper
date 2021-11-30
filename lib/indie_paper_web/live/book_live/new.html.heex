@@ -12,13 +12,37 @@
                 </div>
             <% end %>
 
-            <div class="form-tight-container">
+            <div class="form-container">
                 <div class="input-container">
                     <%= label f, :title, class: "input-label"  %>
                     <%= text_input f, :title, class: "form-input", autocomplete: "off" %>
                     <p class="input-error">
                         <%= error_tag f, :title %>
                     </p>
+                </div>
+                <div class="input-container" x-data="{selected: 'vanilla'}">
+                    <%= label f, :publishing_type, class: "input-label"  %>
+                    <%= hidden_input f, :publishing_type, "x-model": "selected" %>
+                    <div class="flex flex-col items-stretch mt-2 space-y-4 md:flex-row md:space-y-0 md:space-x-4">
+                        <button class="flex relative text-left primary-card transistion"
+                                @click.prevent="selected = 'vanilla'"
+                                :class="{'border-accent border-2 bg-orange-50' : selected == 'vanilla'}">
+                            <svg x-show="selected == 'vanilla'" xmlns="http://www.w3.org/2000/svg" class="absolute top-2 right-2 w-6 h-6 text-orange-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            <p class="font-semibold">Vanilla Book</p>
+                            <p class="mt-1 text-sm secondary-text">Publish all chapters at once and sell to readers for a fixed price.</p>
+                        </button>
+                        <button class="flex relative text-left primary-card transistion"
+                                @click.prevent="selected = 'serial'"
+                                :class="{'border-accent border-2 bg-orange-50' : selected == 'serial'}">
+                            <svg x-show="selected == 'serial'" xmlns="http://www.w3.org/2000/svg" class="absolute top-2 right-2 w-6 h-6 text-orange-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            <p class="font-semibold">Serial Book</p>
+                            <p class="mt-1 text-sm secondary-text">Publish your book as a series of chapters that your readers can subscribe to.</p>
+                        </button>
+                    </div>
                 </div>
                 <%= submit "Create Book", class: "primary-button" %>
             </div>
