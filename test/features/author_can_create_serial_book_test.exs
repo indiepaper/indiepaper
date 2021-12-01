@@ -13,7 +13,7 @@ defmodule IndiePaperWeb.Feature.AuthorCanCreateSerialBooksTest do
       |> form("[data-test=new-book-form]",
         book: %{title: "Serial Novel"}
       )
-      |> render_submit(%{publishing_type: :serial})
+      |> render_submit(%{book: %{"publishing_type" => "serial"}})
       |> follow_redirect(conn)
 
     html = html_response(conn, 200)
