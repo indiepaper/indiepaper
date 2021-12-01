@@ -57,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex-1 p-0 bg-white rounded-lg border shadow-sm border-primary-border" data-content={Jason.encode!(@first_chapter.content_json)}>
+                <div class="flex-1 p-0 bg-white rounded-lg border shadow-sm border-primary-border" data-content={Jason.encode!(@last_updated_chapter.content_json)}>
                     <div class="flex flex-col items-stretch" >
                         <div class="flex sticky top-0 z-40 flex-row items-center py-4 px-8 space-x-1 bg-white rounded-t-lg border-b shadow-sm border-primary-border">
                             <button
@@ -114,11 +114,11 @@
 </section>
 
 <script type="text/javascript">
- const chapterContentJSON = <%= raw(Jason.encode!(@first_chapter.content_json)) %>;
+ const chapterContentJSON = <%= raw(Jason.encode!(@last_updated_chapter.content_json)) %>;
  const draftChapters = <%= raw(Jason.encode!(@draft.chapters)) %>;
  const draftId = "<%= @draft.id %>";
  const csrfToken = "<%= Phoenix.Controller.get_csrf_token() %>";
- const initialChapterId = "<%= @first_chapter.id %>";
+ const initialChapterId = "<%= @last_updated_chapter.id %>";
 </script>
 
 <script phx-track-static type="module" src={Routes.static_path(@conn, "/assets/js/draft-editor.js")}></script>

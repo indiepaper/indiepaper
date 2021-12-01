@@ -75,4 +75,9 @@ defmodule IndiePaper.Chapters do
       _ -> nil
     end
   end
+
+  def get_last_updated_chapter(draft_id) do
+    from(c in Chapter, where: c.draft_id == ^draft_id, order_by: [desc: c.updated_at], limit: 1)
+    |> Repo.one()
+  end
 end
