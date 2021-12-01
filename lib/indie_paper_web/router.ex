@@ -173,18 +173,18 @@ defmodule IndiePaperWeb.Router do
     scope "/", IndiePaperWeb do
       pipe_through :browser
 
+      get "/", PageController, :index
+      get "/privacy-policy", PageController, :privacy_policy
+      get "/terms-of-service", PageController, :terms_of_service
+
+      resources "/books", BookController, only: [:show]
+    end
+
+    scope "/", IndiePaperWeb do
+      pipe_through :browser
+
       live "/:username", AuthorPageLive, :show
     end
-  end
-
-  scope "/", IndiePaperWeb do
-    pipe_through :browser
-
-    get "/", PageController, :index
-    get "/privacy-policy", PageController, :privacy_policy
-    get "/terms-of-service", PageController, :terms_of_service
-
-    resources "/books", BookController, only: [:show]
   end
 
   # Other scopes may use custom stacks.
