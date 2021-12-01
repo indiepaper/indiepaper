@@ -103,4 +103,8 @@ defmodule IndiePaper.Books do
   def first_promo_image(book) do
     Enum.at(book.promo_images, 0)
   end
+
+  def serial_book?(book) do
+    book.publishing_type == :serial
+  end
 end
