@@ -36,4 +36,8 @@ defmodule IndiePaperWeb.BookLive.New do
 
     {:noreply, assign(socket, changeset: changeset)}
   end
+
+  def get_publishing_type(changeset) do
+    Ecto.Changeset.get_field(changeset, :publishing_type, "vanilla")
+  end
 end
