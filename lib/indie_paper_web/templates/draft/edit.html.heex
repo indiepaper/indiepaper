@@ -20,7 +20,7 @@
                             <p>Update listing</p>
                         <% end %>
                         <%= if Books.serial_book?(@draft.book) do %>
-                            <%= live_redirect "Publish Chapter", to: Routes.book_publication_path(@conn, :create, @draft.book), method: :post, class: "primary-button md:w-auto md:text-sm" %>
+                            <%= live_redirect "Publish Chapter", to: Routes.book_publish_chapter_path(@conn, :new, @draft.book, @last_updated_chapter), method: :post, class: "primary-button md:w-auto md:text-sm" %>
                         <% else %>
                             <%= link "Publish Book", to: Routes.book_publication_path(@conn, :create, @draft.book), method: :post, class: "primary-button md:w-auto md:text-sm" %>
                         <% end %>

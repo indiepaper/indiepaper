@@ -22,11 +22,26 @@ defmodule IndiePaperWeb.Feature.AuthorCanCreateSerialBooksTest do
     assert html =~ "Publish Chapter"
   end
 
-  test "author can publish single chapters" do
+  test "author can publish single chapters", %{conn: conn} do
     author = insert(:author)
     conn = log_in_author(conn, author)
     chapter = insert(:chapter)
+    membership_tier = insert(:membership_tier, author: author)
 
-    book = insert(:book, publishing_type: serial, draft: build(:draft, chapters: [chapter]))
+    book = insert(:book, publishing_type: :serial, draft: build(:draft, chapters: [chapter]))
+
+    {:ok, view, _html} = live(conn, Routes.book_publish_chapter_path(conn, :new, book, chapter))
+
+    {:ok, conn} =
+      view
+      |> form("[data-test=book-publish-chapter-form]",
+        book: %{membership_tiers: [membership_tier.id]}
+      )
+      |> render_submit()
+      |> follow_redirect(conn, to: Routes.book_path(conn, :show, book))
+
+    html = html_response(conn, 200)
+
+    assert html =~ book.title
   end
 end

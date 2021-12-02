@@ -125,6 +125,8 @@ defmodule IndiePaperWeb.Router do
       live "/dashboard/memberships/new", DashboardMembershipsLive, :new
       live "/dashboard/memberships/:id/edit", DashboardMembershipsLive, :edit
 
+      live "/books/:book_id/publish/:id", BookPublishChapterLive, :new
+
       resources "/books", BookController, only: [] do
         resources "/publication", PublicationController, only: [:create]
         resources "/products", ProductController, only: [:create, :edit, :update]
