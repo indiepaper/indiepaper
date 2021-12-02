@@ -21,4 +21,12 @@ defmodule IndiePaperWeb.Feature.AuthorCanCreateSerialBooksTest do
     assert html =~ "Serial Novel"
     assert html =~ "Publish Chapter"
   end
+
+  test "author can publish single chapters" do
+    author = insert(:author)
+    conn = log_in_author(conn, author)
+    chapter = insert(:chapter)
+
+    book = insert(:book, publishing_type: serial, draft: build(:draft, chapters: [chapter]))
+  end
 end

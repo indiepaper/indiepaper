@@ -106,30 +106,11 @@ defmodule IndiePaperWeb.Router do
     pipe_through [
       :browser,
       :require_authenticated_author,
-      :require_account_status_payment_connected
-    ]
-
-    resources "/books", BookController, only: [] do
-      resources "/publication", PublicationController, only: [:create]
-      resources "/products", ProductController, only: [:create, :edit, :update]
-    end
-  end
-
-  scope "/", IndiePaperWeb do
-    pipe_through [
-      :browser,
-      :require_authenticated_author,
       :require_account_status_confirmed,
       :stripe_connect_rate_limit
     ]
 
     resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:delete]
-  end
-
-  scope "/", IndiePaperWeb do
-    pipe_through [:browser, :require_authenticated_author, :require_account_status_confirmed]
-
-    resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:new, :create]
   end
 
   live_session :default do
@@ -143,6 +124,17 @@ defmodule IndiePaperWeb.Router do
       live "/dashboard/memberships", DashboardMembershipsLive, :index
       live "/dashboard/memberships/new", DashboardMembershipsLive, :new
       live "/dashboard/memberships/:id/edit", DashboardMembershipsLive, :edit
+
+      resources "/books", BookController, only: [] do
+        resources "/publication", PublicationController, only: [:create]
+        resources "/products", ProductController, only: [:create, :edit, :update]
+      end
+    end
+
+    scope "/", IndiePaperWeb do
+      pipe_through [:browser, :require_authenticated_author, :require_account_status_confirmed]
+
+      resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:new, :create]
     end
 
     scope "/", IndiePaperWeb do
