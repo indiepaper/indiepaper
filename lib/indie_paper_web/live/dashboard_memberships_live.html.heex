@@ -21,7 +21,7 @@
                     </p>
                 </div>
                 <%= if not is_membership_tiers_empty?(@membership_tiers) do %>
-                    <%= live_patch to: Routes.dashboard_memberships_path(@socket, :new),  class: "rounded-full primary-button" do %>
+                    <%= live_patch to: Routes.dashboard_memberships_path(@socket, :new),  class: "primary-button" do %>
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
@@ -34,7 +34,7 @@
                     <div class="flex flex-col justify-center items-center max-w-lg">
                         <h3 class="mt-8 text-lg font-bold">Create Memberships for your Readers to subscribe to</h3>
                         <p class="mt-2 text-sm text-secondary-text">Memberships enable you to get predictive monthly income while you write your books. Give your super readers access to your serial novels and your community all through memberships.</p>
-                        <%= live_patch to: Routes.dashboard_memberships_path(@socket, :new),  class: "mt-8 rounded-full primary-button", data: [test: "create-new-tier-when-empty"] do %>
+                        <%= live_patch to: Routes.dashboard_memberships_path(@socket, :new),  class: "mt-8 rounded-lg primary-button", data: [test: "create-new-tier-when-empty"] do %>
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
@@ -51,7 +51,7 @@
                             <div class="flex-1 mt-8 prose-sm secondary-text">
                                 <%= raw(membership_tier.description_html) %>
                             </div>
-                                <%= live_patch to: Routes.dashboard_memberships_path(@socket, :edit, membership_tier), class: "secondary-button mt-8 rounded-full text-sm", data: [test: "membership-tier-edit-#{membership_tier.id}"] do %>
+                                <%= live_patch to: Routes.dashboard_memberships_path(@socket, :edit, membership_tier), class: "secondary-button mt-8 text-sm", data: [test: "membership-tier-edit-#{membership_tier.id}"] do %>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
                                         <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
                                         <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
