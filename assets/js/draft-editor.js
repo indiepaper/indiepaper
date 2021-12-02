@@ -34,6 +34,7 @@ const app = new Vue({
     draftChapters: draftChapters,
     isDraftLoading: false,
     draftId: draftId,
+    bookId: bookId,
     csrfToken: csrfToken,
     content: {},
     persistedContent: {},
