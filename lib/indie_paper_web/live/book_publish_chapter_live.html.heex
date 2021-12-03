@@ -1,7 +1,7 @@
 <div class="bg-background">
     <div class="container-box page-box">
         <div class="max-w-xl">
-            <h1 class="page-heading">Publish - <%= @chapter.title %> </h1>
+            <h1 class="page-heading">Publish Chapter</h1>
             <p class="page-description">Set the membership tier for which you want the chapter to be accessble.</p>
 
             <div class="mt-12">
@@ -12,7 +12,11 @@
                 data-test="book-publish-chapter-form"
                 phx-submit="publish_chapter">
 
-                <div class="form-container">
+                <div class="max-w-md form-container">
+                    <div class="input-container">
+                        <%= label f, :title, class: "input-label"  %>
+                        <%= text_input f, :title, value: @chapter.title, class: "form-input", disabled: true %>
+                    </div>
                     <div class="input-container"
                          x-data="{
                                 selected: [],
@@ -20,18 +24,19 @@
                                     return this.selected.indexOf(id) != -1
                                 },
                                 toggleMembershipTier(id) {
-
-                                  if (this.selected.indexOf(id) == -1)
-                                    this.selected.push(id)
-                                  else {
-                                    this.selected = this.selected.filter(membershipTierId => membershipTierId !== id);
-                                  }
+                                    if (this.selected.indexOf(id) == -1)
+                                        this.selected.push(id)
+                                    else {
+                                        this.selected = this.selected.filter(membershipTierId => membershipTierId !== id);
+                                    }
                                 }}">
                         <%= label f, :membership_tiers, class: "input-label"  %>
                         <%= hidden_input f, :membership_tiers, ":value": "selected" %>
                         <div class="flex flex-col items-stretch mt-2 space-y-5 max-w-md">
                             <%= for membership_tier <- @membership_tiers do %>
-                                <button :class={"{'bg-orange-50 border-2 transistion border-accent': isMembershipTierSelected('#{membership_tier.id}') }"} @click.prevent={"toggleMembershipTier('#{membership_tier.id}')"} class="flex flex-row justify-center items-center py-3 px-6 space-x-3 bg-white rounded-xl border border-primary-border">
+                                <button @click.prevent={"toggleMembershipTier('#{membership_tier.id}')"}
+                                        class="flex flex-row justify-center items-center py-3 px-6 space-x-3 bg-white rounded-xl border-2 border border-primary-border"
+                                        :class={"{'bg-orange-50 border-2 transistion border-accent': isMembershipTierSelected('#{membership_tier.id}') }"}>
                                     <div>
                                         <svg x-show={"!isMembershipTierSelected('#{membership_tier.id}')"} xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
