@@ -1,0 +1,53 @@
+<div class="bg-background">
+    <div class="container-box page-box">
+        <div class="max-w-xl">
+            <h1 class="page-heading">Publish - <%= @chapter.title %> </h1>
+            <p class="page-description">Set the membership tier for which you want the chapter to be accessble.</p>
+
+            <div class="mt-12">
+                <.form
+                let={f}
+                id="book-publish-chapter-form"
+                for={@changeset}
+                data-test="book-publish-chapter-form"
+                phx-submit="publish_chapter">
+
+                <div class="form-container">
+                    <div class="input-container"
+                         x-data="{
+                                selected: [],
+                                toggleMembershipTier(id) {
+                                  if (this.selected.indexOf(id) == -1)
+                                    this.selected.push(id)
+                                  else
+                                    this.selected = this.selected.filter(membershipTierId => membershipTierId !== id);
+                                }}">
+                        <%= label f, :membership_tiers, class: "input-label"  %>
+                        <%= hidden_input f, :membership_tiers, ":value": "selected" %>
+                        <div class="flex flex-col items-stretch mt-2 space-y-4 max-w-sm">
+                            <%= for membership_tier <- @membership_tiers do %>
+                                <button :class={"{'bg-orange-50 border-2 transistion border-accent': selected.indexOf('#{membership_tier.id}') != -1 }"} @click.prevent={"toggleMembershipTier('#{membership_tier.id}')"} class="flex flex-row justify-center items-center py-3 px-6 space-x-3 bg-white rounded-xl border border-primary-border">
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1 text-left">
+                                        <h3><%= membership_tier.title %></h3>
+                                        <div class="secondary-text prose-sm"><%= raw(membership_tier.description_html) %></div>
+                                    </div>
+                                </button>
+                            <% end %>
+                        </div>
+                        <p class="input-error">
+                            <%= error_tag f, :membership_tiers %>
+                        </p>
+                    </div>
+
+                    <%= submit "Publish Chapter", phx_disable_with: "Publishing Chapter...", class: "primary-button" %>
+                </div>
+                </.form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -35,7 +35,7 @@ defmodule IndiePaperWeb.Feature.AuthorCanCreateSerialBooksTest do
     {:ok, conn} =
       view
       |> form("[data-test=book-publish-chapter-form]",
-        book: %{membership_tiers: [membership_tier.id]}
+        chapter: %{membership_tiers: [membership_tier.id]}
       )
       |> render_submit()
       |> follow_redirect(conn, to: Routes.book_path(conn, :show, book))
