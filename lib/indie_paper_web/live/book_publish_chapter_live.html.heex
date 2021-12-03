@@ -39,7 +39,10 @@
                                         </svg>
                                     </div>
                                     <div class="flex-1 text-left">
-                                        <h3><%= membership_tier.title %></h3>
+                                        <div class="flex flex-row justify-between items-center space-x-2">
+                                            <h3 class="font-semibold"><%= membership_tier.title %></h3>
+                                            <p class="px-2 text-sm text-orange-900 bg-orange-100 rounded-full"><%= MoneyHandler.humanize(membership_tier.amount) %></p>
+                                        </div>
                                         <div class="secondary-text prose-sm"><%= raw(membership_tier.description_html) %></div>
                                     </div>
                                 </button>

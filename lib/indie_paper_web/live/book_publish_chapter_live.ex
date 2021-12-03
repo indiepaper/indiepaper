@@ -7,6 +7,7 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
   alias IndiePaper.Chapters
   alias IndiePaper.MembershipTiers
   alias IndiePaper.Books
+  alias IndiePaper.PaymentHandler.MoneyHandler
 
   @impl true
   def mount(%{"book_id" => book_id, "id" => chapter_id}, _, socket) do
@@ -19,7 +20,8 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
       %MembershipTiers.MembershipTier{
         id: "free",
         title: "Free",
-        description_html: "<p>Chapter can be read by anyone</p>"
+        description_html: "<p>Chapter can be read by anyone</p>",
+        amount: MoneyHandler.new(0)
       }
       | membership_tiers
     ]
