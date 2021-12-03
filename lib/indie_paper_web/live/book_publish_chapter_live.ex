@@ -15,6 +15,15 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
     author = Books.get_author(book)
     membership_tiers = MembershipTiers.list_membership_tiers(author)
 
-    {:ok, socket |> assign(chapter: chapter, membership_tiers: membership_tiers)}
+    membership_tiers_with_free = [
+      %MembershipTiers.MembershipTier{
+        id: "free",
+        title: "Free",
+        description_html: "<p>Chapter can be read by anyone</p>"
+      }
+      | membership_tiers
+    ]
+
+    {:ok, socket |> assign(chapter: chapter, membership_tiers: membership_tiers_with_free)}
   end
 end

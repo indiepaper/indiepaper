@@ -7,10 +7,11 @@ defmodule IndiePaper.Chapters.Chapter do
   @derive {Jason.Encoder, only: [:title, :id, :chapter_index]}
   schema "chapters" do
     field :title, :string
-    field :draft_id, :binary_id
     field :chapter_index, :integer, null: false, default: 0
     field :content_json, :map
     field :published_content_json, :map
+
+    belongs_to :draft, IndiePaper.Drafts.Draft
 
     timestamps()
   end
