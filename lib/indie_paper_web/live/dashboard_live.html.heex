@@ -136,7 +136,7 @@
                             </div>
                         </div>
 
-                        <%= if IndiePaper.Books.is_published?(book)  do %>
+                        <%= if IndiePaper.Books.is_published?(book) and Books.vanilla_book?(book)  do %>
                             <div class="">
                                 <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-primary-border">
                                     <p>Products</p>

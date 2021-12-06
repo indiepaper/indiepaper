@@ -114,4 +114,8 @@ defmodule IndiePaper.Books do
   def serial_book?(book) do
     book.publishing_type == :serial
   end
+
+  def vanilla_book?(book) do
+    book.publishing_type == :vanilla
+  end
 end
