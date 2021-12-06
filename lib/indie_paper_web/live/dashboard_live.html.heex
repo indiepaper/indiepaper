@@ -95,10 +95,18 @@
                     <div class="items-stretch p-0 primary-card">
                         <div class="flex flex-row justify-between items-center py-3 px-6 border-b border-secondary-border">
                             <%= if IndiePaper.Books.is_pending_publication?(book)  do %>
-                                <span class="py-1 px-2 text-xs text-warm-gray-700 bg-warm-gray-100 rounded-lg border border-warm-gray-200" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
+                                <%= if Books.serial_book?(book)  do %>
+                                    <span class="py-1 px-2 text-xs text-warm-gray-700 bg-warm-gray-100 rounded-lg border border-warm-gray-200">Pending serial publication</span>
+                                <% else %>
+                                    <span class="py-1 px-2 text-xs text-warm-gray-700 bg-warm-gray-100 rounded-lg border border-warm-gray-200" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
+                                <% end %>
                             <% end %>
                             <%= if IndiePaper.Books.is_published?(book)  do %>
-                                <span class="py-1 px-2 text-xs text-green-700 bg-green-100 rounded-lg border border-green-200" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
+                                <%= if Books.serial_book?(book)  do %>
+                                    <span class="py-1 px-2 text-xs text-green-700 bg-green-100 rounded-lg border border-green-200">Serial publication</span>
+                                <% else %>
+                                    <span class="py-1 px-2 text-xs text-green-700 bg-green-100 rounded-lg border border-green-200" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
+                                <% end %>
                             <% end %>
                             <%= if IndiePaper.Books.is_published?(book) do %>
                                 <%= link to: Routes.book_path(@socket, :show, book), class: "secondary-link" do %>
