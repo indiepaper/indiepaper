@@ -35,4 +35,18 @@ defmodule IndiePaper.BookPublisherTest do
       assert asset.title == "Read online"
     end
   end
+
+  describe "publish_serial_chapter!/3" do
+    test "publishes book with first chapters" do
+      chapter = insert(:chapter)
+      draft = insert(:draft, chapters: [chapter])
+      book = insert(:book, status: :pending_publication, draft: draft)
+      membership_tier = insert(:membership_tier)
+
+      book = BookPublisher.publish_serial_chapter!(book, chapter, [membership_tier])
+      assert Books.is_published?(book)
+
+      assert chapter.content_json == chapter.published_content_json
+    end
+  end
 end

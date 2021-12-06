@@ -1,7 +1,12 @@
 defmodule IndiePaper.BookPublisher do
   alias Ecto.Multi
   alias IndiePaper.Repo
-  alias IndiePaper.{Books, Chapters, Products, Assets}
+
+  alias IndiePaper.Assets
+  alias IndiePaper.Books
+  alias IndiePaper.Chapters
+  alias IndiePaper.Products
+  alias IndiePaper.MembershipTiers
 
   def publish_book(%Books.Book{} = book) do
     book_with_draft = book |> Books.with_assoc(:draft)
@@ -45,5 +50,21 @@ defmodule IndiePaper.BookPublisher do
 
   def maybe_insert_default_product(_repo, _previous_data, _book) do
     {:ok, nil}
+  end
+
+  @spec publish_serial_chapter!(
+          %Books.Book{},
+          %Chapters.Chapter{},
+          [String.t()]
+        ) ::
+          %Books.Book{}
+  def(
+    publish_serial_chapter!(
+      book,
+      chapter,
+      membership_tier_ids
+    )
+  ) do
+    book
   end
 end
