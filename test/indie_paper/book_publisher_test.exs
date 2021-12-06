@@ -1,13 +1,15 @@
-defmodule IndiePaper.PublicationTest do
+defmodule IndiePaper.BookPublisherTest do
   use IndiePaper.DataCase, async: true
 
-  alias IndiePaper.{Publication, Books, Chapters}
+  alias IndiePaper.BookPublisher
+  alias IndiePaper.Books
+  alias IndiePaper.Chapters
 
   describe "publish_book/1" do
     test "populate chapter with published content_json" do
       book = insert(:book, status: :pending_publication)
 
-      {:ok, book} = Publication.publish_book(book)
+      {:ok, book} = BookPublisher.publish_book(book)
       assert Books.is_published?(book)
 
       book = book |> Books.with_assoc(:draft)
@@ -22,7 +24,7 @@ defmodule IndiePaper.PublicationTest do
       book = insert(:book, status: :pending_publication, products: [])
 
       found_book = Books.get_book!(book.id)
-      {:ok, published_book} = Publication.publish_book(found_book)
+      {:ok, published_book} = BookPublisher.publish_book(found_book)
 
       book_with_products = published_book |> Books.with_assoc(products: :assets)
 

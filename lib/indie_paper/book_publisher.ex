@@ -1,4 +1,4 @@
-defmodule IndiePaper.Publication do
+defmodule IndiePaper.BookPublisher do
   alias Ecto.Multi
   alias IndiePaper.Repo
   alias IndiePaper.{Books, Chapters, Products, Assets}

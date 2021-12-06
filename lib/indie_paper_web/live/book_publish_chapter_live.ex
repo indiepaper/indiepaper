@@ -4,9 +4,10 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
   on_mount IndiePaperWeb.AuthorLiveAuth
   on_mount {IndiePaperWeb.AuthorLiveAuth, :require_account_status_payment_connected}
 
+  alias IndiePaper.Books
+  alias IndiePaper.BookPublisher
   alias IndiePaper.Chapters
   alias IndiePaper.MembershipTiers
-  alias IndiePaper.Books
   alias IndiePaper.PaymentHandler.MoneyHandler
 
   @impl true
@@ -27,6 +28,25 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
     ]
 
     {:ok,
-     socket |> assign(chapter: chapter, membership_tiers: membership_tiers_with_free, book: book)}
+     socket
+     |> assign(
+       chapter: chapter,
+       membership_tiers: membership_tiers_with_free,
+       book: book
+     )}
+  end
+
+  @impl true
+  def handle_event(
+        "publish_chapter",
+        %{"chapter" => %{"membership_tiers" => [membership_tiers_params]}},
+        socket
+      ) do
+    membership_tier_ids = String.split(membership_tiers_params, ",")
+
+    {:ok, _book} =
+      BookPublisher.publish_serial_chapter(socket.assigns.chapter.id, membership_tier_ids)
+
+    {:noreply, socket}
   end
 end
