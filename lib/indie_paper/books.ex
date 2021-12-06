@@ -50,6 +50,7 @@ defmodule IndiePaper.Books do
   end
 
   def get_book!(book_id), do: Repo.get!(Book, book_id)
+  def get_book_with_draft!(book_id), do: get_book!(book_id) |> with_assoc(:draft)
 
   def with_assoc(book, assoc), do: Repo.preload(book, assoc)
 

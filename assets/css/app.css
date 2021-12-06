@@ -107,6 +107,14 @@
   .profile-picture {
     @apply object-cover w-24 h-24 rounded-full ring-2 ring-white ring-offset-2 ring-offset-gray-800 focus:outline-none;
   }
+
+  .secondary-nav {
+    @apply bg-white border-b border-primary-border;
+  }
+
+  .secondary-nav-content {
+    @apply py-6 md:py-4 flex flex-col items-start space-y-4 md:flex-row md:items-center md:space-y-0 md:space-x-6 container-box;
+  }
 }
 
 /* LiveView specific classes for your customization */

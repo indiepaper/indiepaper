@@ -12,7 +12,7 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
   @impl true
   def mount(%{"book_id" => book_id, "id" => chapter_id}, _, socket) do
     chapter = Chapters.get_chapter!(chapter_id)
-    book = Books.get_book!(book_id)
+    book = Books.get_book_with_draft!(book_id)
     author = Books.get_author(book)
     membership_tiers = MembershipTiers.list_membership_tiers(author)
 
@@ -26,6 +26,7 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
       | membership_tiers
     ]
 
-    {:ok, socket |> assign(chapter: chapter, membership_tiers: membership_tiers_with_free)}
+    {:ok,
+     socket |> assign(chapter: chapter, membership_tiers: membership_tiers_with_free, book: book)}
   end
 end
