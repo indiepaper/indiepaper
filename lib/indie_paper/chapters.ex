@@ -80,4 +80,10 @@ defmodule IndiePaper.Chapters do
     from(c in Chapter, where: c.draft_id == ^draft_id, order_by: [desc: c.updated_at], limit: 1)
     |> Repo.one()
   end
+
+  def publish_chapter(chapter) do
+    chapter
+    |> Chapter.publish_changeset(chapter.content_json)
+    |> Repo.update()
+  end
 end

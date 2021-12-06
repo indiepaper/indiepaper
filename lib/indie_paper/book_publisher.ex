@@ -65,6 +65,9 @@ defmodule IndiePaper.BookPublisher do
       membership_tier_ids
     )
   ) do
-    book
+    with {:ok, _published_chapter} <- Chapters.publish_chapter(chapter),
+         {:ok, published_book} <- Books.publish_book(book) do
+      published_book
+    end
   end
 end

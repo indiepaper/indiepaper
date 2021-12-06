@@ -46,7 +46,9 @@ defmodule IndiePaper.BookPublisherTest do
       book = BookPublisher.publish_serial_chapter!(book, chapter, [membership_tier])
       assert Books.is_published?(book)
 
-      assert chapter.content_json == chapter.published_content_json
+      updated_chapter = Chapters.get_chapter!(chapter.id)
+
+      assert updated_chapter.published_content_json == chapter.content_json
     end
   end
 end

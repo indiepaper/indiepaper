@@ -24,4 +24,10 @@ defmodule IndiePaper.Chapters.Chapter do
     |> validate_number(:chapter_index, greater_than_or_equal_to: 0)
     |> validate_length(:title, max: 30)
   end
+
+  def publish_changeset(chapter, content_json) do
+    chapter
+    |> cast(%{published_content_json: content_json}, [:published_content_json])
+    |> validate_required([:published_content_json])
+  end
 end
