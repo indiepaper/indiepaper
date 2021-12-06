@@ -10,8 +10,6 @@ defmodule IndiePaper.Repo.Migrations.CreateChapterMembershipTiers do
           null: false
 
       add :chapter_id, references(:chapters, on_delete: :nothing, type: :binary_id), null: false
-
-      timestamps()
     end
 
     create index(:chapter_membership_tiers, [:membership_tier_id])

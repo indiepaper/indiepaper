@@ -44,13 +44,15 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
       ) do
     membership_tier_ids = String.split(membership_tiers_params, ",")
 
-    {:ok, _book} =
+    book =
       BookPublisher.publish_serial_chapter!(
         socket.assigns.book,
         socket.assigns.chapter,
         membership_tier_ids
       )
 
-    {:noreply, socket}
+    {:noreply,
+     socket
+     |> push_redirect(to: Routes.book_read_path(socket, :show, book, socket.assigns.chapter))}
   end
 end

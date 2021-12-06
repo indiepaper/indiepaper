@@ -6,7 +6,6 @@ defmodule IndiePaper.BookPublisher do
   alias IndiePaper.Books
   alias IndiePaper.Chapters
   alias IndiePaper.Products
-  alias IndiePaper.MembershipTiers
 
   def publish_book(%Books.Book{} = book) do
     book_with_draft = book |> Books.with_assoc(:draft)
@@ -52,12 +51,6 @@ defmodule IndiePaper.BookPublisher do
     {:ok, nil}
   end
 
-  @spec publish_serial_chapter!(
-          %Books.Book{},
-          %Chapters.Chapter{},
-          [String.t()]
-        ) ::
-          %Books.Book{}
   def(
     publish_serial_chapter!(
       book,
@@ -65,7 +58,8 @@ defmodule IndiePaper.BookPublisher do
       membership_tier_ids
     )
   ) do
-    with {:ok, _published_chapter} <- Chapters.publish_chapter(chapter),
+    with {:ok, _published_chapter} <-
+           Chapters.publish_serial_chapter(chapter, membership_tier_ids),
          {:ok, published_book} <- Books.publish_book(book) do
       published_book
     end

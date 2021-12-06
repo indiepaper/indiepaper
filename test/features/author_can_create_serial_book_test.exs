@@ -28,17 +28,22 @@ defmodule IndiePaperWeb.Feature.AuthorCanCreateSerialBooksTest do
     chapter = insert(:chapter)
     membership_tier = insert(:membership_tier, author: author)
 
-    book = insert(:book, publishing_type: :serial, draft: build(:draft, chapters: [chapter]))
+    book =
+      insert(:book,
+        author: author,
+        publishing_type: :serial,
+        draft: build(:draft, chapters: [chapter])
+      )
 
     {:ok, view, _html} = live(conn, Routes.book_publish_chapter_path(conn, :new, book, chapter))
 
     {:ok, conn} =
       view
       |> form("[data-test=book-publish-chapter-form]")
-      |> render_submit(%{chapter: %{membership_tiers: [membership_tier.id]}})
-      |> follow_redirect(conn, to: Routes.book_path(conn, :show, book))
+      |> render_submit(%{publish_chapter: %{membership_tiers: membership_tier.id}})
+      |> follow_redirect(conn)
 
-    html = html_response(conn, 200)
+    html = html_response(conn, 200) |> redirected_to()
 
     assert html =~ book.title
   end

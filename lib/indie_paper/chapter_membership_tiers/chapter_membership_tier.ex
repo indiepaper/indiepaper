@@ -7,16 +7,14 @@ defmodule IndiePaper.ChapterMembershipTiers.ChapterMembershipTier do
   schema "chapter_membership_tiers" do
     belongs_to :membership_tier, IndiePaper.MembershipTiers.MembershipTier
     belongs_to :chapter, IndiePaper.Chapters.Chapter
-
-    timestamps()
   end
 
   @doc false
   def changeset(chapter_membership_tier, attrs) do
     chapter_membership_tier
-    |> cast(attrs, [:chapter_id, :membership_id])
-    |> validate_required([:chapter_id, :membership_id])
-    |> unique_constraint(:membership_id,
+    |> cast(attrs, [:chapter_id, :membership_tier_id])
+    |> validate_required([:chapter_id, :membership_tier_id])
+    |> unique_constraint(:membership_tier_id,
       name: :chapter_membership_tiers_chapter_id_membership_tier_id_index
     )
   end

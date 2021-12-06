@@ -1,9 +1,11 @@
 defmodule IndiePaper.Chapters do
   import Ecto.Query
+  alias Ecto.Multi
 
-  alias IndiePaper.Repo
-  alias IndiePaper.Drafts
+  alias IndiePaper.ChapterMembershipTiers
   alias IndiePaper.Chapters.Chapter
+  alias IndiePaper.Drafts
+  alias IndiePaper.Repo
 
   def change_chapter(%Chapter{} = chapter, attrs \\ %{}) do
     chapter
@@ -81,9 +83,19 @@ defmodule IndiePaper.Chapters do
     |> Repo.one()
   end
 
-  def publish_chapter(chapter) do
-    chapter
-    |> Chapter.publish_changeset(chapter.content_json)
-    |> Repo.update()
+  def publish_serial_chapter(chapter, membership_tier_ids) do
+    Multi.new()
+    |> Multi.update(:chapter, Chapter.publish_changeset(chapter, chapter.content_json))
+    |> Multi.insert_all(
+      :chapter_membership_tiers,
+      ChapterMembershipTiers.ChapterMembershipTier,
+      fn %{chapter: chapter} ->
+        ChapterMembershipTiers.build_insert_all_chapter_membership_tiers(
+          chapter,
+          membership_tier_ids
+        )
+      end
+    )
+    |> Repo.transaction()
   end
 end
