@@ -4,6 +4,7 @@ defmodule IndiePaper.BookPublisherTest do
   alias IndiePaper.BookPublisher
   alias IndiePaper.Books
   alias IndiePaper.Chapters
+  alias IndiePaper.ChapterMembershipTiers
 
   describe "publish_book/1" do
     test "populate chapter with published content_json" do
@@ -43,12 +44,14 @@ defmodule IndiePaper.BookPublisherTest do
       book = insert(:book, status: :pending_publication, draft: draft)
       membership_tier = insert(:membership_tier)
 
-      book = BookPublisher.publish_serial_chapter!(book, chapter, [membership_tier])
+      book = BookPublisher.publish_serial_chapter!(book, chapter, [membership_tier.id])
       assert Books.is_published?(book)
 
       updated_chapter = Chapters.get_chapter!(chapter.id)
+      [chapter_membership_tier] = ChapterMembershipTiers.list_membership_tiers(chapter_id)
 
       assert updated_chapter.published_content_json == chapter.content_json
+      assert chapter_membership_tier.id == membership_tier.id
     end
   end
 end
