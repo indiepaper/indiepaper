@@ -47,13 +47,13 @@
                                 }}">
                         <%= label f, :membership_tiers, class: "input-label"  %>
                         <%= hidden_input f, :membership_tiers, ":value": "selected" %>
-                        <div class="flex flex-col items-stretch mt-3 space-y-6 max-w-md">
+                        <div class="flex flex-col items-stretch mt-3 space-y-5 max-w-md">
                             <%= for membership_tier <- @membership_tiers do %>
                                 <button @click.prevent={"toggleMembershipTier('#{membership_tier.id}')"}
-                                        class="flex flex-row justify-center items-center py-3 px-6 space-x-3 bg-white rounded-xl border-2 border border-primary-border"
+                                        class="flex flex-row justify-center items-center py-4 px-6 space-x-3 bg-white rounded-xl border-2 border border-primary-border"
                                         :class={"{'bg-orange-50 border-2 transistion border-accent': isMembershipTierSelected('#{membership_tier.id}') }"}>
                                     <div>
-                                        <svg x-show={"!isMembershipTierSelected('#{membership_tier.id}')"} xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg x-show={"!isMembershipTierSelected('#{membership_tier.id}')"} xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
                                         <svg x-cloak x-show={"isMembershipTierSelected('#{membership_tier.id}')"} xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-accent" viewBox="0 0 20 20" fill="currentColor">
@@ -65,7 +65,6 @@
                                             <h3 class="font-medium"><%= membership_tier.title %></h3>
                                             <p class="px-2 text-sm text-orange-900 bg-orange-100 rounded-full"><%= MoneyHandler.humanize(membership_tier.amount) %></p>
                                         </div>
-                                        <div class="secondary-text prose-sm"><%= raw(membership_tier.description_html) %></div>
                                     </div>
                                 </button>
                             <% end %>

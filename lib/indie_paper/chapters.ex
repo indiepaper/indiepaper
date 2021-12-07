@@ -83,16 +83,12 @@ defmodule IndiePaper.Chapters do
     |> Repo.one()
   end
 
-  defp publish_serial_chapter_multi(chapter) do
+  def publish_serial_chapter(chapter, membership_tier_ids) do
     Multi.new()
     |> Multi.update(
       :chapter,
       Chapter.publish_changeset(chapter, %{published_content_json: chapter.content_json})
     )
-  end
-
-  def publish_serial_chapter(chapter, membership_tier_ids) do
-    publish_serial_chapter_multi(chapter)
     |> Multi.insert_all(
       :chapter_membership_tiers,
       ChapterMembershipTiers.ChapterMembershipTier,
@@ -107,9 +103,11 @@ defmodule IndiePaper.Chapters do
   end
 
   def publish_free_serial_chapter(chapter) do
-    publish_serial_chapter_multi(chapter)
-    |> Multi.update(:free_chapter, Chapter.publish_changeset(chapter, %{is_free: true}))
-    |> Repo.transaction()
+    Chapter.publish_changeset(chapter, %{
+      published_content_json: chapter.content_json,
+      is_free: true
+    })
+    |> Repo.update()
   end
 
   def published?(%Chapter{published_content_json: nil}), do: false
