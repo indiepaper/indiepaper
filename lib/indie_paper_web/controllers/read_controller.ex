@@ -10,7 +10,11 @@ defmodule IndiePaperWeb.ReadController do
     published_chapters = Books.get_published_chapters(book)
     chapter = Enum.at(published_chapters, 0)
 
-    redirect(conn, to: Routes.book_read_path(conn, :show, book, chapter))
+    render(conn, "show.html",
+      book: book,
+      chapters: published_chapters,
+      current_chapter: chapter
+    )
   end
 
   def show(conn, %{"book_id" => book_id, "id" => chapter_id}) do

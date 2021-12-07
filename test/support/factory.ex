@@ -63,6 +63,7 @@ defmodule IndiePaper.Factory do
     %IndiePaper.Chapters.Chapter{
       title: sequence(:title, &"Chapter Title #{&1}", start_at: 0),
       chapter_index: sequence(:chapter_index, fn num -> num end, start_at: 0),
+      is_free: false,
       published_content_json:
         sequence(
           :published_content_json,

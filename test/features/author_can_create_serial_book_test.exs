@@ -2,6 +2,7 @@ defmodule IndiePaperWeb.Feature.AuthorCanCreateSerialBooksTest do
   use IndiePaperWeb.ConnCase, async: true
 
   import Phoenix.LiveViewTest
+  alias IndiePaper.Chapters
 
   test "author can create serial books", %{conn: conn} do
     author = insert(:author)
@@ -70,8 +71,10 @@ defmodule IndiePaperWeb.Feature.AuthorCanCreateSerialBooksTest do
       |> render_submit(%{publish_chapter: %{membership_tiers: "free"}})
       |> follow_redirect(conn)
 
-    html = html_response(conn, 200) |> redirected_to()
-
+    html = html_response(conn, 200)
     assert html =~ book.title
+
+    published_chapter = Chapters.get_chapter!(chapter.id)
+    assert published_chapter.is_free
   end
 end

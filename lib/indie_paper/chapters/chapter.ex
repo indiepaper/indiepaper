@@ -10,6 +10,7 @@ defmodule IndiePaper.Chapters.Chapter do
     field :chapter_index, :integer, null: false, default: 0
     field :content_json, :map
     field :published_content_json, :map
+    field :is_free, :boolean, nil: false, default: false
 
     belongs_to :draft, IndiePaper.Drafts.Draft
 
@@ -25,9 +26,9 @@ defmodule IndiePaper.Chapters.Chapter do
     |> validate_length(:title, max: 30)
   end
 
-  def publish_changeset(chapter, content_json) do
+  def publish_changeset(chapter, attrs) do
     chapter
-    |> cast(%{published_content_json: content_json}, [:published_content_json])
+    |> cast(attrs, [:published_content_json, :is_free])
     |> validate_required([:published_content_json])
   end
 end
