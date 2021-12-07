@@ -98,4 +98,7 @@ defmodule IndiePaper.Chapters do
     )
     |> Repo.transaction()
   end
+
+  def published?(%Chapter{published_content_json: nil}), do: false
+  def published?(%Chapter{} = _chapter), do: true
 end
