@@ -14,7 +14,7 @@
             <h1 class="page-heading">Publish Chapter</h1>
             <p class="page-description">Set the membership tier for which you want the chapter to be accessble.</p>
 
-            <div class="mt-12">
+            <div class="mt-16">
                 <.form
                 let={f}
                 id="book-publish-chapter-form"
@@ -22,7 +22,7 @@
                 data-test="book-publish-chapter-form"
                 phx-submit="publish_chapter">
 
-                <div class="max-w-md form-loose-container">
+                <div class="!space-y-12 max-w-md form-loose-container">
                     <div class="input-container">
                         <%= label f, :title, class: "input-label"  %>
                         <%= text_input f, :title, value: @chapter.title, class: "form-input", disabled: true %>
@@ -42,7 +42,7 @@
                                 }}">
                         <%= label f, :membership_tiers, class: "input-label"  %>
                         <%= hidden_input f, :membership_tiers, ":value": "selected" %>
-                        <div class="flex flex-col items-stretch mt-2 space-y-5 max-w-md">
+                        <div class="flex flex-col items-stretch mt-3 space-y-6 max-w-md">
                             <%= for membership_tier <- @membership_tiers do %>
                                 <button @click.prevent={"toggleMembershipTier('#{membership_tier.id}')"}
                                         class="flex flex-row justify-center items-center py-3 px-6 space-x-3 bg-white rounded-xl border-2 border border-primary-border"
@@ -64,6 +64,11 @@
                                     </div>
                                 </button>
                             <% end %>
+                            <div>
+                                <%= live_redirect to: Routes.dashboard_memberships_path(@socket, :index), class: "secondary-button text-sm", data: [test: "create-membership-tier-link"] do  %>
+                                    <p>Create membership tier</p>
+                                <% end %>
+                            </div>
                         </div>
                         <p class="input-error">
                             <%= error_tag f, :membership_tiers %>
