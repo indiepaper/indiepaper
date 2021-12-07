@@ -124,4 +124,11 @@ defmodule IndiePaper.Factory do
       stripe_checkout_session_id: sequence("stripe_checkout_session_id")
     }
   end
+
+  def chapter_membership_tier_factory do
+    %IndiePaper.ChapterMembershipTiers.ChapterMembershipTier{
+      chapter: build(:chapter),
+      membership_tier: build(:membership_tier)
+    }
+  end
 end
