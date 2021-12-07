@@ -5,5 +5,10 @@
         </div>
     </div>
     <div class="container-box page-box">
+        <div class="space-y-4">
+            <%= for chapter <- @published_chapters do %>
+                <p><%= chapter.title %></p>
+            <% end %>
+        </div>
     </div>
 </section>
