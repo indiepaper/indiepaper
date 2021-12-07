@@ -113,7 +113,7 @@
   }
 
   .secondary-nav-content {
-    @apply py-6 md:py-4 flex flex-col items-start space-y-4 md:flex-row md:items-center md:space-y-0 md:space-x-6 container-box;
+    @apply py-6 md:py-4 flex flex-col items-start space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0 md:space-x-6 container-box;
   }
 
   .secondary-big-nav-content {

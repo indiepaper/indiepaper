@@ -8,8 +8,9 @@ defmodule IndiePaper.Books do
   import Ecto.Query
 
   alias IndiePaper.Books.Book
-  alias IndiePaper.Drafts
   alias IndiePaper.Chapters
+  alias IndiePaper.Drafts
+  alias IndiePaper.ReaderBookSubscriptions
 
   def list_books(author) do
     Book
@@ -117,5 +118,11 @@ defmodule IndiePaper.Books do
 
   def vanilla_book?(book) do
     book.publishing_type == :vanilla
+  end
+
+  def add_serial_book_to_library(reader, %Book{publishing_type: :serial} = book) do
+    case ReaderBookSubscriptions.create_reader_book_subscription(reader.id, book.id) do
+      {:ok, _reader_book_subscription} -> {:ok, book}
+    end
   end
 end

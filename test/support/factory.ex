@@ -131,4 +131,11 @@ defmodule IndiePaper.Factory do
       membership_tier: build(:membership_tier)
     }
   end
+
+  def reader_book_subscription_factory do
+    %IndiePaper.ReaderBookSubscriptions.ReaderBookSubscription{
+      reader: build(:reader),
+      book: build(:book, pubishing_type: :serial)
+    }
+  end
 end
