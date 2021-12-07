@@ -3,7 +3,7 @@ defmodule IndiePaperWeb.Feature.ReaderCanSubscribeToBookTest do
 
   import Phoenix.LiveViewTest
 
-  test "reader can read book when subscribed", %{conn: conn} do
+  test "reader can subscribe to books", %{conn: conn} do
     reader = insert(:author)
     author = insert(:author)
 
