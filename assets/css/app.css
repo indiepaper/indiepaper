@@ -116,6 +116,10 @@
     @apply py-6 md:py-4 flex flex-col items-start space-y-4 md:flex-row md:items-center md:space-y-0 md:space-x-6 container-box;
   }
 
+  .secondary-big-nav-content {
+    @apply secondary-nav-content md:py-6;
+  }
+
   .secondary-nav-link {
     @apply secondary-link py-2;
   }
