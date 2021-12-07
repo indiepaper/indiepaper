@@ -8,11 +8,13 @@ defmodule IndiePaperWeb.DashboardLibraryLive do
   @impl true
   def mount(_, _, socket) do
     orders = BookLibrary.list_payment_completed_orders(socket.assigns.current_author)
+    subscribed_books = BookLibrary.list_subscribed_books(socket.assigns.current_author)
 
     {:ok,
      socket
      |> assign(
        orders: orders,
+       subscribed_books: subscribed_books,
        page_title: "Library"
      )}
   end
