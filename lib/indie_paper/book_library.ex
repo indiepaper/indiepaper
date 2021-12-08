@@ -1,6 +1,7 @@
 defmodule IndiePaper.BookLibrary do
   alias IndiePaper.Orders
   alias IndiePaper.ReaderBookSubscriptions
+  alias IndiePaper.Books
 
   def get_orders(customer) do
     Orders.list_orders(customer)
@@ -17,7 +18,7 @@ defmodule IndiePaper.BookLibrary do
       ReaderBookSubscriptions.list_book_subscriptions(reader.id)
       |> ReaderBookSubscriptions.with_book()
 
-    Enum.map(book_subscriptions_with_books, fn bs -> bs.book end)
+    Enum.map(book_subscriptions_with_books, fn bs -> bs.book end) |> Books.with_assoc(:author)
   end
 
   def book_added_to_library?(reader, book) do

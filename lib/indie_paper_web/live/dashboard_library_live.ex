@@ -4,6 +4,7 @@ defmodule IndiePaperWeb.DashboardLibraryLive do
   on_mount IndiePaperWeb.AuthorLiveAuth
 
   alias IndiePaper.BookLibrary
+  alias IndiePaper.Authors
 
   @impl true
   def mount(_, _, socket) do
