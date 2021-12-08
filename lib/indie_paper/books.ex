@@ -55,8 +55,8 @@ defmodule IndiePaper.Books do
 
   def with_assoc(book, assoc), do: Repo.preload(book, assoc)
 
-  def is_published?(book), do: book.status == :published
-  def is_pending_publication?(book), do: book.status == :pending_publication
+  def published?(book), do: book.status == :published
+  def pending_publication?(book), do: book.status == :pending_publication
 
   def update_book_status(book, status) do
     book

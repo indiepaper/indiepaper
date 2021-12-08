@@ -28,7 +28,7 @@ defmodule IndiePaper.Authors.Author do
       null: false,
       default: "public/profile_pictures/placeholder.png"
 
-    has_many :books, IndiePaper.Books.Book
+    has_many :books, IndiePaper.Books.Book, preload_order: [desc: :updated_at]
     has_many :orders, IndiePaper.Orders.Order, foreign_key: :customer_id
     has_many :membership_tiers, IndiePaper.MembershipTiers.MembershipTier
 

@@ -32,13 +32,13 @@ defmodule IndiePaper.Subscriptions do
       ) do
     case ReaderAuthorSubscriptions.get_subscription_by_reader_author_id(reader_id, author_id) do
       nil -> false
-      _subscription -> true
+      subscription -> true && active?(subscription)
     end
   end
 
   def list_subscriptions(reader) do
     ReaderAuthorSubscriptions.list_subscriptions_of_reader(reader.id)
-    |> Repo.preload(membership_tier: :author)
+    |> Repo.preload(membership_tier: [author: :books])
   end
 
   def active?(%{status: :active}), do: true
