@@ -112,7 +112,7 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
       ) do
     params = %{
       success_url:
-        Routes.dashboard_subscriptions_path(Endpoint, :index, stripe_checkout_success: true),
+        Routes.dashboard_subscriptions_url(Endpoint, :index, stripe_checkout_success: true),
       cancel_url: Routes.author_page_url(Endpoint, :show, author),
       mode: "subscription",
       line_items: [
