@@ -12,7 +12,7 @@ defmodule IndiePaperWeb.ReadLive do
 
   @impl true
   def mount(%{"book_id" => book_id}, _session, socket) do
-    book = Books.get_book!(book_id) |> Books.with_assoc(:author)
+    book = Books.get_book!(book_id) |> Books.with_assoc([:author, :draft])
     published_chapters = Books.get_published_chapters(book)
     selected_chapter = List.first(published_chapters)
 
