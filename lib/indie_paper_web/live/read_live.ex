@@ -60,34 +60,39 @@ defmodule IndiePaperWeb.ReadLive do
     selected_chapter = Chapters.get_chapter!(chapter_id)
     author = Books.get_author(socket.assigns.book)
 
-    if Chapters.free?(selected_chapter) do
-      {:noreply, assign(socket, selected_chapter: selected_chapter, not_subscribed: false)}
-    else
-      membership_tiers = ChapterMembershipTiers.list_membership_tiers(selected_chapter.id)
-
-      subscribed_membership_tier =
-        ReaderAuthorSubscriptions.get_subscription_by_reader_author_id(
-          socket.assigns.current_author.id,
-          author.id
-        )
-
-      if subscribed_membership_tier &&
-           Enum.any?(membership_tiers, fn membership_tier ->
-             membership_tier.id === subscribed_membership_tier.id
-           end) do
+    cond do
+      Authors.is_same?(socket.assigns.current_author, author) ->
         {:noreply, assign(socket, selected_chapter: selected_chapter, not_subscribed: false)}
-      else
-        chapter_with_masked_content =
-          Map.merge(selected_chapter, %{
-            content_json:
-              Chapters.placeholder_content_json("Chapter", "lorem ipsum, kind of nice."),
-            published_content_json:
-              Chapters.placeholder_content_json("Chapter", "lorem ipsum, kind of nice.")
-          })
 
-        {:noreply,
-         assign(socket, selected_chapter: chapter_with_masked_content, not_subscribed: true)}
-      end
+      Chapters.free?(selected_chapter) ->
+        {:noreply, assign(socket, selected_chapter: selected_chapter, not_subscribed: false)}
+
+      true ->
+        membership_tiers = ChapterMembershipTiers.list_membership_tiers(selected_chapter.id)
+
+        subscribed_membership_tier =
+          ReaderAuthorSubscriptions.get_subscription_by_reader_author_id(
+            socket.assigns.current_author.id,
+            author.id
+          )
+
+        if subscribed_membership_tier &&
+             Enum.any?(membership_tiers, fn membership_tier ->
+               membership_tier.id === subscribed_membership_tier.id
+             end) do
+          {:noreply, assign(socket, selected_chapter: selected_chapter, not_subscribed: false)}
+        else
+          chapter_with_masked_content =
+            Map.merge(selected_chapter, %{
+              content_json:
+                Chapters.placeholder_content_json("Chapter", "lorem ipsum, kind of nice."),
+              published_content_json:
+                Chapters.placeholder_content_json("Chapter", "lorem ipsum, kind of nice.")
+            })
+
+          {:noreply,
+           assign(socket, selected_chapter: chapter_with_masked_content, not_subscribed: true)}
+        end
     end
   end
 
