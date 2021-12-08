@@ -29,4 +29,14 @@ defmodule IndiePaperWeb.ReadLiveTest do
     assert html =~ chapter1.title
     refute html =~ chapter2.title
   end
+
+  test "show remove from library when added to library", %{conn: conn} do
+    reader = insert(:author)
+    book = insert(:book, publishing_type: :serial)
+    _reader_book_subscription = insert(:reader_book_subscription, book: book, reader: reader)
+    conn = log_in_author(conn, reader)
+    {:ok, _view, html} = live(conn, Routes.book_read_path(conn, :index, book))
+
+    assert html =~ "Remove from library"
+  end
 end

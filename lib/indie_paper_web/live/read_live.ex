@@ -2,6 +2,7 @@ defmodule IndiePaperWeb.ReadLive do
   use IndiePaperWeb, :live_view
 
   alias IndiePaper.Books
+  alias IndiePaper.BookLibrary
 
   on_mount IndiePaperWeb.AuthorLiveAuth
 

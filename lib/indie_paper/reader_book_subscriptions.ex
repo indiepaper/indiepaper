@@ -15,6 +15,13 @@ defmodule IndiePaper.ReaderBookSubscriptions do
     |> Repo.all()
   end
 
+  def get_reader_book_subscription(reader_id, book_id) do
+    from(rbs in ReaderBookSubscription,
+      where: rbs.book_id == ^book_id and rbs.reader_id == ^reader_id
+    )
+    |> Repo.one()
+  end
+
   def with_book(query) do
     query |> Repo.preload(:book)
   end

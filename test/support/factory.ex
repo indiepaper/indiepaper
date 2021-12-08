@@ -134,8 +134,8 @@ defmodule IndiePaper.Factory do
 
   def reader_book_subscription_factory do
     %IndiePaper.ReaderBookSubscriptions.ReaderBookSubscription{
-      reader: build(:reader),
-      book: build(:book, pubishing_type: :serial)
+      reader: build(:author),
+      book: build(:book, publishing_type: :serial)
     }
   end
 end

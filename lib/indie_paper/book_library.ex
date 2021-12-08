@@ -20,6 +20,10 @@ defmodule IndiePaper.BookLibrary do
     Enum.map(book_subscriptions_with_books, fn bs -> bs.book end)
   end
 
+  def book_added_to_library?(reader, book) do
+    ReaderBookSubscriptions.get_reader_book_subscription(reader.id, book.id)
+  end
+
   defp load_order_assoc(orders),
     do: orders |> Orders.with_assoc([[book: :author], [line_items: [product: :assets]]])
 end
