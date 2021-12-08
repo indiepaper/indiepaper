@@ -3,6 +3,7 @@ defmodule IndiePaperWeb.ReadLive do
 
   alias IndiePaper.Books
   alias IndiePaper.BookLibrary
+  alias IndiePaper.Chapters
 
   on_mount IndiePaperWeb.AuthorLiveAuth
 
@@ -10,12 +11,14 @@ defmodule IndiePaperWeb.ReadLive do
   def mount(%{"book_id" => book_id}, _session, socket) do
     book = Books.get_book!(book_id)
     published_chapters = Books.get_published_chapters(book)
+    selected_chapter = List.first(published_chapters)
 
     {:ok,
      socket
      |> assign(
        book: book,
        published_chapters: published_chapters,
+       selected_chapter: selected_chapter,
        book_added_to_library?:
          BookLibrary.book_added_to_library?(socket.assigns.current_author, book)
      )}
@@ -46,5 +49,11 @@ defmodule IndiePaperWeb.ReadLive do
        "The book has been removed from your library, you will no longer be notified of new chapter releases."
      )
      |> assign(book_added_to_library?: false)}
+  end
+
+  @impl true
+  def handle_event("select_chapter", %{"chapter_id" => chapter_id}, socket) do
+    selected_chapter = Chapters.get_chapter!(chapter_id)
+    {:noreply, socket |> assign(selected_chapter: selected_chapter)}
   end
 end

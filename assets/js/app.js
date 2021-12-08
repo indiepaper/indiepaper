@@ -60,6 +60,31 @@ Hooks.BookLongDescriptionEditor = {
   },
 };
 
+Hooks.BookReaderHook = {
+  mounted() {
+    const readerElement = document.getElementById(
+      this.el.dataset.readerElementId
+    );
+    const initialChapterContentJson = JSON.parse(
+      this.el.dataset.chapterContentJson
+    );
+    this.loadAndSetContent(readerElement, initialChapterContentJson);
+  },
+  updated() {
+    const readerElement = document.getElementById(
+      this.el.dataset.readerElementId
+    );
+    const chapterContentJson = JSON.parse(this.el.dataset.chapterContentJson);
+    this.loadAndSetContent(readerElement, chapterContentJson);
+  },
+
+  loadAndSetContent(readerElement, contentJson) {
+    import("./book-reader").then(({ generateHtmlFromContentJson }) => {
+      readerElement.innerHTML = generateHtmlFromContentJson(contentJson);
+    });
+  },
+};
+
 let Uploaders = {};
 Uploaders.S3 = function (entries, onViewError) {
   entries.forEach((entry) => {

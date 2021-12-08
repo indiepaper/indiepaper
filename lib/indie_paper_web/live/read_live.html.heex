@@ -19,11 +19,23 @@
             <% end %>
         </div>
     </div>
-    <div class="container-box page-box">
-        <div class="space-y-4">
-            <%= for chapter <- @published_chapters do %>
-                <p><%= chapter.title %></p>
-            <% end %>
+    <div class="page-box md:container-box md:page-box">
+        <div class="flex flex-col space-y-6">
+            <div class="flex flex-col items-stretch space-y-4">
+                <%= for chapter <- @published_chapters do %>
+                    <button phx-click="select_chapter" phx-value-chapter_id={chapter.id} class="py-2 px-6 text-left md:px-4">
+                        <p><%= chapter.title %></p>
+                    </button>
+                <% end %>
+            </div>
+            <div class="min-h-screen bg-white" id="book-reader"
+                 phx-hook="BookReaderHook"
+                 data-reader-element-id="book-reader-content-html"
+                 data-chapter-content-json={(Jason.encode!(@selected_chapter.published_content_json))}
+            >
+                <div class="py-8 px-6 prose" id="book-reader-content-html" phx-update="ignore">
+                </div>
+            </div>
         </div>
     </div>
 </section>

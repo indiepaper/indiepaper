@@ -1,8 +1,6 @@
 defmodule IndiePaperWeb.ModalComponent do
   use IndiePaperWeb, :live_component
 
-  import Phoenix.LiveView.JS
-
   @impl true
   def render(assigns) do
     ~H"""
