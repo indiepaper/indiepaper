@@ -1,7 +1,9 @@
 <section class="bg-background">
     <div class="secondary-nav">
         <div class="secondary-big-nav-content">
-            <h1 class="text-lg font-bold"><%= @book.title %></h1>
+            <%= live_redirect to: Routes.book_path(@socket, :show, @book) do %>
+                <h1 class="text-lg font-bold"><%= @book.title %></h1>
+            <% end %>
             <%= if @book_added_to_library? do %>
                 <button phx-click="remove_from_library" data-test="remove-from-library-button" class="secondary-link">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -20,20 +22,20 @@
         </div>
     </div>
     <div class="page-box md:container-box md:page-box">
-        <div class="flex flex-col space-y-6">
-            <div class="flex flex-col items-stretch space-y-4">
+        <div class="flex flex-col space-y-6 md:flex-row md:space-y-0">
+            <div class="flex flex-col items-stretch space-y-4 sm:w-56 md:pt-8 md:w-72">
                 <%= for chapter <- @published_chapters do %>
-                    <button phx-click="select_chapter" phx-value-chapter_id={chapter.id} class="py-2 px-6 text-left md:px-4">
+                    <%= live_patch to: Routes.book_read_path(@socket, :index, @book, chapter_id: chapter.id), replace: true, class: "py-2 px-6 text-left rounded-l-md border-t border-b border-l border-transparent md:px-4 hover:bg-warm-gray-100 hover:border-primary-border" do  %>
                         <p><%= chapter.title %></p>
-                    </button>
+                    <% end %>
                 <% end %>
             </div>
-            <div class="min-h-screen bg-white" id="book-reader"
+            <div class="min-h-screen bg-white md:flex-1 md:rounded-lg md:border md:border-primary-border" id="book-reader"
                  phx-hook="BookReaderHook"
                  data-reader-element-id="book-reader-content-html"
                  data-chapter-content-json={(Jason.encode!(@selected_chapter.published_content_json))}
             >
-                <div class="py-8 px-6 prose" id="book-reader-content-html" phx-update="ignore">
+                <div class="py-8 px-6 font-normal text-justify md:py-10 md:px-8 prose" id="book-reader-content-html" phx-update="ignore">
                 </div>
             </div>
         </div>

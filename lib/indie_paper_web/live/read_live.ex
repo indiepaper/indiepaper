@@ -52,8 +52,13 @@ defmodule IndiePaperWeb.ReadLive do
   end
 
   @impl true
-  def handle_event("select_chapter", %{"chapter_id" => chapter_id}, socket) do
+  def handle_params(%{"book_id" => _book_id, "chapter_id" => chapter_id}, _uri, socket) do
     selected_chapter = Chapters.get_chapter!(chapter_id)
     {:noreply, socket |> assign(selected_chapter: selected_chapter)}
+  end
+
+  @impl true
+  def handle_params(%{"book_id" => _book_id}, _uri, socket) do
+    {:noreply, socket}
   end
 end
