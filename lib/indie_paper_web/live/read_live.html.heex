@@ -23,7 +23,7 @@
     </div>
     <div class="page-box md:container-box md:page-box">
         <div class="flex flex-col space-y-6 md:flex-row md:space-y-0">
-            <div class="flex flex-col items-stretch space-y-4 md:pt-8 md:w-72">
+            <div class="flex flex-col items-stretch space-y-4 md:pt-10 md:w-72">
                 <%= for chapter <- @published_chapters do %>
                     <%= live_patch to: Routes.book_read_path(@socket, :index, @book, chapter_id: chapter.id), replace: true,
                     class: "py-2 px-6 text-left md:rounded-l-md border-t border-b md:border-l border-transparent md:px-4 hover:bg-warm-gray-100 hover:border-primary-border #{if @selected_chapter.id == chapter.id, do: 'bg-warm-gray-100 !border-primary-border'}" do  %>

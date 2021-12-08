@@ -59,6 +59,13 @@ defmodule IndiePaperWeb.ReadLive do
 
   @impl true
   def handle_params(%{"book_id" => _book_id}, _uri, socket) do
-    {:noreply, socket}
+    {:noreply,
+     socket
+     |> push_patch(
+       to:
+         Routes.book_read_path(socket, :index, socket.assigns.book,
+           chapter_id: socket.assigns.selected_chapter.id
+         )
+     )}
   end
 end
