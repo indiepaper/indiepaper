@@ -2,14 +2,17 @@ defmodule IndiePaperWeb.ReadLive do
   use IndiePaperWeb, :live_view
 
   alias IndiePaper.Books
+  alias IndiePaper.Authors
   alias IndiePaper.BookLibrary
   alias IndiePaper.Chapters
+  alias IndiePaper.ChapterMembershipTiers
+  alias IndiePaper.ReaderAuthorSubscriptions
 
   on_mount IndiePaperWeb.AuthorLiveAuth
 
   @impl true
   def mount(%{"book_id" => book_id}, _session, socket) do
-    book = Books.get_book!(book_id)
+    book = Books.get_book!(book_id) |> Books.with_assoc(:author)
     published_chapters = Books.get_published_chapters(book)
     selected_chapter = List.first(published_chapters)
 
@@ -19,6 +22,7 @@ defmodule IndiePaperWeb.ReadLive do
        book: book,
        published_chapters: published_chapters,
        selected_chapter: selected_chapter,
+       not_subscribed: false,
        book_added_to_library?:
          BookLibrary.book_added_to_library?(socket.assigns.current_author, book)
      )}
@@ -54,7 +58,37 @@ defmodule IndiePaperWeb.ReadLive do
   @impl true
   def handle_params(%{"book_id" => _book_id, "chapter_id" => chapter_id}, _uri, socket) do
     selected_chapter = Chapters.get_chapter!(chapter_id)
-    {:noreply, socket |> assign(selected_chapter: selected_chapter)}
+    author = Books.get_author(socket.assigns.book)
+
+    if Chapters.free?(selected_chapter) do
+      {:noreply, assign(socket, selected_chapter: selected_chapter, not_subscribed: false)}
+    else
+      membership_tiers = ChapterMembershipTiers.list_membership_tiers(selected_chapter.id)
+
+      subscribed_membership_tier =
+        ReaderAuthorSubscriptions.get_subscription_by_reader_author_id(
+          socket.assigns.current_author.id,
+          author.id
+        )
+
+      if subscribed_membership_tier &&
+           Enum.any?(membership_tiers, fn membership_tier ->
+             membership_tier.id === subscribed_membership_tier.id
+           end) do
+        {:noreply, assign(socket, selected_chapter: selected_chapter, not_subscribed: false)}
+      else
+        chapter_with_masked_content =
+          Map.merge(selected_chapter, %{
+            content_json:
+              Chapters.placeholder_content_json("Chapter", "lorem ipsum, kind of nice."),
+            published_content_json:
+              Chapters.placeholder_content_json("Chapter", "lorem ipsum, kind of nice.")
+          })
+
+        {:noreply,
+         assign(socket, selected_chapter: chapter_with_masked_content, not_subscribed: true)}
+      end
+    end
   end
 
   @impl true
