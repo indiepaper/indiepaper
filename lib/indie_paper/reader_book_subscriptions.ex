@@ -22,6 +22,11 @@ defmodule IndiePaper.ReaderBookSubscriptions do
     |> Repo.one()
   end
 
+  def delete_reader_book_subscription!(reader_id, book_id) do
+    get_reader_book_subscription(reader_id, book_id)
+    |> Repo.delete!()
+  end
+
   def with_book(query) do
     query |> Repo.preload(:book)
   end

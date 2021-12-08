@@ -125,4 +125,8 @@ defmodule IndiePaper.Books do
       {:ok, _reader_book_subscription} -> {:ok, book}
     end
   end
+
+  def remove_serial_book_to_library!(reader, %Book{publishing_type: :serial} = book) do
+    ReaderBookSubscriptions.delete_reader_book_subscription!(reader.id, book.id)
+  end
 end
