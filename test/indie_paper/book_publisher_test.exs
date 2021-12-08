@@ -11,7 +11,7 @@ defmodule IndiePaper.BookPublisherTest do
       book = insert(:book, status: :pending_publication)
 
       {:ok, book} = BookPublisher.publish_book(book)
-      assert Books.is_published?(book)
+      assert Books.published?(book)
 
       book = book |> Books.with_assoc(:draft)
       chapters = Chapters.list_chapters(book.draft)
@@ -45,7 +45,7 @@ defmodule IndiePaper.BookPublisherTest do
       membership_tier = insert(:membership_tier)
 
       book = BookPublisher.publish_serial_chapter!(book, chapter, [membership_tier.id])
-      assert Books.is_published?(book)
+      assert Books.published?(book)
 
       updated_chapter = Chapters.get_chapter!(chapter.id)
 

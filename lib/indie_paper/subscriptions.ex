@@ -30,10 +30,10 @@ defmodule IndiePaper.Subscriptions do
         %Authors.Author{id: reader_id} = _reader,
         %Authors.Author{id: author_id} = _author
       ) do
-    case ReaderAuthorSubscriptions.get_subscription_by_reader_author_id(reader_id, author_id) do
-      nil -> false
-      subscription -> true && active?(subscription)
-    end
+    subscription =
+      ReaderAuthorSubscriptions.get_subscription_by_reader_author_id(reader_id, author_id)
+
+    active?(subscription)
   end
 
   def list_subscriptions(reader) do
