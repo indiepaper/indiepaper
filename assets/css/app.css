@@ -61,7 +61,7 @@
   }
 
   .base-button {
-    @apply px-5 py-2 rounded-lg inline-flex flex-row items-center justify-center space-x-1.5 font-medium text-gray-700 hover:text-gray-900;
+    @apply px-5 py-2 rounded-full inline-flex flex-row items-center justify-center space-x-1.5 font-medium text-gray-700 hover:text-gray-900;
   }
 
   .primary-button {

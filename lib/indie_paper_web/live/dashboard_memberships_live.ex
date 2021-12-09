@@ -11,8 +11,8 @@ defmodule IndiePaperWeb.DashboardMembershipsLive do
     {:ok,
      socket
      |> assign(
-       page_title: "Memberships",
-       membership_tiers: MembershipTiers.list_membership_tiers(socket.assigns.current_author)
+       membership_tiers: MembershipTiers.list_membership_tiers(socket.assigns.current_author),
+       page_title: "Memberships"
      )}
   end
 
@@ -35,7 +35,6 @@ defmodule IndiePaperWeb.DashboardMembershipsLive do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Products")
     |> assign(:membership_tier, nil)
   end
 
