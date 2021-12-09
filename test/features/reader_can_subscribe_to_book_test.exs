@@ -18,7 +18,9 @@ defmodule IndiePaperWeb.Feature.ReaderCanSubscribeToBookTest do
     reader = insert(:author)
     book = insert(:book, publishing_type: :serial)
     conn = conn |> log_in_author(reader)
-    {:ok, view, _html} = live(conn, Routes.book_read_path(conn, :index, book))
+
+    {:ok, view, _html} =
+      live(conn, Routes.book_read_path(conn, :index, book)) |> follow_redirect(conn)
 
     view
     |> element("[data-test=add-to-library-button]")

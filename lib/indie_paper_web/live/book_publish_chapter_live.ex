@@ -53,6 +53,8 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
 
     {:noreply,
      socket
-     |> redirect(to: Routes.book_read_path(socket, :index, book))}
+     |> redirect(
+       to: Routes.book_read_path(socket, :index, book, chapter_id: socket.assigns.chapter)
+     )}
   end
 end

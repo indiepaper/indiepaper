@@ -94,21 +94,21 @@
                 <%= for book <- @books do %>
                     <div class="items-stretch p-0 primary-card">
                         <div class="flex flex-row justify-between items-center py-3 px-6 border-b border-secondary-border">
-                            <%= if IndiePaper.Books.pending_publication?(book)  do %>
+                            <%= if IndiePaper.Books.is_pending_publication?(book)  do %>
                                 <%= if Books.serial_book?(book)  do %>
                                     <span class="py-1 px-2 text-xs text-warm-gray-700 bg-warm-gray-100 rounded-lg border border-warm-gray-200">Pending serial publication</span>
                                 <% else %>
                                     <span class="py-1 px-2 text-xs text-warm-gray-700 bg-warm-gray-100 rounded-lg border border-warm-gray-200" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
                                 <% end %>
                             <% end %>
-                            <%= if IndiePaper.Books.published?(book)  do %>
+                            <%= if IndiePaper.Books.is_published?(book)  do %>
                                 <%= if Books.serial_book?(book)  do %>
                                     <span class="py-1 px-2 text-xs text-green-700 bg-green-100 rounded-lg border border-green-200">Serial publication</span>
                                 <% else %>
                                     <span class="py-1 px-2 text-xs text-green-700 bg-green-100 rounded-lg border border-green-200" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
                                 <% end %>
                             <% end %>
-                            <%= if IndiePaper.Books.published?(book) do %>
+                            <%= if IndiePaper.Books.is_published?(book) do %>
                                 <%= link to: Routes.book_path(@socket, :show, book), class: "secondary-link" do %>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -119,7 +119,7 @@
                             <% end %>
                         </div>
                         <div class="p-6">
-                            <%= link to: (if IndiePaper.Books.published?(book), do: Routes.book_path(@socket, :show, book), else: Routes.draft_path(@socket, :edit, book.draft)) , class: "block" do %>
+                            <%= link to: (if IndiePaper.Books.is_published?(book), do: Routes.book_path(@socket, :show, book), else: Routes.draft_path(@socket, :edit, book.draft)) , class: "block" do %>
                                 <%= if IndiePaper.Books.has_promo_images?(book) do %>
                                     <div class="mb-6 aspect-h-1 aspect-w-1 sm:aspect-w-3">
                                         <img src={IndiePaper.ExternalAssetHandler.get_public_url(IndiePaper.Books.first_promo_image(book))} alt="Book Promo Image" class="object-cover rounded-lg" />
@@ -144,7 +144,7 @@
                             </div>
                         </div>
 
-                        <%= if IndiePaper.Books.published?(book) and Books.vanilla_book?(book)  do %>
+                        <%= if IndiePaper.Books.is_published?(book) and Books.vanilla_book?(book)  do %>
                             <div class="">
                                 <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-primary-border">
                                     <p>Products</p>

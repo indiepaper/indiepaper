@@ -9,7 +9,9 @@ defmodule IndiePaperWeb.ReadLiveTest do
     reader = insert(:author)
     book = insert(:book)
     conn = log_in_author(conn, reader)
-    {:ok, _view, html} = live(conn, Routes.book_read_path(conn, :index, book))
+
+    {:ok, _view, html} =
+      live(conn, Routes.book_read_path(conn, :index, book)) |> follow_redirect(conn)
 
     assert html =~ book.title
   end
@@ -24,7 +26,9 @@ defmodule IndiePaperWeb.ReadLiveTest do
 
     conn = log_in_author(conn, reader)
     {:ok, _published_chapter} = Chapters.publish_free_serial_chapter(chapter1)
-    {:ok, _view, html} = live(conn, Routes.book_read_path(conn, :index, book))
+
+    {:ok, _view, html} =
+      live(conn, Routes.book_read_path(conn, :index, book)) |> follow_redirect(conn)
 
     assert html =~ chapter1.title
     refute html =~ chapter2.title
@@ -35,7 +39,9 @@ defmodule IndiePaperWeb.ReadLiveTest do
     book = insert(:book, publishing_type: :serial)
     _reader_book_subscription = insert(:reader_book_subscription, book: book, reader: reader)
     conn = log_in_author(conn, reader)
-    {:ok, view, _html} = live(conn, Routes.book_read_path(conn, :index, book))
+
+    {:ok, view, _html} =
+      live(conn, Routes.book_read_path(conn, :index, book)) |> follow_redirect(conn)
 
     view
     |> element("[data-test=remove-from-library-button]")
