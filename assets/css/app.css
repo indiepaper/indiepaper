@@ -69,7 +69,7 @@
   }
 
   .submit-button {
-    @apply primary-button;
+    @apply primary-button !py-3 !px-6;
   }
 
   .secondary-button {
