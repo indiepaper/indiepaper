@@ -43,7 +43,11 @@
                     <%= error_tag f, :description_html %>
                 </p>
             </div>
-            <%= submit "Save", phx_disable_with: "Saving...", class: "submit-button w-full md:w-auto py-3 md:py-2" %>
+            <%= if @action in [:new] do %>
+                <%= submit "Create new tier", phx_disable_with: "Creating new tier...", class: "submit-button w-full md:w-auto py-3 md:py-2" %>
+            <% else %>
+                <%= submit "Update membership tier", phx_disable_with: "Updating tier...", class: "submit-button w-full md:w-auto py-3 md:py-2" %>
+            <% end %>
         </div>
         </.form>
     </div>
