@@ -23,14 +23,16 @@ defmodule IndiePaper.PaymentHandler do
   end
 
   def get_subscription_checkout_session(
-        %Authors.Author{id: reader_id} = reader,
-        %Authors.Author{} = author,
+        %Authors.Author{id: reader_id, stripe_customer_id: stripe_customer_id},
+        %Authors.Author{stripe_connect_id: stripe_connect_id} = author,
         %MembershipTiers.MembershipTier{id: membership_tier_id, stripe_price_id: stripe_price_id}
       ) do
     case StripeHandler.get_subscription_checkout_session(
            author: author,
+           customer_id: stripe_customer_id,
            price_id: stripe_price_id,
-           customer_id: reader.stripe_customer_id,
+           connect_id: stripe_connect_id,
+           application_fee_percent: get_platform_percentage(),
            metadata: %{
              reader_id: reader_id,
              membership_tier_id: membership_tier_id
@@ -105,8 +107,20 @@ defmodule IndiePaper.PaymentHandler do
     end
   end
 
+  def create_customer(%Authors.Author{stripe_customer_id: nil, email: email}) do
+    case StripeHandler.create_customer(email) do
+      {:ok, customer} ->
+        {:ok, customer}
+
+      {:error, error} ->
+        {:error, error_message(error, "There was an error while creating Stripe Customer.")}
+    end
+  end
+
+  def get_platform_percentage(), do: 9
+
   def get_platform_fees(price) do
-    MoneyHandler.calculate_percentage(price, 9)
+    MoneyHandler.calculate_percentage(price, get_platform_percentage())
   end
 
   defp error_message(error, default_message) do

@@ -13,7 +13,7 @@ defmodule IndiePaper.SubscriptionsTest do
       assert message =~ "cannot"
     end
 
-    test "returns stripe checkout session url when customer_id is nil" do
+    test "creates new stripe customer when stripe_customer_id is nil" do
       reader = insert(:author, stripe_customer_id: nil)
       membership_tier = insert(:membership_tier)
 
