@@ -5,7 +5,7 @@
     <div class="secondary-nav">
         <div class="secondary-big-nav-content">
             <%= live_redirect to: Routes.book_path(@socket, :show, @book) do %>
-                <h1 class="text-lg font-bold"><%= @book.title %></h1>
+                <h1 class="text-lg font-bold" data-test="book-title"><%= @book.title %></h1>
             <% end %>
             <%= if Authors.is_same?(@current_author, @book.author) do %>
                 <%= live_redirect to: Routes.draft_path(@socket, :edit, @book.draft), class: "secondary-link" do %>
@@ -15,7 +15,7 @@
                     </svg>
                     <span>Edit draft</span>
                 <% end %>
-                <% else %>
+            <% else %>
                 <%= if @book_added_to_library? do %>
                     <button phx-click="remove_from_library" data-test="remove-from-library-button" class="secondary-link">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
