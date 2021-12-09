@@ -14,7 +14,7 @@ defmodule IndiePaperWeb.AuthorPageLive do
       nil ->
         {:ok,
          socket
-         |> put_flash(:error, "The Author was not found, check the profile url.")
+         |> put_flash(:info, "The Author was not found, check the profile url.")
          |> redirect(to: "/")}
 
       author ->

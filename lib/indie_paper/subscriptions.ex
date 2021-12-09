@@ -26,6 +26,11 @@ defmodule IndiePaper.Subscriptions do
     end
   end
 
+  def list_subscriptions(reader) do
+    ReaderAuthorSubscriptions.list_subscriptions_of_reader(reader.id)
+    |> Repo.preload(membership_tier: [author: :books])
+  end
+
   def is_subscribed?(
         %Authors.Author{id: reader_id} = _reader,
         %Authors.Author{id: author_id} = _author
@@ -34,11 +39,6 @@ defmodule IndiePaper.Subscriptions do
       ReaderAuthorSubscriptions.get_subscription_by_reader_author_id(reader_id, author_id)
 
     active?(subscription)
-  end
-
-  def list_subscriptions(reader) do
-    ReaderAuthorSubscriptions.list_subscriptions_of_reader(reader.id)
-    |> Repo.preload(membership_tier: [author: :books])
   end
 
   def active?(%{status: :active}), do: true
