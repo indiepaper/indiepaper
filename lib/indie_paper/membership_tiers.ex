@@ -30,6 +30,7 @@ defmodule IndiePaper.MembershipTiers do
     membership_tier_changeset =
       Ecto.build_assoc(current_author, :membership_tiers)
       |> MembershipTier.changeset(params)
+      |> MembershipTier.amount_changeset(params)
 
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:membership_tier, membership_tier_changeset)

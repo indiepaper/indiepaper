@@ -23,14 +23,21 @@ defmodule IndiePaper.MembershipTiers.MembershipTier do
   @doc false
   def changeset(membership_tier, attrs) do
     membership_tier
-    |> cast(attrs, [:amount, :title, :description_html])
+    |> cast(attrs, [:title, :description_html])
     |> validate_required([
-      :amount,
       :title,
       :description_html
     ])
     |> validate_length(:title, min: 3, max: 32)
     |> validate_length(:description_html, min: 4, max: 512)
+  end
+
+  def amount_changeset(membership_tier, attrs) do
+    membership_tier
+    |> cast(attrs, [:amount])
+    |> validate_required([
+      :amount
+    ])
     |> validate_money(:amount)
   end
 
