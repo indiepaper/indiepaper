@@ -70,15 +70,15 @@ defmodule IndiePaperWeb.ReadLive do
       true ->
         membership_tiers = ChapterMembershipTiers.list_membership_tiers(selected_chapter.id)
 
-        subscribed_membership_tier =
+        subscription =
           ReaderAuthorSubscriptions.get_subscription_by_reader_author_id(
             socket.assigns.current_author.id,
             author.id
           )
 
-        if subscribed_membership_tier &&
+        if subscription &&
              Enum.any?(membership_tiers, fn membership_tier ->
-               membership_tier.id === subscribed_membership_tier.id
+               membership_tier.id === subscription.membership_tier.id
              end) do
           {:noreply, assign(socket, selected_chapter: selected_chapter, not_subscribed: false)}
         else

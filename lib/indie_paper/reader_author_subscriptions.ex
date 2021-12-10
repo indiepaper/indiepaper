@@ -19,6 +19,7 @@ defmodule IndiePaper.ReaderAuthorSubscriptions do
       where: m.author_id == ^author_id
     )
     |> Repo.one()
+    |> Repo.preload([:reader, :membership_tier])
   end
 
   def list_subscriptions_of_reader(reader_id) do
