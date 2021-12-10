@@ -5,10 +5,14 @@ defmodule IndiePaper.ChapterMembershipTiers do
   alias IndiePaper.ChapterMembershipTiers.ChapterMembershipTier
   alias IndiePaper.Chapters
 
+  def list_chapter_membership_tiers(chapter_id) do
+    from(cm in ChapterMembershipTier, where: cm.chapter_id == ^chapter_id)
+    |> Repo.all()
+  end
+
   def list_membership_tiers(chapter_id) do
     chapter_membership_tiers =
-      from(cm in ChapterMembershipTier, where: cm.chapter_id == ^chapter_id)
-      |> Repo.all()
+      list_chapter_membership_tiers(chapter_id)
       |> Repo.preload([:membership_tier])
 
     Enum.map(chapter_membership_tiers, fn chapter_membership_tier ->
