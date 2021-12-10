@@ -65,4 +65,7 @@ defmodule IndiePaper.PaymentHandlerTest do
       assert platform_fees.amount == 36
     end
   end
+
+  describe "create_product_with_price/2" do
+  end
 end

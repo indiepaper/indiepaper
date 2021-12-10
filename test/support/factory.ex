@@ -7,6 +7,7 @@ defmodule IndiePaper.Factory do
   def book_factory do
     %IndiePaper.Books.Book{
       title: sequence("Book Title"),
+      publishing_type: :vanilla,
       short_description: "Really long and short description",
       long_description_html:
         "<h3>Book Description Html</h3><p>This is the description of the description</p>",
@@ -62,6 +63,7 @@ defmodule IndiePaper.Factory do
     %IndiePaper.Chapters.Chapter{
       title: sequence(:title, &"Chapter Title #{&1}", start_at: 0),
       chapter_index: sequence(:chapter_index, fn num -> num end, start_at: 0),
+      is_free: false,
       published_content_json:
         sequence(
           :published_content_json,
@@ -97,5 +99,43 @@ defmodule IndiePaper.Factory do
     |> Authors.Author.registration_changeset(%{password: "longpassword123"})
     |> Ecto.Changeset.put_change(:password, "longpassword123")
     |> Ecto.Changeset.apply_changes()
+  end
+
+  def membership_tier_factory do
+    %IndiePaper.MembershipTiers.MembershipTier{
+      title: sequence("Tier"),
+      description_html:
+        "<p>Description about the membership that makes everything worthwhile.</p>",
+      author: build(:author),
+      amount: Money.new(400),
+      stripe_price_id: sequence("stripe_price_"),
+      stripe_product_id: sequence("stripe_product")
+    }
+  end
+
+  def reader_author_subscription_factory do
+    author = build(:author)
+
+    %IndiePaper.ReaderAuthorSubscriptions.ReaderAuthorSubscription{
+      author: author,
+      reader: build(:author),
+      membership_tier: build(:membership_tier, author: author),
+      status: :active,
+      stripe_checkout_session_id: sequence("stripe_checkout_session_id")
+    }
+  end
+
+  def chapter_membership_tier_factory do
+    %IndiePaper.ChapterMembershipTiers.ChapterMembershipTier{
+      chapter: build(:chapter),
+      membership_tier: build(:membership_tier)
+    }
+  end
+
+  def reader_book_subscription_factory do
+    %IndiePaper.ReaderBookSubscriptions.ReaderBookSubscription{
+      reader: build(:author),
+      book: build(:book, publishing_type: :serial)
+    }
   end
 end

@@ -44,11 +44,6 @@ defmodule IndiePaperWeb.BookLive.Edit do
     {:ok, meta, socket}
   end
 
-  @impl Phoenix.LiveView
-  def render(assigns) do
-    IndiePaperWeb.BookView.render("edit.html", assigns)
-  end
-
   defp put_promo_images(socket, book, params) do
     {completed, []} = uploaded_entries(socket, :promo_image)
 
@@ -93,8 +88,9 @@ defmodule IndiePaperWeb.BookLive.Edit do
              book_params_with_promo_images
            ) do
       socket =
-        redirect(
-          socket,
+        socket
+        |> put_flash(:info, "Listing page of #{updated_book.title} updated successfully.")
+        |> redirect(
           to:
             if(Books.is_published?(updated_book),
               do: Routes.book_path(socket, :show, updated_book),

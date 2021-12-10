@@ -1,5 +1,5 @@
 defmodule IndiePaperWeb.BookView do
   use IndiePaperWeb, :view
 
-  import IndiePaperWeb.UploadHelpers
+  alias IndiePaper.Books
 end

@@ -36,17 +36,6 @@ defmodule IndiePaper.Orders do
     |> Repo.insert()
   end
 
-  def change_line_item(line_item, attrs \\ %{}) do
-    line_item
-    |> LineItem.changeset(attrs)
-  end
-
-  def line_items_changeset(products) do
-    Enum.map(products, fn product ->
-      change_line_item(%LineItem{}, %{amount: product.price, product_id: product.id})
-    end)
-  end
-
   def update_order(order, attrs) do
     order
     |> Order.changeset(attrs)
@@ -63,4 +52,15 @@ defmodule IndiePaper.Orders do
 
   def is_payment_completed?(%Order{status: :payment_completed}), do: true
   def is_payment_completed?(_), do: false
+
+  def change_line_item(line_item, attrs \\ %{}) do
+    line_item
+    |> LineItem.changeset(attrs)
+  end
+
+  def line_items_changeset(products) do
+    Enum.map(products, fn product ->
+      change_line_item(%LineItem{}, %{amount: product.price, product_id: product.id})
+    end)
+  end
 end

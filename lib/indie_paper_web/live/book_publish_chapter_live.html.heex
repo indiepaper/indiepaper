@@ -1,0 +1,87 @@
+<div class="bg-background">
+    <div class="secondary-nav">
+        <div class="secondary-nav-content">
+            <%= link to: Routes.draft_path(@socket, :edit, @book.draft), class: "secondary-nav-link" do %>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
+                </svg>
+                <p>back to editing</p>
+            <% end %>
+        </div>
+    </div>
+    <div class="container-box page-box">
+        <div class="max-w-xl">
+            <h1 class="page-heading">Publish Chapter</h1>
+            <p class="page-description">Set the membership tier for which you want the chapter to be accessble.</p>
+
+            <div class="mt-16">
+                <.form
+                let={f}
+                id="book-publish-chapter-form"
+                for={:publish_chapter}
+                data-test="book-publish-chapter-form"
+                phx-submit="publish_chapter">
+
+                <div class="max-w-md form-loose-container">
+                    <div class="input-container">
+                        <p class="text-xl font-bold"><%= @chapter.title %></p>
+                    </div>
+                    <div class="input-container"
+                         x-data="{
+                                selected: ['free'],
+                                isMembershipTierSelected(id) {
+                                    return this.selected.indexOf(id) != -1
+                                },
+                                toggleMembershipTier(id) {
+                                    if(id === 'free') {
+                                        this.selected= ['free'];
+                                    } else {
+                                        this.selected = this.selected.filter(membershipTierId => membershipTierId !== 'free');
+                                        if (this.selected.indexOf(id) == -1)
+                                            this.selected.push(id)
+                                        else {
+                                            this.selected = this.selected.filter(membershipTierId => membershipTierId !== id);
+                                        }
+                                    }
+                                }}">
+                        <%= label f, :membership_tiers, class: "input-label"  %>
+                        <%= hidden_input f, :membership_tiers, ":value": "selected" %>
+                        <div class="flex flex-col items-stretch mt-3 space-y-5 max-w-md">
+                            <div>
+                                <%= live_redirect to: Routes.dashboard_memberships_path(@socket, :index), class: "secondary-button text-sm", data: [test: "create-membership-tier-link"] do  %>
+                                    <p>Create membership tier</p>
+                                <% end %>
+                            </div>
+                            <%= for membership_tier <- @membership_tiers do %>
+                                <button @click.prevent={"toggleMembershipTier('#{membership_tier.id}')"}
+                                        class="flex flex-row justify-center items-center py-4 px-6 space-x-3 bg-white rounded-xl border-2 border border-primary-border"
+                                        :class={"{'bg-orange-50 border-2 transistion border-accent': isMembershipTierSelected('#{membership_tier.id}') }"}>
+                                    <div>
+                                        <svg x-show={"!isMembershipTierSelected('#{membership_tier.id}')"} xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <svg x-cloak x-show={"isMembershipTierSelected('#{membership_tier.id}')"} xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-accent" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1 text-left">
+                                        <div class="flex flex-row justify-between items-center space-x-2">
+                                            <h3 class="font-medium"><%= membership_tier.title %></h3>
+                                            <p class="px-2 text-sm text-orange-900 bg-orange-100 rounded-full"><%= MoneyHandler.humanize(membership_tier.amount) %></p>
+                                        </div>
+                                    </div>
+                                </button>
+                            <% end %>
+                        </div>
+                        <p class="input-error">
+                            <%= error_tag f, :membership_tiers %>
+                        </p>
+                    </div>
+
+                    <%= submit "Publish Chapter", phx_disable_with: "Publishing Chapter...", class: "primary-button" %>
+                </div>
+                </.form>
+            </div>
+        </div>
+    </div>
+</div>

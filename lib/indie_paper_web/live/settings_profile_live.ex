@@ -1,6 +1,8 @@
 defmodule IndiePaperWeb.SettingsProfileLive do
   use IndiePaperWeb, :live_view
 
+  on_mount IndiePaperWeb.AuthorLiveAuth
+
   import IndiePaperWeb.UploadHelpers
 
   alias IndiePaper.AuthorProfile
@@ -40,7 +42,8 @@ defmodule IndiePaperWeb.SettingsProfileLive do
            consume_profile_picture(socket, updated_author) do
       {:noreply,
        socket
-       |> redirect(to: Routes.dashboard_path(socket, :index))}
+       |> put_flash(:info, "Your Profile has been successfully updated.")
+       |> redirect(to: Routes.author_page_path(socket, :show, updated_author))}
     else
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset, form_error: true)}

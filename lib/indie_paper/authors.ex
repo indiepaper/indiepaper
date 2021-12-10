@@ -27,6 +27,10 @@ defmodule IndiePaper.Authors do
     Repo.get_by(Author, email: email)
   end
 
+  def get_author_by_username(username) when is_binary(username) do
+    Repo.get_by(Author, username: username)
+  end
+
   @doc """
   Gets a author by email and password.
 
@@ -399,6 +403,12 @@ defmodule IndiePaper.Authors do
     })
   end
 
+  def set_stripe_customer_id(reader, stripe_customer_id) do
+    update_author_internal_profile(reader, %{
+      stripe_customer_id: stripe_customer_id
+    })
+  end
+
   def is_payment_connected?(author) do
     author.is_payment_connected
   end
@@ -412,4 +422,7 @@ defmodule IndiePaper.Authors do
   def get_full_name(author) do
     "#{author.first_name} #{author.last_name}"
   end
+
+  def is_same?(%{id: id}, %{id: id}), do: true
+  def is_same?(_, _), do: false
 end

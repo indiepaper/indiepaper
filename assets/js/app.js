@@ -25,7 +25,6 @@ import "phoenix_html";
 import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
-// import "instant.page";
 
 import Alpine from "alpinejs";
 window.Alpine = Alpine;
@@ -35,9 +34,58 @@ let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
 
-let hooks = {};
-let Uploaders = {};
+let Hooks = {};
+Hooks.SimpleTipTapHtmlEditor = {
+  mounted() {
+    const contentHTMLElementId = this.el.dataset.contentHtmlElementId;
+    const editorElementId = this.el.dataset.editorElementId;
+    import("./simple-tip-tap-html-editor").then(
+      ({ setupSimpleTipTapHtmlEditor }) => {
+        setupSimpleTipTapHtmlEditor(contentHTMLElementId, editorElementId);
+      }
+    );
+  },
+};
 
+Hooks.BookLongDescriptionEditor = {
+  mounted() {
+    const contentHTMLElementId = this.el.dataset.contentHtmlElementId;
+    const editorElementId = this.el.dataset.editorElementId;
+
+    import("./book-description-editor").then(
+      ({ setupBookDescriptionEditor }) => {
+        setupBookDescriptionEditor(contentHTMLElementId, editorElementId);
+      }
+    );
+  },
+};
+
+Hooks.BookReaderHook = {
+  mounted() {
+    const readerElement = document.getElementById(
+      this.el.dataset.readerElementId
+    );
+    const initialChapterContentJson = JSON.parse(
+      this.el.dataset.chapterContentJson
+    );
+    this.loadAndSetContent(readerElement, initialChapterContentJson);
+  },
+  updated() {
+    const readerElement = document.getElementById(
+      this.el.dataset.readerElementId
+    );
+    const chapterContentJson = JSON.parse(this.el.dataset.chapterContentJson);
+    this.loadAndSetContent(readerElement, chapterContentJson);
+  },
+
+  loadAndSetContent(readerElement, contentJson) {
+    import("./book-reader").then(({ generateHtmlFromContentJson }) => {
+      readerElement.innerHTML = generateHtmlFromContentJson(contentJson);
+    });
+  },
+};
+
+let Uploaders = {};
 Uploaders.S3 = function (entries, onViewError) {
   entries.forEach((entry) => {
     let formData = new FormData();
@@ -65,7 +113,7 @@ Uploaders.S3 = function (entries, onViewError) {
 
 let liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
-  hooks: hooks,
+  hooks: Hooks,
   uploaders: Uploaders,
   dom: {
     onBeforeElUpdated(from, to) {

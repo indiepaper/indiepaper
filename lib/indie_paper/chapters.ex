@@ -1,9 +1,11 @@
 defmodule IndiePaper.Chapters do
   import Ecto.Query
+  alias Ecto.Multi
 
-  alias IndiePaper.Repo
-  alias IndiePaper.Drafts
+  alias IndiePaper.ChapterMembershipTiers
   alias IndiePaper.Chapters.Chapter
+  alias IndiePaper.Drafts
+  alias IndiePaper.Repo
 
   def change_chapter(%Chapter{} = chapter, attrs \\ %{}) do
     chapter
@@ -75,4 +77,41 @@ defmodule IndiePaper.Chapters do
       _ -> nil
     end
   end
+
+  def get_last_updated_chapter(draft_id) do
+    from(c in Chapter, where: c.draft_id == ^draft_id, order_by: [desc: c.updated_at], limit: 1)
+    |> Repo.one()
+  end
+
+  def publish_serial_chapter(chapter, membership_tier_ids) do
+    Multi.new()
+    |> Multi.update(
+      :chapter,
+      Chapter.publish_changeset(chapter, %{published_content_json: chapter.content_json})
+    )
+    |> Multi.insert_all(
+      :chapter_membership_tiers,
+      ChapterMembershipTiers.ChapterMembershipTier,
+      fn %{chapter: chapter} ->
+        ChapterMembershipTiers.build_insert_all_chapter_membership_tiers(
+          chapter,
+          membership_tier_ids
+        )
+      end
+    )
+    |> Repo.transaction()
+  end
+
+  def publish_free_serial_chapter(chapter) do
+    Chapter.publish_changeset(chapter, %{
+      published_content_json: chapter.content_json,
+      is_free: true
+    })
+    |> Repo.update()
+  end
+
+  def free?(%Chapter{is_free: is_free}), do: is_free
+
+  def published?(%Chapter{published_content_json: nil}), do: false
+  def published?(%Chapter{} = _chapter), do: true
 end

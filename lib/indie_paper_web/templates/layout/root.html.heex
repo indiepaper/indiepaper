@@ -12,7 +12,7 @@
 
         <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
         <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/fonts/fonts.css")}/>
-        <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/js/app.js")}></script>
+        <script defer type="module" phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/js/app.js")}></script>
         <script defer data-domain="indiepaper.me" src="https://plausible.io/js/plausible.js"></script>
     </head>
 
@@ -20,7 +20,7 @@
         <header class="border-b-2 border-orange-400">
             <div class="flex flex-row justify-between items-center container-box">
                 <%= link "IndiePaper", to: Routes.page_path(@conn, :index), class: "font-bold", "data-test": "title"  %>
-                <div class="flex flex-row items-center space-x-6 md:space-x-8">
+                <div class="flex flex-row items-center space-x-6">
                     <%= if @current_author do %>
                         <%= live_redirect "Dashboard", to: Routes.dashboard_path(@conn, :index), class: "primary-link" %>
                         <div x-data="{profileOpen: false}" class="relative ml-3">
@@ -41,7 +41,7 @@
                                 x-transition:leave-start="transform opacity-100 scale-100"
                                 x-transition:leave-end="transform opacity-0 scale-95"
                                 class="absolute right-0 z-50 py-1 mt-2 w-64 bg-white rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                                <%= live_redirect to: Routes.settings_profile_path(@conn, :edit), class: "block flex flex-col items-start py-3 px-6 space-y-0 !space-x-0 hover:bg-warm-gray-100 primary-link" do %>
+                                <%= live_redirect to: Routes.author_page_path(@conn, :show, @current_author), class: "block flex flex-col items-start py-3 px-6 space-y-0 !space-x-0 hover:bg-warm-gray-100 primary-link" do %>
                                     <p>Signed in as</p>
                                     <div class="flex flex-row items-center space-x-1">
                                         <p class="font-semibold"><%= IndiePaper.Authors.get_full_name(@current_author) %></p>
@@ -71,14 +71,14 @@
                                     <p>Sign out</p>
                                 <% end %>
                             </div>
-                </div>
+                        </div>
                     <% else %>
-                <div class="flex flex-row items-center space-x-6">
-                    <%= link "Sign in", to: Routes.author_session_path(@conn, :new) , class: "primary-link"%>
-                    <%= link "Start Writing", to: Routes.author_registration_path(@conn, :new), class: "secondary-button text-sm" %>
-                </div>
+                        <div class="flex flex-row items-center space-x-6">
+                            <%= link "Sign in", to: Routes.author_session_path(@conn, :new) , class: "primary-link"%>
+                            <%= link "Start Writing", to: Routes.author_registration_path(@conn, :new), class: "secondary-button text-sm" %>
+                        </div>
                     <% end %>
-            </div>
+                </div>
             </div>
         </header>
         <%= @inner_content %>

@@ -8,8 +8,9 @@ defmodule IndiePaper.Books do
   import Ecto.Query
 
   alias IndiePaper.Books.Book
-  alias IndiePaper.Drafts
   alias IndiePaper.Chapters
+  alias IndiePaper.Drafts
+  alias IndiePaper.ReaderBookSubscriptions
 
   def list_books(author) do
     Book
@@ -31,10 +32,7 @@ defmodule IndiePaper.Books do
       long_description_html: "<h2>You love your book, let the world know</h2>"
     })
     |> Repo.insert()
-  end
-
-  def create_book_with_draft(author, params) do
-    case create_book(author, params) do
+    |> case do
       {:ok, book} ->
         Drafts.create_draft_with_placeholder_chapters!(book)
         {:ok, book}
@@ -53,6 +51,7 @@ defmodule IndiePaper.Books do
   end
 
   def get_book!(book_id), do: Repo.get!(Book, book_id)
+  def get_book_with_draft!(book_id), do: get_book!(book_id) |> with_assoc(:draft)
 
   def with_assoc(book, assoc), do: Repo.preload(book, assoc)
 
@@ -68,6 +67,12 @@ defmodule IndiePaper.Books do
   def publish_book_changeset(book) do
     book
     |> Book.status_changeset(%{status: :published})
+  end
+
+  def publish_book(book) do
+    book
+    |> publish_book_changeset()
+    |> Repo.update()
   end
 
   def get_read_online_product(book) do
@@ -105,5 +110,23 @@ defmodule IndiePaper.Books do
 
   def first_promo_image(book) do
     Enum.at(book.promo_images, 0)
+  end
+
+  def serial_book?(book) do
+    book.publishing_type == :serial
+  end
+
+  def vanilla_book?(book) do
+    book.publishing_type == :vanilla
+  end
+
+  def add_serial_book_to_library(reader, %Book{publishing_type: :serial} = book) do
+    case ReaderBookSubscriptions.create_reader_book_subscription(reader.id, book.id) do
+      {:ok, _reader_book_subscription} -> {:ok, book}
+    end
+  end
+
+  def remove_serial_book_to_library!(reader, %Book{publishing_type: :serial} = book) do
+    ReaderBookSubscriptions.delete_reader_book_subscription!(reader.id, book.id)
   end
 end

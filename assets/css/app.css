@@ -9,7 +9,7 @@
   }
 
   .page-box {
-    @apply py-16 md:py-20;
+    @apply py-20 md:py-24;
   }
 
   .page-heading {
@@ -48,6 +48,10 @@
     @apply !border-primary-error;
   }
 
+  .small-badge {
+    @apply flex flex-row items-center py-1 px-3 space-x-1.5 text-xs rounded-full;
+  }
+
   .input-label {
     @apply mb-1;
   }
@@ -61,7 +65,7 @@
   }
 
   .base-button {
-    @apply px-5 py-2 rounded-lg inline-flex flex-row items-center justify-center space-x-1.5 font-medium text-gray-700 hover:text-gray-900;
+    @apply px-5 py-2 rounded-full inline-flex flex-row items-center justify-center space-x-1.5 font-medium text-gray-700 hover:text-gray-900;
   }
 
   .primary-button {
@@ -69,7 +73,7 @@
   }
 
   .submit-button {
-    @apply primary-button;
+    @apply primary-button !px-6;
   }
 
   .secondary-button {
@@ -103,6 +107,26 @@
   .secondary-link {
     @apply base-link text-sm;
   }
+
+  .profile-picture {
+    @apply object-cover w-24 h-24 rounded-full ring-2 ring-white ring-offset-2 ring-offset-gray-800 focus:outline-none;
+  }
+
+  .secondary-nav {
+    @apply bg-white border-b border-primary-border;
+  }
+
+  .secondary-nav-content {
+    @apply py-6 md:py-4 flex flex-col items-start space-y-5 md:flex-row md:items-center md:justify-between md:space-y-0 md:space-x-6 container-box;
+  }
+
+  .secondary-big-nav-content {
+    @apply secondary-nav-content md:py-6;
+  }
+
+  .secondary-nav-link {
+    @apply secondary-link py-2;
+  }
 }
 
 /* LiveView specific classes for your customization */
@@ -119,6 +143,7 @@
 .phx-disconnected {
   cursor: wait;
 }
+
 .phx-disconnected * {
   pointer-events: none;
 }

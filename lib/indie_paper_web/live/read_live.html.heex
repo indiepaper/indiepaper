@@ -1,0 +1,74 @@
+<section class="bg-background">
+    <%= if Authors.is_same?(@current_author, @book.author) do %>
+        <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
+    <% end %>
+    <div class="secondary-nav">
+        <div class="secondary-big-nav-content">
+            <%= live_redirect to: Routes.book_path(@socket, :show, @book) do %>
+                <h1 class="text-lg font-bold" data-test="book-title"><%= @book.title %></h1>
+            <% end %>
+            <%= if Authors.is_same?(@current_author, @book.author) do %>
+                <%= live_redirect to: Routes.draft_path(@socket, :edit, @book.draft), class: "secondary-link" do %>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                        <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Edit draft</span>
+                <% end %>
+            <% else %>
+                <%= if @book_added_to_library? do %>
+                    <button phx-click="remove_from_library" data-test="remove-from-library-button" class="secondary-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span class="text-sm">Remove from library</span>
+                    </button>
+                <% else %>
+                    <button phx-click="add_to_library" class="primary-button" data-test="add-to-library-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span phx-disable-with="Adding to library..." class="text-sm">Add to library</span>
+                    </button>
+                <% end %>
+            <% end %>
+        </div>
+    </div>
+    <div class="page-box md:container-box md:page-box">
+        <div class="flex flex-col space-y-6 md:flex-row md:space-y-0">
+            <div class="flex flex-col items-stretch space-y-4 md:py-10 md:w-72">
+                <%= for chapter <- @published_chapters do %>
+                    <%= live_patch to: Routes.book_read_path(@socket, :index, @book, chapter_id: chapter.id),
+                    data: [test: "book-chapter-title"],
+                    class: "py-2 px-6 text-left md:rounded-l-md border-t border-b md:border-l border-transparent md:px-4 hover:bg-warm-gray-100 hover:border-primary-border #{if @selected_chapter.id == chapter.id, do: 'bg-warm-gray-100 !border-primary-border'}" do  %>
+                        <p><%= chapter.title %></p>
+                    <% end %>
+                <% end %>
+            </div>
+            <div class={"min-h-screen bg-white md:flex-1 md:rounded-lg md:border md:border-primary-border #{if @not_subscribed, do: 'flex flex-row items-center justify-center min-h-[320px] md:min-h-[480px]'}"} id="book-reader"
+                 phx-hook="BookReaderHook"
+                 data-reader-element-id="book-reader-content-html"
+                 data-chapter-content-json={(Jason.encode!(@selected_chapter.published_content_json))}
+            >
+                <div class={"py-8 px-6 font-normal text-justify md:py-10 md:px-8 prose #{if @not_subscribed, do: 'hidden'}"} id="book-reader-content-html" phx-update="ignore">
+                </div>
+                <%= if @not_subscribed do %>
+                    <div class="flex flex-col justify-center items-center py-8 px-6 bg-white rounded-lg">
+                        <div class="text-center">
+                            <h2 class="text-2xl font-bold">Subscribe to <%= Authors.get_full_name(@book.author) %></h2>
+                            <p class="text-secondary-text">This chapter is only available for subscribed readers of the author.</p>
+                        </div>
+                        <div class="flex flex-row justify-start items-center mt-8">
+                            <%= live_redirect to: Routes.author_page_path(@socket, :show, @book.author), class: "primary-button" do %>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                                </svg>
+                                <p>Subscribe</p>
+                            <% end %>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</section>

@@ -36,7 +36,7 @@ config :esbuild,
   version: "0.12.18",
   default: [
     args:
-      ~w(js/app.js js/draft-editor.js js/book-long-description-html-editor.js js/chapter-render.js fonts/fonts.css --bundle --loader:.otf=file --target=es2017 --outdir=../priv/static/assets),
+      ~w(js/app.js js/draft-editor.js js/book-description-editor.js js/book-reader.js js/simple-tip-tap-html-editor.js fonts/fonts.css --chunk-names=chunks/[name]-[hash] --splitting --format=esm --bundle --loader:.otf=file --target=es2017 --minify --outdir=../priv/static/assets),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
@@ -59,6 +59,10 @@ config :ueberauth, Ueberauth,
     google: {Ueberauth.Strategy.Google, []},
     twitter: {Ueberauth.Strategy.Twitter, []}
   ]
+
+# Setup Stripe API Level
+config :stripity_stripe,
+  api_version: "2020-08-27"
 
 # Setup EX_AWS
 config :ex_aws,

@@ -55,7 +55,7 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
            type: "account_onboarding"
          }) do
       {:ok, stripe_account_link} -> {:ok, stripe_account_link.url}
-      {:error, error} -> {:error, error_message(error, "error creating Stripe Account link")}
+      {:error, error} -> {:error, error}
     end
   end
 
@@ -65,36 +65,84 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
         platform_fees: platform_fees,
         stripe_connect_id: stripe_connect_id
       ) do
-    case Stripe.Session.create(%{
-           payment_method_types: ["card"],
-           line_items: [
-             %{
-               name: item_title,
-               amount: item_amount,
-               currency: "usd",
-               quantity: 1
-             }
-           ],
-           payment_intent_data: %{
-             application_fee_amount: platform_fees,
-             transfer_data: %{
-               destination: stripe_connect_id
-             }
-           },
-           mode: "payment",
-           success_url:
-             Routes.dashboard_library_url(Endpoint, :index, stripe_checkout_success: true),
-           cancel_url: Routes.dashboard_url(Endpoint, :index)
-         }) do
-      {:ok, stripe_checkout_session} ->
-        {:ok, stripe_checkout_session}
-
-      {:error, error} ->
-        {:error, error_message(error, "error creating Stripe Checkout Session.")}
-    end
+    Stripe.Session.create(%{
+      payment_method_types: ["card"],
+      line_items: [
+        %{
+          name: item_title,
+          amount: item_amount,
+          currency: "usd",
+          quantity: 1
+        }
+      ],
+      payment_intent_data: %{
+        application_fee_amount: platform_fees,
+        transfer_data: %{
+          destination: stripe_connect_id
+        }
+      },
+      mode: "payment",
+      success_url: Routes.dashboard_library_url(Endpoint, :index, stripe_checkout_success: true),
+      cancel_url: Routes.dashboard_url(Endpoint, :index)
+    })
   end
 
-  defp error_message(error, default_message) do
-    (error.user_message && error.user_message) || default_message
+  def create_product(name: name) do
+    Stripe.Product.create(%{
+      name: name
+    })
+  end
+
+  def create_price(product_id: product_id, unit_amount: unit_amount) do
+    Stripe.Price.create(%{
+      unit_amount: unit_amount,
+      product: product_id,
+      currency: "usd",
+      recurring: %{
+        interval: "month"
+      }
+    })
+  end
+
+  def get_subscription_checkout_session(
+        author: author,
+        customer_id: customer_id,
+        price_id: price_id,
+        connect_id: connect_id,
+        application_fee_percent: application_fee_percent,
+        metadata: metadata
+      ) do
+    params = %{
+      success_url:
+        Routes.dashboard_subscriptions_url(Endpoint, :index, stripe_checkout_success: true),
+      cancel_url: Routes.author_page_url(Endpoint, :show, author),
+      mode: "subscription",
+      metadata: metadata,
+      line_items: [
+        %{
+          price: price_id,
+          quantity: 1
+        }
+      ],
+      subscription_data: %{
+        transfer_data: %{
+          destination: connect_id
+        },
+        application_fee_percent: application_fee_percent
+      }
+    }
+
+    updated_params =
+      if customer_id do
+        Map.merge(params, %{customer: customer_id})
+      else
+        params
+      end
+
+    Stripe.Session.create(updated_params)
+  end
+
+  def create_customer(email) do
+    Stripe.Customer.create(%{email: email})
   end
 end

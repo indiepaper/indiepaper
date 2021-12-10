@@ -1,6 +1,9 @@
 <section class="bg-background">
+    <%= if IndiePaper.Authors.is_same?(@current_author, @book.author) do %>
+        <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
+    <% end %>
     <div class="py-24 md:py-32 container-box page-box">
-        <div class="mx-auto max-w-4xl">
+        <div class="mx-auto max-w-3xl">
             <div class="flex flex-col items-start md:px-8">
                 <div class="flex flex-col space-y-8 w-full">
                     <%= for promo_image <- @book.promo_images do %>
@@ -11,17 +14,21 @@
                 </div>
                 <h1 class="mt-12 text-2xl font-black text-gray-800 md:text-4xl" data-test="title"><%= @book.title %></h1>
                 <p class="mt-2 secondary-text">written by <%= link IndiePaper.Authors.get_full_name(@book.author), to: Routes.author_page_path(@conn, :show, @book.author), class: "primary-link inline-block" %></p>
-                <%= link to: Routes.book_checkout_path(@conn, :new, @book), class: "flex flex-row justify-center items-center py-4 px-12 mt-8 space-x-3 bg-gradient-to-br from-gray-700 via-gray-900 to-black rounded-lg border-none shadow-sm md:mt-12 border-dark-border primary-button", "data-no-instant": "" do %>
+                <%= link to: (if Books.serial_book?(@book), do: Routes.book_read_path(@conn, :index, @book), else: Routes.book_checkout_path(@conn, :new, @book)), class: "flex flex-row justify-center items-center py-4 px-12 mt-8 space-x-3 bg-gradient-to-br from-gray-700 via-gray-900 to-black rounded-full border-none shadow-sm md:mt-12 border-dark-border primary-button", "data-no-instant": "" do %>
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                     </svg>
-                    <p class="font-black">Buy Now</p>
+                    <%= if Books.serial_book?(@book) do %>
+                        <p class="font-black">Start Reading</p>
+                    <% else %>
+                        <p class="font-black">Buy Now</p>
+                    <% end %>
                 <% end %>
-                <div class="mt-8 max-w-3xl text-gray-600 secondary-text">
+                <div class="mt-8 text-justify text-gray-600 secondary-text">
                     <p><%= @book.short_description %></p>
                 </div>
             </div>
-            <div class="py-12 mt-16 w-full text-gray-700 border-t md:px-8 md:mt-20 md:text-gray-600 secondary-text prose border-primary-border">
+            <div class="py-12 mt-16 w-full max-w-none text-justify text-gray-700 border-t md:px-8 md:mt-20 md:text-gray-600 secondary-text prose border-primary-border">
                 <%= raw(@book.long_description_html) %>
             </div>
         </div>

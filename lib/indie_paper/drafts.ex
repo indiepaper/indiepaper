@@ -8,10 +8,18 @@ defmodule IndiePaper.Drafts do
 
   alias IndiePaper.Drafts.Draft
   alias IndiePaper.Chapters
+  alias IndiePaper.Books
+
+  def create_draft_with_placeholder_chapters!(%Books.Book{publishing_type: :serial} = book) do
+    create_draft_changeset(book)
+    |> Draft.chapters_changeset([
+      Chapters.placeholder_chapter(title: "Introduction", chapter_index: 0)
+    ])
+    |> Repo.insert!()
+  end
 
   def create_draft_with_placeholder_chapters!(book) do
-    Ecto.build_assoc(book, :draft)
-    |> Draft.changeset()
+    create_draft_changeset(book)
     |> Draft.chapters_changeset([
       Chapters.placeholder_chapter(title: "Introduction", chapter_index: 0),
       Chapters.placeholder_chapter(title: "Preface", chapter_index: 1),
@@ -19,6 +27,11 @@ defmodule IndiePaper.Drafts do
       Chapters.placeholder_chapter(title: "Chapter 2", chapter_index: 3)
     ])
     |> Repo.insert!()
+  end
+
+  defp create_draft_changeset(book) do
+    Ecto.build_assoc(book, :draft)
+    |> Draft.changeset()
   end
 
   def get_draft!(id) do

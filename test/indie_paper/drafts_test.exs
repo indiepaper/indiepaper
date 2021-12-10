@@ -24,6 +24,16 @@ defmodule IndiePaper.DraftsTest do
     end
   end
 
+  test "creates draft with single placeholder chapter when serial" do
+    book = insert(:book, publishing_type: :serial)
+
+    draft = Drafts.create_draft_with_placeholder_chapters!(book)
+    draft_with_chapters = draft |> Drafts.with_assoc(:chapters)
+
+    assert Enum.count(draft_with_chapters.chapters) == 1
+    assert List.first(draft_with_chapters.chapters).title == "Introduction"
+  end
+
   describe "get_draft/1" do
     test "gets draft by id" do
       draft = insert(:draft)

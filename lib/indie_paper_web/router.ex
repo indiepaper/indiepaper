@@ -18,11 +18,11 @@ defmodule IndiePaperWeb.Router do
     plug :accepts, ["json"]
   end
 
-  pipeline :account_status_payment_connected do
+  pipeline :require_account_status_payment_connected do
     plug IndiePaperWeb.Plugs.EnsureAccountStatusPlug, [:payment_connected]
   end
 
-  pipeline :account_status_confirmed do
+  pipeline :require_account_status_confirmed do
     plug IndiePaperWeb.Plugs.EnsureAccountStatusPlug, [:confirmed, :payment_connected]
   end
 
@@ -103,39 +103,49 @@ defmodule IndiePaperWeb.Router do
 
   # App Specific Routes
   scope "/", IndiePaperWeb do
-    pipe_through [:browser, :require_authenticated_author, :account_status_payment_connected]
-
-    resources "/books", BookController, only: [] do
-      resources "/publication", PublicationController, only: [:create]
-      resources "/products", ProductController, only: [:create, :edit, :update]
-    end
-  end
-
-  scope "/", IndiePaperWeb do
     pipe_through [
       :browser,
       :require_authenticated_author,
-      :account_status_confirmed,
+      :require_account_status_confirmed,
       :stripe_connect_rate_limit
     ]
 
     resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:delete]
   end
 
-  scope "/", IndiePaperWeb do
-    pipe_through [:browser, :require_authenticated_author, :account_status_confirmed]
+  live_session :default do
+    scope "/", IndiePaperWeb do
+      pipe_through [
+        :browser,
+        :require_authenticated_author,
+        :require_account_status_payment_connected
+      ]
 
-    resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:new, :create]
-  end
+      live "/dashboard/memberships", DashboardMembershipsLive, :index
+      live "/dashboard/memberships/new", DashboardMembershipsLive, :new
+      live "/dashboard/memberships/:id/edit", DashboardMembershipsLive, :edit
 
-  live_session :require_authenticated_author, on_mount: IndiePaperWeb.AuthorLiveAuth do
+      live "/books/:book_id/publish/:id", BookPublishChapterLive, :new
+
+      resources "/books", BookController, only: [] do
+        resources "/publication", PublicationController, only: [:create]
+        resources "/products", ProductController, only: [:create, :edit, :update]
+      end
+    end
+
+    scope "/", IndiePaperWeb do
+      pipe_through [:browser, :require_authenticated_author, :require_account_status_confirmed]
+
+      resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:new, :create]
+    end
+
     scope "/", IndiePaperWeb do
       pipe_through [:browser, :require_authenticated_author]
 
       live "/books/new", BookLive.New, :new
 
-      resources "/books", BookController, only: [:show] do
-        resources "/read", ReadController, only: [:index, :show]
+      resources "/books", BookController, only: [] do
+        live "/read", ReadLive, :index
         resources "/checkout", CheckoutController, only: [:new]
       end
 
@@ -148,22 +158,27 @@ defmodule IndiePaperWeb.Router do
       live "/dashboard", DashboardLive, :index
 
       live "/dashboard/library", DashboardLibraryLive, :index
+      live "/dashboard/subscriptions", DashboardSubscriptionsLive, :index
       # resources "/dashboard/orders", DashboardOrderController, only: [:index]
 
       live "/settings/profile", SettingsProfileLive, :edit
     end
-  end
 
-  scope "/", IndiePaperWeb do
-    pipe_through :browser
+    scope "/", IndiePaperWeb do
+      pipe_through :browser
 
-    get "/", PageController, :index
-    get "/privacy-policy", PageController, :privacy_policy
-    get "/terms-of-service", PageController, :terms_of_service
+      get "/", PageController, :index
+      get "/privacy-policy", PageController, :privacy_policy
+      get "/terms-of-service", PageController, :terms_of_service
 
-    get "/:id", AuthorPageController, :show
+      resources "/books", BookController, only: [:show]
+    end
 
-    resources "/books", BookController, only: [:show]
+    scope "/", IndiePaperWeb do
+      pipe_through :browser
+
+      live "/:username", AuthorPageLive, :show
+    end
   end
 
   # Other scopes may use custom stacks.

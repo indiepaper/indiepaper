@@ -3,15 +3,19 @@ defmodule IndiePaperWeb.BookLive.New do
 
   alias IndiePaper.Books
 
+  on_mount IndiePaperWeb.AuthorLiveAuth
+
   @impl true
   def mount(_, _session, socket) do
     changeset = Books.change_book(%Books.Book{})
-    {:ok, assign(socket, changeset: changeset, form_submit_error: false)}
+
+    {:ok,
+     assign(socket, changeset: changeset, form_submit_error: false, page_title: "Create new book")}
   end
 
   @impl true
   def handle_event("create_book", %{"book" => book_params}, socket) do
-    case Books.create_book_with_draft(socket.assigns.current_author, book_params) do
+    case Books.create_book(socket.assigns.current_author, book_params) do
       {:ok, book} ->
         book_with_draft = Books.with_assoc(book, :draft)
 
@@ -31,5 +35,9 @@ defmodule IndiePaperWeb.BookLive.New do
       |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, changeset: changeset)}
+  end
+
+  def get_publishing_type(changeset) do
+    Ecto.Changeset.get_field(changeset, :publishing_type, "vanilla")
   end
 end

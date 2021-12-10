@@ -1,0 +1,74 @@
+<section class="bg-white">
+    <%= if IndiePaper.Authors.is_same?(@current_author, @author) do %>
+        <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
+    <% end %>
+    <div class="container-box page-box">
+        <div class="flex flex-row justify-center items-center">
+            <img src={IndiePaper.ExternalAssetHandler.get_public_url(@author.profile_picture)} alt="" class="object-cover w-40 h-40 rounded-full ring-4 ring-white ring-offset-4 ring-offset-gray-800 md:w-48 md:h-48 focus:outline-none" />
+        </div>
+        <div class="flex flex-row justify-center items-center mt-8">
+            <div class="flex flex-col justify-center items-center">
+                <h1 class="text-2xl page-heading"><%= IndiePaper.Authors.get_full_name(@author) %></h1>
+                <p class="page-description">@<%= @author.username %></p>
+            </div>
+        </div>
+        <%= if @current_author &&  IndiePaper.Subscriptions.is_subscribed?(@current_author, @author) do %>
+            <div class="flex flex-row justify-center items-center mt-4">
+                <button class="py-3 px-6 rounded-full primary-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Subscribed</span></button>
+            </div>
+        <% else %>
+            <%= if not Enum.empty?(@membership_tiers) do %>
+                <div class="grid overflow-hidden relative grid-cols-1 gap-8 p-4 mt-12 bg-warm-gray-100 rounded-lg border sm:grid-cols-2 md:py-8 md:px-8 lg:grid-cols-3 border-primary-border">
+                    <%= for membership_tier <- @membership_tiers do %>
+                        <div class="flex flex-col items-start p-8 bg-white rounded-xl border shadow-sm border-secondary-border">
+                            <h3 class="font-bold"><%= membership_tier.title %></h3>
+                            <p class="mt-2"><span class="text-2xl font-bold"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(membership_tier.amount) %></span> / <span class="text-secondary-text">month</span></p>
+                            <div class="flex-1 mt-8 prose-sm secondary-text">
+                                <%= raw(membership_tier.description_html) %>
+                            </div>
+                            <button phx-page-loading phx-click="subscribe" phx-value-membership_tier_id={membership_tier.id} class="mt-8 space-x-0 w-full rounded-full hover:text-white group secondary-button hover:bg-primary" data-test={"subscribe-#{membership_tier.id}"}>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block mr-1.5 w-5 h-5 group-hover:hidden group-hover:mr-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="hidden w-5 h-5 group-hover:block group-hover:mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                                </svg>
+                                <span>
+                                    Subscribe
+                                </span>
+                            </button>
+                        </div>
+                    <% end %>
+                </div>
+            <% end %>
+        <% end %>
+    </div>
+    <%= if not Enum.empty?(@books) do %>
+        <div class="border-t bg-background border-primary-border">
+            <div class="py-16 container-box">
+                <div class="mx-auto max-w-2xl">
+                    <h3 class="page-heading">Published Books</h3>
+                </div>
+                <div class="mx-auto mt-8 space-y-12 w-full max-w-2xl">
+                    <%= for book <- @books do %>
+                        <div class="primary-card">
+                            <%= link to: Routes.book_path(@socket, :show, book), class: "w-full" do %>
+                                <%= if IndiePaper.Books.has_promo_images?(book) do %>
+                                    <div class="mb-6 aspect-h-1 aspect-w-1 sm:aspect-w-3">
+                                        <img src={IndiePaper.ExternalAssetHandler.get_public_url(IndiePaper.Books.first_promo_image(book))} alt="Book Promo Image" class="object-cover rounded-lg" />
+                                    </div>
+                                <% end %>
+                                <p class="text-lg font-semibold"><%= book.title %></p>
+                                <p class="mt-2 secondary-text"><%= book.short_description %></p>
+                            <% end %>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    <% end %>
+</section>
