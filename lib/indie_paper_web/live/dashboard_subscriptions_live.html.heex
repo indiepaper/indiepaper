@@ -8,10 +8,20 @@
                 <div class="items-stretch p-0 primary-card">
                     <div class="flex flex-row justify-between items-center py-3 px-6">
                         <%= if Subscriptions.active?(subscription) do %>
-                            <div class="py-1 px-2 text-sm bg-green-100 rounded-lg"><%= humanize(subscription.status) %></div>
+                            <div class="text-green-800 bg-green-100 small-badge">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                <span>Subscribed</span>
+                            </div>
                         <% else %>
-                            <div class="py-1 px-2 text-sm bg-warm-gray-100 rounded-lg"><%= humanize(subscription.status) %></div>
+                            <div class="bg-warm-gray-100 border border-secondary-border small-badge">
+                                <span><%= humanize(subscription.status) %></span>
+                            </div>
                         <% end %>
+                        <div>
+                            <p><%= MoneyHandler.humanize(subscription.membership_tier.amount) %> <span class="text-sm secondary-text">/ month</span></p>
+                        </div>
                     </div>
                     <%= live_redirect to: Routes.author_page_path(@socket, :show, subscription.membership_tier.author), class: "flex flex-col items-start space-y-4 md:space-y-0 md:space-x-4 md:flex-row md:justify-between md:items-center  p-6 border-t border-secondary-border" do %>
                         <img src={IndiePaper.ExternalAssetHandler.get_public_url(subscription.membership_tier.author.profile_picture)} alt="" class="rounded-lg profile-picture" />

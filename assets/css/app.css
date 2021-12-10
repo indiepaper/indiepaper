@@ -48,6 +48,10 @@
     @apply !border-primary-error;
   }
 
+  .small-badge {
+    @apply flex flex-row items-center py-1 px-3 space-x-1.5 text-xs rounded-full;
+  }
+
   .input-label {
     @apply mb-1;
   }

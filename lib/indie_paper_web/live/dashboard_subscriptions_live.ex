@@ -6,6 +6,7 @@ defmodule IndiePaperWeb.DashboardSubscriptionsLive do
   alias IndiePaper.Subscriptions
   alias IndiePaper.Books
   alias IndiePaper.BookLibrary
+  alias IndiePaper.PaymentHandler.MoneyHandler
 
   @impl true
   def mount(_, _, socket) do

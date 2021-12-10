@@ -60,6 +60,10 @@ config :ueberauth, Ueberauth,
     twitter: {Ueberauth.Strategy.Twitter, []}
   ]
 
+# Setup Stripe API Level
+config :stripity_stripe,
+  api_version: "2020-08-27"
+
 # Setup EX_AWS
 config :ex_aws,
   debug_requests: true,
