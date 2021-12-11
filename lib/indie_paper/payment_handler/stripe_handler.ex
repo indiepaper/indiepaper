@@ -19,8 +19,9 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
       settings: %{
         payouts: %{
           schedule: %{
-            interval: "daily",
-            delay_days: 14
+            interval: "weekly",
+            delay_days: 7,
+            weekly_anchor: "friday"
           }
         }
       }
@@ -50,8 +51,8 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
   def get_connect_url(stripe_connect_id) do
     case Stripe.AccountLink.create(%{
            account: stripe_connect_id,
-           refresh_url: "#{Endpoint.url()}/dashboard/stripe/connect",
-           return_url: "#{Endpoint.url()}/dashboard",
+           refresh_url: Routes.profile_stripe_connect_url(Endpoint, :new),
+           return_url: Routes.dashboard_path(Endpoint, :index),
            type: "account_onboarding"
          }) do
       {:ok, stripe_account_link} -> {:ok, stripe_account_link.url}
