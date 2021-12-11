@@ -17,16 +17,20 @@
             data-test="stripe-connect-form"
             phx-submit="connect_stripe">
             <div class="form-tight-container">
-                <div class={"mt-4 input-container #{if IndiePaper.Authors.has_stripe_connect_id?(@current_author), do: 'hidden'}"}>
+                <div class={"mt-4 input-container"}>
                     <%= label f, :country_code, "Country", class: "input-label" %>
                     <span class="input-label-info">Select the country of your bank account to recieve payouts.</span>
-                    <%= select f, :country_code, IndiePaper.PaymentHandler.StripeHandler.stripe_connect_enabled_countries(), class: "form-input"%>
+                    <%= select f, :country_code, IndiePaper.PaymentHandler.StripeHandler.stripe_connect_enabled_countries(), class: "form-input", disabled: IndiePaper.Authors.has_stripe_connect_id?(@current_author) %>
                 </div>
                 <%= submit class: "submit-button" do %>
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span>Connect Stripe</span>
+                    <%= if  IndiePaper.Authors.has_stripe_connect_id?(@current_author) do %>
+                        <span>Continue Stripe Connect</span>
+                    <% else %>
+                        <span>Connect Stripe</span>
+                    <% end %>
                 <% end %>
             </div>
             </.form>
