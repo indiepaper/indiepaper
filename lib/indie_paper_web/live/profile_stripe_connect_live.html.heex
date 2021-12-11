@@ -17,10 +17,10 @@
             data-test="stripe-connect-form"
             phx-submit="connect_stripe">
             <div class="form-tight-container">
-                <div class={"mt-4 input-container"}>
+                <div class={"mt-4 input-container #{if IndiePaper.Authors.has_stripe_connect_id?(@current_author), do: 'hidden' }"}>
                     <%= label f, :country_code, "Country", class: "input-label" %>
                     <span class="input-label-info">Select the country of your bank account to recieve payouts.</span>
-                    <%= select f, :country_code, IndiePaper.PaymentHandler.StripeHandler.stripe_connect_enabled_countries(), class: "form-input", disabled: IndiePaper.Authors.has_stripe_connect_id?(@current_author) %>
+                    <%= select f, :country_code, IndiePaper.PaymentHandler.StripeHandler.stripe_connect_enabled_countries(), class: "form-input" %>
                 </div>
                 <%= submit class: "submit-button" do %>
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
