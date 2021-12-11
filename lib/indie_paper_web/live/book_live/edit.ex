@@ -87,6 +87,8 @@ defmodule IndiePaperWeb.BookLive.Edit do
              socket.assigns.book,
              book_params_with_promo_images
            ) do
+      updated_book_with_draft = Books.with_assoc(updated_book, :draft)
+
       socket =
         socket
         |> put_flash(:info, "Listing page of #{updated_book.title} updated successfully.")
@@ -94,7 +96,7 @@ defmodule IndiePaperWeb.BookLive.Edit do
           to:
             if(Books.is_published?(updated_book),
               do: Routes.book_path(socket, :show, updated_book),
-              else: Routes.dashboard_path(socket, :index)
+              else: Routes.draft_path(socket, :edit, updated_book_with_draft.draft)
             )
         )
 
