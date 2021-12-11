@@ -9,7 +9,7 @@
   }
 
   .page-box {
-    @apply py-20 md:py-24 md:min-h-screen;
+    @apply py-20 md:pt-24 md:pb-32;
   }
 
   .page-heading {
