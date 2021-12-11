@@ -10,7 +10,7 @@ defmodule IndiePaperWeb.BookLive.Edit do
   @impl Phoenix.LiveView
   def mount(%{"id" => book_id}, %{"author_token" => author_token}, socket) do
     current_author = Authors.get_author_by_session_token(author_token)
-    book = Books.get_book!(book_id)
+    book = Books.get_book!(book_id) |> Books.with_assoc(:draft)
     changeset = Books.change_book(book)
 
     {:ok,

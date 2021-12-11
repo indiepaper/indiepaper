@@ -1,5 +1,14 @@
 <section class="bg-background">
-    <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
+    <div class="secondary-nav">
+        <div class="secondary-nav-content">
+            <%= link to: Routes.draft_path(@socket, :edit, @book.draft), class: "secondary-nav-link" do %>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
+                </svg>
+                <p>back to editing</p>
+            <% end %>
+        </div>
+    </div>
     <div class="container-box page-box">
         <h1 class="page-heading" data-test="title">Edit Book Listing</h1>
         <p class="max-w-xl page-description">Your listing page is shown to your readers and act as an homepage for your book.</p>
