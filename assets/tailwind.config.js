@@ -2,8 +2,7 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-  mode: "jit",
-  purge: ["./js/**/*.js", "../lib/*_web/**/*.*ex"],
+  content: ["./js/**/*.js", "../lib/*_web/**/*.*ex"],
   theme: {
     extend: {
       maxHeight: {
@@ -14,19 +13,19 @@ module.exports = {
         "4/5": "80%",
       },
       colors: {
-        background: colors.warmGray[50],
+        background: colors.stone[50],
         "primary-text": colors.gray[700],
         "secondary-text": colors.gray[500],
-        "primary-border": colors.warmGray[300],
-        "dark-border": colors.warmGray[500],
-        "darker-border": colors.warmGray[700],
-        "secondary-border": colors.warmGray[200],
-        "lightest-border": colors.warmGray[100],
-        "primary-border-darker": colors.warmGray[400],
+        "primary-border": colors.stone[300],
+        "dark-border": colors.stone[500],
+        "darker-border": colors.stone[700],
+        "secondary-border": colors.stone[200],
+        "lightest-border": colors.stone[100],
+        "primary-border-darker": colors.stone[400],
         "primary-error": colors.red[500],
         primary: colors.gray[900],
         accent: colors.orange[400],
-        "warm-gray": colors.warmGray,
+        "warm-gray": colors.stone,
         orange: colors.orange,
         amber: colors.amber,
       },
