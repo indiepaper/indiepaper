@@ -9,12 +9,20 @@ defmodule IndiePaper.PaymentHandler do
            Authors.set_stripe_connect_id(author, stripe_connect_id) do
       get_stripe_connect_url(author_with_stripe_connect_id, country_code)
     else
-      {:error, _} -> {:error, "error creating Stripe Connect account"}
+      {:error, _} ->
+        {:error, "There was an error creating Stripe Account Setup. Try again later."}
     end
   end
 
   def get_stripe_connect_url(%Authors.Author{stripe_connect_id: stripe_connect_id}, _country_code) do
-    StripeHandler.get_connect_url(stripe_connect_id)
+    case StripeHandler.get_connect_account_link(stripe_connect_id) do
+      {:ok, stripe_connect_account_link} ->
+        {:ok, stripe_connect_account_link.url}
+
+      {:error, error} ->
+        {:error,
+         error_message(error, "There was an error creating Stripe Account. Try again later.")}
+    end
   end
 
   def set_payment_connected(stripe_connect_id) do

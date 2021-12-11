@@ -102,16 +102,6 @@ defmodule IndiePaperWeb.Router do
   end
 
   # App Specific Routes
-  scope "/", IndiePaperWeb do
-    pipe_through [
-      :browser,
-      :require_authenticated_author,
-      :require_account_status_confirmed,
-      :stripe_connect_rate_limit
-    ]
-
-    resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:delete]
-  end
 
   live_session :default do
     scope "/", IndiePaperWeb do
@@ -136,7 +126,7 @@ defmodule IndiePaperWeb.Router do
     scope "/", IndiePaperWeb do
       pipe_through [:browser, :require_authenticated_author, :require_account_status_confirmed]
 
-      resources "/profile/stripe/connect", ProfileStripeConnectController, only: [:new, :create]
+      live "/profile/stripe/connect", ProfileStripeConnectLive, :new
     end
 
     scope "/", IndiePaperWeb do

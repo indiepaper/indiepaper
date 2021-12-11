@@ -27,6 +27,25 @@ defmodule IndiePaperWeb.AuthorLiveAuth do
   end
 
   def on_mount(
+        :require_account_status_confirmed,
+        _,
+        _,
+        socket
+      ) do
+    if Authors.is_confirmed?(socket.assigns.current_author) do
+      {:cont, socket}
+    else
+      {:halt,
+       socket
+       |> put_flash(
+         :info,
+         "Confirm your account to continue."
+       )
+       |> redirect(to: Routes.dashboard_path(socket, :index))}
+    end
+  end
+
+  def on_mount(
         :require_account_status_payment_connected,
         _,
         _,
