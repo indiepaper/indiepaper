@@ -48,16 +48,13 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
     end
   end
 
-  def get_connect_url(stripe_connect_id) do
-    case Stripe.AccountLink.create(%{
-           account: stripe_connect_id,
-           refresh_url: Routes.profile_stripe_connect_url(Endpoint, :new),
-           return_url: Routes.dashboard_path(Endpoint, :index),
-           type: "account_onboarding"
-         }) do
-      {:ok, stripe_account_link} -> {:ok, stripe_account_link.url}
-      {:error, error} -> {:error, error}
-    end
+  def get_connect_account_link(stripe_connect_id) do
+    Stripe.AccountLink.create(%{
+      account: stripe_connect_id,
+      refresh_url: Routes.profile_stripe_connect_url(Endpoint, :new),
+      return_url: Routes.dashboard_url(Endpoint, :index),
+      type: "account_onboarding"
+    })
   end
 
   def get_checkout_session(
