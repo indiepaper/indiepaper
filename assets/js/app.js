@@ -51,10 +51,15 @@ Hooks.BookLongDescriptionEditor = {
   mounted() {
     const contentHTMLElementId = this.el.dataset.contentHtmlElementId;
     const editorElementId = this.el.dataset.editorElementId;
+    const context = this;
 
     import("./book-description-editor").then(
       ({ setupBookDescriptionEditor }) => {
-        setupBookDescriptionEditor(this, contentHTMLElementId, editorElementId);
+        setupBookDescriptionEditor(
+          context,
+          contentHTMLElementId,
+          editorElementId
+        );
       }
     );
   },
