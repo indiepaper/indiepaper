@@ -92,7 +92,7 @@ defmodule IndiePaperWeb.BookLive.Edit do
       socket =
         socket
         |> put_flash(:info, "Listing page of book updated successfully.")
-        |> redirect(
+        |> push_redirect(
           to:
             if(Books.is_published?(updated_book),
               do: Routes.book_show_path(socket, :show, updated_book),
