@@ -1,7 +1,4 @@
 <section class="bg-background">
-    <%= if Authors.is_same?(@current_author, @book.author) do %>
-        <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
-    <% end %>
     <div class="secondary-nav">
         <div class="secondary-big-nav-content">
             <%= live_redirect to: Routes.book_path(@socket, :show, @book) do %>
