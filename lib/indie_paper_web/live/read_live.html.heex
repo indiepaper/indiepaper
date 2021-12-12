@@ -1,7 +1,7 @@
 <section class="bg-background">
     <div class="secondary-nav">
         <div class="secondary-big-nav-content">
-            <%= live_redirect to: Routes.book_path(@socket, :show, @book) do %>
+            <%= live_redirect to: Routes.book_show_path(@socket, :show, @book) do %>
                 <h1 class="text-lg font-bold" data-test="book-title"><%= @book.title %></h1>
             <% end %>
             <%= if Authors.is_same?(@current_author, @book.author) do %>

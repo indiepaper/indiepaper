@@ -9,7 +9,7 @@ defmodule IndiePaperWeb.Feature.ReaderCanSubscribeToBookTest do
 
     conn = conn |> log_in_author(reader)
 
-    html = get(conn, Routes.book_path(conn, :show, book)) |> html_response(200)
+    html = get(conn, Routes.book_show_path(conn, :show, book)) |> html_response(200)
 
     assert html =~ "Start Reading"
   end

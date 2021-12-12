@@ -12,7 +12,7 @@ defmodule IndiePaperWeb.CheckoutController do
         :info,
         "Oops, you cannot buy your own book. Share this page with your readers, they will love to do so."
       )
-      |> redirect(to: Routes.book_path(conn, :show, book))
+      |> redirect(to: Routes.book_show_path(conn, :show, book))
     else
       {:ok, checkout_session_url} = PaymentHandler.get_checkout_session_url(reader, book)
 

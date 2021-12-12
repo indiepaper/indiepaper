@@ -17,7 +17,7 @@ defmodule IndiePaperWeb.Pages.BookPage.Show do
 
   def visit_page(session, book) do
     session
-    |> visit(Routes.book_path(@endpoint, :show, book))
+    |> visit(Routes.book_show_path(@endpoint, :show, book))
   end
 
   def select_product(session, product_title) do
