@@ -161,7 +161,7 @@ defmodule IndiePaperWeb.Router do
       get "/privacy-policy", PageController, :privacy_policy
       get "/terms-of-service", PageController, :terms_of_service
 
-      resources "/books", BookController, only: [:show]
+      live "/books/:id", BookLive.Show, :show
     end
 
     scope "/", IndiePaperWeb do
