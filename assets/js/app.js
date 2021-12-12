@@ -54,7 +54,7 @@ Hooks.BookLongDescriptionEditor = {
 
     import("./book-description-editor").then(
       ({ setupBookDescriptionEditor }) => {
-        setupBookDescriptionEditor(contentHTMLElementId, editorElementId);
+        setupBookDescriptionEditor(this, contentHTMLElementId, editorElementId);
       }
     );
   },

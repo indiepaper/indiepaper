@@ -2,6 +2,7 @@ import { Editor } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 
 export function setupBookDescriptionEditor(
+  context,
   contentHtmlElementId,
   editorElementId
 ) {
@@ -20,6 +21,10 @@ export function setupBookDescriptionEditor(
     ],
     onUpdate({ editor }) {
       contentHtmlElement.value = editor.getHTML();
+      sendUpdate();
+    },
+    onSelectionUpdate() {
+      sendUpdate();
     },
     editorProps: {
       attributes: {
@@ -27,6 +32,11 @@ export function setupBookDescriptionEditor(
       },
     },
   });
+
+  function sendUpdate() {
+    let event = new CustomEvent("selection-updated", {});
+    context.el.dispatchEvent(event);
+  }
 
   window.toggleHeading = (level) => {
     window.bookDescriptionEditor
@@ -36,7 +46,7 @@ export function setupBookDescriptionEditor(
       .run();
   };
 
-  window.isActive = (type, opts = {}) => {
+  window.isActiveSelection = (type, opts = {}) => {
     return window.bookDescriptionEditor.isActive(type, opts);
   };
 
