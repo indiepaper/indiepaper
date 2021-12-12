@@ -73,7 +73,7 @@
   }
 
   .submit-button {
-    @apply primary-button !px-6;
+    @apply primary-button !px-6 shadow-sm;
   }
 
   .secondary-button {
