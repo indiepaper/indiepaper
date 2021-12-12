@@ -33,10 +33,13 @@
                 </div>
 
                 <div class="input-container"
-                     x-data="{updatedAt: Date.now(),
-                            isActive(type, opts = {}, updatedAt) {
-                            return window.isActiveSelection && window.isActiveSelection(type, opts);
-                            }}"
+                     x-data="{
+                                updatedAt: Date.now(),
+                                isActive(type, opts = {}, updatedAt) {
+                                    return (window.isActiveSelection
+                                            && window.isActiveSelection(type, opts));
+                                }
+                            }"
                      x-on:selection-updated="updatedAt = Date.now()"
                      id="book-long-description-html"
                      phx-hook="BookLongDescriptionEditor"
