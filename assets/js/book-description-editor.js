@@ -1,5 +1,6 @@
 import { Editor } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
+import Link from "@tiptap/extension-link";
 
 export function setupBookDescriptionEditor(
   context,
@@ -13,6 +14,7 @@ export function setupBookDescriptionEditor(
     element: editorElement,
     content: contentHtmlElement.value,
     extensions: [
+      Link,
       StarterKit.configure({
         heading: {
           levels: [2, 3],
