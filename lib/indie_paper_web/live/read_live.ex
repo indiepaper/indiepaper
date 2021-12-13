@@ -104,7 +104,8 @@ defmodule IndiePaperWeb.ReadLive do
        to:
          Routes.book_read_path(socket, :index, socket.assigns.book,
            chapter_id: socket.assigns.selected_chapter.id
-         )
+         ),
+       replace: true
      )}
   end
 end
