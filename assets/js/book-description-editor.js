@@ -14,12 +14,12 @@ export function setupBookDescriptionEditor(
     element: editorElement,
     content: contentHtmlElement.value,
     extensions: [
-      Link,
       StarterKit.configure({
         heading: {
           levels: [2, 3],
         },
       }),
+      Link,
     ],
     onUpdate({ editor }) {
       contentHtmlElement.value = editor.getHTML();
