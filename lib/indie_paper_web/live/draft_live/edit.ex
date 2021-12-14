@@ -17,6 +17,7 @@ defmodule IndiePaperWeb.DraftLive.Edit do
         {:ok,
          assign(socket,
            draft: draft,
+           chapters: draft.chapters,
            selected_chapter: last_updated_chapter,
            page_title: draft.book.title
          )}
@@ -33,5 +34,20 @@ defmodule IndiePaperWeb.DraftLive.Edit do
   def handle_event("select_chapter", %{"chapter_id" => chapter_id}, socket) do
     selected_chapter = Chapters.get_chapter!(chapter_id)
     {:noreply, socket |> assign(selected_chapter: selected_chapter)}
+  end
+
+  @impl true
+  def handle_event("add_chapter", _, socket) do
+    last_chapter = Drafts.get_last_chapter(socket.assigns.draft)
+
+    {:ok, chapter} =
+      Chapters.create_chapter(
+        socket.assigns.draft,
+        Map.put(%{"title" => "New Chapter"}, "chapter_index", last_chapter.chapter_index + 1)
+      )
+
+    draft = Drafts.get_draft!(socket.assigns.draft.id) |> Drafts.with_assoc([:chapters, :book])
+
+    {:noreply, socket |> assign(selected_chapter: chapter, chapters: draft.chapters)}
   end
 end
