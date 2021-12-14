@@ -65,6 +65,24 @@ Hooks.BookLongDescriptionEditor = {
   },
 };
 
+Hooks.DraftEditor = {
+  mounted() {
+    const chapterContentJson = JSON.parse(this.el.dataset.chapterContentJson);
+    const editorElementId = this.el.dataset.editorElementId;
+    const context = this;
+
+    import("./draft-editor").then(({ setupDraftEditor }) => {
+      setupDraftEditor(context, editorElementId, chapterContentJson);
+    });
+  },
+  updated() {
+    const chapterContentJson = JSON.parse(this.el.dataset.chapterContentJson);
+    import("./draft-editor").then(({ updateDraftEditor }) => {
+      updateDraftEditor(chapterContentJson);
+    });
+  },
+};
+
 Hooks.BookReaderHook = {
   mounted() {
     const readerElement = document.getElementById(

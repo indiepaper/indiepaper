@@ -1,9 +1,4 @@
-<section x-data={"{
-                    isEditorError: false,
-                    isActive(type, opts = {}) {
-                        return false;
-                    }
-                 }"}
+<section
          class="bg-background">
         <div x-ignore class="bg-white border-b border-primary-border">
             <div class="container-box">
@@ -54,8 +49,8 @@
                         </div>
                         <div class="space-y-4">
                             <%= for chapter <- @chapters do %>
-                                <div id={chapter.id} class={"flex flex-row justify-between items-center pr-2 space-x-2 rounded-md hover:bg-warm-gray-100 #{if chapter.id == @selected_chapter.id, do: 'bg-warm-gray-100 border border-secondary-border'}"}>
-                                    <button phx-click="select_chapter" phx-value-chapter_id={chapter.id} data-test="chapter-title" class="inline-block py-2 px-6 w-full text-left whitespace-normal break-words rounded-md hover:bg-warm-gray-100">
+                                <div class={"flex flex-row justify-between items-center pr-2 space-x-2 rounded-md hover:bg-warm-gray-100 #{if chapter.id == @selected_chapter.id, do: 'bg-warm-gray-100 border border-secondary-border'}"}>
+                                    <button phx-page-loading phx-click="select_chapter" phx-value-chapter_id={chapter.id} data-test="chapter-title" class="inline-block py-2 px-6 w-full text-left whitespace-normal break-words rounded-md hover:bg-warm-gray-100">
                                         <%= chapter.title %>
                                     </button>
                                 </div>
@@ -63,8 +58,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex-1 p-0 bg-white rounded-lg border shadow-sm border-primary-border" data-content={Jason.encode!(@selected_chapter.content_json)}>
-                    <div class="flex flex-col items-stretch" >
+                <div class="flex-1 p-0 bg-white rounded-lg border shadow-sm border-primary-border"
+                    x-data="{
+                                isEditorError: false,
+                                isActive(type, opts = {}) {
+                                    return false;
+                                }
+                            }"
+                     id="draft-editor"
+                     data-test="draft-editor"
+                     phx-hook="DraftEditor"
+                     data-chapter-content-json={Jason.encode!(@selected_chapter.content_json)}
+                     data-editor-element-id="draft-editor-element-id">
+                    <div phx-update="ignore" class="flex flex-col items-stretch" >
                         <div class="flex sticky top-0 z-40 flex-row items-center py-4 px-8 space-x-1 bg-white rounded-t-lg border-b shadow-sm border-primary-border">
                             <button
                                 @click.prevent="editor.chain().toggleBold().focus().run();"
@@ -104,7 +110,7 @@
                             </button>
                             <span class="flex-1"></span>
                         </div>
-                        <div class="py-8 px-8 prose md:p-12 !max-w-4xl min-h-[720px] font-normal" />
+                        <div class="py-8 px-8 prose md:p-12 !max-w-4xl min-h-[720px] font-normal" id="draft-editor-element-id" />
                     </div>
                 </div>
             </div>

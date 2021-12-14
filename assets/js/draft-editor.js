@@ -7,13 +7,39 @@ import jp from "jsonpath";
 import throttle from "lodash.throttle";
 import * as fastjsonpatch from "fast-json-patch";
 
-function truncateWords(str, num) {
-  return str.split(" ").slice(0, num).join(" ");
-}
-
 const CustomDocument = Document.extend({
   content: "heading block*",
 });
+
+export function setupDraftEditor(context, editorElementId, chapterContentJson) {
+  const editorElement = document.getElementById(editorElementId);
+
+  window.draftEditor = new Editor({
+    element: editorElement,
+    content: chapterContentJson,
+    extensions: [
+      CustomDocument,
+      StarterKit.configure({
+        document: false,
+      }),
+    ],
+    editorProps: {
+      attributes: {
+        class: "focus:outline-none",
+      },
+    },
+    onUpdate: () => {},
+  });
+}
+
+export function updateDraftEditor(chapterContentJson) {
+  window.draftEditor.commands.setContent(chapterContentJson);
+}
+
+/*
+function truncateWords(str, num) {
+  return str.split(" ").slice(0, num).join(" ");
+}
 
 function getRawJSON(obj) {
   return JSON.parse(JSON.stringify(obj));
@@ -106,7 +132,8 @@ const app = new Vue({
 
     this.presistedContent = this.content = chapterContentJSON;
 
-    this.editor = new Editor({
+    this.editor =
+    new Editor({
       content: chapterContentJSON,
       extensions: [
         CustomDocument,
@@ -133,3 +160,4 @@ function getChapterTitle(contentJSON) {
   const title = jp.value(contentJSON, "$.content[0].content[0].text");
   return title;
 }
+*/
