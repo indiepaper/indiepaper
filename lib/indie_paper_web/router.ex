@@ -141,9 +141,7 @@ defmodule IndiePaperWeb.Router do
 
       live "/books/:id/edit", BookLive.Edit, :edit
 
-      resources "/drafts", DraftController, only: [:edit] do
-        resources "/chapters", DraftChapterController, only: [:update, :create, :show]
-      end
+      live "/drafts/:id/edit", DraftLive.Edit, :edit
 
       live "/dashboard", DashboardLive, :index
 

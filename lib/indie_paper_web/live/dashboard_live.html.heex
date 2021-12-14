@@ -124,7 +124,7 @@
                             <% end %>
                         </div>
                         <div class="p-6">
-                            <%= live_redirect to: (if IndiePaper.Books.is_published?(book), do: Routes.book_show_path(@socket, :show, book), else: Routes.draft_path(@socket, :edit, book.draft)) , class: "block" do %>
+                            <%= live_redirect to: (if IndiePaper.Books.is_published?(book), do: Routes.book_show_path(@socket, :show, book), else: Routes.draft_edit_path(@socket, :edit, book.draft)) , class: "block" do %>
                                 <%= if IndiePaper.Books.has_promo_images?(book) do %>
                                     <div class="mb-6 aspect-h-1 aspect-w-1 sm:aspect-w-3">
                                         <img src={IndiePaper.ExternalAssetHandler.get_public_url(IndiePaper.Books.first_promo_image(book))} alt="Book Promo Image" class="object-cover rounded-lg" />
@@ -134,7 +134,7 @@
                                 <p data-test="book-title" class="mt-1 text-sm secondary-text"><%= book.short_description %></p>
                             <% end %>
                             <div class="flex flex-row mt-8 space-x-6 text-secondary-text">
-                                <%= link to: Routes.draft_path(@socket, :edit, book.draft), class: "secondary-link"  do %>
+                                <%= live_redirect to: Routes.draft_edit_path(@socket, :edit, book.draft), class: "secondary-link"  do %>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                     </svg>
