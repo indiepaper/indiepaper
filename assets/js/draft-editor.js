@@ -47,8 +47,33 @@ export function setupDraftEditor(context, editorElementId, chapterContentJson) {
           }
         }
       );
+      sendUpdate();
     }, 80),
+    onSelectionUpdate() {
+      sendUpdate();
+    },
   });
+
+  function sendUpdate() {
+    let event = new CustomEvent("selection-updated", {});
+    context.el.dispatchEvent(event);
+  }
+
+  window.isActiveSelection = (type, opts = {}) => {
+    return window.draftEditor.isActive(type, opts);
+  };
+
+  window.toggleHeading = (level) => {
+    window.draftEditor.chain().toggleHeading({ level: level }).focus().run();
+  };
+
+  window.toggleBold = () => {
+    window.draftEditor.chain().toggleBold().focus().run();
+  };
+
+  window.toggleItalic = () => {
+    window.draftEditor.chain().toggleItalic().focus().run();
+  };
 }
 
 export function updateDraftEditor(chapterContentJson) {
