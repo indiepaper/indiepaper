@@ -33,14 +33,16 @@ export function setupDraftEditor(context, editorElementId, chapterContentJson) {
       const contentJSON = editor.getJSON();
 
       const delta = fastjsonpatch.compare(window.persistedContent, contentJSON);
-      const result = context.pushEvent(
+      context.pushEvent(
         "update_selected_chapter",
         {
           delta: delta,
         },
-        (reply, ref) => {
+        (reply, _ref) => {
           if (reply.data === "ok") {
             window.persistedContent = contentJSON;
+            let event = new CustomEvent("persist-success");
+            context.el.dispatchEvent(event);
           } else if (reply.data === "error") {
             let event = new CustomEvent("persist-error");
             context.el.dispatchEvent(event);
