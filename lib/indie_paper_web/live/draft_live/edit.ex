@@ -29,7 +29,9 @@ defmodule IndiePaperWeb.DraftLive.Edit do
     end
   end
 
-  def chapters_to_alpine(chapters) do
-    Jason.encode!(chapters)
+  @impl true
+  def handle_event("select_chapter", %{"chapter_id" => chapter_id}, socket) do
+    selected_chapter = Chapters.get_chapter!(chapter_id)
+    {:noreply, socket |> assign(selected_chapter: selected_chapter)}
   end
 end

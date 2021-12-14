@@ -60,7 +60,7 @@
                         <div class="space-y-4">
                             <%= for chapter <- @draft.chapters do %>
                                 <div class={"flex flex-row justify-between items-center pr-2 space-x-2 rounded-md hover:bg-warm-gray-100 #{if chapter.id == @selected_chapter.id, do: 'bg-warm-gray-100 border border-secondary-border'}"}>
-                                    <button @click="selectChapter(chapter)" data-test="chapter-title" class="inline-block py-2 px-6 w-full text-left whitespace-normal break-words rounded-md hover:bg-warm-gray-100">
+                                    <button phx-click="select_chapter" phx-value-chapter_id={chapter.id} data-test="chapter-title" class="inline-block py-2 px-6 w-full text-left whitespace-normal break-words rounded-md hover:bg-warm-gray-100">
                                         <%= chapter.title %>
                                     </button>
                                 </div>
