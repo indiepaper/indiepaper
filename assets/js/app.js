@@ -81,6 +81,15 @@ Hooks.DraftEditor = {
       updateDraftEditor(chapterContentJson);
     });
   },
+  reconnected() {
+    const contentJson = window.draftEditor.getJSON();
+    this.pushEvent("editor_reconnected", { content_json: contentJson });
+  },
+  disconnected() {
+    import("./draft-editor").then(({ sendPersistError }) => {
+      sendPersistError(this);
+    });
+  },
 };
 
 Hooks.BookReaderHook = {

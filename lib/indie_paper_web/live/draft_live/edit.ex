@@ -37,6 +37,14 @@ defmodule IndiePaperWeb.DraftLive.Edit do
   end
 
   @impl true
+  def handle_event("editor_reconnected", %{"content_json" => contentJson}, socket) do
+    {:ok, chapter} =
+      Chapters.update_chapter(socket.assigns.selected_chapter, %{content_json: contentJson})
+
+    {:noreply, assign(socket, selected_chapter: chapter)}
+  end
+
+  @impl true
   def handle_event("update_selected_chapter", %{"delta" => delta}, socket) do
     chapter = Chapters.get_chapter!(socket.assigns.selected_chapter.id)
 

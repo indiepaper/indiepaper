@@ -11,6 +11,16 @@ const CustomDocument = Document.extend({
   content: "heading block*",
 });
 
+export function sendPersistSuccess(context) {
+  let event = new CustomEvent("persist-success");
+  context.el.dispatchEvent(event);
+}
+
+export function sendPersistError(context) {
+  let event = new CustomEvent("persist-error");
+  context.el.dispatchEvent(event);
+}
+
 export function setupDraftEditor(context, editorElementId, chapterContentJson) {
   const editorElement = document.getElementById(editorElementId);
   window.persistedContent = {};
@@ -41,11 +51,9 @@ export function setupDraftEditor(context, editorElementId, chapterContentJson) {
         (reply, _ref) => {
           if (reply.data === "ok") {
             window.persistedContent = contentJSON;
-            let event = new CustomEvent("persist-success");
-            context.el.dispatchEvent(event);
+            sendPersistSuccess(context);
           } else if (reply.data === "error") {
-            let event = new CustomEvent("persist-error");
-            context.el.dispatchEvent(event);
+            sendPersistError(context);
           }
         }
       );
