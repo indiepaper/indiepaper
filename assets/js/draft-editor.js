@@ -13,6 +13,7 @@ const CustomDocument = Document.extend({
 
 export function setupDraftEditor(context, editorElementId, chapterContentJson) {
   const editorElement = document.getElementById(editorElementId);
+  window.persistedContent = {};
 
   window.draftEditor = new Editor({
     element: editorElement,
@@ -28,11 +29,30 @@ export function setupDraftEditor(context, editorElementId, chapterContentJson) {
         class: "focus:outline-none",
       },
     },
-    onUpdate: () => {},
+    onUpdate: throttle(function ({ editor }) {
+      const contentJSON = editor.getJSON();
+
+      const delta = fastjsonpatch.compare(window.persistedContent, contentJSON);
+      const result = context.pushEvent(
+        "update_selected_chapter",
+        {
+          delta: delta,
+        },
+        (reply, ref) => {
+          if (reply.data === "ok") {
+            window.persistedContent = contentJSON;
+          } else if (reply.data === "error") {
+            let event = new CustomEvent("persist-error");
+            context.el.dispatchEvent(event);
+          }
+        }
+      );
+    }, 80),
   });
 }
 
 export function updateDraftEditor(chapterContentJson) {
+  window.persistedContent = {};
   window.draftEditor.commands.setContent(chapterContentJson);
 }
 
