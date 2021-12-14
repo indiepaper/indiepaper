@@ -82,8 +82,10 @@ Hooks.DraftEditor = {
     });
   },
   reconnected() {
+    // Send the entire json on reconnect
     const contentJson = window.draftEditor.getJSON();
     this.pushEvent("editor_reconnected", { content_json: contentJson });
+    window.persistedContent = {};
   },
   disconnected() {
     import("./draft-editor").then(({ sendPersistError }) => {
