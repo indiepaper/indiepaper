@@ -8,7 +8,7 @@ defmodule IndiePaperWeb.DraftControllerTest do
       response =
         conn
         |> log_in_author(book1.author)
-        |> get(Routes.draft_path(conn, :edit, book2.draft))
+        |> get(Routes.draft_edit_path(conn, :edit, book2.draft))
         |> redirected_to(302)
 
       assert response =~ "/"

@@ -3,7 +3,7 @@ defmodule IndiePaperWeb.Pages.DraftPage.Edit do
 
   def visit_page(session, draft: draft) do
     session
-    |> visit(Routes.draft_path(@endpoint, :edit, draft))
+    |> visit(Routes.draft_edit_path(@endpoint, :edit, draft))
   end
 
   def has_book_title(session, title) do

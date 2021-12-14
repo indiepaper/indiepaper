@@ -96,7 +96,7 @@ defmodule IndiePaperWeb.BookLive.Edit do
           to:
             if(Books.is_published?(updated_book),
               do: Routes.book_show_path(socket, :show, updated_book),
-              else: Routes.draft_path(socket, :edit, updated_book_with_draft.draft)
+              else: Routes.draft_edit_path(socket, :edit, updated_book_with_draft.draft)
             )
         )
 
