@@ -39,30 +39,33 @@ export function setupDraftEditor(context, editorElementId, chapterContentJson) {
         class: "focus:outline-none",
       },
     },
-    onUpdate: throttle(function ({ editor }) {
+    onUpdate({ editor }) {
       const contentJSON = editor.getJSON();
-
-      const delta = fastjsonpatch.compare(window.persistedContent, contentJSON);
-      context.pushEvent(
-        "update_selected_chapter",
-        {
-          delta: delta,
-        },
-        (reply, _ref) => {
-          if (reply.data === "ok") {
-            window.persistedContent = contentJSON;
-            sendPersistSuccess(context);
-          } else if (reply.data === "error") {
-            sendPersistError(context);
-          }
-        }
-      );
+      sendDelta(contentJSON);
       sendUpdate();
-    }, 80),
+    },
     onSelectionUpdate() {
       sendUpdate();
     },
   });
+
+  const sendDelta = throttle(function (contentJSON) {
+    const delta = fastjsonpatch.compare(window.persistedContent, contentJSON);
+    context.pushEvent(
+      "update_selected_chapter",
+      {
+        delta: delta,
+      },
+      (reply, _ref) => {
+        if (reply.data === "ok") {
+          window.persistedContent = contentJSON;
+          sendPersistSuccess(context);
+        } else if (reply.data === "error") {
+          sendPersistError(context);
+        }
+      }
+    );
+  }, 100);
 
   function sendUpdate() {
     let event = new CustomEvent("selection-updated", {});
