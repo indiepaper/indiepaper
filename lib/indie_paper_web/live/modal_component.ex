@@ -20,7 +20,9 @@ defmodule IndiePaperWeb.ModalComponent do
             </svg>
         <% end %>
         </div>
+        <div class='pt-4 pb-12 md:pb-4'>
             <%= live_component @component, @opts %>
+        </div>
       </div>
     </div>
     """
