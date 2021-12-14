@@ -21,6 +21,8 @@ defmodule IndiePaper.BookLibrary do
     Enum.map(book_subscriptions_with_books, fn bs -> bs.book end) |> Books.with_assoc(:author)
   end
 
+  def book_added_to_library?(nil, _book), do: false
+
   def book_added_to_library?(reader, book) do
     ReaderBookSubscriptions.get_reader_book_subscription(reader.id, book.id)
   end

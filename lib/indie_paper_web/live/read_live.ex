@@ -8,7 +8,7 @@ defmodule IndiePaperWeb.ReadLive do
   alias IndiePaper.ChapterMembershipTiers
   alias IndiePaper.ReaderAuthorSubscriptions
 
-  on_mount IndiePaperWeb.AuthorLiveAuth
+  on_mount {IndiePaperWeb.AuthorLiveAuth, :fetch_current_author}
 
   @impl true
   def mount(%{"book_id" => book_id}, _session, socket) do
@@ -30,16 +30,24 @@ defmodule IndiePaperWeb.ReadLive do
 
   @impl true
   def handle_event("add_to_library", _, socket) do
-    {:ok, _saved_book} =
-      Books.add_serial_book_to_library(socket.assigns.current_author, socket.assigns.book)
+    case socket.assigns.current_author do
+      nil ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Sign up or Sign in to add this book to your Library.")
+         |> redirect(to: Routes.author_registration_path(socket, :new))}
 
-    {:noreply,
-     socket
-     |> put_flash(
-       :info,
-       "The serial book has been added to your library. You will be notified when new chapters are published."
-     )
-     |> assign(book_added_to_library?: true)}
+      current_author ->
+        {:ok, _saved_book} = Books.add_serial_book_to_library(current_author, socket.assigns.book)
+
+        {:noreply,
+         socket
+         |> put_flash(
+           :info,
+           "The serial book has been added to your library. You will be notified when new chapters are published."
+         )
+         |> assign(book_added_to_library?: true)}
+    end
   end
 
   @impl true
@@ -66,6 +74,18 @@ defmodule IndiePaperWeb.ReadLive do
 
       Chapters.free?(selected_chapter) ->
         {:noreply, assign(socket, selected_chapter: selected_chapter, not_subscribed: false)}
+
+      is_nil(socket.assigns.current_author) ->
+        chapter_with_masked_content =
+          Map.merge(selected_chapter, %{
+            content_json:
+              Chapters.placeholder_content_json("Chapter", "lorem ipsum, kind of nice."),
+            published_content_json:
+              Chapters.placeholder_content_json("Chapter", "lorem ipsum, kind of nice.")
+          })
+
+        {:noreply,
+         assign(socket, selected_chapter: chapter_with_masked_content, not_subscribed: true)}
 
       true ->
         membership_tiers = ChapterMembershipTiers.list_membership_tiers(selected_chapter.id)

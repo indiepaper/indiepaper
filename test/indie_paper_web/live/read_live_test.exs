@@ -6,9 +6,7 @@ defmodule IndiePaperWeb.ReadLiveTest do
   alias IndiePaper.Chapters
 
   test "show the title of the book", %{conn: conn} do
-    reader = insert(:author)
     book = insert(:book)
-    conn = log_in_author(conn, reader)
 
     {:ok, _view, html} =
       live(conn, Routes.book_read_path(conn, :index, book)) |> follow_redirect(conn)

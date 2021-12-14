@@ -135,7 +135,6 @@ defmodule IndiePaperWeb.Router do
       live "/books/new", BookLive.New, :new
 
       resources "/books", BookController, only: [] do
-        live "/read", ReadLive, :index
         resources "/checkout", CheckoutController, only: [:new]
       end
 
@@ -154,6 +153,10 @@ defmodule IndiePaperWeb.Router do
 
     scope "/", IndiePaperWeb do
       pipe_through :browser
+
+      resources "/books", BookController, only: [] do
+        live "/read", ReadLive, :index
+      end
 
       get "/", PageController, :index
       get "/privacy-policy", PageController, :privacy_policy
