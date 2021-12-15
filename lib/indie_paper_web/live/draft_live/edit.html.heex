@@ -1,6 +1,6 @@
 <section
          class="bg-background">
-        <div x-ignore class="bg-white border-b border-primary-border">
+        <div class="bg-white border-b border-primary-border">
             <div class="container-box">
                 <div class="flex flex-col items-start space-y-8 md:flex-row md:justify-between md:items-center md:space-y-0">
                     <div>
@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div x-ignore class="pt-20 page-box container-box">
+        <div class="pt-20 page-box container-box">
             <div class="flex flex-col items-stretch space-y-12 md:flex-row md:items-stretch md:space-y-0" >
                 <div class="flex flex-col md:pt-8 md:pr-6 md:pb-12 md:w-72">
                     <div class="space-y-6">
@@ -74,35 +74,35 @@
                      x-on:persist-error="isEditorError = true"
                      x-on:persist-success="isEditorError = false"
                      data-chapter-content-json={Jason.encode!(@selected_chapter.content_json)}
-                     data-editor-element-id="draft-editor-element-id">
+                     data-editor-element-id="draft-editor-element">
                     <div phx-update="ignore" class="flex flex-col items-stretch" >
                         <div class="flex sticky top-0 z-40 flex-row items-center py-4 px-8 space-x-1 bg-white rounded-t-lg border-b shadow-sm border-primary-border">
                             <button
-                                @click.prevent="toggleBold()"
                                 class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
                                 :class="{ 'text-white bg-gray-800' : isActive(updatedAt, 'bold') }"
+                                @click.prevent="toggleBold()"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current" ><path fill="none" d="M0 0h24v24H0z"/><path d="M8 11h4.5a2.5 2.5 0 1 0 0-5H8v5zm10 4.5a4.5 4.5 0 0 1-4.5 4.5H6V4h6.5a4.5 4.5 0 0 1 3.256 7.606A4.498 4.498 0 0 1 18 15.5zM8 13v5h5.5a2.5 2.5 0 1 0 0-5H8z"/></svg>
                             </button>
                             <button
                                 class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
-                                @click.prevent="toggleItalic()"
                                 :class="{ 'text-white bg-gray-800' : isActive(updatedAt, 'italic') }"
+                                @click.prevent="toggleItalic()"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 20H7v-2h2.927l2.116-12H9V4h8v2h-2.927l-2.116 12H15z"/></svg>
                             </button>
                             <span class="px-1"></span>
                             <button
                                 class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
-                                @click.prevent="toggleHeading(1)"
                                 :class="{ 'text-white bg-gray-800' : isActive(updatedAt, 'heading', { level: 1 }) }"
+                                @click.prevent="toggleHeading(1)"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0H24V24H0z"/><path d="M13 20h-2v-7H4v7H2V4h2v7h7V4h2v16zm8-12v12h-2v-9.796l-2 .536V8.67L19.5 8H21z"/></svg>
                             </button>
                             <button
                                 class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
-                                @click.prevent="toggleHeading(2)"
                                 :class="{ 'text-white bg-gray-800' : isActive(updatedAt, 'heading', { level: 2 }) }"
+                                @click.prevent="toggleHeading(2)"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path fill="none" d="M0 0H24V24H0z"/><path d="M4 4v7h7V4h2v16h-2v-7H4v7H2V4h2zm14.5 4c2.071 0 3.75 1.679 3.75 3.75 0 .857-.288 1.648-.772 2.28l-.148.18L18.034 18H22v2h-7v-1.556l4.82-5.546c.268-.307.43-.709.43-1.148 0-.966-.784-1.75-1.75-1.75-.918 0-1.671.707-1.744 1.606l-.006.144h-2C14.75 9.679 16.429 8 18.5 8z"/></svg>
                             </button>
@@ -122,7 +122,7 @@
                                 <p class="text-sm">Unsaved changes</p>
                             </div>
                         </div>
-                        <div class="py-8 px-8 prose md:p-12 !max-w-4xl min-h-[720px] font-normal" id="draft-editor-element-id" />
+                        <div class="py-8 px-8 prose md:p-12 !max-w-4xl min-h-[720px] font-normal" id="draft-editor-element" />
                     </div>
                 </div>
             </div>
