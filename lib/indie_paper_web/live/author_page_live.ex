@@ -49,7 +49,12 @@ defmodule IndiePaperWeb.AuthorPageLive do
        :info,
        "Create an account or Sign in to subscribe to #{Authors.get_full_name(author)}."
      )
-     |> redirect(to: Routes.author_registration_path(socket, :new))}
+     |> redirect(
+       to:
+         Routes.author_registration_path(socket, :new,
+           return_to: Routes.author_page_path(socket, :show, author)
+         )
+     )}
   end
 
   @impl true
