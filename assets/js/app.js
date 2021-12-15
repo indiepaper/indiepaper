@@ -86,6 +86,9 @@ Hooks.DraftEditor = {
     const contentJson = window.draftEditor.getJSON();
     this.pushEvent("editor_reconnected", { content_json: contentJson });
     window.persistedContent = {};
+    import("./draft-editor").then(({ sendPersistSuccess }) => {
+      sendPersistSuccess(this);
+    });
   },
   disconnected() {
     import("./draft-editor").then(({ sendPersistError }) => {
