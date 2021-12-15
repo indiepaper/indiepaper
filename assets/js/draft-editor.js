@@ -49,6 +49,8 @@ export function setupDraftEditor(context, editorElementId, chapterContentJson) {
     },
   });
 
+  sendEditorLoaded();
+
   const sendDelta = throttle(function (contentJSON) {
     const delta = fastjsonpatch.compare(window.persistedContent, contentJSON);
     context.pushEvent(
@@ -66,6 +68,11 @@ export function setupDraftEditor(context, editorElementId, chapterContentJson) {
       }
     );
   }, 100);
+
+  function sendEditorLoaded() {
+    let event = new CustomEvent("editor-loaded", {});
+    context.el.dispatchEvent(event);
+  }
 
   function sendUpdate() {
     let event = new CustomEvent("selection-updated", {});
