@@ -2,6 +2,7 @@ defmodule IndiePaperWeb.ProfileStripeConnectLive do
   use IndiePaperWeb, :live_view
 
   alias IndiePaper.PaymentHandler
+  alias IndiePaper.Authors
 
   on_mount IndiePaperWeb.AuthorLiveAuth
   on_mount {IndiePaperWeb.AuthorLiveAuth, :require_account_status_confirmed}
@@ -12,7 +13,9 @@ defmodule IndiePaperWeb.ProfileStripeConnectLive do
         %{"stripe_connect" => %{"country_code" => country_code}},
         socket
       ) do
-    case PaymentHandler.get_stripe_connect_url(socket.assigns.current_author, country_code) do
+    author = Authors.get_author!(socket.assigns.current_author.id)
+
+    case PaymentHandler.get_stripe_connect_url(author, country_code) do
       {:ok, stripe_connect_url} ->
         {:noreply, redirect(socket, external: stripe_connect_url)}
 

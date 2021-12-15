@@ -13,7 +13,12 @@ defmodule IndiePaperWeb.AuthorPageLiveTest do
       view
       |> element("[data-test=subscribe-#{membership_tier.id}]")
       |> render_click()
-      |> follow_redirect(conn, Routes.author_registration_path(conn, :new))
+      |> follow_redirect(
+        conn,
+        Routes.author_registration_path(conn, :new,
+          return_to: Routes.author_page_path(conn, :show, membership_tier.author)
+        )
+      )
 
     assert html_response(conn, 200) =~ Authors.get_full_name(membership_tier.author)
   end
