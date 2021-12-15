@@ -47,7 +47,7 @@
                  data-reader-element-id="book-reader-content-html"
                  data-chapter-content-json={(Jason.encode!(@selected_chapter.published_content_json))}
             >
-                <div class={"py-16 px-10 font-normal text-left md:py-16 md:px-16 prose #{if @not_subscribed, do: 'hidden'}"} id="book-reader-content-html" phx-update="ignore">
+                <div class={"py-16 px-10 font-normal text-justify md:py-16 md:px-16 prose #{if @not_subscribed, do: 'hidden'}"} id="book-reader-content-html" phx-update="ignore">
                 </div>
                 <%= if @not_subscribed do %>
                     <div class="flex flex-col justify-center items-center py-8 px-6 bg-white rounded-lg">
