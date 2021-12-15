@@ -144,8 +144,14 @@ defmodule IndiePaperWeb.AuthorAuth do
     end
   end
 
+  def store_return_to(conn, nil), do: conn
+
+  def store_return_to(conn, return_to_path) do
+    put_session(conn, :author_return_to, return_to_path)
+  end
+
   defp maybe_store_return_to(%{method: "GET"} = conn) do
-    put_session(conn, :author_return_to, current_path(conn))
+    store_return_to(conn, current_path(conn))
   end
 
   defp maybe_store_return_to(conn), do: conn

@@ -35,7 +35,12 @@ defmodule IndiePaperWeb.ReadLive do
         {:noreply,
          socket
          |> put_flash(:info, "Sign up or Sign in to add this book to your Library.")
-         |> redirect(to: Routes.author_registration_path(socket, :new))}
+         |> redirect(
+           to:
+             Routes.author_registration_path(socket, :new,
+               return_to: Routes.book_read_path(socket, :index, socket.assigns.book)
+             )
+         )}
 
       current_author ->
         {:ok, _saved_book} = Books.add_serial_book_to_library(current_author, socket.assigns.book)

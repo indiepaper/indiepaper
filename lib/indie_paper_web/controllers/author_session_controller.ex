@@ -4,7 +4,8 @@ defmodule IndiePaperWeb.AuthorSessionController do
   alias IndiePaper.Authors
   alias IndiePaperWeb.AuthorAuth
 
-  def new(conn, _params) do
+  def new(conn, params) do
+    conn = AuthorAuth.store_return_to(conn, params["return_to"])
     render(conn, "new.html", error_message: nil)
   end
 

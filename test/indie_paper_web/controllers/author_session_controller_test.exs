@@ -52,6 +52,22 @@ defmodule IndiePaperWeb.AuthorSessionControllerTest do
       assert redirected_to(conn) =~ "/"
     end
 
+    test "logs the author in with return_to on params", %{conn: conn, author: author} do
+      conn =
+        conn
+        |> init_test_session(author_return_to: "/foo/bar")
+        |> get(Routes.author_session_path(conn, :new, return_to: "/updated/bar"))
+        |> post(Routes.author_session_path(conn, :create), %{
+          "author" => %{
+            "email" => author.email,
+            "password" => valid_author_password()
+          }
+        })
+
+      assert redirected_to(conn) == "/updated/bar"
+      refute redirected_to(conn) == "/foo/bar"
+    end
+
     test "logs the author in with return to", %{conn: conn, author: author} do
       conn =
         conn

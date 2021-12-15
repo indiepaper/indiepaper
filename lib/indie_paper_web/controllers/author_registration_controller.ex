@@ -5,7 +5,8 @@ defmodule IndiePaperWeb.AuthorRegistrationController do
   alias IndiePaper.Authors.Author
   alias IndiePaperWeb.AuthorAuth
 
-  def new(conn, _params) do
+  def new(conn, params) do
+    conn = AuthorAuth.store_return_to(conn, params["return_to"])
     changeset = Authors.change_author_registration(%Author{})
     render(conn, "new.html", changeset: changeset)
   end

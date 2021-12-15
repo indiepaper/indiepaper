@@ -13,7 +13,7 @@ defmodule IndiePaperWeb.AuthorLiveAuth do
       {:halt,
        socket
        |> put_flash(:info, "Create an account or Sign in to continue.")
-       |> redirect(to: Routes.author_registration_path(socket, :new))}
+       |> redirect(to: Routes.author_registration_path(socket, :new, return_to: "/hello"))}
     end
   end
 
