@@ -18,13 +18,9 @@
     "@tiptap/extension-placeholder": "^2.0.0-beta.35",
     "@tiptap/html": "^2.0.0-beta.111",
     "@tiptap/starter-kit": "^2.0.0-beta.102",
-    "@tiptap/vue-2": "^2.0.0-beta.60",
     "alpinejs": "^3.7.0",
-    "axios": "^0.24.0",
     "fast-json-patch": "^3.1.0",
-    "instant.page": "^5.1.0",
     "jsonpath": "^1.1.1",
-    "lodash.throttle": "^4.1.1",
-    "vue": "^2.6.14"
+    "lodash.throttle": "^4.1.1"
   }
 }

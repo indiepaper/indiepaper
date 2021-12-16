@@ -1,8 +1,6 @@
-import { Editor, EditorContent } from "@tiptap/vue-2";
+import { Editor } from "@tiptap/core";
 import Document from "@tiptap/extension-document";
 import StarterKit from "@tiptap/starter-kit";
-import Vue from "vue/dist/vue.common.prod";
-import axios from "axios";
 import jp from "jsonpath";
 import throttle from "lodash.throttle";
 import * as fastjsonpatch from "fast-json-patch";
