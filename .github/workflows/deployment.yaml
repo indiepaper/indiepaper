@@ -31,9 +31,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          key: ${{ runner.os }}-${{ env.FLY_APP_NAME }}-buildx-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-
+            ${{ runner.os }}-${{ env.FLY_APP_NAME }}-buildx-
 
       - name: 🔑 Fly Registry Auth
         uses: docker/login-action@v1
