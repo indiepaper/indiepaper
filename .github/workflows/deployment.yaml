@@ -30,7 +30,7 @@ jobs:
       - name: ⚡️ Cache Docker layers
         uses: actions/cache@v2
         with:
-          path: /tmp/.buildx-cache
+          path: "/tmp/.indiepaper/.${{ env.FLY_APP_NAME }}/.buildx-cache"
           key: ${{ runner.os }}-${{ env.FLY_APP_NAME }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-${{ env.FLY_APP_NAME }}-buildx-
@@ -50,13 +50,13 @@ jobs:
           tags: "registry.fly.io/${{ env.FLY_APP_NAME }}:${{ github.sha }}"
           build-args: |
             COMMIT_SHA=${{ github.sha }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+          cache-from: "type=local,src=/tmp/.indiepaper/.${{ env.FLY_APP_NAME }}/.buildx-cache"
+          cache-to: "type=local,mode=max,dest=/tmp/.indiepaper/.${{ env.FLY_APP_NAME }}/.buildx-cache-new"
 
       - name: Move cache
         run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+          rm -rf /tmp/.indiepaper/.${{ env.FLY_APP_NAME }}/.buildx-cache
+          mv /tmp/.indiepaper/.${{ env.FLY_APP_NAME }}/.buildx-cache-new /tmp/.indiepaper/.${{ env.FLY_APP_NAME }}/.buildx-cache
 
   deploy:
     name: Deploy App to Environment
