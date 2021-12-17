@@ -7,11 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master') && github.event_name == 'push'}}
     steps:
-      - name: Setup Correct Fly App
+      - name: Setup Development Fly App
         run: echo "FLY_APP_NAME=indiepaper-development" >> $GITHUB_ENV
         if: github.ref == 'refs/heads/develop'
 
-      - name: Setup Correct Fly App
+      - name: Setup Production Fly App
         run: echo "FLY_APP_NAME=indiepaper-production" >> $GITHUB_ENV
         if: github.ref == 'refs/heads/production'
 
@@ -47,9 +47,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: registry.fly.io/${{env.FLY_APP_NAME}}:${{ github.sha }}
+          tags: "registry.fly.io/${{ env.FLY_APP_NAME }}:${{ github.sha }}"
           build-args: |
-            REMIX_TOKEN=${{ secrets.REMIX_TOKEN }}
             COMMIT_SHA=${{ github.sha }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
@@ -77,7 +76,7 @@ jobs:
         uses: superfly/flyctl-actions@1.1
         with:
           args:
-            "deploy -i registry.fly.io/${{env.FLY_APP_NAME}}:${{ github.sha }}
+            "deploy -i registry.fly.io/${{ env.FLY_APP_NAME }}:${{ github.sha }}
             -a indiepaper-development --strategy rolling "
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
