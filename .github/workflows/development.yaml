@@ -71,6 +71,6 @@ jobs:
         with:
           args:
             "deploy -i registry.fly.io/indiepaper-development:${{ github.sha }}
-            --strategy rolling"
+            -a indiepaper-development --strategy rolling "
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
