@@ -5,8 +5,8 @@ defmodule IndiePaperWeb.BookLive.Show do
 
   on_mount {IndiePaperWeb.AuthorLiveAuth, :fetch_current_author}
 
-  def mount(%{"id" => book_id}, _session, socket) do
-    book = Books.get_book!(book_id) |> Books.with_assoc([:author, :draft])
+  def mount(%{"slug" => book_slug}, _session, socket) do
+    book = Books.get_book_from_slug!(book_slug) |> Books.with_assoc([:author, :draft])
     {:ok, socket |> assign(book: book)}
   end
 end

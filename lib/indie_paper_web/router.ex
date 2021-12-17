@@ -115,9 +115,9 @@ defmodule IndiePaperWeb.Router do
       live "/dashboard/memberships/new", DashboardMembershipsLive, :new
       live "/dashboard/memberships/:id/edit", DashboardMembershipsLive, :edit
 
-      live "/books/:book_id/publish/:id", BookPublishChapterLive, :new
+      live "/books/:book_slug/publish/:id", BookPublishChapterLive, :new
 
-      resources "/books", BookController, only: [] do
+      resources "/books", BookController, only: [], param: "slug" do
         resources "/publication", PublicationController, only: [:create]
         resources "/products", ProductController, only: [:create, :edit, :update]
       end
@@ -134,11 +134,11 @@ defmodule IndiePaperWeb.Router do
 
       live "/books/new", BookLive.New, :new
 
-      resources "/books", BookController, only: [] do
+      resources "/books", BookController, only: [], param: "slug" do
         resources "/checkout", CheckoutController, only: [:new]
       end
 
-      live "/books/:id/edit", BookLive.Edit, :edit
+      live "/books/:slug/edit", BookLive.Edit, :edit
 
       live "/drafts/:id/edit", DraftLive.Edit, :edit
 
@@ -154,7 +154,7 @@ defmodule IndiePaperWeb.Router do
     scope "/", IndiePaperWeb do
       pipe_through :browser
 
-      resources "/books", BookController, only: [] do
+      resources "/books", BookController, only: [], param: "slug" do
         live "/read", ReadLive, :index
       end
 
@@ -162,7 +162,7 @@ defmodule IndiePaperWeb.Router do
       get "/privacy-policy", PageController, :privacy_policy
       get "/terms-of-service", PageController, :terms_of_service
 
-      live "/books/:id", BookLive.Show, :show
+      live "/books/:slug", BookLive.Show, :show
     end
 
     scope "/", IndiePaperWeb do

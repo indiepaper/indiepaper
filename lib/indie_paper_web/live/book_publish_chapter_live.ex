@@ -11,9 +11,9 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
   alias IndiePaper.PaymentHandler.MoneyHandler
 
   @impl true
-  def mount(%{"book_id" => book_id, "id" => chapter_id}, _, socket) do
+  def mount(%{"book_slug" => book_slug, "id" => chapter_id}, _, socket) do
     chapter = Chapters.get_chapter!(chapter_id)
-    book = Books.get_book_with_draft!(book_id)
+    book = Books.get_book_from_slug!(book_slug) |> Books.with_assoc(:draft)
     author = Books.get_author(book)
     membership_tiers = MembershipTiers.list_membership_tiers(author)
 
