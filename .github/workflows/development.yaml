@@ -1,14 +1,20 @@
 name: Deploy develop branch to indiepaper-development on fly
-on:
-  push:
-    branches:
-      - develop
+on: push
 
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    if: ${{ (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master') && github.event_name == 'push'}}
     steps:
+      - name: Setup Correct Fly App
+        run: echo "FLY_APP_NAME=indiepaper-development" >> $GITHUB_ENV
+        if: github.ref == 'refs/heads/develop'
+
+      - name: Setup Correct Fly App
+        run: echo "FLY_APP_NAME=indiepaper-production" >> $GITHUB_ENV
+        if: github.ref == 'refs/heads/production'
+
       - name: 🛑 Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.6.0
         with:
@@ -41,7 +47,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: registry.fly.io/indiepaper-development:${{ github.sha }}
+          tags: registry.fly.io/${{env.FLY_APP_NAME}}:${{ github.sha }}
           build-args: |
             REMIX_TOKEN=${{ secrets.REMIX_TOKEN }}
             COMMIT_SHA=${{ github.sha }}
@@ -57,6 +63,7 @@ jobs:
     name: Deploy Development App
     needs: [build]
     runs-on: ubuntu-latest
+    if: ${{ (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master') && github.event_name == 'push'}}
     steps:
       - name: 🛑 Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.6.0
@@ -70,7 +77,7 @@ jobs:
         uses: superfly/flyctl-actions@1.1
         with:
           args:
-            "deploy -i registry.fly.io/indiepaper-development:${{ github.sha }}
+            "deploy -i registry.fly.io/${{env.FLY_APP_NAME}}:${{ github.sha }}
             -a indiepaper-development --strategy rolling "
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
