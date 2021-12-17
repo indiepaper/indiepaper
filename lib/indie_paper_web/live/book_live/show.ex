@@ -2,11 +2,19 @@ defmodule IndiePaperWeb.BookLive.Show do
   use IndiePaperWeb, :live_view
 
   alias IndiePaper.Books
+  alias IndiePaper.ExternalAssetHandler
 
   on_mount {IndiePaperWeb.AuthorLiveAuth, :fetch_current_author}
 
   def mount(%{"slug" => book_slug}, _session, socket) do
     book = Books.get_book_from_slug!(book_slug) |> Books.with_assoc([:author, :draft])
+
+    book_image_url =
+      if Books.has_promo_images?(book) do
+        ExternalAssetHandler.get_public_url(Books.first_promo_image(book))
+      else
+        Routes.book_show_url(socket, :show, book)
+      end
 
     meta_attrs = [
       %{name: "title", content: book.title},
@@ -16,7 +24,7 @@ defmodule IndiePaperWeb.BookLive.Show do
       },
       %{name: "keywords", content: "book"},
       %{name: "og:type", content: "website"},
-      %{name: "og:url", content: Routes.book_show_url(socket, :show, book)},
+      %{name: "og:url", content: book_image_url},
       %{name: "og:title", content: book.title},
       %{
         name: "og:description",
@@ -24,7 +32,7 @@ defmodule IndiePaperWeb.BookLive.Show do
       },
       %{name: "og:image", content: Routes.static_url(socket, "/images/og-image.png")},
       %{name: "twitter:card", content: "summary_large_image"},
-      %{name: "twitter:url", content: Routes.book_show_url(socket, :show, book)},
+      %{name: "twitter:url", content: book_image_url},
       %{
         name: "twitter:title",
         content: book.title
