@@ -97,7 +97,7 @@
   }
 
   .base-link {
-    @apply flex flex-row items-center space-x-1.5 text-gray-700 hover:text-gray-900 transition font-medium;
+    @apply flex flex-row items-center space-x-1.5 text-gray-700 hover:text-black transition font-medium;
   }
 
   .primary-link {
