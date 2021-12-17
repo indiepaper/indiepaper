@@ -105,21 +105,24 @@ Hooks.BookReaderHook = {
     const initialChapterContentJson = JSON.parse(
       this.el.dataset.chapterContentJson
     );
-    this.loadAndSetContent(readerElement, initialChapterContentJson);
-    let event = new CustomEvent("reader-loaded");
-    this.el.dispatchEvent(event);
+    const context = this;
+
+    this.loadAndSetContent(context, readerElement, initialChapterContentJson);
   },
   updated() {
     const readerElement = document.getElementById(
       this.el.dataset.readerElementId
     );
+    const context = this;
     const chapterContentJson = JSON.parse(this.el.dataset.chapterContentJson);
-    this.loadAndSetContent(readerElement, chapterContentJson);
+    this.loadAndSetContent(context, readerElement, chapterContentJson);
   },
 
-  loadAndSetContent(readerElement, contentJson) {
+  loadAndSetContent(context, readerElement, contentJson) {
     import("./book-reader").then(({ generateHtmlFromContentJson }) => {
       readerElement.innerHTML = generateHtmlFromContentJson(contentJson);
+      let event = new CustomEvent("reader-loaded");
+      context.el.dispatchEvent(event);
     });
   },
 };

@@ -42,7 +42,8 @@
                     <% end %>
                 <% end %>
             </div>
-            <div class={"min-h-screen relative bg-white md:flex-1 md:rounded-lg md:border md:border-primary-border #{if @not_subscribed, do: 'flex flex-row items-center justify-center min-h-[320px] md:min-h-[480px]'}"} id="book-reader"
+            <div class={"min-h-screen relative bg-white md:flex-1 md:rounded-lg md:border md:border-primary-border #{if @not_subscribed, do: 'flex flex-row items-center justify-center min-h-[320px] md:min-h-[480px]'}"}
+                 id="book-reader"
                  x-data="{isReaderLoading: true}"
                  x-on:reader-loaded="isReaderLoading = false"
                  phx-hook="BookReaderHook"
