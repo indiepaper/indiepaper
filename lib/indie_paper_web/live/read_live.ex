@@ -11,8 +11,8 @@ defmodule IndiePaperWeb.ReadLive do
   on_mount {IndiePaperWeb.AuthorLiveAuth, :fetch_current_author}
 
   @impl true
-  def mount(%{"book_id" => book_id}, _session, socket) do
-    book = Books.get_book!(book_id) |> Books.with_assoc([:author, :draft])
+  def mount(%{"book_slug" => book_slug}, _session, socket) do
+    book = Books.get_book_from_slug!(book_slug) |> Books.with_assoc([:author, :draft])
     published_chapters = Books.get_published_chapters(book)
     selected_chapter = List.first(published_chapters)
 
@@ -69,7 +69,7 @@ defmodule IndiePaperWeb.ReadLive do
   end
 
   @impl true
-  def handle_params(%{"book_id" => _book_id, "chapter_id" => chapter_id}, _uri, socket) do
+  def handle_params(%{"book_slug" => _book_slug, "chapter_id" => chapter_id}, _uri, socket) do
     selected_chapter = Chapters.get_chapter!(chapter_id)
     author = Books.get_author(socket.assigns.book)
 
@@ -122,7 +122,7 @@ defmodule IndiePaperWeb.ReadLive do
   end
 
   @impl true
-  def handle_params(%{"book_id" => _book_id}, _uri, socket) do
+  def handle_params(%{"book_slug" => _book_slugd}, _uri, socket) do
     {:noreply,
      socket
      |> push_patch(

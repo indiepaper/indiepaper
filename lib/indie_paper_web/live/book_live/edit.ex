@@ -8,9 +8,9 @@ defmodule IndiePaperWeb.BookLive.Edit do
   alias IndiePaper.ExternalAssetHandler
 
   @impl Phoenix.LiveView
-  def mount(%{"id" => book_id}, %{"author_token" => author_token}, socket) do
+  def mount(%{"slug" => book_slug}, %{"author_token" => author_token}, socket) do
     current_author = Authors.get_author_by_session_token(author_token)
-    book = Books.get_book!(book_id) |> Books.with_assoc(:draft)
+    book = Books.get_book_from_slug!(book_slug) |> Books.with_assoc(:draft)
     changeset = Books.change_book(book)
 
     {:ok,

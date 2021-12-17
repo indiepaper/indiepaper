@@ -3,8 +3,8 @@ defmodule IndiePaperWeb.CheckoutController do
 
   alias IndiePaper.{PaymentHandler, Books}
 
-  def new(%{assigns: %{current_author: reader}} = conn, %{"book_id" => book_id}) do
-    book = Books.get_book!(book_id) |> Books.with_assoc(:author)
+  def new(%{assigns: %{current_author: reader}} = conn, %{"book_slug" => book_slug}) do
+    book = Books.get_book_from_slug!(book_slug) |> Books.with_assoc(:author)
 
     if book.author.id == reader.id do
       conn
