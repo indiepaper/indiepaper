@@ -36,6 +36,6 @@ defmodule IndiePaperWeb.BookLive.Show do
       %{name: "twitter:image", content: Routes.static_url(socket, "/images/og-image.png")}
     ]
 
-    {:ok, socket |> assign(book: book, meta_attrs: meta_attrs)}
+    {:ok, socket |> assign(book: book, meta_attrs: meta_attrs, page_title: book.title)}
   end
 end
