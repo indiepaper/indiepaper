@@ -85,6 +85,6 @@ jobs:
         with:
           args:
             "deploy -i registry.fly.io/${{ env.FLY_APP_NAME }}:${{ github.sha }}
-            -a ${{ env.FLY_APP_NAME }} --strategy rolling "
+            -a ${{ env.FLY_APP_NAME }}"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
