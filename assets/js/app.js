@@ -106,6 +106,8 @@ Hooks.BookReaderHook = {
       this.el.dataset.chapterContentJson
     );
     this.loadAndSetContent(readerElement, initialChapterContentJson);
+    let event = new CustomEvent("reader-loaded");
+    this.el.dispatchEvent(event);
   },
   updated() {
     const readerElement = document.getElementById(
