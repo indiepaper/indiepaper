@@ -1,4 +1,4 @@
-name: Deploy develop branch to indiepaper-development on fly
+name: Deploy branch to fly
 on: push
 
 jobs:
