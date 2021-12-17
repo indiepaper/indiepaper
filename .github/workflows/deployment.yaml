@@ -59,7 +59,7 @@ jobs:
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   deploy:
-    name: Deploy Development App
+    name: Deploy App to Environment
     needs: [build]
     runs-on: ubuntu-latest
     if: ${{ (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master') && github.event_name == 'push'}}
