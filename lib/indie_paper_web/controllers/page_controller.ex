@@ -9,8 +9,7 @@ defmodule IndiePaperWeb.PageController do
         content:
           "IndiePaper is a place for authors to write, edit, publish and sell their books. Just write and we'll take care of the rest, taking your manuscript to beautiful self-published books to the hands of your readers."
       },
-      %{name: "keywords", content: "tech blog, tech writing"},
-      %{name: "description", content: "A tech blog by DevDecks"},
+      %{name: "keywords", content: "indiepaper, books, self-publishing, writing, pubilshing"},
       %{name: "og:type", content: "website"},
       %{name: "og:url", content: "https://indiepaper.me/"},
       %{name: "og:title", content: "IndiePaper, the best way to make and sell beautiful books"},
