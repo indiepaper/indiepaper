@@ -72,4 +72,14 @@ defmodule IndiePaper.Books.Book do
   def scope(query, %IndiePaper.Authors.Author{id: author_id}, _) do
     from p in query, where: p.author_id == ^author_id
   end
+
+  def to_slug(id, title) do
+    "#{Slug.slugify(title)}-#{id}"
+  end
+end
+
+defimpl Phoenix.Param, for: IndiePaper.Books.Book do
+  def to_param(%{id: id, title: title}) do
+    IndiePaper.Books.Book.to_slug(id, title)
+  end
 end

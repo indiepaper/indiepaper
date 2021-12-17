@@ -53,6 +53,11 @@ defmodule IndiePaper.Books do
   def get_book!(book_id), do: Repo.get!(Book, book_id)
   def get_book_with_draft!(book_id), do: get_book!(book_id) |> with_assoc(:draft)
 
+  def get_book_from_slug!(slug) do
+    id = String.slice(slug, -36, 36)
+    get_book!(id)
+  end
+
   def with_assoc(book, assoc), do: Repo.preload(book, assoc)
 
   def is_published?(book), do: book.status == :published

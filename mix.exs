@@ -69,7 +69,8 @@ defmodule IndiePaper.MixProject do
       {:ex_aws, "~> 2.1"},
       {:ex_aws_s3, "~> 2.0"},
       {:sweet_xml, "~> 0.6"},
-      {:mogrify, "~> 0.9.1"}
+      {:mogrify, "~> 0.9.1"},
+      {:slugify, "~> 1.3"}
     ]
   end
 

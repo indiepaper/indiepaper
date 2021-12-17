@@ -44,6 +44,17 @@ defmodule IndiePaper.BooksTest do
     end
   end
 
+  describe "get_book_from_slug!/1" do
+    test "gets book with given slug" do
+      book = insert(:book)
+      slug = Books.Book.to_slug(book.id, book.title)
+
+      found_book = Books.get_book_from_slug!(slug)
+
+      assert found_book.id == book.id
+    end
+  end
+
   describe "list_books/1" do
     test "lists books of a given author" do
       [book1, book2] = insert_pair(:book)
