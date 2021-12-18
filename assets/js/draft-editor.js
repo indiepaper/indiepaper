@@ -1,6 +1,7 @@
 import { Editor } from "@tiptap/core";
 import Document from "@tiptap/extension-document";
 import StarterKit from "@tiptap/starter-kit";
+import Link from "@tiptap/extension-link";
 import jp from "jsonpath";
 import throttle from "lodash.throttle";
 import * as fastjsonpatch from "fast-json-patch";
@@ -19,6 +20,16 @@ export function sendPersistError(context) {
   context.el.dispatchEvent(event);
 }
 
+export function getEnabledExtensions() {
+  return [
+    CustomDocument,
+    StarterKit.configure({
+      document: false,
+    }),
+    Link,
+  ];
+}
+
 export function setupDraftEditor(context, editorElementId, chapterContentJson) {
   const editorElement = document.getElementById(editorElementId);
   window.persistedContent = {};
@@ -26,12 +37,7 @@ export function setupDraftEditor(context, editorElementId, chapterContentJson) {
   window.draftEditor = new Editor({
     element: editorElement,
     content: chapterContentJson,
-    extensions: [
-      CustomDocument,
-      StarterKit.configure({
-        document: false,
-      }),
-    ],
+    extensions: getEnabledExtensions(),
     editorProps: {
       attributes: {
         class: "focus:outline-none",
