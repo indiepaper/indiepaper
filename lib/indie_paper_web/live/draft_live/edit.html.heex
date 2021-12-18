@@ -49,7 +49,7 @@
                         </div>
                         <div class="space-y-4">
                             <%= for chapter <- @chapters do %>
-                                <div class={"flex flex-row justify-between items-center pr-2 space-x-2 rounded-md hover:bg-stone-100 #{if chapter.id == @selected_chapter.id, do: 'bg-stone-100 border border-secondary-border'}"}>
+                                <div class={"flex flex-row justify-between items-center pr-2 space-x-2 border border-transparent rounded-md hover:bg-stone-100 #{if chapter.id == @selected_chapter.id, do: 'bg-stone-100 !border-secondary-border'}"}>
                                     <button phx-page-loading phx-click="select_chapter" phx-value-chapter_id={chapter.id} data-test="chapter-title" class="inline-block py-3 px-6 w-full text-left whitespace-normal break-words rounded-md hover:bg-stone-100">
                                         <%= chapter.title %>
                                     </button>
