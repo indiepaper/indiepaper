@@ -11,7 +11,7 @@
                             <%= if IndiePaper.Orders.is_payment_completed?(order) do %>
                                 <span data-test="order-status" class="py-1 px-2 text-xs text-green-800 bg-green-100 rounded-lg border border-green-200"><%= Phoenix.Naming.humanize(order.status) %></span>
                             <% else %>
-                                <span data-test="order-status" class="py-1 px-2 text-xs text-warm-gray-600 bg-warm-gray-100 rounded-lg border border-warm-gray-200"><%= Phoenix.Naming.humanize(order.status) %></span>
+                                <span data-test="order-status" class="py-1 px-2 text-xs text-stone-600 bg-stone-100 rounded-lg border border-stone-200"><%= Phoenix.Naming.humanize(order.status) %></span>
                             <% end %>
 
                             <p data-test="order-amount"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(order.amount) %></p>

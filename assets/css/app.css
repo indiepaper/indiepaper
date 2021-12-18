@@ -41,7 +41,7 @@
   }
 
   .form-input {
-    @apply border-primary-border focus:ring-0 w-full rounded-lg focus:outline-none focus:border-warm-gray-500;
+    @apply border-primary-border focus:ring-0 w-full rounded-lg focus:outline-none focus:border-stone-500;
   }
 
   .form-input-error {
