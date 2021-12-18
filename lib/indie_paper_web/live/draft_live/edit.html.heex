@@ -32,10 +32,10 @@
                 </div>
             </div>
         </div>
-        <div class="pt-20 page-box container-box">
+        <div class="md:py-0 page-box md:container-box">
             <div class="flex flex-col items-stretch space-y-12 md:flex-row md:items-stretch md:space-y-0" >
-                <div class="flex flex-col md:pt-8 md:pr-6 md:pb-12 md:w-72">
-                    <div class="space-y-6">
+                <div class="px-6 flex flex-col md:pt-8 md:pr-6 md:pb-12 md:max-w-sm">
+                    <div class="space-y-6 md:py-8">
                         <div class="flex flex-row justify-between items-center">
                             <div>
                                 <p>Chapters</p>
@@ -50,7 +50,7 @@
                         <div class="space-y-4">
                             <%= for chapter <- @chapters do %>
                                 <div class={"flex flex-row justify-between items-center pr-2 space-x-2 rounded-md hover:bg-stone-100 #{if chapter.id == @selected_chapter.id, do: 'bg-stone-100 border border-secondary-border'}"}>
-                                    <button phx-page-loading phx-click="select_chapter" phx-value-chapter_id={chapter.id} data-test="chapter-title" class="inline-block py-2 px-6 w-full text-left whitespace-normal break-words rounded-md hover:bg-stone-100">
+                                    <button phx-page-loading phx-click="select_chapter" phx-value-chapter_id={chapter.id} data-test="chapter-title" class="inline-block py-3 px-6 w-full text-left whitespace-normal break-words rounded-md hover:bg-stone-100">
                                         <%= chapter.title %>
                                     </button>
                                 </div>
@@ -58,7 +58,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex-1 p-0 bg-white rounded-lg border shadow-sm border-primary-border"
+                <div class="flex-1 p-0 bg-white border-t md:border-t-0 md:border-l md:border-r shadow-sm border-primary-border"
                     x-data="{
                                 isEditorLoading: true,
                                 isEditorError: false,
@@ -78,7 +78,7 @@
                      data-chapter-content-json={Jason.encode!(@selected_chapter.content_json)}
                      data-editor-element-id="draft-editor-element">
                     <div phx-update="ignore" class="flex flex-col items-stretch" >
-                        <div class="flex sticky top-0 z-40 flex-row items-center py-4 px-8 space-x-1 bg-white rounded-t-lg border-b shadow-sm border-primary-border">
+                        <div class="flex sticky top-0 z-40 flex-row items-center py-4 px-8 space-x-1 bg-white border-b shadow-sm border-primary-border">
                             <button
                                 class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
                                 :class="{ 'text-white bg-gray-800' : isActive(updatedAt, 'bold') }"
