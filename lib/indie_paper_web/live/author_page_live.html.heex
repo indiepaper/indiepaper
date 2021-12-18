@@ -22,7 +22,7 @@
             </div>
         <% else %>
             <%= if not Enum.empty?(@membership_tiers) do %>
-                <div class="grid overflow-hidden relative grid-cols-1 gap-8 p-4 mt-12 bg-warm-gray-100 rounded-lg border sm:grid-cols-2 md:py-8 md:px-8 lg:grid-cols-3 border-primary-border">
+                <div class="grid overflow-hidden relative grid-cols-1 gap-8 p-4 mt-12 bg-stone-100 rounded-lg border sm:grid-cols-2 md:py-8 md:px-8 lg:grid-cols-3 border-primary-border">
                     <%= for membership_tier <- @membership_tiers do %>
                         <div class="flex flex-col items-start p-8 bg-white rounded-xl border shadow-sm border-secondary-border">
                             <h3 class="font-bold"><%= membership_tier.title %></h3>

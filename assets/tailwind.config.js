@@ -25,9 +25,6 @@ module.exports = {
         "primary-error": colors.red[500],
         primary: colors.gray[900],
         accent: colors.orange[400],
-        "warm-gray": colors.stone,
-        orange: colors.orange,
-        amber: colors.amber,
       },
       fontFamily: {
         sans: ["Good Sans", ...defaultTheme.fontFamily.sans],

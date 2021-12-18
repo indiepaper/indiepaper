@@ -111,6 +111,7 @@ defmodule IndiePaper.Chapters do
   end
 
   def free?(%Chapter{is_free: is_free}), do: is_free
+  def locked?(%Chapter{is_free: is_free}), do: not is_free
 
   def published?(%Chapter{published_content_json: nil}), do: false
   def published?(%Chapter{} = _chapter), do: true

@@ -1,4 +1,4 @@
-<section class="bg-background">
+<section class="bg-white bg-background">
     <div class="secondary-nav">
         <div class="secondary-big-nav-content">
             <%= live_redirect to: Routes.book_show_path(@socket, :show, @book) do %>
@@ -25,24 +25,39 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <span phx-disable-with="Adding to library..." class="text-sm">Add to library</span>
+                        <span class="text-sm">Subscribe for updates</span>
                     </button>
                 <% end %>
             <% end %>
         </div>
     </div>
-    <div class="page-box md:container-box md:page-box">
+    <div class="md:py-0 page-box md:container-box">
         <div class="flex flex-col space-y-6 md:flex-row md:space-y-0">
-            <div class="flex flex-col items-stretch space-y-4 md:py-10 md:w-72">
-                <%= for chapter <- @published_chapters do %>
-                    <%= live_patch to: Routes.book_read_path(@socket, :index, @book, chapter_id: chapter.id), replace: true,
-                    data: [test: "book-chapter-title"],
-                    class: "py-2 px-6 text-left md:rounded-l-md border-t border-b md:border-l border-transparent md:px-4 hover:bg-warm-gray-100 hover:border-primary-border #{if @selected_chapter.id == chapter.id, do: 'bg-warm-gray-100 !border-primary-border'}" do  %>
-                        <p><%= chapter.title %></p>
+            <div class="px-6 md:py-16 md:pl-0 md:max-w-md" x-data="{showChapters: false}">
+                <div class="flex justify-between items-center">
+                    <h3 class="">Chapters</h3>
+                    <button @click="showChapters = !showChapters" class="p-2 md:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex hidden flex-col items-stretch mt-6 space-y-4 md:flex md:space-y-5" :class="showChapters ?'!flex' : ''">
+                    <%= for chapter <- @published_chapters do %>
+                        <%= live_patch to: Routes.book_read_path(@socket, :index, @book, chapter_id: chapter.id), replace: true,
+                        data: [test: "book-chapter-title"],
+                        class: "px-3 rounded-md py-3  text-left  border md:border-l border-transparent md:px-4 hover:bg-stone-100 space-x-2  primary-link #{if @selected_chapter.id == chapter.id, do: 'bg-stone-100 !border-secondary-border'}" do  %>
+                            <%= if Chapters.locked?(chapter) do %>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-stone-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                            <% end %>
+                            <p><%= chapter.title %></p>
+                        <% end %>
                     <% end %>
-                <% end %>
+                </div>
             </div>
-            <div class={"min-h-screen relative bg-white md:flex-1 md:rounded-lg md:border md:border-primary-border #{if @not_subscribed, do: 'flex flex-row items-center justify-center min-h-[320px] md:min-h-[480px]'}"}
+            <div class={"min-h-screen border-t relative bg-white md:flex-1 md:border-l md:border-r md:border-t-0 md:border-primary-border #{if @not_subscribed, do: 'flex flex-row items-center justify-center min-h-[320px] md:min-h-[480px]'}"}
                  id="book-reader"
                  x-data="{isReaderLoading: true}"
                  x-on:reader-loaded="isReaderLoading = false"
@@ -50,7 +65,7 @@
                  data-reader-element-id="book-reader-content-html"
                  data-chapter-content-json={(Jason.encode!(@selected_chapter.published_content_json))}
             >
-                <div class={"py-16 px-6 font-normal text-justify md:py-16 md:px-16 prose #{if @not_subscribed, do: 'hidden'}"} id="book-reader-content-html" phx-update="ignore">
+                <div class={"py-16 px-6 font-normal text-justify md:py-24 md:px-16 prose #{if @not_subscribed, do: 'hidden'}"} id="book-reader-content-html" phx-update="ignore">
                 </div>
                 <%= if @not_subscribed do %>
                     <div class="flex flex-col justify-center items-center py-8 px-6 bg-white rounded-lg">
@@ -68,7 +83,7 @@
                         </div>
                     </div>
                 <% else %>
-                    <div x-show="isReaderLoading" class="flex absolute top-0 right-0 flex-row justify-center items-center py-2 px-3 space-x-2 text-sm text-green-800 bg-white bg-green-100 rounded-lg badge">
+                    <div x-show="isReaderLoading" class="flex absolute top-4 left-4 flex-row justify-center items-center py-2 px-3 space-x-2 text-sm text-green-800 bg-white bg-green-100 rounded-lg md:top-8 md:left-16 badge">
                         <svg class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
