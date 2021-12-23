@@ -3,7 +3,6 @@ import Document from "@tiptap/extension-document";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import jp from "jsonpath";
-import throttle from "lodash.throttle";
 import * as fastjsonpatch from "fast-json-patch";
 
 const CustomDocument = Document.extend({
@@ -11,11 +10,13 @@ const CustomDocument = Document.extend({
 });
 
 export function sendPersistSuccess(context) {
+  window.isDraftEditorPendingRequest = false;
   let event = new CustomEvent("persist-success");
   context.el.dispatchEvent(event);
 }
 
 export function sendPersistError(context) {
+  window.isDraftEditorPendingRequest = false;
   let event = new CustomEvent("persist-error");
   context.el.dispatchEvent(event);
 }
@@ -33,6 +34,7 @@ export function getEnabledExtensions() {
 export function setupDraftEditor(context, editorElementId, chapterContentJson) {
   const editorElement = document.getElementById(editorElementId);
   window.persistedContent = {};
+  window.isDraftEditorPendingRequest = false;
 
   window.draftEditor = new Editor({
     element: editorElement,
@@ -55,23 +57,30 @@ export function setupDraftEditor(context, editorElementId, chapterContentJson) {
 
   sendEditorLoaded();
 
-  const sendDelta = throttle(function (contentJSON) {
-    const delta = fastjsonpatch.compare(window.persistedContent, contentJSON);
-    context.pushEvent(
-      "update_selected_chapter",
-      {
-        delta: delta,
-      },
-      (reply, _ref) => {
-        if (reply.data === "ok") {
-          window.persistedContent = contentJSON;
-          sendPersistSuccess(context);
-        } else if (reply.data === "error") {
-          sendPersistError(context);
+  function sendDelta(contentJSON) {
+    if(window.isDraftEditorPendingRequest) {
+      // Skip if pending request is not fulfilled
+    }
+    else  {
+      window.isDraftEditorPendingRequest = true;
+      const delta = fastjsonpatch.compare(window.persistedContent, contentJSON);
+      context.pushEvent(
+        "update_selected_chapter",
+        {
+          delta: delta,
+        },
+        (reply, _ref) => {
+          window.isDraftEditorPendingRequest = false;
+          if (reply.data === "ok") {
+            window.persistedContent = contentJSON;
+            sendPersistSuccess(context);
+          } else if (reply.data === "error") {
+            sendPersistError(context);
+          }
         }
-      }
-    );
-  }, 100);
+      );
+    }
+  };
 
   function sendEditorLoaded() {
     let event = new CustomEvent("editor-loaded", {});
