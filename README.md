@@ -1,3 +1,3 @@
 # IndiePaper
 
-The best way to write books.
+The future of publishing.
