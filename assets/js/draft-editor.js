@@ -10,11 +10,13 @@ const CustomDocument = Document.extend({
 });
 
 export function sendPersistSuccess(context) {
+  window.isDraftEditorPendingRequest = false;
   let event = new CustomEvent("persist-success");
   context.el.dispatchEvent(event);
 }
 
 export function sendPersistError(context) {
+  window.isDraftEditorPendingRequest = false;
   let event = new CustomEvent("persist-error");
   context.el.dispatchEvent(event);
 }
