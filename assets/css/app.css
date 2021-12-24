@@ -97,15 +97,16 @@
   }
 
   .base-link {
-    @apply flex flex-row items-center space-x-1.5 text-gray-700 hover:text-primary-text transition-all font-medium hover:bg-stone-100 px-2 py-1 rounded-md;
+    @apply flex flex-row items-center space-x-1.5 text-gray-700 hover:text-primary-text transition-all font-medium hover:bg-stone-100 px-2 py-1;
   }
 
   .primary-link {
-    @apply base-link text-gray-700;
+    @apply base-link text-gray-700 rounded-lg;
+
   }
 
   .secondary-link {
-    @apply base-link text-sm;
+    @apply base-link text-sm rounded-md;
   }
 
   .profile-picture {
