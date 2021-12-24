@@ -77,7 +77,7 @@ defmodule IndiePaperWeb.AuthorPageLive do
         {:noreply,
          socket
          |> put_flash(:error, message)
-         |> redirect(to: Routes.author_page_path(socket, :show, author))}
+         |> push_redirect(to: Routes.author_page_path(socket, :show, author))}
     end
   end
 end
