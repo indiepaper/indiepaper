@@ -20,7 +20,7 @@
         <header class="border-b-2 border-orange-400">
             <div class="flex flex-row justify-between items-center container-box">
                 <%= link "IndiePaper", to: Routes.page_path(@conn, :index), class: "font-bold", "data-test": "title"  %>
-                <div class="flex flex-row items-center space-x-6">
+                <div class="flex flex-row items-center space-x-4">
                     <%= if @current_author do %>
                         <%= live_redirect "Dashboard", to: Routes.dashboard_path(@conn, :index), class: "primary-link" %>
                         <div x-data="{profileOpen: false}" class="relative ml-3">
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                     <% else %>
-                        <div class="flex flex-row items-center space-x-6">
+                        <div class="flex flex-row items-center space-x-4">
                             <%= link "Sign in", to: Routes.author_session_path(@conn, :new) , class: "primary-link"%>
                             <%= link "Start Writing", to: Routes.author_registration_path(@conn, :new), class: "secondary-button text-sm" %>
                         </div>
