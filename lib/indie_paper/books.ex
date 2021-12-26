@@ -117,7 +117,11 @@ defmodule IndiePaper.Books do
     Enum.at(book.promo_images, 0)
   end
 
-  def serial_book?(book) do
+  def is_pre_order_book?(book) do
+    book.publishing_type == :pre_order
+  end
+
+  def is_serial_book?(book) do
     book.publishing_type == :serial
   end
 
