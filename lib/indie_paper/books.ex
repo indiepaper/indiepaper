@@ -121,6 +121,10 @@ defmodule IndiePaper.Books do
     book.publishing_type == :serial
   end
 
+  def can_publish_as_serial_book?(book) do
+    book.publishing_type in [:serial, :pre_order]
+  end
+
   def vanilla_book?(book) do
     book.publishing_type == :vanilla
   end
