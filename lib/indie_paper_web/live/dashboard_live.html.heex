@@ -101,7 +101,7 @@
                         <div class="flex flex-row justify-between items-center py-3 px-6 border-b border-secondary-border">
                             <%= if IndiePaper.Books.is_pending_publication?(book)  do %>
                                 <%= if Books.can_publish_as_serial_book?(book)  do %>
-                                    <span class="py-1 px-2 text-xs rounded-lg border text-stone-700 bg-stone-100 border-stone-200">Pending serial publication</span>
+                                    <span class="py-1 px-2 text-xs rounded-lg border text-stone-700 bg-stone-100 border-stone-200">Pending publication</span>
                                 <% else %>
                                     <span class="py-1 px-2 text-xs rounded-lg border text-stone-700 bg-stone-100 border-stone-200" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
                                 <% end %>
