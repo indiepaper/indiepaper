@@ -17,6 +17,7 @@ defmodule IndiePaperWeb.DashboardSubscriptionsLive do
      |> assign(
        page_title: "Subscriptions",
        subscriptions: subscriptions
-     )}
+     )
+     |> push_redirect(to: Routes.dashboard_path(socket, :index))}
   end
 end
