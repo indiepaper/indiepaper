@@ -102,11 +102,15 @@ defmodule IndiePaper.Chapters do
     |> Repo.transaction()
   end
 
-  def publish_free_serial_chapter(chapter) do
+  def free_chapter_changeset(chapter) do
     Chapter.publish_changeset(chapter, %{
       published_content_json: chapter.content_json,
       is_free: true
     })
+  end
+
+  def publish_free_serial_chapter(chapter) do
+    free_chapter_changeset(chapter)
     |> Repo.update()
   end
 

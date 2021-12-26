@@ -4,6 +4,7 @@ defmodule IndiePaper.BookPublisherTest do
   alias IndiePaper.BookPublisher
   alias IndiePaper.Books
   alias IndiePaper.Chapters
+  alias IndiePaper.Assets
   alias IndiePaper.ChapterMembershipTiers
 
   describe "publish_book/1" do
@@ -54,6 +55,24 @@ defmodule IndiePaper.BookPublisherTest do
       assert updated_chapter.published_content_json == chapter.content_json
       assert chapter_membership_tier.membership_tier_id == membership_tier.id
       assert chapter_membership_tier.chapter_id == chapter.id
+    end
+  end
+
+  describe "publish_pre_order_chapter/1" do
+    test "creates default product and asset" do
+      chapter = insert(:chapter)
+      draft = insert(:draft, chapters: [chapter])
+      book = insert(:book, status: :pending_publication, draft: draft)
+
+      published_book = BookPublisher.publish_pre_order_chapter!(book, chapter)
+      asset = Assets.get_readable_asset_of_book(book)
+
+      assert Books.is_published?(published_book)
+
+      updated_chapter = Chapters.get_chapter!(chapter.id)
+
+      assert asset
+      assert updated_chapter.published_content_json == chapter.content_json
     end
   end
 end
