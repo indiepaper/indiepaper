@@ -108,9 +108,9 @@
                             <% end %>
                             <%= if IndiePaper.Books.is_published?(book)  do %>
                                 <%= cond do %>
-                                <%= Books.is_serial_book?(book) -> %>
+                                <% Books.is_serial_book?(book) -> %>
                                     <span class="py-1 px-2 text-xs text-green-700 bg-green-100 rounded-lg border border-green-200">Serial publication</span>
-                                <%= Books.is_pre_order_book?(book) -> %>
+                                <% Books.is_pre_order_book?(book) -> %>
                                     <span class="py-1 px-2 text-xs text-green-700 bg-green-100 rounded-lg border border-green-200">Pre-order Book</span>
                                 <% true -> %>
                                     <span class="py-1 px-2 text-xs text-green-700 bg-green-100 rounded-lg border border-green-200" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>

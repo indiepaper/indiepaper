@@ -7,7 +7,7 @@ defmodule IndiePaper.BookPublisher do
   alias IndiePaper.Chapters
   alias IndiePaper.Products
 
-  def maybe_create_default_product_and_publish(multi, book) do
+  def maybe_create_default_product_and_publish_multi(multi, book) do
     multi
     |> Multi.run(
       :default_readable_asset,
@@ -18,10 +18,6 @@ defmodule IndiePaper.BookPublisher do
       &maybe_insert_default_product(&1, &2, book)
     )
     |> Multi.update(:book, Books.publish_book_changeset(book))
-    |> Repo.transaction()
-    |> case do
-      {:ok, %{book: published_book}} -> {:ok, published_book}
-    end
   end
 
   def publish_book(%Books.Book{} = book) do
@@ -29,7 +25,11 @@ defmodule IndiePaper.BookPublisher do
 
     Multi.new()
     |> Multi.update_all(:chapters, Chapters.publish_chapters_query(book_with_draft.draft), [])
-    |> maybe_create_default_product_and_publish(book)
+    |> maybe_create_default_product_and_publish_multi(book)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{book: published_book}} -> {:ok, published_book}
+    end
   end
 
   def maybe_insert_readable_asset(repo, _previous_data, book) do
@@ -78,7 +78,11 @@ defmodule IndiePaper.BookPublisher do
     {:ok, book} =
       Multi.new()
       |> Multi.update(:chapter, Chapters.free_chapter_changeset(chapter))
-      |> maybe_create_default_product_and_publish(book)
+      |> maybe_create_default_product_and_publish_multi(book)
+      |> Repo.transaction()
+      |> case do
+        {:ok, %{book: published_book}} -> {:ok, published_book}
+      end
 
     book
   end

@@ -6,32 +6,31 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
 
   alias IndiePaper.Books
   alias IndiePaper.BookPublisher
+  alias IndiePaper.Products
   alias IndiePaper.Chapters
-  alias IndiePaper.MembershipTiers
   alias IndiePaper.PaymentHandler.MoneyHandler
 
   @impl true
   def mount(%{"book_slug" => book_slug, "id" => chapter_id}, _, socket) do
     chapter = Chapters.get_chapter!(chapter_id)
     book = Books.get_book_from_slug!(book_slug) |> Books.with_assoc(:draft)
-    author = Books.get_author(book)
-    membership_tiers = MembershipTiers.list_membership_tiers(author)
+    product = Books.get_read_online_product(book)
 
-    membership_tiers_with_free = [
-      %MembershipTiers.MembershipTier{
+    products_with_free = [
+      %Products.Product{
         id: "free",
         title: "Free",
-        description_html: "<p>Chapter can be read by anyone</p>",
-        amount: MoneyHandler.new(0)
+        description: "Chapter can be read by anyone",
+        price: MoneyHandler.new(0)
       }
-      | membership_tiers
+      | product
     ]
 
     {:ok,
      socket
      |> assign(
        chapter: chapter,
-       membership_tiers: membership_tiers_with_free,
+       products: products_with_free,
        book: book
      )}
   end
@@ -39,10 +38,10 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
   @impl true
   def handle_event(
         "publish_chapter",
-        %{"publish_chapter" => %{"membership_tiers" => membership_tiers_params}},
+        %{"publish_chapter" => %{"products" => products_params}},
         socket
       ) do
-    membership_tier_ids = String.split(membership_tiers_params, ",")
+    membership_tier_ids = String.split(products_params, ",")
 
     book =
       BookPublisher.publish_serial_chapter!(
