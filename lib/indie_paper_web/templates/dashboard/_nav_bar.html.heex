@@ -14,14 +14,6 @@
                     </svg>
                     <p>Create new</p>
                 <% end %>
-                <%= if IndiePaper.Authors.is_payment_connected?(@current_author) do %>
-                    <%= live_redirect to: Routes.dashboard_memberships_path(assigns[:conn] || assigns[:socket], :index), class: "secondary-link rounded-lg w-full py-2 md:w-auto", "data-test": "create-new", data: [test: "memberships-link"] do %>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <p>Memberships</p>
-                    <% end %>
-                <% end %>
                 <div class=""></div>
             </div>
             <div class="flex flex-col items-start pt-4 space-y-4 w-full border-t md:flex-row md:items-center md:pt-0 md:space-y-0 md:space-x-4 md:w-auto md:border-t-0 border-secondary-border">

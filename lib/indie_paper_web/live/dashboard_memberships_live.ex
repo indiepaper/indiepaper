@@ -13,7 +13,8 @@ defmodule IndiePaperWeb.DashboardMembershipsLive do
      |> assign(
        membership_tiers: MembershipTiers.list_membership_tiers(socket.assigns.current_author),
        page_title: "Memberships"
-     )}
+     )
+     |> push_redirect(to: Routes.dashboard_path(socket, :index))}
   end
 
   @impl true

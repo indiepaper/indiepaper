@@ -47,11 +47,6 @@
                         <%= label f, :membership_tiers, class: "input-label"  %>
                         <%= hidden_input f, :membership_tiers, ":value": "selected" %>
                         <div class="flex flex-col items-stretch mt-3 space-y-5 max-w-md">
-                            <div>
-                                <%= live_redirect to: Routes.dashboard_memberships_path(@socket, :index), class: "secondary-button text-sm", data: [test: "create-membership-tier-link"] do  %>
-                                    <p>Create membership tier</p>
-                                <% end %>
-                            </div>
                             <%= for membership_tier <- @membership_tiers do %>
                                 <button @click.prevent={"toggleMembershipTier('#{membership_tier.id}')"}
                                         class="flex flex-row justify-center items-center py-4 px-6 space-x-3 bg-white rounded-xl border-2 border border-primary-border"
