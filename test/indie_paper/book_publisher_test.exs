@@ -72,5 +72,20 @@ defmodule IndiePaper.BookPublisherTest do
       assert updated_chapter.published_content_json == chapter.content_json
       assert Chapters.is_free?(updated_chapter)
     end
+
+    test "publishes chapters associated with product" do
+      chapter = insert(:chapter)
+      draft = insert(:draft, chapters: [chapter])
+      book = insert(:book, status: :pending_publication, draft: draft)
+      product = insert(:product, book: book)
+
+      BookPublisher.publish_pre_order_chapter!(book, chapter, product.id)
+      [chapter_product] = ChapterProducts.list_chapter_products(chapter.id)
+
+      updated_chapter = Chapters.get_chapter!(chapter.id)
+
+      assert chapter_product.product_id == product.id
+      refute Chapters.is_free?(updated_chapter)
+    end
   end
 end
