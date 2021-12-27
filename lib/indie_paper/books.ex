@@ -7,9 +7,11 @@ defmodule IndiePaper.Books do
   alias IndiePaper.Repo
   import Ecto.Query
 
+  alias IndiePaper.Assets
   alias IndiePaper.Books.Book
   alias IndiePaper.Chapters
   alias IndiePaper.Drafts
+  alias IndiePaper.Products
   alias IndiePaper.ReaderBookSubscriptions
 
   def list_books(author) do
@@ -50,7 +52,27 @@ defmodule IndiePaper.Books do
 
   def create_book(author, params) do
     create_book_multi(author, params)
+    |> maybe_create_pre_order_product_multi()
     |> create_book_transaction()
+  end
+
+  def maybe_create_pre_order_product_multi(multi) do
+    multi
+    |> Ecto.Multi.run(:readable_asset, fn repo, %{book: book} ->
+      if(is_pre_order_book?(book)) do
+        Assets.readable_asset_changeset(book, "Read online") |> repo.insert()
+      else
+        {:ok, nil}
+      end
+    end)
+    |> Ecto.Multi.run(:pre_order_readable_asset, fn repo, %{book: book, readable_asset: asset} ->
+      if(is_pre_order_book?(book)) do
+        Products.default_read_online_product_changeset(book, asset, "Pre-order Book")
+        |> repo.insert()
+      else
+        {:ok, nil}
+      end
+    end)
   end
 
   def update_book(current_author, book, book_params) do

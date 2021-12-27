@@ -35,7 +35,7 @@ defmodule IndiePaper.BookPublisher do
   def maybe_insert_readable_asset(repo, _previous_data, book) do
     case Assets.get_readable_asset_of_book(book) do
       nil ->
-        Assets.readable_asset_changeset(book)
+        Assets.readable_asset_changeset(book, "Read online")
         |> repo.insert()
 
       asset ->
@@ -48,7 +48,7 @@ defmodule IndiePaper.BookPublisher do
         %{default_readable_asset: readable_asset},
         %Books.Book{status: :pending_publication} = book
       ) do
-    Products.default_read_online_product_changeset(book, readable_asset)
+    Products.default_read_online_product_changeset(book, readable_asset, "Read online")
     |> repo.insert()
   end
 
