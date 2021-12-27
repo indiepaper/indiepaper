@@ -67,7 +67,7 @@ defmodule IndiePaper.Books do
     end)
     |> Ecto.Multi.run(:pre_order_readable_asset, fn repo, %{book: book, readable_asset: asset} ->
       if(is_pre_order_book?(book)) do
-        Products.default_read_online_product_changeset(book, asset, "Pre-order Book")
+        Products.default_read_online_product_changeset(book, asset, "Pre-order")
         |> repo.insert()
       else
         {:ok, nil}
