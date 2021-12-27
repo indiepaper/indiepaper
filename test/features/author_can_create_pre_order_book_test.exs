@@ -1,4 +1,4 @@
-defmodule IndiePaperWeb.Feature.AuthorCanCreateSerialBooksTest do
+defmodule IndiePaperWeb.Feature.AuthorCanCreatePreOrderBooksTest do
   use IndiePaperWeb.ConnCase, async: true
 
   import Phoenix.LiveViewTest

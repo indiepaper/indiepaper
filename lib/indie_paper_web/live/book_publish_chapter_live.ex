@@ -37,7 +37,7 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
   @impl true
   def handle_event(
         "publish_chapter",
-        %{"publish_chapter" => %{"products" => _products_params}},
+        %{"publish_chapter" => %{"products" => products_params}},
         socket
       ) do
     book =

@@ -5,7 +5,6 @@ defmodule IndiePaper.BookPublisherTest do
   alias IndiePaper.Books
   alias IndiePaper.Chapters
   alias IndiePaper.Assets
-  alias IndiePaper.Products
   alias IndiePaper.ChapterMembershipTiers
 
   describe "publish_book/1" do
