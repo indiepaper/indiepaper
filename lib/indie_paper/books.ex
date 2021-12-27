@@ -24,22 +24,33 @@ defmodule IndiePaper.Books do
     |> Book.changeset(attrs)
   end
 
-  def create_book(author, params) do
-    Ecto.build_assoc(author, :books)
-    |> Book.initial_draft_changeset(params)
-    |> Book.changeset(%{
-      short_description: "Short description about your book",
-      long_description_html: "<h2>You love your book, let the world know</h2>"
-    })
-    |> Repo.insert()
-    |> case do
-      {:ok, book} ->
-        Drafts.create_draft_with_placeholder_chapters!(book)
-        {:ok, book}
+  def create_book_multi(author, params) do
+    Ecto.Multi.new()
+    |> Ecto.Multi.insert(
+      :book,
+      Ecto.build_assoc(author, :books)
+      |> Book.initial_draft_changeset(params)
+      |> Book.changeset(%{
+        short_description: "Short description about your book",
+        long_description_html: "<h2>You love your book, let the world know</h2>"
+      })
+    )
+    |> Ecto.Multi.insert(:draft, fn %{book: book} ->
+      Drafts.draft_with_placeholder_chapters_changeset(book)
+    end)
+  end
 
-      {:error, changeset} ->
-        {:error, changeset}
+  def create_book_transaction(multi) do
+    Repo.transaction(multi)
+    |> case do
+      {:ok, %{book: book}} -> {:ok, book}
+      {:error, :book, changeset, %{}} -> {:error, changeset}
     end
+  end
+
+  def create_book(author, params) do
+    create_book_multi(author, params)
+    |> create_book_transaction()
   end
 
   def update_book(current_author, book, book_params) do

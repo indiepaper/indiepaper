@@ -10,7 +10,7 @@ defmodule IndiePaper.Drafts do
   alias IndiePaper.Chapters
   alias IndiePaper.Books
 
-  def create_draft_with_placeholder_chapters!(%Books.Book{publishing_type: :vanilla} = book) do
+  def draft_with_placeholder_chapters_changeset(%Books.Book{publishing_type: :vanilla} = book) do
     create_draft_changeset(book)
     |> Draft.chapters_changeset([
       Chapters.placeholder_chapter(title: "Introduction", chapter_index: 0),
@@ -18,14 +18,17 @@ defmodule IndiePaper.Drafts do
       Chapters.placeholder_chapter(title: "Chapter 1", chapter_index: 2),
       Chapters.placeholder_chapter(title: "Chapter 2", chapter_index: 3)
     ])
-    |> Repo.insert!()
   end
 
-  def create_draft_with_placeholder_chapters!(%Books.Book{} = book) do
+  def draft_with_placeholder_chapters_changeset(%Books.Book{} = book) do
     create_draft_changeset(book)
     |> Draft.chapters_changeset([
       Chapters.placeholder_chapter(title: "Introduction", chapter_index: 0)
     ])
+  end
+
+  def create_draft_with_placeholder_chapters!(book) do
+    draft_with_placeholder_chapters_changeset(book)
     |> Repo.insert!()
   end
 
