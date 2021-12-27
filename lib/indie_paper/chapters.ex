@@ -114,8 +114,8 @@ defmodule IndiePaper.Chapters do
     |> Repo.update()
   end
 
-  def free?(%Chapter{is_free: is_free}), do: is_free
-  def locked?(%Chapter{is_free: is_free}), do: not is_free
+  def is_free?(%Chapter{is_free: is_free}), do: is_free
+  def is_locked?(%Chapter{is_free: is_free}), do: not is_free
 
   def is_published?(%Chapter{published_content_json: nil}), do: false
   def is_published?(%Chapter{} = _chapter), do: true

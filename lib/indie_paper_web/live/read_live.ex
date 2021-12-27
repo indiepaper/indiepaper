@@ -77,7 +77,7 @@ defmodule IndiePaperWeb.ReadLive do
       Authors.is_same?(socket.assigns.current_author, author) ->
         {:noreply, assign(socket, selected_chapter: selected_chapter, not_subscribed: false)}
 
-      Chapters.free?(selected_chapter) ->
+      Chapters.is_free?(selected_chapter) ->
         {:noreply, assign(socket, selected_chapter: selected_chapter, not_subscribed: false)}
 
       is_nil(socket.assigns.current_author) ->

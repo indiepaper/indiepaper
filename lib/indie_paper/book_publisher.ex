@@ -74,7 +74,7 @@ defmodule IndiePaper.BookPublisher do
     end
   end
 
-  def publish_pre_order_chapter!(book, chapter) do
+  def publish_pre_order_chapter!(book, chapter, product_id) do
     {:ok, book} =
       Multi.new()
       |> Multi.update(:book, Books.publish_book_changeset(book))

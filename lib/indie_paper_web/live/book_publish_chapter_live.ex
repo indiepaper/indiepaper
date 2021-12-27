@@ -37,13 +37,16 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
   @impl true
   def handle_event(
         "publish_chapter",
-        %{"publish_chapter" => %{"products" => products_params}},
+        %{"publish_chapter" => %{"products" => product_params}},
         socket
       ) do
+    selected_product_id = parse_product_params(product_params)
+
     book =
       BookPublisher.publish_pre_order_chapter!(
         socket.assigns.book,
-        socket.assigns.chapter
+        socket.assigns.chapter,
+        selected_product_id
       )
 
     {:noreply,
@@ -52,4 +55,7 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
        to: Routes.book_read_path(socket, :index, book, chapter_id: socket.assigns.chapter)
      )}
   end
+
+  defp parse_product_params("free"), do: nil
+  defp parse_product_params(param) when is_binary(param), do: param
 end

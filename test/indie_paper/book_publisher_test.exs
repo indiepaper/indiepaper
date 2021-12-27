@@ -58,18 +58,19 @@ defmodule IndiePaper.BookPublisherTest do
   end
 
   describe "publish_pre_order_chapter/1" do
-    test "creates default product and asset" do
+    test "publishes free chapter" do
       chapter = insert(:chapter)
       draft = insert(:draft, chapters: [chapter])
       book = insert(:book, status: :pending_publication, draft: draft)
 
-      published_book = BookPublisher.publish_pre_order_chapter!(book, chapter)
+      published_book = BookPublisher.publish_pre_order_chapter!(book, chapter, nil)
 
       assert Books.is_published?(published_book)
 
       updated_chapter = Chapters.get_chapter!(chapter.id)
 
       assert updated_chapter.published_content_json == chapter.content_json
+      assert Chapters.is_free?(updated_chapter)
     end
   end
 end
