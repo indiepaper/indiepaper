@@ -4,7 +4,6 @@ defmodule IndiePaper.BookPublisherTest do
   alias IndiePaper.BookPublisher
   alias IndiePaper.Books
   alias IndiePaper.Chapters
-  alias IndiePaper.Assets
   alias IndiePaper.ChapterMembershipTiers
 
   describe "publish_book/1" do
@@ -65,15 +64,11 @@ defmodule IndiePaper.BookPublisherTest do
       book = insert(:book, status: :pending_publication, draft: draft)
 
       published_book = BookPublisher.publish_pre_order_chapter!(book, chapter)
-      asset = Assets.get_readable_asset_of_book(book)
-      product = Books.get_read_online_product(published_book)
 
       assert Books.is_published?(published_book)
 
       updated_chapter = Chapters.get_chapter!(chapter.id)
 
-      assert asset
-      assert product
       assert updated_chapter.published_content_json == chapter.content_json
     end
   end

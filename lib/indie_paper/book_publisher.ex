@@ -43,10 +43,6 @@ defmodule IndiePaper.BookPublisher do
     end
   end
 
-  def maybe_insert_default_product(_repo, _previous_data, %Books.Book{publishing_type: :pre_order}) do
-    {:ok, nil}
-  end
-
   def maybe_insert_default_product(
         repo,
         %{default_readable_asset: readable_asset},
@@ -81,8 +77,8 @@ defmodule IndiePaper.BookPublisher do
   def publish_pre_order_chapter!(book, chapter) do
     {:ok, book} =
       Multi.new()
+      |> Multi.update(:book, Books.publish_book_changeset(book))
       |> Multi.update(:chapter, Chapters.free_chapter_changeset(chapter))
-      |> maybe_create_default_product_and_publish_multi(book)
       |> Repo.transaction()
       |> case do
         {:ok, %{book: published_book}} -> {:ok, published_book}
