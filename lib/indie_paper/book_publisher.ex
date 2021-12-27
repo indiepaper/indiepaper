@@ -43,6 +43,10 @@ defmodule IndiePaper.BookPublisher do
     end
   end
 
+  def maybe_insert_default_product(_repo, _previous_data, %Books.Book{publishing_type: :pre_order}) do
+    {:ok, nil}
+  end
+
   def maybe_insert_default_product(
         repo,
         %{default_readable_asset: readable_asset},
