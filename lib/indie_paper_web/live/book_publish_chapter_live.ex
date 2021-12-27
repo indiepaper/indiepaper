@@ -13,8 +13,7 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
   @impl true
   def mount(%{"book_slug" => book_slug, "id" => chapter_id}, _, socket) do
     chapter = Chapters.get_chapter!(chapter_id)
-    book = Books.get_book_from_slug!(book_slug) |> Books.with_assoc(:draft)
-    product = Books.get_read_online_product(book)
+    book = Books.get_book_from_slug!(book_slug) |> Books.with_assoc([:draft, :products])
 
     products_with_free = [
       %Products.Product{
@@ -23,7 +22,7 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
         description: "Chapter can be read by anyone",
         price: MoneyHandler.new(0)
       }
-      | product
+      | book.products
     ]
 
     {:ok,
@@ -38,16 +37,13 @@ defmodule IndiePaperWeb.BookPublishChapterLive do
   @impl true
   def handle_event(
         "publish_chapter",
-        %{"publish_chapter" => %{"products" => products_params}},
+        %{"publish_chapter" => %{"products" => _products_params}},
         socket
       ) do
-    membership_tier_ids = String.split(products_params, ",")
-
     book =
-      BookPublisher.publish_serial_chapter!(
+      BookPublisher.publish_pre_order_chapter!(
         socket.assigns.book,
-        socket.assigns.chapter,
-        membership_tier_ids
+        socket.assigns.chapter
       )
 
     {:noreply,
