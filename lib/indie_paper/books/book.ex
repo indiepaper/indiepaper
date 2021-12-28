@@ -24,6 +24,7 @@ defmodule IndiePaper.Books.Book do
     field :publishing_type, Ecto.Enum,
       values: [
         :vanilla,
+        :pre_order,
         :serial
       ],
       default: :vanilla,

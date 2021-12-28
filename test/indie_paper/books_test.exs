@@ -32,6 +32,15 @@ defmodule IndiePaper.BooksTest do
 
       assert book_with_draft.draft.book_id == book.id
     end
+
+    test "throws error when empty title" do
+      book_params = params_for(:book, title: nil)
+      author = insert(:author)
+
+      {:error, changeset} = Books.create_book(author, book_params)
+
+      assert %{title: ["can't be blank"]} = errors_on(changeset)
+    end
   end
 
   describe "get_book!/1" do

@@ -9,7 +9,8 @@ defmodule IndiePaper.ProductsTest do
       asset = insert(:asset)
 
       {:ok, product} =
-        Products.default_read_online_product_changeset(book, asset) |> Repo.insert()
+        Products.default_read_online_product_changeset(book, asset, "Read online")
+        |> Repo.insert()
 
       assert product.title == "Read online"
       assert product.book_id == book.id

@@ -5,6 +5,7 @@ defmodule IndiePaper.BookPublisherTest do
   alias IndiePaper.Books
   alias IndiePaper.Chapters
   alias IndiePaper.ChapterMembershipTiers
+  alias IndiePaper.ChapterProducts
 
   describe "publish_book/1" do
     test "populate chapter with published content_json" do
@@ -54,6 +55,48 @@ defmodule IndiePaper.BookPublisherTest do
       assert updated_chapter.published_content_json == chapter.content_json
       assert chapter_membership_tier.membership_tier_id == membership_tier.id
       assert chapter_membership_tier.chapter_id == chapter.id
+    end
+  end
+
+  describe "publish_pre_order_chapter/1" do
+    test "publishes free chapter" do
+      chapter = insert(:chapter)
+      draft = insert(:draft, chapters: [chapter])
+      book = insert(:book, status: :pending_publication, draft: draft)
+
+      published_book = BookPublisher.publish_pre_order_chapter!(book, chapter, nil)
+
+      assert Books.is_published?(published_book)
+
+      updated_chapter = Chapters.get_chapter!(chapter.id)
+
+      assert updated_chapter.published_content_json == chapter.content_json
+      assert Chapters.is_free?(updated_chapter)
+    end
+
+    test "publishes chapters associated with product" do
+      chapter = insert(:chapter)
+      draft = insert(:draft, chapters: [chapter])
+      book = insert(:book, status: :pending_publication, draft: draft)
+      product = insert(:product, book: book)
+
+      BookPublisher.publish_pre_order_chapter!(book, chapter, product.id)
+      [chapter_product] = ChapterProducts.list_chapter_products(chapter)
+
+      updated_chapter = Chapters.get_chapter!(chapter.id)
+
+      assert chapter_product.product_id == product.id
+      refute Chapters.is_free?(updated_chapter)
+
+      # Ignore call when already published with product
+      BookPublisher.publish_pre_order_chapter!(book, chapter, product.id)
+
+      BookPublisher.publish_pre_order_chapter!(book, chapter, nil)
+      chapter_product = ChapterProducts.get_chapter_product(chapter.id, product.id)
+      free_chapter = Chapters.get_chapter!(chapter.id)
+
+      assert Chapters.is_free?(free_chapter)
+      refute chapter_product
     end
   end
 end

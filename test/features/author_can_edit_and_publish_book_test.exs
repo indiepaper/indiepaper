@@ -53,14 +53,14 @@ defmodule IndiePaperWeb.Features.AuthorCanEditAndPublishDraftTest do
     |> DashboardPage.click_edit_draft()
     |> DraftPage.Edit.click_publish()
     |> BookPage.Show.select_product(
-      Products.default_read_online_product_changeset(book, asset).changes.title
+      Products.default_read_online_product_changeset(book, asset, "Read online").changes.title
     )
     |> DashboardPage.visit_page()
     |> DashboardPage.has_product_title?(
-      Products.default_read_online_product_changeset(book, asset).changes.title
+      Products.default_read_online_product_changeset(book, asset, "Read online").changes.title
     )
     |> DashboardPage.click_edit_product(
-      Products.default_read_online_product_changeset(book, asset).changes.title
+      Products.default_read_online_product_changeset(book, asset, "Read online").changes.title
     )
     |> ProductPage.click_read_online_asset()
   end

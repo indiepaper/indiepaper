@@ -8,8 +8,8 @@ defmodule IndiePaper.Assets do
     from(a in Asset, where: a.book_id == ^book.id and a.type == :readable) |> Repo.one()
   end
 
-  def readable_asset_changeset(book) do
+  def readable_asset_changeset(book, title) do
     Ecto.build_assoc(book, :assets)
-    |> Asset.changeset(%{type: :readable, title: "Read online"})
+    |> Asset.changeset(%{type: :readable, title: title})
   end
 end

@@ -100,28 +100,31 @@
                     <div class="items-stretch p-0 primary-card">
                         <div class="flex flex-row justify-between items-center py-3 px-6 border-b border-secondary-border">
                             <%= if IndiePaper.Books.is_pending_publication?(book)  do %>
-                                <%= if Books.serial_book?(book)  do %>
-                                    <span class="py-1 px-2 text-xs rounded-lg border text-stone-700 bg-stone-100 border-stone-200">Pending serial publication</span>
+                                <%= if Books.is_pre_order_book?(book)  do %>
+                                    <span class="py-1 px-2 text-xs rounded-lg border text-stone-700 bg-stone-100 border-stone-200">Pending publication</span>
                                 <% else %>
                                     <span class="py-1 px-2 text-xs rounded-lg border text-stone-700 bg-stone-100 border-stone-200" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
                                 <% end %>
                             <% end %>
                             <%= if IndiePaper.Books.is_published?(book)  do %>
-                                <%= if Books.serial_book?(book)  do %>
-                                    <span class="py-1 px-2 text-xs text-green-700 bg-green-100 rounded-lg border border-green-200">Serial publication</span>
-                                <% else %>
-                                    <span class="py-1 px-2 text-xs text-green-700 bg-green-100 rounded-lg border border-green-200" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
-                                <% end %>
-                            <% end %>
-                            <%= if IndiePaper.Books.is_published?(book) do %>
-                                <%= live_redirect to: Routes.book_show_path(@socket, :show, book), class: "secondary-link" do %>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                    </svg>
-                                    <p>View</p>
-                                <% end %>
-                            <% end %>
+                                <%= cond do %>
+                                    <% Books.is_serial_book?(book) -> %>
+                                        <span class="py-1 px-2 text-xs text-green-800 bg-green-100 rounded-lg border border-green-200">Serial publication</span>
+                                        <% Books.is_pre_order_book?(book) -> %>
+                                            <span class="py-1 px-2 text-xs text-green-800 bg-green-100 rounded-lg border border-green-200">Pre-order Book</span>
+                                            <% true -> %>
+                                                <span class="py-1 px-2 text-xs text-green-800 bg-green-100 rounded-lg border border-green-200" data-test="book-status"><%= Phoenix.Naming.humanize(book.status) %></span>
+                                            <% end %>
+                                        <% end %>
+                                        <%= if IndiePaper.Books.is_published?(book) do %>
+                                            <%= live_redirect to: Routes.book_show_path(@socket, :show, book), class: "secondary-link" do %>
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                </svg>
+                                                <p>View</p>
+                                            <% end %>
+                                        <% end %>
                         </div>
                         <div class="p-6">
                             <%= live_redirect to: (if IndiePaper.Books.is_published?(book), do: Routes.book_show_path(@socket, :show, book), else: Routes.draft_edit_path(@socket, :edit, book.draft)) , class: "block" do %>
@@ -149,7 +152,7 @@
                             </div>
                         </div>
 
-                        <%= if IndiePaper.Books.is_published?(book) and Books.vanilla_book?(book)  do %>
+                        <%= if IndiePaper.Books.is_published?(book) or Books.is_pre_order_book?(book)  do %>
                             <div class="">
                                 <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-primary-border">
                                     <p>Products</p>

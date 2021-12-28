@@ -5,8 +5,8 @@ defmodule IndiePaperWeb.ReadLive do
   alias IndiePaper.Authors
   alias IndiePaper.BookLibrary
   alias IndiePaper.Chapters
-  alias IndiePaper.ChapterMembershipTiers
-  alias IndiePaper.ReaderAuthorSubscriptions
+  alias IndiePaper.Products
+  alias IndiePaper.ChapterProducts
 
   on_mount {IndiePaperWeb.AuthorLiveAuth, :fetch_current_author}
 
@@ -22,7 +22,7 @@ defmodule IndiePaperWeb.ReadLive do
        book: book,
        published_chapters: published_chapters,
        selected_chapter: selected_chapter,
-       not_subscribed: false,
+       not_pre_ordered: false,
        book_added_to_library?:
          BookLibrary.book_added_to_library?(socket.assigns.current_author, book)
      )}
@@ -71,52 +71,26 @@ defmodule IndiePaperWeb.ReadLive do
   @impl true
   def handle_params(%{"book_slug" => _book_slug, "chapter_id" => chapter_id}, _uri, socket) do
     selected_chapter = Chapters.get_chapter!(chapter_id)
-    author = Books.get_author(socket.assigns.book)
 
     cond do
-      Authors.is_same?(socket.assigns.current_author, author) ->
-        {:noreply, assign(socket, selected_chapter: selected_chapter, not_subscribed: false)}
-
-      Chapters.free?(selected_chapter) ->
-        {:noreply, assign(socket, selected_chapter: selected_chapter, not_subscribed: false)}
+      Chapters.is_free?(selected_chapter) ->
+        {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: false)}
 
       is_nil(socket.assigns.current_author) ->
-        chapter_with_masked_content =
-          Map.merge(selected_chapter, %{
-            content_json:
-              Chapters.placeholder_content_json("Chapter", "lorem ipsum, kind of nice."),
-            published_content_json:
-              Chapters.placeholder_content_json("Chapter", "lorem ipsum, kind of nice.")
-          })
+        {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: true)}
 
-        {:noreply,
-         assign(socket, selected_chapter: chapter_with_masked_content, not_subscribed: true)}
+      Authors.is_same?(socket.assigns.current_author, socket.assigns.book.author) ->
+        {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: false)}
 
       true ->
-        membership_tiers = ChapterMembershipTiers.list_membership_tiers(selected_chapter.id)
+        chapter_products = ChapterProducts.list_chapter_products(selected_chapter)
+        chapter_product = List.first(chapter_products)
+        product = Products.get_product!(chapter_product.product_id)
 
-        subscription =
-          ReaderAuthorSubscriptions.get_subscription_by_reader_author_id(
-            socket.assigns.current_author.id,
-            author.id
-          )
-
-        if subscription &&
-             Enum.any?(membership_tiers, fn membership_tier ->
-               membership_tier.id === subscription.membership_tier.id
-             end) do
-          {:noreply, assign(socket, selected_chapter: selected_chapter, not_subscribed: false)}
+        if BookLibrary.has_purchased_product?(socket.assigns.current_author, product) do
+          {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: false)}
         else
-          chapter_with_masked_content =
-            Map.merge(selected_chapter, %{
-              content_json:
-                Chapters.placeholder_content_json("Chapter", "lorem ipsum, kind of nice."),
-              published_content_json:
-                Chapters.placeholder_content_json("Chapter", "lorem ipsum, kind of nice.")
-            })
-
-          {:noreply,
-           assign(socket, selected_chapter: chapter_with_masked_content, not_subscribed: true)}
+          {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: true)}
         end
     end
   end

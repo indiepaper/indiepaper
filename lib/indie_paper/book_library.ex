@@ -1,5 +1,9 @@
 defmodule IndiePaper.BookLibrary do
+  import Ecto.Query
+  alias IndiePaper.Repo
+
   alias IndiePaper.Orders
+  alias IndiePaper.Products
   alias IndiePaper.ReaderBookSubscriptions
   alias IndiePaper.Books
 
@@ -25,6 +29,15 @@ defmodule IndiePaper.BookLibrary do
 
   def book_added_to_library?(reader, book) do
     ReaderBookSubscriptions.get_reader_book_subscription(reader.id, book.id)
+  end
+
+  def has_purchased_product?(reader, product) do
+    from(l in Orders.LineItem,
+      join: o in Orders.Order,
+      on: o.id == l.order_id,
+      where: l.product_id == ^product.id and o.customer_id == ^reader.id
+    )
+    |> Repo.exists?()
   end
 
   defp load_order_assoc(orders),

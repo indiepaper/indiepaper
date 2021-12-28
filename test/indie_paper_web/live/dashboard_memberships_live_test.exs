@@ -3,6 +3,7 @@ defmodule IndiePaperWeb.DashboardMembershipsLiveTest do
 
   import Phoenix.LiveViewTest
 
+  @tag :skip
   test "shows create new tier button when empty membership_tiers", %{conn: conn} do
     author = insert(:author, membership_tiers: [])
 
@@ -15,6 +16,7 @@ defmodule IndiePaperWeb.DashboardMembershipsLiveTest do
     assert element(view, create_new_tier_when_empty()) |> has_element?()
   end
 
+  @tag :skip
   test "authors without payment_connected get redirected to Stripe page", %{conn: conn} do
     author = insert(:author, is_payment_connected: false)
     conn = conn |> log_in_author(author)
@@ -23,6 +25,7 @@ defmodule IndiePaperWeb.DashboardMembershipsLiveTest do
     |> follow_redirect(conn, Routes.profile_stripe_connect_path(conn, :new))
   end
 
+  @tag :skip
   test "author can click on create new tier", %{conn: conn} do
     author = insert(:author)
     conn = conn |> log_in_author(author)
@@ -35,6 +38,7 @@ defmodule IndiePaperWeb.DashboardMembershipsLiveTest do
     assert has_element?(view, membership_tier_form())
   end
 
+  @tag :skip
   test "author can create a new membership tier", %{conn: conn} do
     author = insert(:author, membership_tiers: [])
 
@@ -55,6 +59,7 @@ defmodule IndiePaperWeb.DashboardMembershipsLiveTest do
     assert html =~ membership_tier_params[:title]
   end
 
+  @tag :skip
   test "author is notified of errors on change", %{conn: conn} do
     author = insert(:author)
     conn = conn |> log_in_author(author)
@@ -69,6 +74,7 @@ defmodule IndiePaperWeb.DashboardMembershipsLiveTest do
     assert render(view) =~ "can&#39;t be blank"
   end
 
+  @tag :skip
   test "author is notified of errors on submit", %{conn: conn} do
     author = insert(:author)
     conn = conn |> log_in_author(author)
@@ -83,6 +89,7 @@ defmodule IndiePaperWeb.DashboardMembershipsLiveTest do
     assert render(view) =~ "can&#39;t be blank"
   end
 
+  @tag :skip
   test "author can edit already existing membership", %{conn: conn} do
     membership_tier = insert(:membership_tier)
     conn = conn |> log_in_author(membership_tier.author)
@@ -95,6 +102,7 @@ defmodule IndiePaperWeb.DashboardMembershipsLiveTest do
     assert has_element?(view, membership_tier_form())
   end
 
+  @tag :skip
   test "author can edit a new membership tier", %{conn: conn} do
     membership_tier = insert(:membership_tier)
     conn = conn |> log_in_author(membership_tier.author)

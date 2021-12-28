@@ -3,6 +3,7 @@ defmodule IndiePaperWeb.Feature.AuthorCanAddMembershipsTest do
 
   import Phoenix.LiveViewTest
 
+  @tag :skip
   test "authors with payment connected authors can see the membership link", %{
     conn: conn
   } do
@@ -21,6 +22,7 @@ defmodule IndiePaperWeb.Feature.AuthorCanAddMembershipsTest do
     assert view |> element(".page-heading", "Memberships") |> has_element?()
   end
 
+  @tag :skip
   test "readers cannot see memberships", %{conn: conn} do
     reader = insert(:author, account_status: :confirmed, is_payment_connected: false)
     conn = conn |> log_in_author(reader)

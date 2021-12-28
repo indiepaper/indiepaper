@@ -132,6 +132,13 @@ defmodule IndiePaper.Factory do
     }
   end
 
+  def chapter_product_factory do
+    %IndiePaper.ChapterProducts.ChapterProduct{
+      chapter: build(:chapter),
+      product: build(:product)
+    }
+  end
+
   def reader_book_subscription_factory do
     %IndiePaper.ReaderBookSubscriptions.ReaderBookSubscription{
       reader: build(:author),

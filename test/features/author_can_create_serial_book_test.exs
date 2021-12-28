@@ -63,8 +63,6 @@ defmodule IndiePaperWeb.Feature.AuthorCanCreateSerialBooksTest do
 
     {:ok, view, _html} = live(conn, Routes.book_publish_chapter_path(conn, :new, book, chapter))
 
-    assert has_element?(view, "[data-test=create-membership-tier-link]")
-
     {:ok, conn} =
       view
       |> form("[data-test=book-publish-chapter-form]")

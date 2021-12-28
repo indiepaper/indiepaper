@@ -102,16 +102,27 @@ defmodule IndiePaper.Chapters do
     |> Repo.transaction()
   end
 
-  def publish_free_serial_chapter(chapter) do
+  def publish_chapter_changeset(chapter) do
     Chapter.publish_changeset(chapter, %{
       published_content_json: chapter.content_json,
+      is_free: false
+    })
+  end
+
+  def publish_free_chapter_changeset(chapter) do
+    publish_chapter_changeset(chapter)
+    |> Chapter.publish_changeset(%{
       is_free: true
     })
+  end
+
+  def publish_free_serial_chapter(chapter) do
+    publish_free_chapter_changeset(chapter)
     |> Repo.update()
   end
 
-  def free?(%Chapter{is_free: is_free}), do: is_free
-  def locked?(%Chapter{is_free: is_free}), do: not is_free
+  def is_free?(%Chapter{is_free: is_free}), do: is_free
+  def is_locked?(%Chapter{is_free: is_free}), do: not is_free
 
   def is_published?(%Chapter{published_content_json: nil}), do: false
   def is_published?(%Chapter{} = _chapter), do: true
