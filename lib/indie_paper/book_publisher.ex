@@ -75,28 +75,39 @@ defmodule IndiePaper.BookPublisher do
     end
   end
 
+  def publish_pre_order_chapter!(book, chapter, nil) do
+    {:ok, book} =
+      Multi.new()
+      |> Multi.update(:book, Books.publish_book_changeset(book))
+      |> Multi.update(
+        :chapter,
+        Chapters.publish_free_chapter_changeset(chapter)
+      )
+      |> Multi.delete_all(:chapter_products, fn %{chapter: published_chapter} ->
+        ChapterProducts.list_chapter_products_query(published_chapter)
+      end)
+      |> Repo.transaction()
+      |> case do
+        {:ok, %{book: published_book}} -> {:ok, published_book}
+      end
+
+    book
+  end
+
   def publish_pre_order_chapter!(book, chapter, product_id) do
     {:ok, book} =
       Multi.new()
       |> Multi.update(:book, Books.publish_book_changeset(book))
-      |> Multi.update(:chapter, fn _ ->
-        if is_nil(product_id) do
-          Chapters.publish_free_chapter_changeset(chapter)
-        else
-          Chapters.publish_chapter_changeset(chapter)
-        end
-      end)
+      |> Multi.update(
+        :chapter,
+        Chapters.publish_chapter_changeset(chapter)
+      )
       |> Multi.run(:chapter_product, fn repo, %{chapter: chapter} ->
-        if is_nil(product_id) do
-          {:ok, nil}
+        if is_nil(ChapterProducts.get_chapter_product(chapter.id, product_id)) do
+          ChapterProducts.new_chapter_product(chapter.id, product_id)
+          |> repo.insert()
         else
-          if is_nil(ChapterProducts.get_chapter_product(chapter.id, product_id)) do
-            ChapterProducts.new_chapter_product(chapter.id, product_id)
-            |> repo.insert()
-          else
-            ChapterProducts.delete_chapter_product!(chapter.id, product_id)
-            {:ok, nil}
-          end
+          {:ok, nil}
         end
       end)
       |> Repo.transaction()

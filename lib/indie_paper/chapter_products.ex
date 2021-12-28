@@ -5,8 +5,12 @@ defmodule IndiePaper.ChapterProducts do
   alias IndiePaper.Chapters
   alias IndiePaper.ChapterProducts.ChapterProduct
 
-  def list_chapter_products(%Chapters.Chapter{} = chapter) do
+  def list_chapter_products_query(%Chapters.Chapter{} = chapter) do
     from(cp in ChapterProduct, where: cp.chapter_id == ^chapter.id)
+  end
+
+  def list_chapter_products(%Chapters.Chapter{} = chapter) do
+    list_chapter_products_query(chapter)
     |> Repo.all()
   end
 
@@ -22,8 +26,12 @@ defmodule IndiePaper.ChapterProducts do
     |> Repo.one()
   end
 
-  def delete_chapter_product!(chapter_id, product_id) do
-    get_chapter_product(chapter_id, product_id)
-    |> Repo.delete!()
+  def delete_chapter_product!(chapter_product) do
+    Repo.delete!(chapter_product)
+  end
+
+  def delete_all_chapter_products!(%Chapters.Chapter{} = chapter) do
+    list_chapter_products_query(chapter)
+    |> Repo.delete_all()
   end
 end
