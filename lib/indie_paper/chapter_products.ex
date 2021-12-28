@@ -14,4 +14,11 @@ defmodule IndiePaper.ChapterProducts do
     %ChapterProduct{}
     |> ChapterProduct.changeset(%{chapter_id: chapter_id, product_id: product_id})
   end
+
+  def get_chapter_product(chapter_id, product_id) do
+    from(cp in ChapterProduct,
+      where: cp.chapter_id == ^chapter_id and cp.product_id == ^product_id
+    )
+    |> Repo.one()
+  end
 end

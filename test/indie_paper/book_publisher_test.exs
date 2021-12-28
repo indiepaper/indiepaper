@@ -87,6 +87,9 @@ defmodule IndiePaper.BookPublisherTest do
 
       assert chapter_product.product_id == product.id
       refute Chapters.is_free?(updated_chapter)
+
+      # Ignore call when already published with product
+      BookPublisher.publish_pre_order_chapter!(book, chapter, product.id)
     end
   end
 end

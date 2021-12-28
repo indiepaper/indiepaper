@@ -90,8 +90,12 @@ defmodule IndiePaper.BookPublisher do
         if is_nil(product_id) do
           {:ok, nil}
         else
-          ChapterProducts.new_chapter_product(chapter.id, product_id)
-          |> repo.insert()
+          if is_nil(ChapterProducts.get_chapter_product(chapter.id, product_id)) do
+            ChapterProducts.new_chapter_product(chapter.id, product_id)
+            |> repo.insert()
+          else
+            {:ok, nil}
+          end
         end
       end)
       |> Repo.transaction()
