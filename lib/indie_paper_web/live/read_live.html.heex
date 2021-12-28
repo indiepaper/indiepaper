@@ -57,7 +57,7 @@
                     <% end %>
                 </div>
             </div>
-            <div class={"min-h-screen border-t relative bg-white md:flex-1 md:border-l md:border-r md:border-t-0 md:border-primary-border #{if @not_subscribed, do: 'flex flex-row items-center justify-center min-h-[320px] md:min-h-[480px]'}"}
+            <div class={"min-h-screen border-t relative bg-white md:flex-1 md:border-l md:border-r md:border-t-0 md:border-primary-border #{if @not_pre_ordered, do: 'flex flex-row items-center justify-center min-h-[320px] md:min-h-[480px]'}"}
                  id="book-reader"
                  x-data="{isReaderLoading: true}"
                  x-on:reader-loaded="isReaderLoading = false"
@@ -65,20 +65,20 @@
                  data-reader-element-id="book-reader-content-html"
                  data-chapter-content-json={(Jason.encode!(@selected_chapter.published_content_json))}
             >
-                <div class={"py-16 px-6 font-normal text-justify md:py-24 md:px-16 prose #{if @not_subscribed, do: 'hidden'}"} id="book-reader-content-html" phx-update="ignore">
+                <div class={"py-16 px-6 font-normal text-justify md:py-24 md:px-16 prose #{if @not_pre_ordered, do: 'hidden'}"} id="book-reader-content-html" phx-update="ignore">
                 </div>
-                <%= if @not_subscribed do %>
+                <%= if @not_pre_ordered do %>
                     <div class="flex flex-col justify-center items-center py-8 px-6 bg-white rounded-lg">
                         <div class="text-center">
-                            <h2 class="text-2xl font-bold">Subscribe to <%= Authors.get_full_name(@book.author) %></h2>
-                            <p class="text-secondary-text">This chapter is only available for subscribed readers of the author.</p>
+                            <h2 class="text-2xl font-bold">Pre-order book from <%= Authors.get_full_name(@book.author) %></h2>
+                            <p class="text-secondary-text">This chapter is only available for readers who have pre-ordered the book.</p>
                         </div>
                         <div class="flex flex-row justify-start items-center mt-8">
                             <%= live_redirect to: Routes.author_page_path(@socket, :show, @book.author), class: "primary-button" do %>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
                                 </svg>
-                                <p>Subscribe</p>
+                                <p>Pre-order</p>
                             <% end %>
                         </div>
                     </div>
