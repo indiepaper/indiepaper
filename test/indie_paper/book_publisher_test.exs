@@ -90,6 +90,13 @@ defmodule IndiePaper.BookPublisherTest do
 
       # Ignore call when already published with product
       BookPublisher.publish_pre_order_chapter!(book, chapter, product.id)
+
+      BookPublisher.publish_pre_order_chapter!(book, chapter, nil)
+      chapter_product = ChapterProducts.get_chapter_product(chapter.id, product.id)
+      free_chapter = Chapters.get_chapter!(chapter.id)
+
+      assert Chapters.is_free?(free_chapter)
+      refute chapter_product
     end
   end
 end

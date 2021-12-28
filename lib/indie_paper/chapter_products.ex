@@ -21,4 +21,9 @@ defmodule IndiePaper.ChapterProducts do
     )
     |> Repo.one()
   end
+
+  def delete_chapter_product!(chapter_id, product_id) do
+    get_chapter_product(chapter_id, product_id)
+    |> Repo.delete!()
+  end
 end

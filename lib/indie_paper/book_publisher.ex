@@ -94,6 +94,7 @@ defmodule IndiePaper.BookPublisher do
             ChapterProducts.new_chapter_product(chapter.id, product_id)
             |> repo.insert()
           else
+            ChapterProducts.delete_chapter_product!(chapter.id, product_id)
             {:ok, nil}
           end
         end
