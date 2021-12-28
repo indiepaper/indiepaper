@@ -104,7 +104,8 @@ defmodule IndiePaper.Chapters do
 
   def publish_chapter_changeset(chapter) do
     Chapter.publish_changeset(chapter, %{
-      published_content_json: chapter.content_json
+      published_content_json: chapter.content_json,
+      is_free: false
     })
   end
 
