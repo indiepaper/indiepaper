@@ -5,6 +5,7 @@ defmodule IndiePaper.BookPublisherTest do
   alias IndiePaper.Books
   alias IndiePaper.Chapters
   alias IndiePaper.ChapterMembershipTiers
+  alias IndiePaper.ChapterProducts
 
   describe "publish_book/1" do
     test "populate chapter with published content_json" do
@@ -80,7 +81,7 @@ defmodule IndiePaper.BookPublisherTest do
       product = insert(:product, book: book)
 
       BookPublisher.publish_pre_order_chapter!(book, chapter, product.id)
-      [chapter_product] = ChapterProducts.list_chapter_products(chapter.id)
+      [chapter_product] = ChapterProducts.list_chapter_products(chapter)
 
       updated_chapter = Chapters.get_chapter!(chapter.id)
 

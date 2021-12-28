@@ -6,6 +6,7 @@ defmodule IndiePaper.BookPublisher do
   alias IndiePaper.Books
   alias IndiePaper.Chapters
   alias IndiePaper.Products
+  alias IndiePaper.ChapterProducts
 
   def maybe_create_default_product_and_publish_multi(multi, book) do
     multi
@@ -78,7 +79,21 @@ defmodule IndiePaper.BookPublisher do
     {:ok, book} =
       Multi.new()
       |> Multi.update(:book, Books.publish_book_changeset(book))
-      |> Multi.update(:chapter, Chapters.free_chapter_changeset(chapter))
+      |> Multi.update(:chapter, fn _ ->
+        if is_nil(product_id) do
+          Chapters.publish_free_chapter_changeset(chapter)
+        else
+          Chapters.publish_chapter_changeset(chapter)
+        end
+      end)
+      |> Multi.run(:chapter_product, fn repo, %{chapter: chapter} ->
+        if is_nil(product_id) do
+          {:ok, nil}
+        else
+          ChapterProducts.new_chapter_product(chapter.id, product_id)
+          |> repo.insert()
+        end
+      end)
       |> Repo.transaction()
       |> case do
         {:ok, %{book: published_book}} -> {:ok, published_book}
