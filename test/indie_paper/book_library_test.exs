@@ -15,4 +15,9 @@ defmodule IndiePaper.BookLibraryTest do
       refute Enum.find(orders, fn order -> order.id == order2.id end)
     end
   end
+
+  describe "has_purchased_product?/2" do
+    test "returns true if the author has purchased product" do
+    end
+  end
 end
