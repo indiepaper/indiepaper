@@ -27,8 +27,8 @@
                         <p class="text-xl font-bold"><%= @chapter.title %></p>
                     </div>
                     <div class="input-container"
-                         x-data="{
-                                selected: ['free'],
+                         x-data={"{
+                                selected: ['#{@selected_product.id}'],
                                 isProductSelected(id) {
                                     return this.selected.indexOf(id) != -1
                                 },
@@ -43,7 +43,7 @@
                                             this.selected = this.selected.filter(membershipTierId => membershipTierId !== id);
                                         }
                                     }
-                                }}">
+                                }}"}>
                         <%= label f, :products, "Availability",class: "input-label"  %>
                         <span class="input-label-info">Choose if you want to make this available only to readers who have pre-ordered book.</span>
                         <%= hidden_input f, :products, ":value": "selected" %>
