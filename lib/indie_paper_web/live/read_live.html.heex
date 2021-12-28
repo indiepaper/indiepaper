@@ -74,7 +74,7 @@
                             <p class="text-secondary-text">This chapter is only available for readers who have pre-ordered the book.</p>
                         </div>
                         <div class="flex flex-row justify-start items-center mt-8">
-                            <%= live_redirect to: Routes.author_page_path(@socket, :show, @book.author), class: "primary-button" do %>
+                            <%= link to: Routes.book_checkout_path(@socket, :new, @book), class: "primary-button" do %>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
                                 </svg>
