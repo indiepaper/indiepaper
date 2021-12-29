@@ -1,6 +1,15 @@
-<div class="bg-gradient-to-br from-cool-gray-100 to-cool-gray-300">
-    <section class="text-center container-box">
-        <h1 class="pt-16 text-4xl font-black text-center text-gray-900">Earn money from books, even before you publish them.</h1>
-        <p class="mt-6 leading-relaxed">Earn money from your books, publishing each chapter as you finish them, all on a platform designed to make beautiful books.</p>
+<div class="bg-white">
+    <section class="flex flex-col justify-center items-center pt-20 pb-16 max-w-4xl text-center md:pt-40 md:pb-32 container-box">
+        <h1 class="text-4xl font-black text-center text-gray-900 md:text-5xl"><span class="md:block">Earn money from your books,</span> <span class="md:block">even before you publish them.</span></h1>
+        <p class="mt-6 max-w-lg leading-normal md:mt-4 md:text-lg">Earn money from your books, publishing each chapter as you finish them, all on a platform designed to make beautiful books.</p>
+        <div class="flex flex-col justify-center items-center mt-6 md:mt-10">
+            <%= link to: Routes.author_registration_path(@conn, :new, return_to: Routes.book_new_path(@conn, :new)), class: "flex flex-row justify-center items-center py-2 px-6 space-x-2 text-sm font-bold text-white bg-gradient-to-r from-orange-500 to-orange-600 rounded-3xl border-2 border-orange-600 shadow-lg transition-all hover:shadow-xl" do %>
+                <span>Start Writing</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
+                </svg>
+            <% end %>
+            <p class="mt-2 text-xs md:mt-3 secondary-text">It's free, and takes 30(ish) seconds</p>
+        </div>
     </section>
 </div>
