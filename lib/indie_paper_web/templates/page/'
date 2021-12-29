@@ -1,10 +1,10 @@
 <div class="bg-white">
-    <section class="flex flex-col justify-center items-center mt-20 max-w-4xl text-center md:mt-40 container-box">
+    <section class="flex flex-col justify-center items-center pt-20 max-w-4xl text-center md:pt-40 container-box">
         <h1 class="text-4xl font-black text-center text-gray-900 md:text-5xl"><span class="md:block">Earn money from your books,</span> <span class="md:block">even before you publish them.</span></h1>
         <p class="mt-6 max-w-2xl leading-normal text-gray-700 md:mt-4 md:text-lg">Write, edit, format, typeset and publish your book on IndiePaper, a platform designed to make beautiful books.</p>
         <div class="flex flex-col justify-center items-center mt-6 md:mt-10">
             <%= link to: Routes.author_registration_path(@conn, :new, return_to: Routes.book_new_path(@conn, :new)),
-            class: "flex flex-row justify-center items-center py-2 px-6 space-x-2 text-sm font-bold text-white bg-gradient-to-r duration-200 from-orange-500 to-orange-600 hover:rounded-md rounded-3xl border-2 border-orange-600 shadow-lg transition-all hover:shadow-xl" do %>
+            class: "flex flex-row justify-center items-center py-2 px-6 space-x-2 text-sm font-bold text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:rounded-md rounded-3xl border-2 border-orange-600 shadow-lg transition-all hover:shadow-xl" do %>
                 <span>Start Writing Now</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
@@ -13,15 +13,11 @@
             <p class="mt-2 text-xs md:text-sm secondary-text">It's free, and takes 30(ish) seconds.</p>
         </div>
     </section>
-    <section class="flex flex-col-reverse items-stretch mt-20 md:mt-40 lg:flex-row container-box">
-        <div class="flex flex-col items-start w-full lg:w-2/5">
+    <div class="bg-background">
+    <section class="flex flex-col items-stretch mt-16 container-box">
+        <div class="flex flex-col items-start">
             <h3 class="text-2xl font-bold">Start selling with a single chapter.</h3>
-            <div class="mt-3 text-gray-600">
-                <p class="text-lg font-medium leading-6 text-gray-700">You spend years crafting a book, doing a job you love to make a book no one wants to read.</p>
-                <p class="mt-4">Start selling with a single chapter. Let your readers be the judge of your writing. Mkae something people want to read.</p>
-                <p class="mt-4">Adapt your writing, get valuable feedback from the start, all while your readers have access to a book, months before your finish it.</p>
-            </div>
         </div>
-        <div class="w-full h-80 bg-gray-100 md:flex-1 md:w-auto"></div>
     </section>
+    </div>
 </div>
