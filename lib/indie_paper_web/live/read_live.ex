@@ -43,13 +43,14 @@ defmodule IndiePaperWeb.ReadLive do
          )}
 
       current_author ->
-        {:ok, _saved_book} = Books.add_serial_book_to_library(current_author, socket.assigns.book)
+        {:ok, _saved_book} =
+          Books.add_pre_order_book_to_library(current_author, socket.assigns.book)
 
         {:noreply,
          socket
          |> put_flash(
            :info,
-           "The serial book has been added to your library. You will be notified when new chapters are published."
+           "The book has been added to your library. You will be notified when new chapters are published."
          )
          |> assign(book_added_to_library?: true)}
     end
@@ -57,7 +58,7 @@ defmodule IndiePaperWeb.ReadLive do
 
   @impl true
   def handle_event("remove_from_library", _, socket) do
-    Books.remove_serial_book_to_library!(socket.assigns.current_author, socket.assigns.book)
+    Books.remove_pre_order_book_from_library!(socket.assigns.current_author, socket.assigns.book)
 
     {:noreply,
      socket

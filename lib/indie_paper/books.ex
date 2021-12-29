@@ -162,13 +162,13 @@ defmodule IndiePaper.Books do
     book.publishing_type == :vanilla
   end
 
-  def add_serial_book_to_library(reader, %Book{publishing_type: :serial} = book) do
+  def add_pre_order_book_to_library(reader, %Book{publishing_type: :pre_order} = book) do
     case ReaderBookSubscriptions.create_reader_book_subscription(reader.id, book.id) do
       {:ok, _reader_book_subscription} -> {:ok, book}
     end
   end
 
-  def remove_serial_book_to_library!(reader, %Book{publishing_type: :serial} = book) do
+  def remove_pre_order_book_from_library!(reader, %Book{publishing_type: :serial} = book) do
     ReaderBookSubscriptions.delete_reader_book_subscription!(reader.id, book.id)
   end
 end
