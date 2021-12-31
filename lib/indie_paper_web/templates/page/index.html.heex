@@ -29,9 +29,7 @@
                 <% end %>
             </div>
             <div class="relative pb-8 mt-16 h-96 md:mt-0 md:w-full md:h-auto aspect-square">
-                <iframe src="https://embed.lottiefiles.com/animation/68978"
-                        class="w-full h-full"
-                        allowfullscreen></iframe>
+                <lottie-player src={Routes.static_path(@conn, "/images/animated-hand.json")}  background="transparent"  speed="1"  class="absolute inset-0 w-full h-full"  loop autoplay></lottie-player>
             </div>
         </section>
     </div>
@@ -106,3 +104,4 @@
         </div>
     </section>
 </div>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
