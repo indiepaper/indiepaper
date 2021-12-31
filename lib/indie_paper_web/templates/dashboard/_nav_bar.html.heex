@@ -14,9 +14,9 @@
                     </svg>
                     <p>Create new</p>
                 <% end %>
-                <div class=""></div>
+                <div class="hidden md:block"></div>
             </div>
-            <div class="flex flex-col items-start pt-4 space-y-4 w-full border-t md:flex-row md:items-center md:pt-0 md:space-y-0 md:space-x-4 md:w-auto md:border-t-0 border-secondary-border">
+            <div class="flex flex-col items-start space-y-4 w-full border-t md:flex-row md:items-center md:pt-0 md:space-y-0 md:space-x-4 md:w-auto md:border-t-0 border-secondary-border">
                 <div class=""></div>
                 <%= live_redirect to: Routes.dashboard_library_path(assigns[:conn] || assigns[:socket], :index), class: "secondary-link rounded-lg w-full py-2 md:w-auto", data: [test: "library-link"] do %>
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
