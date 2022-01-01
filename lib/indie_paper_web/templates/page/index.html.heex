@@ -93,13 +93,12 @@
                 </div>
             </div>
             <div class="flex flex-row items-start space-x-4 md:space-x-5">
-                <div class="flex justify-center items-center p-2 w-16 h-16 bg-gradient-to-bl from-orange-200 to-indigo-400 rounded-3xl shadow-sm shadow-inner shrink-0">
+                <div class="flex relative justify-center items-center p-2 w-16 h-16 bg-gradient-to-bl from-orange-200 to-indigo-400 rounded-3xl shadow-sm shadow-inner shrink-0">
                     <img src={Routes.static_path(@conn, "/images/girl-dynamic-color.png")} alt="chat" class="object-cover w-full h-full" />
                 </div>
                 <div>
-                    <h3 class="mt-2 font-bold text-gray-300">Easy Editing</h3>
-                    <p class="mt-1 text-gray-400">Create something valuable for the people</p>
-                    <span class="inline-block py-1 px-2 mt-2 text-xs font-bold text-emerald-100 bg-gradient-to-b from-emerald-500 to-emerald-700 rounded-xl">Coming soon</span>
+                    <h3 class="font-bold text-gray-300">Easy Editing</h3>
+                    <p class="mt-2 text-gray-400">Collaborate with your Editor, on your drafts and see edits, comments and changes all in a single file.</p>
                 </div>
             </div>
             <div class="flex flex-row items-start space-x-4 md:space-x-5">
@@ -107,9 +106,8 @@
                     <img src={Routes.static_path(@conn, "/images/file-text-dynamic-color.png")} alt="chat" class="object-cover w-full h-full" />
                 </div>
                 <div>
-                    <h3 class="font-bold text-gray-300">Easy Beautiful Typesetting</h3>
-                    <p class="mt-1 text-gray-400">Create something valuable for the people</p>
-                    <span class="inline-block py-1 px-2 mt-2 text-xs font-bold text-emerald-100 bg-gradient-to-b from-emerald-500 to-emerald-700 rounded-xl">Coming soon</span>
+                    <h3 class="font-bold text-gray-300">Easy Beautiful Typesetting *</h3>
+                    <p class="mt-2 text-gray-400">Publish your draft, and we'll typeset the entire document to beautiful books into different formats.</p>
                 </div>
             </div>
             <div class="flex flex-row items-start space-x-4 md:space-x-5">
@@ -117,9 +115,8 @@
                     <img src={Routes.static_path(@conn, "/images/notebook-dynamic-color.png")} alt="chat" class="object-cover w-full h-full" />
                 </div>
                 <div>
-                <h3 class="font-bold text-gray-300">Easy Print-on-demand Books</h3>
-                    <p class="mt-1 text-gray-400">Create something valuable for the people</p>
-                    <span class="inline-block py-1 px-2 mt-2 text-xs font-bold text-emerald-100 bg-gradient-to-b from-emerald-500 to-emerald-700 rounded-xl">Coming soon</span>
+                <h3 class="font-bold text-gray-300">Easy Print-on-demand Books *</h3>
+                    <p class="mt-1 text-gray-400">We integrate with print-on-demand services to make your books available as paperbacks in 100+ countries.</p>
                 </div>
             </div>
             <div class="flex flex-row items-start space-x-4 md:space-x-5">
@@ -128,7 +125,7 @@
                 </div>
                 <div>
                 <h3 class="font-bold text-gray-300">Easy Selling</h3>
-                    <p class="mt-1 text-gray-400">Create something valuable for the people</p>
+                    <p class="mt-1 text-gray-400">Have a complete store-front generated for your book, where you can even sell extra assets with them.</p>
                 </div>
             </div>
             <div class="flex flex-row items-start space-x-4 md:space-x-5">
@@ -137,7 +134,7 @@
                 </div>
                 <div>
                 <h3 class="font-bold text-gray-300">Easy Returns and Refunds</h3>
-                    <p class="mt-1 text-gray-400">Create something valuable for the people</p>
+                    <p class="mt-1 text-gray-400">Don't worry about returns, refunds and chargebacks. Everything is handled by our 24/7 support team, so you can sleep in peace.</p>
                 </div>
             </div>
             <div class="flex flex-row items-start space-x-4 md:space-x-5">
@@ -146,7 +143,7 @@
                 </div>
                 <div>
                 <h3 class="font-bold text-gray-300">Easy Profits</h3>
-                    <p class="mt-1 text-gray-400">Create something valuable for the people</p>
+                    <p class="mt-1 text-gray-400">Keep 91% of every book you sell. We take 9% + 30c on each sale you make. We make money when you do.</p>
                 </div>
             </div>
         </div>
@@ -154,7 +151,7 @@
 </div>
 <section class="flex flex-col items-center my-20 md:my-24 container-box">
     <h2 class="text-2xl font-bold text-gray-800 md:text-3xl md:text-center">Come join the Future of Publishing</h2>
-    <p class="mt-3 max-w-3xl text-lg font-medium leading-7 text-gray-600 md:text-center">We're buliding a revolution that is due 481 years. We're building a world where an Indie Author can publish a beautiful book, and make a living out of it.</p>
+    <p class="mt-3 max-w-3xl text-lg font-medium leading-7 text-gray-600 md:text-center">We're building a world where making a beautifully typeset, well formatted self-published book should be as easy as publishign a blog post. And we're just getting started.</p>
     <div class="flex flex-col justify-center items-center mt-8 md:mt-10">
         <%= link to: Routes.author_registration_path(@conn, :new, return_to: Routes.book_new_path(@conn, :new)),
         class: "flex flex-row justify-center items-center py-2 px-6 space-x-2 text-sm font-bold text-white bg-gradient-to-b duration-200 from-orange-500 to-orange-600 hover:rounded-xl rounded-3xl border-2 border-orange-600 shadow-md transition-all hover:shadow-lg" do %>
