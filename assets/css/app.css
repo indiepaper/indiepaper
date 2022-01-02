@@ -69,7 +69,7 @@
   }
 
   .primary-button {
-    @apply bg-gradient-to-b from-gray-700 via-gray-800 to-gray-900 base-button !text-gray-50 hover:text-white;
+    @apply bg-gradient-to-b from-gray-700  to-gray-900 base-button !text-gray-50 hover:text-white;
   }
 
   .submit-button {
