@@ -77,7 +77,7 @@
   }
 
   .secondary-button {
-    @apply bg-white base-button border border-primary-border shadow-sm hover:border-darker-border transition;
+    @apply bg-white base-button border border-primary-border shadow-sm hover:border-darker-border;
   }
 
   .accent-button {
