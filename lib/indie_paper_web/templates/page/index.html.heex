@@ -1,99 +1,172 @@
-<section class="font-normal bg-white">
-    <div class="flex flex-col items-center py-24 text-left md:py-36 container-box">
-        <div class="max-w-3xl text-center">
-            <h1 class="text-3xl font-black text-gray-800 md:text-5xl">Hey Authors, meet your new home.</h1>
-            <p class="mt-6 text-gray-700 md:mt-8 md:text-lg">Writing your draft is hard, making a book is ten times harder. It involves multiple tools, people, processes and unnecessary stress. IndiePaper enables you to write, typeset, publish and sell your books all from a single platform, so you can do more of what you love, writing.</p>
+<div class="bg-white">
+    <section class="flex flex-col justify-center items-center py-24 max-w-4xl text-center md:py-40 container-box">
+        <h1 class="text-4xl font-black text-center text-gray-900 md:text-5xl"><span class="md:block">Earn money from your books,</span> <span class="md:block"> even before you publish them.</span></h1>
+        <p class="mt-5 max-w-2xl leading-normal text-gray-700 md:text-lg">Write, edit, publish, typeset and sell your books, all from a single end-to-end integrated platform and start earning today.</p>
+        <div class="flex flex-col justify-center items-center mt-6 md:mt-10">
             <%= link to: Routes.author_registration_path(@conn, :new, return_to: Routes.book_new_path(@conn, :new)),
-            class: "flex font-medium items-center justify-center inline-flex mt-10 space-x-2 bg-gradient-to-r from-orange-400 shadow via-orange-500 to-orange-600 px-8 py-3 text-white rounded-full shadow-md hover:shadow-lg transistion border-orange-600" do %>
-                <p class="font-bold">Start Writing</p>
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            class: "flex flex-row justify-center items-center py-2 px-6 space-x-2 text-sm font-bold text-white bg-gradient-to-b duration-200 from-orange-500 to-orange-600 hover:rounded-xl rounded-3xl border-2 border-orange-600 shadow-md transition-all hover:shadow-lg" do %>
+                <span>Start Writing Now</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
+                </svg>
+            <% end %>
+            <p class="mt-2 text-xs md:text-sm secondary-text">It's free, and takes 30(ish) seconds.</p>
+        </div>
+    </section>
+</div>
+<div class="bg-gradient-to-tr from-gray-900 to-gray-800">
+    <section class="flex flex-col-reverse items-stretch md:flex-row md:space-x-12 container-box">
+        <div class="flex flex-col items-start py-16 w-full max-w-lg md:py-40">
+            <h2 class="text-2xl font-bold tracking-tight text-gray-200 md:text-3xl">Start selling with a single chapter.</h2>
+            <div class="text-gray-400">
+                <p class="mt-4 leading-relaxed">Rather than waiting to finish the entire book before selling it, or worse, to find out no one wants it. Why wait? Start selling your book today.</p>
+                <p class="mt-5 leading-relaxed">Put your book up for pre-orders, even with a single chapter and open it up for your early readers. Gather feedback, profit and build out a fan base for your book from day one.</p>
+            </div>
+            <%= link to: Routes.author_registration_path(@conn, :new), class: "mt-8 base-button hover:text-blue-100 text-blue-100 px-6 py-2.5  font-bold text-sm tracking-wide bg-gradient-to-b from-blue-400 to-indigo-600" do %>
+                <span>Start Selling Today</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
             <% end %>
         </div>
-        <div class="mt-8 max-w-5xl rounded-2xl border shadow-sm md:mt-10 border-primary-border">
-            <img class="rounded-2xl" src={Routes.static_path(@conn, "/images/hero-image.svg")}>
+        <div class="relative pb-16 h-96 md:w-full md:h-auto aspect-square">
+            <lottie-player src={Routes.static_path(@conn, "/images/animated-hand.json")}  background="transparent"  speed="1"  class="absolute inset-0 w-full h-full"  loop autoplay></lottie-player>
+        </div>
+    </section>
+</div>
+<section class="flex flex-col items-start py-16 mt-16 md:items-center md:py-24 md:mt-24 container-box">
+    <h2 class="text-2xl font-bold text-gray-800 md:text-3xl md:text-center">Write, Publish, Improvise.</h2>
+    <p class="mt-3 max-w-3xl text-lg font-medium leading-7 text-gray-600 md:text-center">
+        Write your book in public.
+        Let your early readers give feedback on chapters as you finish them. Use that to improve, and re-publish.
+        Adapt your writing, get valuable feedback, all while your readers read your book, months before you finish it.</p>
+    <div class="grid grid-cols-1 gap-x-8 gap-y-16 justify-between items-start mt-24 md:grid-cols-3">
+        <div class="flex flex-col md:items-center md:text-center">
+            <div class="flex justify-center items-center p-2 w-16 h-16 bg-gradient-to-bl from-orange-200 to-indigo-300 rounded-3xl shadow-sm shadow-inner">
+                <img src={Routes.static_path(@conn, "/images/pencil-iso-color.png")} alt="pencil" class="object-cover w-full h-full" />
+            </div>
+            <h3 class="mt-4 font-bold text-gray-800">Write your chapter</h3>
+            <p class="mt-2 text-gray-600">in (our online or your favorite) word processor. Start with a single chapter.</p>
+        </div>
+        <div class="flex flex-col md:items-center md:text-center">
+            <div class="flex justify-center items-center p-2 w-16 h-16 bg-gradient-to-bl from-orange-200 to-indigo-300 rounded-3xl shadow-sm shadow-inner">
+                <img src={Routes.static_path(@conn, "/images/file-text-iso-color.png")} alt="document" class="object-cover w-full h-full" />
+            </div>
+            <h3 class="mt-4 font-bold text-gray-800">Publish your chapter</h3>
+            <p class="mt-2 text-gray-600">and have fully functional storefront setup. Share with your readers and start taking pre-orders.</p>
+        </div>
+        <div class="flex flex-col md:items-center md:text-center">
+            <div class="flex justify-center items-center p-2 w-16 h-16 bg-gradient-to-bl from-orange-200 to-indigo-300 rounded-3xl shadow-sm shadow-inner">
+                <img src={Routes.static_path(@conn, "/images/chat-text-iso-color.png")} alt="chat" class="object-cover w-full h-full" />
+            </div>
+            <h3 class="mt-4 font-bold text-gray-800">Improvise your chapter</h3>
+            <p class="mt-2 text-gray-600">by gathering feedback from your early readers, improving your chapter.</p>
         </div>
     </div>
 </section>
-
-<section class="font-normal border-t bg-background border-primary-border">
-    <div class="flex flex-col items-center py-16 md:py-32 container-box">
-        <div class="max-w-2xl text-center">
-            <h2 class="text-2xl font-black text-center md:text-3xl">Self-Publishing as easy as 1, 2, 3. </h2>
-            <p class="mt-1 text-gray-600 md:mt-2 md:text-lg">Writing books should be fun, getting it in the hands of your readers should be easy.</p>
-        </div>
-        <div class="mt-12 space-y-12 w-full max-w-5xl md:mt-20 md:space-y-16">
-            <div class="flex overflow-hidden flex-col bg-white rounded-xl border shadow-sm md:flex-row border-primary-border">
-                <div class="w-full aspect-w-5 aspect-h-3 md:aspect-w-3 md:aspect-h-1">
-                    <img src="https://images.pexels.com/photos/7112/woman-typing-writing-windows.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Author typing" class="object-cover" />
+<div class="pt-12 pb-24 mt-12 bg-gradient-to-tr from-gray-900 to-gray-800 md:pt-16 md:mt-24">
+    <section class="container-box">
+        <div class="flex flex-col-reverse items-stretch md:flex-row md:justify-between md:items-center">
+            <div class="max-w-2xl">
+                <h2 class="text-2xl font-bold text-gray-200 md:text-3xl">Self-publishing as easy as 1, 2, 3</h2>
+                <div class="text-gray-400">
+                    <p class="mt-3 max-w-3xl text-lg font-medium leading-7 text-gray-300">Self-publishing your book shouldn't be hard, it should be easy.</p>
+                    <p class="mt-4">Taking a finished draft and turning it into a self-published book is really, really hard. You have to manage multiple hard things, most of which you hate, to get your book in the hands of your readers.</p>
+                    <p class="mt-4">Publish your book with IndiePaper, and just start writing, we'll handle the rest. We'll take your draft and make it into beautiful work of words, that will put traditionally published books to shame, and that your readers love and deserve.</p>
                 </div>
-                <div class="flex flex-col justify-center items-start py-6 px-4 max-w-lg md:pr-16 md:pl-8">
-                    <h1 class="text-xl font-bold md:text-2xl">Write your book</h1>
-                    <p class="mt-2 text-gray-600">You write your draft in our integrated online editor. It's just like writing in your favourite word processor, but better.</p>
-                </div>
+                <%= link to: Routes.author_registration_path(@conn, :new), class: "mt-8 base-button hover:text-blue-100 text-blue-100 px-6 py-2.5  font-bold text-sm tracking-wide bg-gradient-to-b from-blue-400 to-indigo-600" do %>
+                    <span>Start Publishing Now</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                <% end %>
             </div>
-            <div class="flex overflow-hidden flex-col bg-white rounded-xl border shadow-sm md:flex-row border-primary-border">
-                <div class="w-full md:hidden aspect-w-5 aspect-h-3 md:aspect-w-3 md:aspect-h-1">
-                    <img src="https://images.pexels.com/photos/4089834/pexels-photo-4089834.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Typesetting buttons" class="object-cover" />
-                </div>
-                <div class="flex flex-col justify-center items-start py-6 px-4 max-w-lg md:pr-8 md:pl-16">
-                    <h1 class="text-xl font-bold md:text-2xl">Publish your book</h1>
-                    <p class="mt-2 text-gray-600">After you have done editing, hit publish and we'll take care of the rest. We'll typeset your book into beautiful online and print-on-demand books, ready to be sold on your personalised storefront.</p>
-                </div>
-                <div class="hidden w-full md:block aspect-w-5 aspect-h-3 md:aspect-w-3 md:aspect-h-1">
-                    <img src="https://images.pexels.com/photos/4089834/pexels-photo-4089834.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Typesetting buttons" class="object-cover" />
-                </div>
-            </div>
-            <div class="flex overflow-hidden flex-col bg-white rounded-xl border shadow-sm md:flex-row border-primary-border">
-                <div class="w-full aspect-w-5 aspect-h-3 md:aspect-w-3 md:aspect-h-1">
-                    <img src="https://images.pexels.com/photos/1907785/pexels-photo-1907785.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Image of BookStore" class="object-cover" />
-                </div>
-                <div class="flex flex-col justify-center items-start py-6 px-4 max-w-lg md:pr-16 md:pl-8">
-                    <h1 class="text-xl font-bold md:text-2xl">Sit back and relax</h1>
-                    <p class="mt-2 text-gray-600">Share your book with your readers and sit back and relax. We'll handle payments, refunds, returns and the occasional fraud.</p>
-                </div>
+            <div class="relative mb-8 max-w-lg md:mb-0 md:max-w-md aspect-square animate-thruttle">
+                <img src={Routes.static_path(@conn, "/images/notebook-with-boosters-iso-color.png")} alt="book launched by rockets" class="object-cover w-full h-full" />
             </div>
         </div>
-    </div>
-</section>
-
-<section class="flex flex-col items-center font-normal bg-white border-t border-primary-border">
-    <div class="py-20 text-center md:py-32 container-box">
-        <div class="max-w-2xl">
-            <h2 class="text-2xl font-black md:text-3xl">Built for Indie Authors just like you.</h2>
-            <p class="mt-1 text-gray-600 md:mt-2 md:text-lg">Because we love you, and we know how hard it is to run a self-publishing business all by yourself, that's why we're here to help.</p>
+        <div class="grid grid-cols-1 gap-x-6 gap-y-16 mt-24 max-w-5xl md:grid-cols-2 md:gap-x-8 md:gap-y-16 md:items-start md:mt-20">
+            <div class="flex flex-row items-start space-x-4 md:space-x-5">
+                <div class="flex justify-center items-center p-2 w-16 h-16 bg-gradient-to-bl from-orange-200 to-indigo-400 rounded-3xl shadow-sm shadow-inner shrink-0">
+                    <img src={Routes.static_path(@conn, "/images/pencil-dynamic-color.png")} alt="chat" class="object-cover w-full h-full" />
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-300">Easy Writing</h3>
+                    <p class="mt-1 text-gray-400">Write your draft in our online word-processor, custom built for making books.</p>
+                </div>
+            </div>
+            <div class="flex flex-row items-start space-x-4 md:space-x-5">
+                <div class="flex justify-center items-center p-2 w-16 h-16 bg-gradient-to-bl from-orange-200 to-indigo-400 rounded-3xl shadow-sm shadow-inner shrink-0">
+                    <img src={Routes.static_path(@conn, "/images/girl-dynamic-color.png")} alt="chat" class="object-cover w-full h-full" />
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-300">Easy Editing</h3>
+                    <p class="mt-2 text-gray-400">Collaborate with your Editor, on your drafts and see edits, comments and changes all in one place.</p>
+                    <span class="inline-block py-1 px-2 mt-2 text-xs font-bold text-gray-300 bg-gradient-to-b from-gray-600 to-gray-700 rounded-lg">Coming soon</span>
+                </div>
+            </div>
+            <div class="flex flex-row items-start space-x-4 md:space-x-5">
+                <div class="flex justify-center items-center p-2 w-16 h-16 bg-gradient-to-bl from-orange-200 to-indigo-400 rounded-3xl shadow-sm shadow-inner shrink-0">
+                    <img src={Routes.static_path(@conn, "/images/file-text-dynamic-color.png")} alt="chat" class="object-cover w-full h-full" />
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-300">Easy Beautiful Typesetting</h3>
+                    <p class="mt-2 text-gray-400">When you publish, we'll typeset the entire draft to a beautiful typeset book in different formats.</p>
+                    <span class="inline-block py-1 px-2 mt-2 text-xs font-bold text-gray-300 bg-gradient-to-b from-gray-600 to-gray-700 rounded-lg">Coming soon</span>
+                </div>
+            </div>
+            <div class="flex flex-row items-start space-x-4 md:space-x-5">
+                <div class="flex justify-center items-center p-2 w-16 h-16 bg-gradient-to-bl from-orange-200 to-indigo-400 rounded-3xl shadow-sm shadow-inner shrink-0">
+                    <img src={Routes.static_path(@conn, "/images/notebook-dynamic-color.png")} alt="chat" class="object-cover w-full h-full" />
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-300">Easy Print-on-demand Books</h3>
+                    <p class="mt-1 text-gray-400">We'll make your published book available print-on-demand across 100+ countries.</p>
+                    <span class="inline-block py-1 px-2 mt-2 text-xs font-bold text-gray-300 bg-gradient-to-b from-gray-600 to-gray-700 rounded-lg">Coming soon</span>
+                </div>
+            </div>
+            <div class="flex flex-row items-start space-x-4 md:space-x-5">
+                <div class="flex justify-center items-center p-2 w-16 h-16 bg-gradient-to-bl from-orange-200 to-indigo-400 rounded-3xl shadow-sm shadow-inner shrink-0">
+                    <img src={Routes.static_path(@conn, "/images/dollar-dynamic-color.png")} alt="chat" class="object-cover w-full h-full" />
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-300">Easy Selling</h3>
+                    <p class="mt-1 text-gray-400">Have a complete store-front generated for your book. You can even sell custom addons with your books here.</p>
+                </div>
+            </div>
+            <div class="flex flex-row items-start space-x-4 md:space-x-5">
+                <div class="flex justify-center items-center p-2 w-16 h-16 bg-gradient-to-bl from-orange-200 to-indigo-400 rounded-3xl shadow-sm shadow-inner shrink-0">
+                    <img src={Routes.static_path(@conn, "/images/bag-dynamic-color.png")} alt="chat" class="object-cover w-full h-full" />
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-300">Easy Returns and Refunds</h3>
+                    <p class="mt-1 text-gray-400">Returns, Refunds and Chargebacks are handled by our 24/7 support team, so don't lose sleep dealing with them.</p>
+                </div>
+            </div>
+            <div class="flex flex-row items-start space-x-4 md:space-x-5">
+                <div class="flex justify-center items-center p-2 w-16 h-16 bg-gradient-to-bl from-orange-200 to-indigo-400 rounded-3xl shadow-sm shadow-inner shrink-0">
+                    <img src={Routes.static_path(@conn, "/images/chart-dynamic-color.png")} alt="chat" class="object-cover w-full h-full" />
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-300">Easy Profits</h3>
+                    <p class="mt-1 text-gray-400">Keep 91% of every book you sell, and start making profits from your book. We take 9% + 30c (including processing fees) on each sale. We make money when you do.</p>
+                </div>
+            </div>
         </div>
-        <div class="flex flex-col items-center mx-auto mt-16 space-y-12 max-w-xl text-center md:mt-20 md:space-y-16">
-            <div>
-                <h4 class="text-xl font-bold md:text-2xl">Keep your readers</h4>
-                <p class="mt-2 text-gray-600">Your readers love reading more of your books, sell your new books to your old readers.</p>
-            </div>
-            <div>
-                <h4 class="text-xl font-bold md:text-2xl">Pain-free print books</h4>
-                <p class="mt-2 text-gray-600">We typeset your draft into beautiful print books, which will be printed on demand and delivered to your readers.</p>
-            </div>
-            <div>
-                <h4 class="text-xl font-bold md:text-2xl">Keep your profits</h4>
-                <p class="mt-2 text-gray-600">Sell your books at their worth, not by the tiered price of the platform. We take a flat fee of 9% (transaction fees included).</p>
-            </div>
-            <div>
-                <h4 class="text-xl font-bold md:text-2xl">We handle everything</h4>
-                <p class="mt-2 text-gray-600">24x7 support, refunds, returns and fraud handling are all taken care of. All you have to do, is do more of the thing you love to do, write.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="font-normal border-t bg-background border-primary-border">
-    <div class="pt-20 pb-16 max-w-3xl text-center container-box">
-        <h3 class="text-2xl font-black md:text-3xl">We know you'll love IndiePaper, and we're sure your readers will too.</h3>
-        <p class="mt-2 text-lg text-gray-600">Your books want to make you more money. Your readers want to read more of your books, just let them both do their thing.</p>
-        <%= link to: Routes.author_registration_path(@conn, :new), class: "flex font-medium items-center justify-center inline-flex mt-10 space-x-2 bg-gradient-to-r from-orange-400 shadow via-orange-500 to-orange-600 px-8 py-3 text-white rounded-full shadow-md hover:shadow-lg transistion border-orange-600" do %>
-            <p class="font-bold">Continue Writing</p>
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </section>
+</div>
+<section class="flex flex-col items-center my-20 md:my-24 container-box">
+    <h2 class="text-2xl font-bold text-center text-gray-800 md:text-3xl">Come join the Future of Publishing</h2>
+    <p class="mt-3 max-w-3xl text-lg font-medium leading-7 text-center text-gray-600">We're building a world where making a beautifully typeset, well formatted self-published book should be as easy as publishing a blog post. Authors, welcome to your new home.</p>
+    <div class="flex flex-col justify-center items-center mt-8 md:mt-10">
+        <%= link to: Routes.author_registration_path(@conn, :new, return_to: Routes.book_new_path(@conn, :new)),
+        class: "flex flex-row justify-center items-center py-2 px-6 space-x-2 text-sm font-bold text-white bg-gradient-to-b duration-200 from-orange-500 to-orange-600 hover:rounded-xl rounded-3xl border-2 border-orange-600 shadow-md transition-all hover:shadow-lg" do %>
+            <span>Start Writing Now</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
             </svg>
         <% end %>
+        <p class="mt-2 text-xs md:text-sm secondary-text">Come on in, you'll love writing here.</p>
     </div>
 </section>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>

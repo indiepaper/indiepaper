@@ -29,6 +29,20 @@ module.exports = {
       fontFamily: {
         sans: ["Good Sans", ...defaultTheme.fontFamily.sans],
       },
+      keyframes: {
+        thruttle: {
+          from: {
+            transform: "translateX(-2px)",
+          },
+          to: {
+            transform: "translateX(2px)",
+          }
+
+        }
+      },
+      animation: {
+        thruttle: 'thruttle 0.2s alternate infinite'
+      }
     },
   },
   variants: {
