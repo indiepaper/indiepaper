@@ -5,15 +5,13 @@ processes = []
 
 [deploy]
   release_command = "/app/bin/indie_paper eval IndiePaper.Release.migrate"
+  strategy = "bluegreen"
 
 [env]
 
 [experimental]
   allowed_public_ports = []
   auto_rollback = true
-
-[deploy]
-  strategy = "bluegreen"
 
 [[services]]
   http_checks = []
