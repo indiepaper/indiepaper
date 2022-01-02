@@ -12,6 +12,9 @@ processes = []
   allowed_public_ports = []
   auto_rollback = true
 
+[deploy]
+  strategy = "bluegreen"
+
 [[services]]
   http_checks = []
   internal_port = 4000
