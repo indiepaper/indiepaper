@@ -184,6 +184,19 @@
   cursor: pointer;
 }
 
+.header-pattern {
+  background-color: #fff;
+  background-image: radial-gradient(#d6d3d1 0.780000000000001px, #fff 0.7800000000000001px);
+  background-size: 16px 16px;
+}
+
+.dark-header-pattern {
+  background-color: #1f2937;
+  opacity: 1;
+  background-image: radial-gradient(circle at top right, #f5f5f4, #1f2937), repeating-radial-gradient(circle at top right, #f5f5f4, #f5f5f4, 12px, transparent 24px, transparent 12px);
+  background-blend-mode: multiply;
+}
+
 [x-cloak] {
   display: none;
 }
