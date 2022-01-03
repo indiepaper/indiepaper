@@ -3,7 +3,6 @@ defmodule IndiePaper.BookLibrary do
   alias IndiePaper.Repo
 
   alias IndiePaper.Orders
-  alias IndiePaper.Products
   alias IndiePaper.ReaderBookSubscriptions
   alias IndiePaper.Books
 
