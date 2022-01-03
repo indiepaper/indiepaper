@@ -155,18 +155,18 @@
                         <%= if IndiePaper.Books.is_published?(book) or Books.is_pre_order_book?(book)  do %>
                             <div class="">
                                 <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-primary-border">
-                                    <p>Products</p>
+                                    <p class="text-sm font-medium">Products</p>
                                 </div>
                                 <div>
                                     <%= for product <- book.products do %>
                                         <%= link to: Routes.book_product_path(@socket, :edit, book, product), "data-test": "product-edit" do %>
                                             <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-lightest-border">
                                                 <div>
-                                                    <p data-test="product-title"><%= product.title %></p>
+                                                    <p class="font-medium" data-test="product-title"><%= product.title %></p>
                                                     <p class="text-sm secondary-text"><%= product.description %></p>
                                                 </div>
                                                 <div class="flex flex-row items-center space-x-1.5">
-                                                    <p data-test="product-price"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(product.price) %></p>
+                                                    <p class="font-medium" data-test="product-price"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(product.price) %></p>
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                                                     </svg>
