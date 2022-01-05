@@ -154,7 +154,7 @@ defmodule IndiePaper.Books do
     book.publishing_type == :pre_order
   end
 
-  def vanilla_book?(%Book{} = book) do
+  def is_vanilla_book?(%Book{} = book) do
     book.publishing_type == :vanilla
   end
 

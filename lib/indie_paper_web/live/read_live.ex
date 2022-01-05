@@ -74,6 +74,9 @@ defmodule IndiePaperWeb.ReadLive do
     selected_chapter = Chapters.get_chapter!(chapter_id)
 
     cond do
+      Books.is_vanilla_book?(socket.assigns.book) ->
+        {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: false)}
+
       Chapters.is_free?(selected_chapter) ->
         {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: false)}
 
