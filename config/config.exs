@@ -36,8 +36,7 @@ config :esbuild,
   version: "0.14.0",
   default: [
     args:
-      ~w(js/app.js js/draft-editor.js js/book-description-editor.js js/book-reader.js js/simple-tip-tap-html-editor.js
-        css/fonts.css
+      ~w(./js/app.js ./js/draft-editor.js ./js/book-description-editor.js ./js/book-reader.js ./js/simple-tip-tap-html-editor.js
         --chunk-names=chunks/[name] --splitting --format=esm --bundle --target=es2017
         --minify --outdir=../priv/static/assets
         --external:/fonts/* --external:/images/*),
