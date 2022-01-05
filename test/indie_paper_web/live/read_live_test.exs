@@ -34,21 +34,4 @@ defmodule IndiePaperWeb.ReadLiveTest do
     assert html =~ chapter1.title
     refute html =~ chapter2.title
   end
-
-  test "reader can remove from library", %{conn: conn} do
-    reader = insert(:author)
-    book = insert(:book, publishing_type: :pre_order)
-    _reader_book_subscription = insert(:reader_book_subscription, book: book, reader: reader)
-    conn = log_in_author(conn, reader)
-
-    {:ok, view, _html} =
-      live(conn, Routes.book_read_path(conn, :index, book)) |> follow_redirect(conn)
-
-    view
-    |> element("[data-test=remove-from-library-button]")
-    |> render_click()
-
-    {:ok, _view, html} = live(conn, Routes.dashboard_library_path(conn, :index))
-    refute html =~ book.title
-  end
 end
