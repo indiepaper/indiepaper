@@ -101,37 +101,6 @@ defmodule IndiePaper.Factory do
     |> Ecto.Changeset.apply_changes()
   end
 
-  def membership_tier_factory do
-    %IndiePaper.MembershipTiers.MembershipTier{
-      title: sequence("Tier"),
-      description_html:
-        "<p>Description about the membership that makes everything worthwhile.</p>",
-      author: build(:author),
-      amount: Money.new(400),
-      stripe_price_id: sequence("stripe_price_"),
-      stripe_product_id: sequence("stripe_product")
-    }
-  end
-
-  def reader_author_subscription_factory do
-    author = build(:author)
-
-    %IndiePaper.ReaderAuthorSubscriptions.ReaderAuthorSubscription{
-      author: author,
-      reader: build(:author),
-      membership_tier: build(:membership_tier, author: author),
-      status: :active,
-      stripe_checkout_session_id: sequence("stripe_checkout_session_id")
-    }
-  end
-
-  def chapter_membership_tier_factory do
-    %IndiePaper.ChapterMembershipTiers.ChapterMembershipTier{
-      chapter: build(:chapter),
-      membership_tier: build(:membership_tier)
-    }
-  end
-
   def chapter_product_factory do
     %IndiePaper.ChapterProducts.ChapterProduct{
       chapter: build(:chapter),

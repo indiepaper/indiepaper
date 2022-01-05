@@ -1,7 +1,10 @@
 defmodule IndiePaper.PaymentHandler do
-  alias IndiePaper.{Authors, Books, Orders, Orders.OrderNotifier}
-  alias IndiePaper.PaymentHandler.{StripeHandler, MoneyHandler}
-  alias IndiePaper.MembershipTiers
+  alias IndiePaper.Authors
+  alias IndiePaper.Books
+  alias IndiePaper.Orders
+  alias IndiePaper.Orders.OrderNotifier
+  alias IndiePaper.PaymentHandler.MoneyHandler
+  alias IndiePaper.PaymentHandler.StripeHandler
 
   def get_stripe_connect_url(%Authors.Author{stripe_connect_id: nil} = author, country_code) do
     with {:ok, stripe_connect_id} <- StripeHandler.create_connect_account(country_code),
@@ -28,31 +31,6 @@ defmodule IndiePaper.PaymentHandler do
   def set_payment_connected(stripe_connect_id) do
     author = Authors.get_by_stripe_connect_id!(stripe_connect_id)
     Authors.set_payment_connected(author)
-  end
-
-  def get_subscription_checkout_session(
-        %Authors.Author{id: reader_id, stripe_customer_id: stripe_customer_id},
-        %Authors.Author{stripe_connect_id: stripe_connect_id} = author,
-        %MembershipTiers.MembershipTier{id: membership_tier_id, stripe_price_id: stripe_price_id}
-      ) do
-    case StripeHandler.get_subscription_checkout_session(
-           author: author,
-           customer_id: stripe_customer_id,
-           price_id: stripe_price_id,
-           connect_id: stripe_connect_id,
-           application_fee_percent: get_platform_percentage(),
-           metadata: %{
-             reader_id: reader_id,
-             membership_tier_id: membership_tier_id
-           }
-         ) do
-      {:ok, stripe_checkout_session} ->
-        {:ok, stripe_checkout_session}
-
-      {:error, error} ->
-        {:error,
-         error_message(error, "There was an error contacting Stripe. Please try again later.")}
-    end
   end
 
   def get_checkout_session_url(customer, book) do
@@ -95,23 +73,6 @@ defmodule IndiePaper.PaymentHandler do
              book: order_with_books.book
            ) do
       {:ok, updated_order}
-    end
-  end
-
-  def create_product_with_price(author, membership_tier) do
-    with {:ok, product} <-
-           StripeHandler.create_product(
-             name: "#{Authors.get_full_name(author)} as #{membership_tier.title}"
-           ),
-         {:ok, price} <-
-           StripeHandler.create_price(
-             product_id: product.id,
-             unit_amount: membership_tier.amount.amount
-           ) do
-      {:ok, %{stripe_product_id: product.id, stripe_price_id: price.id}}
-    else
-      {:error, _} ->
-        {:error, "There was an error communicating with Stripe. Please try again later."}
     end
   end
 
