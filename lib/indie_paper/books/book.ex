@@ -26,7 +26,7 @@ defmodule IndiePaper.Books.Book do
         :vanilla,
         :pre_order
       ],
-      default: :vanilla,
+      default: :pre_order,
       nil: false
 
     field :short_description, :string

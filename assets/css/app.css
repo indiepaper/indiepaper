@@ -53,7 +53,7 @@
   }
 
   .input-label {
-    @apply mb-1;
+    @apply mb-1 font-medium;
   }
 
   .input-label-info {
