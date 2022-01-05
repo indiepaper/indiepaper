@@ -1,0 +1,27 @@
+ @font-face {
+   font-family: Good Sans;
+   font-weight: 400;
+   src: url(good-sans/good-sans-regular-353d173bd19979a3aba902e1b3445e48.otf?vsn=d) format("opentype");
+   font-display: fallback;
+ }
+
+ @font-face {
+   font-family: Good Sans;
+   font-weight: 500;
+   src: url(good-sans/good-sans-medium-b1836a7cc6647dabfd0b0a5bb7746f88.otf?vsn=d) format("opentype");
+   font-display: fallback;
+ }
+
+ @font-face {
+   font-family: Good Sans;
+   font-weight: 700;
+   src: url(good-sans/good-sans-bold-1edfe682fa31f8f6eaf31d0f8536575c.otf?vsn=d) format("opentype");
+   font-display: fallback;
+ }
+
+ @font-face {
+   font-family: Good Sans;
+   font-weight: 900;
+   src: url(good-sans/good-sans-black-71c68ca0fe22d5614244446edc5d7ae9.otf?vsn=d) format("opentype");
+   font-display: fallback;
+ }
