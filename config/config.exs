@@ -38,7 +38,7 @@ config :esbuild,
     args:
       ~w( js/app.js js/draft_editor.js js/book_description_editor.js js/book_reader.js js/simple_tip_tap_html_editor.js
       --chunk-names=chunks/[name]-[hash] --splitting --format=esm --bundle --target=es2017
-      --minify --outdir=../priv/static/assets/js
+      --minify --outdir=../priv/static/assets
       --external:/fonts/* --external:/images/* ),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
