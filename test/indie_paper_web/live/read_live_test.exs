@@ -3,7 +3,7 @@ defmodule IndiePaperWeb.ReadLiveTest do
 
   import Phoenix.LiveViewTest
 
-  alias IndiePaper.Chapters
+  alias IndiePaper.BookPublisher
 
   test "show the title of the book", %{conn: conn} do
     book = insert(:book)
@@ -20,10 +20,13 @@ defmodule IndiePaperWeb.ReadLiveTest do
     chapter2 = insert(:chapter, published_content_json: nil)
 
     book =
-      insert(:book, publishing_type: :serial, draft: build(:draft, chapters: [chapter1, chapter2]))
+      insert(:book,
+        publishing_type: :pre_order,
+        draft: build(:draft, chapters: [chapter1, chapter2])
+      )
 
     conn = log_in_author(conn, reader)
-    {:ok, _published_chapter} = Chapters.publish_free_serial_chapter(chapter1)
+    _published_chapter = BookPublisher.publish_pre_order_chapter!(book, chapter1, nil)
 
     {:ok, _view, html} =
       live(conn, Routes.book_read_path(conn, :index, book)) |> follow_redirect(conn)
@@ -34,7 +37,7 @@ defmodule IndiePaperWeb.ReadLiveTest do
 
   test "reader can remove from library", %{conn: conn} do
     reader = insert(:author)
-    book = insert(:book, publishing_type: :serial)
+    book = insert(:book, publishing_type: :pre_order)
     _reader_book_subscription = insert(:reader_book_subscription, book: book, reader: reader)
     conn = log_in_author(conn, reader)
 

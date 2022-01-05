@@ -102,44 +102,6 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
     })
   end
 
-  def get_subscription_checkout_session(
-        author: author,
-        customer_id: customer_id,
-        price_id: price_id,
-        connect_id: connect_id,
-        application_fee_percent: application_fee_percent,
-        metadata: metadata
-      ) do
-    params = %{
-      success_url:
-        Routes.dashboard_subscriptions_url(Endpoint, :index, stripe_checkout_success: true),
-      cancel_url: Routes.author_page_url(Endpoint, :show, author),
-      mode: "subscription",
-      metadata: metadata,
-      line_items: [
-        %{
-          price: price_id,
-          quantity: 1
-        }
-      ],
-      subscription_data: %{
-        transfer_data: %{
-          destination: connect_id
-        },
-        application_fee_percent: application_fee_percent
-      }
-    }
-
-    updated_params =
-      if customer_id do
-        Map.merge(params, %{customer: customer_id})
-      else
-        params
-      end
-
-    Stripe.Session.create(updated_params)
-  end
-
   def create_customer(email) do
     Stripe.Customer.create(%{email: email})
   end

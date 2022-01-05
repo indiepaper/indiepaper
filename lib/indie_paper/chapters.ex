@@ -1,8 +1,6 @@
 defmodule IndiePaper.Chapters do
   import Ecto.Query
-  alias Ecto.Multi
 
-  alias IndiePaper.ChapterMembershipTiers
   alias IndiePaper.Chapters.Chapter
   alias IndiePaper.Drafts
   alias IndiePaper.Repo
@@ -83,25 +81,6 @@ defmodule IndiePaper.Chapters do
     |> Repo.one()
   end
 
-  def publish_serial_chapter(chapter, membership_tier_ids) do
-    Multi.new()
-    |> Multi.update(
-      :chapter,
-      Chapter.publish_changeset(chapter, %{published_content_json: chapter.content_json})
-    )
-    |> Multi.insert_all(
-      :chapter_membership_tiers,
-      ChapterMembershipTiers.ChapterMembershipTier,
-      fn %{chapter: chapter} ->
-        ChapterMembershipTiers.build_insert_all_chapter_membership_tiers(
-          chapter,
-          membership_tier_ids
-        )
-      end
-    )
-    |> Repo.transaction()
-  end
-
   def publish_chapter_changeset(chapter) do
     Chapter.publish_changeset(chapter, %{
       published_content_json: chapter.content_json,
@@ -114,11 +93,6 @@ defmodule IndiePaper.Chapters do
     |> Chapter.publish_changeset(%{
       is_free: true
     })
-  end
-
-  def publish_free_serial_chapter(chapter) do
-    publish_free_chapter_changeset(chapter)
-    |> Repo.update()
   end
 
   def is_free?(%Chapter{is_free: is_free}), do: is_free

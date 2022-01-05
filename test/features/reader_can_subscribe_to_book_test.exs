@@ -5,7 +5,7 @@ defmodule IndiePaperWeb.Feature.ReaderCanSubscribeToBookTest do
 
   test "reader can read books", %{conn: conn} do
     reader = insert(:author)
-    book = insert(:book, publishing_type: :serial)
+    book = insert(:book, publishing_type: :pre_order)
 
     conn = conn |> log_in_author(reader)
 
@@ -16,7 +16,7 @@ defmodule IndiePaperWeb.Feature.ReaderCanSubscribeToBookTest do
 
   test "reader can add book to library", %{conn: conn} do
     reader = insert(:author)
-    book = insert(:book, publishing_type: :serial)
+    book = insert(:book, publishing_type: :pre_order)
     conn = conn |> log_in_author(reader)
 
     {:ok, view, _html} =

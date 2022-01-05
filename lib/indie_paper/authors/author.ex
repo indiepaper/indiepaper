@@ -30,7 +30,6 @@ defmodule IndiePaper.Authors.Author do
 
     has_many :books, IndiePaper.Books.Book, preload_order: [desc: :updated_at]
     has_many :orders, IndiePaper.Orders.Order, foreign_key: :customer_id
-    has_many :membership_tiers, IndiePaper.MembershipTiers.MembershipTier
 
     timestamps()
   end
