@@ -70,7 +70,8 @@ defmodule IndiePaper.MixProject do
       {:ex_aws_s3, "~> 2.0"},
       {:sweet_xml, "~> 0.6"},
       {:mogrify, "~> 0.9.1"},
-      {:slugify, "~> 1.3"}
+      {:slugify, "~> 1.3"},
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev}
     ]
   end
 
@@ -87,7 +88,7 @@ defmodule IndiePaper.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test --max-cases=2"],
       "assets.deploy": [
-        "cmd --cd assets npm run deploy",
+        "tailwind default --minify",
         "esbuild default --minify",
         "phx.digest"
       ]
