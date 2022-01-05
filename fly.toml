@@ -4,10 +4,12 @@ kill_timeout = 5
 processes = []
 
 [deploy]
-  release_command = "/app/bin/indie_paper eval IndiePaper.Release.migrate"
   strategy = "bluegreen"
+  release_command = "/app/bin/migrate"
 
 [env]
+  PHX_HOST = "dev.indiepaper.co"
+  PORT = "8080"
 
 [experimental]
   allowed_public_ports = []
@@ -15,7 +17,7 @@ processes = []
 
 [[services]]
   http_checks = []
-  internal_port = 4000
+  internal_port = 8080
   processes = ["app"]
   protocol = "tcp"
   script_checks = []
@@ -34,7 +36,7 @@ processes = []
     port = 443
 
   [[services.tcp_checks]]
-    grace_period = "30s"  # allow some time for startup
+    grace_period = "1s"
     interval = "15s"
     restart_limit = 0
     timeout = "2s"
