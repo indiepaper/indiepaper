@@ -11,8 +11,8 @@
         <%= if assigns[:meta_attrs], do: meta_tags(assigns[:meta_attrs]) %>
 
         <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
-        <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/fonts/fonts.css")}/>
-        <script defer type="module" phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/js/app.js")}></script>
+
+        <script defer type="module" phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
         <script defer data-domain="indiepaper.me" src="https://plausible.io/js/plausible.js"></script>
     </head>
 

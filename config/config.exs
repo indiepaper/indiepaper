@@ -33,12 +33,27 @@ config :swoosh, :api_client, false
 
 # Configure esbuild (the version is required)
 config :esbuild,
-  version: "0.12.18",
+  version: "0.14.0",
   default: [
     args:
-      ~w(js/app.js js/draft-editor.js js/book-description-editor.js js/book-reader.js js/simple-tip-tap-html-editor.js fonts/fonts.css --chunk-names=chunks/[name]-[hash] --splitting --format=esm --bundle --loader:.otf=file --target=es2017 --minify --outdir=../priv/static/assets),
+      ~w( js/app.js js/draft_editor.js js/book_description_editor.js js/book_reader.js js/simple_tip_tap_html_editor.js
+      --chunk-names=chunks/[name]-[hash] --splitting --format=esm --bundle --target=es2017
+      --minify --outdir=../priv/static/assets
+      --external:/fonts/* --external:/images/* ),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+# Configure Tailwind
+config :tailwind,
+  version: "3.0.10",
+  default: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
   ]
 
 # Configures Elixir's Logger

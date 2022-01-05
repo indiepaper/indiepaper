@@ -35,13 +35,13 @@ defmodule IndiePaper.MixProject do
   defp deps do
     [
       {:bcrypt_elixir, "~> 2.0"},
-      {:phoenix, "~> 1.6.2"},
+      {:phoenix, "~> 1.6.6"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 0.17.0"},
+      {:phoenix_live_view, "~> 0.17.5"},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.6"},
       {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},
@@ -70,7 +70,8 @@ defmodule IndiePaper.MixProject do
       {:ex_aws_s3, "~> 2.0"},
       {:sweet_xml, "~> 0.6"},
       {:mogrify, "~> 0.9.1"},
-      {:slugify, "~> 1.3"}
+      {:slugify, "~> 1.3"},
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev}
     ]
   end
 
@@ -87,7 +88,7 @@ defmodule IndiePaper.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test --max-cases=2"],
       "assets.deploy": [
-        "cmd --cd assets npm run deploy",
+        "tailwind default --minify",
         "esbuild default --minify",
         "phx.digest"
       ]

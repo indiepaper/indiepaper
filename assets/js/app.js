@@ -39,7 +39,7 @@ Hooks.SimpleTipTapHtmlEditor = {
   mounted() {
     const contentHTMLElementId = this.el.dataset.contentHtmlElementId;
     const editorElementId = this.el.dataset.editorElementId;
-    import("./simple-tip-tap-html-editor").then(
+    import("./simple_tip_tap_html_editor").then(
       ({ setupSimpleTipTapHtmlEditor }) => {
         setupSimpleTipTapHtmlEditor(contentHTMLElementId, editorElementId);
       }
@@ -53,7 +53,7 @@ Hooks.BookLongDescriptionEditor = {
     const editorElementId = this.el.dataset.editorElementId;
     const context = this;
 
-    import("./book-description-editor").then(
+    import("./book_description_editor").then(
       ({ setupBookDescriptionEditor }) => {
         setupBookDescriptionEditor(
           context,
@@ -71,13 +71,13 @@ Hooks.DraftEditor = {
     const editorElementId = this.el.dataset.editorElementId;
     const context = this;
 
-    import("./draft-editor").then(({ setupDraftEditor }) => {
+    import("./draft_editor").then(({ setupDraftEditor }) => {
       setupDraftEditor(context, editorElementId, chapterContentJson);
     });
   },
   updated() {
     const chapterContentJson = JSON.parse(this.el.dataset.chapterContentJson);
-    import("./draft-editor").then(({ updateDraftEditor }) => {
+    import("./draft_editor").then(({ updateDraftEditor }) => {
       updateDraftEditor(chapterContentJson);
     });
   },
@@ -86,12 +86,12 @@ Hooks.DraftEditor = {
     const contentJson = window.draftEditor.getJSON();
     this.pushEvent("editor_reconnected", { content_json: contentJson });
     window.persistedContent = {};
-    import("./draft-editor").then(({ sendPersistSuccess }) => {
+    import("./draft_editor").then(({ sendPersistSuccess }) => {
       sendPersistSuccess(this);
     });
   },
   disconnected() {
-    import("./draft-editor").then(({ sendPersistError }) => {
+    import("./draft_editor").then(({ sendPersistError }) => {
       sendPersistError(this);
     });
   },
@@ -119,7 +119,7 @@ Hooks.BookReaderHook = {
   },
 
   loadAndSetContent(context, readerElement, contentJson) {
-    import("./book-reader").then(({ generateHtmlFromContentJson }) => {
+    import("./book_reader").then(({ generateHtmlFromContentJson }) => {
       readerElement.innerHTML = generateHtmlFromContentJson(contentJson);
       let event = new CustomEvent("reader-loaded");
       context.el.dispatchEvent(event);

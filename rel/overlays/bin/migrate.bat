@@ -1,0 +1,1 @@
+call "%~dp0\indie_paper" eval IndiePaper.Release.migrate
