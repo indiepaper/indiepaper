@@ -8,6 +8,7 @@ defmodule IndiePaper.Orders do
 
   alias IndiePaper.Orders.Order
   alias IndiePaper.Orders.LineItem
+  alias IndiePaper.Books.Book
 
   def get_by_stripe_checkout_session_id!(stripe_checkout_session_id),
     do: Repo.get_by!(Order, stripe_checkout_session_id: stripe_checkout_session_id)
@@ -21,6 +22,16 @@ defmodule IndiePaper.Orders do
   def list_orders(%IndiePaper.Authors.Author{} = customer) do
     list_orders_query(customer)
     |> Repo.all()
+  end
+
+  def list_orders_of_author(%IndiePaper.Authors.Author{} = author) do
+    from(o in Order,
+      join: b in Book,
+      on: b.id == o.book_id,
+      where: b.author_id == ^author.id and o.status == :payment_completed
+    )
+    |> Repo.all()
+    |> Repo.preload(:book)
   end
 
   def list_payment_completed_orders(customer) do

@@ -7,7 +7,8 @@ defmodule IndiePaperWeb.Feature.AuthorCanOrdersForBooksTest do
     author = insert(:author)
     conn = log_in_author(conn, author)
     book = insert(:book, author: author)
-    order = insert(:order, book: book)
+
+    insert(:order, book: book)
 
     {:ok, _view, html} = live(conn, Routes.dashboard_orders_path(conn, :index))
 

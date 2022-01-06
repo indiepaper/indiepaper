@@ -1,3 +1,6 @@
 <section>
     <h1>Orders</h1>
+    <%=  for order <- @orders do  %>
+        <h3><%= order.book.title %></h3>
+    <% end %>
 </section>
