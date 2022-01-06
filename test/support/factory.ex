@@ -4,6 +4,21 @@ defmodule IndiePaper.Factory do
   alias IndiePaper.Authors
   alias IndiePaper.Chapters
 
+  def author_factory do
+    %IndiePaper.Authors.Author{
+      email: sequence(:email, &"author#{&1}@email.com"),
+      username: sequence("author"),
+      first_name: sequence("First name"),
+      last_name: sequence("Last name"),
+      stripe_connect_id: sequence(:stripe_connect_id, &"acc_stripeacc#{&1}"),
+      is_payment_connected: true,
+      account_status: :payment_connected
+    }
+    |> Authors.Author.registration_changeset(%{password: "longpassword123"})
+    |> Ecto.Changeset.put_change(:password, "longpassword123")
+    |> Ecto.Changeset.apply_changes()
+  end
+
   def book_factory do
     %IndiePaper.Books.Book{
       title: sequence("Book Title"),
@@ -15,40 +30,6 @@ defmodule IndiePaper.Factory do
       author: build(:author),
       status: :published,
       products: [build(:product), build(:product)],
-      assets: [build(:asset, title: "Read online")]
-    }
-  end
-
-  def asset_factory do
-    %IndiePaper.Assets.Asset{
-      type: :readable,
-      title: sequence("Asset Title")
-    }
-  end
-
-  def line_item_factory do
-    %IndiePaper.Orders.LineItem{
-      amount: Money.new(500),
-      product: build(:product)
-    }
-  end
-
-  def order_factory do
-    %IndiePaper.Orders.Order{
-      line_items: [build(:line_item), build(:line_item)],
-      book: build(:book),
-      customer: build(:author),
-      status: :payment_completed,
-      stripe_checkout_session_id: "checkout_session_id",
-      amount: Money.new(420)
-    }
-  end
-
-  def product_factory do
-    %IndiePaper.Products.Product{
-      title: sequence("Product Title"),
-      description: sequence("Short description about Product"),
-      price: Money.new(400),
       assets: [build(:asset, title: "Read online")]
     }
   end
@@ -86,19 +67,38 @@ defmodule IndiePaper.Factory do
     }
   end
 
-  def author_factory do
-    %IndiePaper.Authors.Author{
-      username: sequence("author"),
-      email: sequence(:email, &"author#{&1}@email.com"),
-      first_name: sequence("First name"),
-      last_name: sequence("Last name"),
-      stripe_connect_id: sequence(:stripe_connect_id, &"acc_stripeacc#{&1}"),
-      is_payment_connected: true,
-      account_status: :payment_connected
+  def asset_factory do
+    %IndiePaper.Assets.Asset{
+      type: :readable,
+      title: sequence("Asset Title")
     }
-    |> Authors.Author.registration_changeset(%{password: "longpassword123"})
-    |> Ecto.Changeset.put_change(:password, "longpassword123")
-    |> Ecto.Changeset.apply_changes()
+  end
+
+  def line_item_factory do
+    %IndiePaper.Orders.LineItem{
+      amount: Money.new(500),
+      product: build(:product)
+    }
+  end
+
+  def order_factory do
+    %IndiePaper.Orders.Order{
+      line_items: [build(:line_item), build(:line_item)],
+      book: build(:book),
+      customer: build(:author),
+      status: :payment_completed,
+      stripe_checkout_session_id: "checkout_session_id",
+      amount: Money.new(420)
+    }
+  end
+
+  def product_factory do
+    %IndiePaper.Products.Product{
+      title: sequence("Product Title"),
+      description: sequence("Short description about Product"),
+      price: Money.new(400),
+      assets: [build(:asset, title: "Read online")]
+    }
   end
 
   def chapter_product_factory do
