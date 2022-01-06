@@ -3,10 +3,14 @@ defmodule IndiePaper.Orders do
 
   def authorize(_, _, _), do: false
 
-  alias IndiePaper.Repo
   import Ecto.Query
+  alias IndiePaper.Repo
 
-  alias IndiePaper.Orders.{Order, LineItem}
+  alias IndiePaper.Orders.Order
+  alias IndiePaper.Orders.LineItem
+
+  def get_by_stripe_checkout_session_id!(stripe_checkout_session_id),
+    do: Repo.get_by!(Order, stripe_checkout_session_id: stripe_checkout_session_id)
 
   defp list_orders_query(%IndiePaper.Authors.Author{} = customer) do
     Order
@@ -25,10 +29,6 @@ defmodule IndiePaper.Orders do
     |> Repo.all()
   end
 
-  def with_assoc(order, assoc) do
-    order |> Repo.preload(assoc)
-  end
-
   def create_order(customer, attrs \\ %{}) do
     Ecto.build_assoc(customer, :orders)
     |> Order.changeset(attrs)
@@ -42,12 +42,13 @@ defmodule IndiePaper.Orders do
     |> Repo.update()
   end
 
-  def get_by_stripe_checkout_session_id!(stripe_checkout_session_id),
-    do: Repo.get_by!(Order, stripe_checkout_session_id: stripe_checkout_session_id)
-
   def set_payment_completed(order) do
     order
     |> update_order(%{status: :payment_completed})
+  end
+
+  def with_assoc(order, assoc) do
+    order |> Repo.preload(assoc)
   end
 
   def is_payment_completed?(%Order{status: :payment_completed}), do: true

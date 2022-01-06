@@ -51,4 +51,9 @@ defmodule IndiePaper.OrdersTest do
       assert order.status == :payment_completed
     end
   end
+
+  describe "list_orders_of_author/1" do
+    test "shows all orders from author books" do
+    end
+  end
 end
