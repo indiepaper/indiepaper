@@ -17,13 +17,13 @@ defmodule IndiePaper.Authors.Author do
       default: :created,
       nil: false
 
-    field :is_payment_connected, :boolean, default: false
-    field :stripe_connect_id, :string
-    field :stripe_customer_id, :string
-
     field :username, :string, null: false
     field :first_name, :string, null: false
     field :last_name, :string
+
+    field :stripe_connect_id, :string
+    field :is_payment_connected, :boolean, default: false
+    field :stripe_customer_id, :string
 
     field :profile_picture, :string,
       null: false,
