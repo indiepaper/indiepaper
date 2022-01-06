@@ -57,8 +57,7 @@ if config_env() == :prod do
       port: port
     ],
     secret_key_base: secret_key_base,
-    cache_static_manifest: "priv/static/cache_manifest.json",
-    force_ssl: [rewrite_on: [:x_forwarded_host, :x_forwarded_port, :x_forwarded_proto]]
+    cache_static_manifest: "priv/static/cache_manifest.json"
 
   # Stripe Config
   config :stripity_stripe,

@@ -17,7 +17,8 @@ config :indie_paper, IndiePaperWeb.Endpoint,
   secret_key_base: "Mw3VTjBpPQh4JECZcHQN/16zg8YP00SwCi05veapf9kqSRRX3W3RrNaPDCd7s1Mz",
   render_errors: [view: IndiePaperWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: IndiePaper.PubSub,
-  live_view: [signing_salt: "1pAwMlMx"]
+  live_view: [signing_salt: "1pAwMlMx"],
+  force_ssl: [rewrite_on: [:x_forwarded_host, :x_forwarded_port, :x_forwarded_proto]]
 
 # Configures the mailer
 #
