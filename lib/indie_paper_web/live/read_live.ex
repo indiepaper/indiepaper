@@ -24,7 +24,8 @@ defmodule IndiePaperWeb.ReadLive do
        selected_chapter: selected_chapter,
        not_pre_ordered: false,
        book_added_to_library?:
-         BookLibrary.book_added_to_library?(socket.assigns.current_author, book)
+         BookLibrary.book_added_to_library?(socket.assigns.current_author, book),
+       page_title: "Reading, #{book.title}"
      )}
   end
 
