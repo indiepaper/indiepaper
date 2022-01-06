@@ -1,36 +1,31 @@
 <section class="bg-white border-b border-primary-border">
     <div class="py-6 md:py-4 container-box">
-        <div class="flex flex-col items-start space-y-4 md:flex-row md:items-center md:space-y-0">
-            <div class="flex flex-col items-start space-y-4 w-full md:flex-row md:items-center md:space-y-0 md:space-x-4 md:w-auto md:border-r border-secondary-border">
-                <%= live_redirect to: Routes.dashboard_path(assigns[:conn] || assigns[:socket], :index), class: "secondary-link rounded-lg w-full py-2 md:w-auto" do %>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                    <p data-test="dashboard-link">Dashboard</p>
-                <% end %>
-                <%= live_redirect to: Routes.book_new_path(assigns[:conn] || assigns[:socket], :new), class: "secondary-link rounded-lg w-full py-2 md:w-auto", "data-test": "create-new" do %>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <p>Create new</p>
-                <% end %>
-                <%= live_redirect to: Routes.dashboard_orders_path(assigns[:conn] || assigns[:socket], :index), class: "secondary-link rounded-lg w-full py-2 md:w-auto", "data-test": "orders-link" do %>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
-                    </svg>
-                    <p>Orders</p>
-                <% end %>
-                <div class="hidden md:block"></div>
-            </div>
-            <div class="flex flex-col items-start space-y-4 w-full border-t md:flex-row md:items-center md:pt-0 md:space-y-0 md:space-x-4 md:w-auto md:border-t-0 border-secondary-border">
-                <div class=""></div>
-                <%= live_redirect to: Routes.dashboard_library_path(assigns[:conn] || assigns[:socket], :index), class: "secondary-link rounded-lg w-full py-2 md:w-auto", data: [test: "library-link"] do %>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                    </svg>
-                    <p>Library</p>
-                <% end %>
-            </div>
+        <div class="flex flex-col items-stretch space-y-5 md:flex-row md:space-y-0 md:space-x-5">
+            <%= live_redirect to: Routes.dashboard_path(assigns[:conn] || assigns[:socket], :index), class: "secondary-link rounded-lg  py-2 " do %>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <p data-test="dashboard-link">Dashboard</p>
+            <% end %>
+            <%= live_redirect to: Routes.book_new_path(assigns[:conn] || assigns[:socket], :new), class: "secondary-link rounded-lg  py-2 ", "data-test": "create-new" do %>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p>Create new</p>
+            <% end %>
+            <%= live_redirect to: Routes.dashboard_orders_path(assigns[:conn] || assigns[:socket], :index), class: "secondary-link rounded-lg  py-2 ", data: [test: "orders-link"] do %>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                </svg>
+                <p>Orders</p>
+            <% end %>
+            <div class="border-t border-warm-gray-600 md:mx-2 md:border-r" />
+            <%= live_redirect to: Routes.dashboard_library_path(assigns[:conn] || assigns[:socket], :index), class: "secondary-link rounded-lg  py-2 ", data: [test: "library-link"] do %>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                </svg>
+                <p>Library</p>
+            <% end %>
         </div>
     </div>
 </section>

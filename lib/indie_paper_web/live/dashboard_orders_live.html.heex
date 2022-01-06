@@ -1,6 +1,15 @@
-<section>
-    <h1>Orders</h1>
-    <%=  for order <- @orders do  %>
-        <h3><%= order.book.title %></h3>
-    <% end %>
+<section class="bg-background">
+    <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
+    <div class="container-box page-box">
+        <div class="max-w-2xl">
+            <h1 class="page-heading">Your Orders</h1>
+            <p class="page-description">
+                shows the orders for your books until now.
+            </p>
+            <div class="mt-12 space-y-12">
+                <%= for order <- @orders do %>
+                <% end %>
+            </div>
+        </div>
+    </div>
 </section>
