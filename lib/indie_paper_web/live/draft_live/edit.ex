@@ -5,7 +5,7 @@ defmodule IndiePaperWeb.DraftLive.Edit do
   alias IndiePaper.Books
   alias IndiePaper.Chapters
 
-  on_mount IndiePaperWeb.AuthorLiveAuth
+  on_mount IndiePaperWeb.AuthorAuthLive
 
   @impl true
   def mount(%{"id" => draft_id}, _session, socket) do

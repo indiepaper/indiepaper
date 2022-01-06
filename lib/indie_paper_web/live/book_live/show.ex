@@ -4,7 +4,7 @@ defmodule IndiePaperWeb.BookLive.Show do
   alias IndiePaper.Books
   alias IndiePaper.ExternalAssetHandler
 
-  on_mount {IndiePaperWeb.AuthorLiveAuth, :fetch_current_author}
+  on_mount {IndiePaperWeb.AuthorAuthLive, :fetch_current_author}
 
   def mount(%{"slug" => book_slug}, _session, socket) do
     book = Books.get_book_from_slug!(book_slug) |> Books.with_assoc([:author, :draft])

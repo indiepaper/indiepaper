@@ -1,8 +1,8 @@
 defmodule IndiePaperWeb.BookPublishChapterLive do
   use IndiePaperWeb, :live_view
 
-  on_mount IndiePaperWeb.AuthorLiveAuth
-  on_mount {IndiePaperWeb.AuthorLiveAuth, :require_account_status_payment_connected}
+  on_mount IndiePaperWeb.AuthorAuthLive
+  on_mount {IndiePaperWeb.AuthorAuthLive, :require_account_status_payment_connected}
 
   alias IndiePaper.Books
   alias IndiePaper.BookPublisher

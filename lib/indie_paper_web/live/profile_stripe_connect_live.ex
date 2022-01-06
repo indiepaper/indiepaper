@@ -4,8 +4,8 @@ defmodule IndiePaperWeb.ProfileStripeConnectLive do
   alias IndiePaper.PaymentHandler
   alias IndiePaper.Authors
 
-  on_mount IndiePaperWeb.AuthorLiveAuth
-  on_mount {IndiePaperWeb.AuthorLiveAuth, :require_account_status_confirmed}
+  on_mount IndiePaperWeb.AuthorAuthLive
+  on_mount {IndiePaperWeb.AuthorAuthLive, :require_account_status_confirmed}
 
   @impl true
   def handle_event(

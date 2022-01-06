@@ -1,7 +1,7 @@
 defmodule IndiePaperWeb.AuthorPageLive do
   use IndiePaperWeb, :live_view
 
-  on_mount {IndiePaperWeb.AuthorLiveAuth, :fetch_current_author}
+  on_mount {IndiePaperWeb.AuthorAuthLive, :fetch_current_author}
 
   alias IndiePaper.Authors
   alias IndiePaper.Books

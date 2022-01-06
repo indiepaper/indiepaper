@@ -1,4 +1,4 @@
-defmodule IndiePaperWeb.AuthorLiveAuth do
+defmodule IndiePaperWeb.AuthorAuthLive do
   import Phoenix.LiveView
 
   alias IndiePaper.Authors

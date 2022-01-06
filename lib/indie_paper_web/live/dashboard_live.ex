@@ -3,7 +3,7 @@ defmodule IndiePaperWeb.DashboardLive do
 
   alias IndiePaper.Books
 
-  on_mount IndiePaperWeb.AuthorLiveAuth
+  on_mount IndiePaperWeb.AuthorAuthLive
 
   @impl true
   def mount(_params, _session, socket) do
