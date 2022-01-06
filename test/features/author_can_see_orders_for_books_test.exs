@@ -10,7 +10,13 @@ defmodule IndiePaperWeb.Feature.AuthorCanOrdersForBooksTest do
 
     insert(:order, book: book)
 
-    {:ok, _view, html} = live(conn, Routes.dashboard_orders_path(conn, :index))
+    {:ok, view, _html} = live(conn, Routes.dashboard_path(conn, :index))
+
+    {:ok, _, html} =
+      view
+      |> element("[data-test=orders-link]")
+      |> render_click()
+      |> follow_redirect(conn, Routes.dashboard_orders_path(conn, :index))
 
     assert html =~ "Orders"
     assert html =~ book.title
