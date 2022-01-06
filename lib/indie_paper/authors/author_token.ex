@@ -44,7 +44,9 @@ defmodule IndiePaper.Authors.AuthorToken do
   """
   def build_session_token(author) do
     token = :crypto.strong_rand_bytes(@rand_size)
-    {token, %IndiePaper.Authors.AuthorToken{token: token, context: "session", author_id: author.id}}
+
+    {token,
+     %IndiePaper.Authors.AuthorToken{token: token, context: "session", author_id: author.id}}
   end
 
   @doc """
@@ -175,6 +177,7 @@ defmodule IndiePaper.Authors.AuthorToken do
   end
 
   def author_and_contexts_query(author, [_ | _] = contexts) do
-    from t in IndiePaper.Authors.AuthorToken, where: t.author_id == ^author.id and t.context in ^contexts
+    from t in IndiePaper.Authors.AuthorToken,
+      where: t.author_id == ^author.id and t.context in ^contexts
   end
 end

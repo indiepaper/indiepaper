@@ -4,7 +4,6 @@ defmodule IndiePaper.BookPublisherTest do
   alias IndiePaper.BookPublisher
   alias IndiePaper.Books
   alias IndiePaper.Chapters
-  alias IndiePaper.ChapterMembershipTiers
   alias IndiePaper.ChapterProducts
 
   describe "publish_book/1" do
@@ -35,26 +34,6 @@ defmodule IndiePaper.BookPublisherTest do
 
       assert product.title == "Read online"
       assert asset.title == "Read online"
-    end
-  end
-
-  describe "publish_serial_chapter!/3" do
-    test "publishes book with first chapters" do
-      chapter = insert(:chapter)
-      draft = insert(:draft, chapters: [chapter])
-      book = insert(:book, status: :pending_publication, draft: draft)
-      membership_tier = insert(:membership_tier)
-
-      book = BookPublisher.publish_serial_chapter!(book, chapter, [membership_tier.id])
-      assert Books.is_published?(book)
-
-      updated_chapter = Chapters.get_chapter!(chapter.id)
-
-      [chapter_membership_tier] = ChapterMembershipTiers.list_chapter_membership_tiers(chapter.id)
-
-      assert updated_chapter.published_content_json == chapter.content_json
-      assert chapter_membership_tier.membership_tier_id == membership_tier.id
-      assert chapter_membership_tier.chapter_id == chapter.id
     end
   end
 

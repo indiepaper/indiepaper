@@ -25,7 +25,7 @@ defmodule IndiePaper.DraftsTest do
   end
 
   test "creates draft with single placeholder chapter when serial" do
-    book = insert(:book, publishing_type: :serial)
+    book = insert(:book, publishing_type: :pre_order)
 
     draft = Drafts.create_draft_with_placeholder_chapters!(book)
     draft_with_chapters = draft |> Drafts.with_assoc(:chapters)

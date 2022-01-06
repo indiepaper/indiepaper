@@ -1,7 +1,9 @@
 defmodule IndiePaperWeb.DashboardLiveTest do
   use IndiePaperWeb.ConnCase, async: true
 
-  test "hides connect_stripe button is the author already has payment connected", %{conn: conn} do
+  test "don't show connect_stripe button is the author already has payment connected", %{
+    conn: conn
+  } do
     author = insert(:author)
 
     response =

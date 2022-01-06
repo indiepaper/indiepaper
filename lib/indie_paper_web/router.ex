@@ -111,10 +111,6 @@ defmodule IndiePaperWeb.Router do
         :require_account_status_payment_connected
       ]
 
-      live "/dashboard/memberships", DashboardMembershipsLive, :index
-      live "/dashboard/memberships/new", DashboardMembershipsLive, :new
-      live "/dashboard/memberships/:id/edit", DashboardMembershipsLive, :edit
-
       live "/books/:book_slug/publish/:id", BookPublishChapterLive, :new
 
       resources "/books", BookController, only: [], param: "slug" do
@@ -142,11 +138,7 @@ defmodule IndiePaperWeb.Router do
       live "/drafts/:id/edit", DraftLive.Edit, :edit
 
       live "/dashboard", DashboardLive, :index
-
       live "/dashboard/library", DashboardLibraryLive, :index
-      live "/dashboard/subscriptions", DashboardSubscriptionsLive, :index
-      # resources "/dashboard/orders", DashboardOrderController, only: [:index]
-
       live "/settings/profile", SettingsProfileLive, :edit
     end
 

@@ -57,24 +57,6 @@ defmodule IndiePaper.BookPublisher do
     {:ok, nil}
   end
 
-  def publish_serial_chapter!(
-        book,
-        chapter,
-        membership_tier_ids
-      ) do
-    chapter_result =
-      if membership_tier_ids == ["free"] do
-        Chapters.publish_free_serial_chapter(chapter)
-      else
-        Chapters.publish_serial_chapter(chapter, membership_tier_ids)
-      end
-
-    with {:ok, _published_chapter} <- chapter_result,
-         {:ok, published_book} <- Books.publish_book(book) do
-      published_book
-    end
-  end
-
   def publish_pre_order_chapter!(book, chapter, nil) do
     {:ok, book} =
       Multi.new()

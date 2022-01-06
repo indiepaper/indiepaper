@@ -8,7 +8,6 @@ processes = []
   release_command = "/app/bin/migrate"
 
 [env]
-  PHX_HOST = "dev.indiepaper.co"
   PORT = "8080"
 
 [experimental]

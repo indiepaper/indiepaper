@@ -25,15 +25,6 @@
                     <%= hidden_input f, :publishing_type, "x-model": "selected" %>
                     <div class="flex flex-col items-stretch mt-2 space-y-4 md:flex-row md:space-y-0 md:space-x-4">
                         <button class="flex relative flex-1 text-left primary-card transistion"
-                                @click.prevent="selected = 'vanilla'"
-                                :class="{'border-accent border-2 bg-orange-50' : selected == 'vanilla'}">
-                            <svg x-show="selected == 'vanilla'" xmlns="http://www.w3.org/2000/svg" class="absolute top-2 right-2 w-6 h-6 text-orange-500" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                            </svg>
-                            <p class="font-semibold">Vanilla Book</p>
-                            <p class="mt-1 text-sm secondary-text">If you already have a finished draft and need to import it.</p>
-                        </button>
-                        <button class="flex relative flex-1 text-left primary-card transistion"
                                 @click.prevent="selected = 'pre_order'"
                                 :class="{'border-accent border-2 bg-orange-50' : selected == 'pre_order'}">
                             <svg x-show="selected == 'pre_order'" xmlns="http://www.w3.org/2000/svg" class="absolute top-2 right-2 w-6 h-6 text-orange-500" viewBox="0 0 20 20" fill="currentColor">
@@ -41,6 +32,15 @@
                             </svg>
                             <p class="font-semibold">Pre-order Book</p>
                             <p class="mt-1 text-sm secondary-text">Publish chapters one at a time, and start accepting pre-orders.</p>
+                        </button>
+                        <button class="flex relative flex-1 text-left primary-card transistion"
+                                @click.prevent="selected = 'vanilla'"
+                                :class="{'border-accent border-2 bg-orange-50' : selected == 'vanilla'}">
+                            <svg x-show="selected == 'vanilla'" xmlns="http://www.w3.org/2000/svg" class="absolute top-2 right-2 w-6 h-6 text-orange-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            <p class="font-semibold">Vanilla Book</p>
+                            <p class="mt-1 text-sm secondary-text">If you already have a finished draft and need to import it.</p>
                         </button>
                     </div>
                 </div>
