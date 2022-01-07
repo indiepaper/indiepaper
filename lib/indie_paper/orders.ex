@@ -29,7 +29,8 @@ defmodule IndiePaper.Orders do
       join: b in Book,
       on: b.id == o.book_id,
       where: b.author_id == ^author.id and o.status == :payment_completed,
-      preload: [:book, :customer]
+      preload: [:book, :customer],
+      order_by: [desc: o.inserted_at]
     )
     |> Repo.all()
   end
