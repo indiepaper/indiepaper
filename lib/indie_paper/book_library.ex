@@ -6,13 +6,13 @@ defmodule IndiePaper.BookLibrary do
   alias IndiePaper.ReaderBookSubscriptions
   alias IndiePaper.Books
 
-  def get_orders(customer) do
-    Orders.list_orders(customer)
+  def get_orders(reader) do
+    Orders.list_orders(reader)
     |> load_order_assoc()
   end
 
-  def list_payment_completed_orders(customer) do
-    Orders.list_payment_completed_orders(customer)
+  def list_payment_completed_orders(reader) do
+    Orders.list_payment_completed_orders(reader)
     |> load_order_assoc()
   end
 
@@ -34,7 +34,7 @@ defmodule IndiePaper.BookLibrary do
     from(l in Orders.LineItem,
       join: o in Orders.Order,
       on: o.id == l.order_id,
-      where: l.product_id == ^product.id and o.customer_id == ^reader.id
+      where: l.product_id == ^product.id and o.reader_id == ^reader.id
     )
     |> Repo.exists?()
   end

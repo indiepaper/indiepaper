@@ -14,7 +14,7 @@ defmodule IndiePaper.Marketplace do
     {:ok, book_id} = Ecto.UUID.dump(book.id)
 
     from(o in "orders",
-      where: o.customer_id == ^reader_id and o.book_id == ^book_id
+      where: o.reader_id == ^reader_id and o.book_id == ^book_id
     )
     |> Repo.aggregate(:count) > 0
   end

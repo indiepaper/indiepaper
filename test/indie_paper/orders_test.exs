@@ -5,25 +5,25 @@ defmodule IndiePaper.OrdersTest do
 
   describe "list_orders/1" do
     test "lists orders for the given author" do
-      customer = insert(:author)
-      order1 = insert(:order, customer: customer)
+      reader = insert(:author)
+      order1 = insert(:order, reader: reader)
       order2 = insert(:order)
 
-      orders = Orders.list_orders(customer)
+      orders = Orders.list_orders(reader)
 
       assert Enum.find(orders, fn order -> order.id == order1.id end)
       refute Enum.find(orders, fn order -> order.id == order2.id end)
     end
   end
 
-  describe "create_order_with_customer/2" do
-    test "creates order and associates to customer" do
+  describe "create_order_with_reader/2" do
+    test "creates order and associates to reader" do
       product = insert(:product)
       book = insert(:book, products: [product])
-      customer = insert(:author)
+      reader = insert(:author)
 
       {:ok, order} =
-        Orders.create_order(customer, %{
+        Orders.create_order(reader, %{
           amount: 340,
           book_id: book.id,
           products: book.products,
@@ -33,7 +33,7 @@ defmodule IndiePaper.OrdersTest do
       order_with_line_items = Orders.with_assoc(order, :line_items)
       line_item = Enum.at(order_with_line_items.line_items, 0)
 
-      assert order.customer_id == customer.id
+      assert order.reader_id == reader.id
       assert order.stripe_checkout_session_id == "checkout_session_id"
       assert order.book_id == book.id
       assert line_item.product_id == product.id

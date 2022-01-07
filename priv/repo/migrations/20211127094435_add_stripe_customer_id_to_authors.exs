@@ -1,4 +1,4 @@
-defmodule IndiePaper.Repo.Migrations.AddStripeCustomerIdToAuthors do
+defmodule IndiePaper.Repo.Migrations.AddStripeReaderIdToAuthors do
   use Ecto.Migration
 
   def change do

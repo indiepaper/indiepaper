@@ -12,7 +12,7 @@ defmodule IndiePaper.Orders.Order do
     field :amount, Money.Ecto.Amount.Type
 
     belongs_to :book, IndiePaper.Books.Book
-    belongs_to :customer, IndiePaper.Authors.Author
+    belongs_to :reader, IndiePaper.Authors.Author
 
     has_many :line_items, IndiePaper.Orders.LineItem
 
@@ -30,8 +30,8 @@ defmodule IndiePaper.Orders.Order do
   @doc false
   def changeset(order, attrs) do
     order
-    |> cast(attrs, [:customer_id, :book_id, :stripe_checkout_session_id, :status, :amount])
-    |> validate_required([:customer_id, :book_id, :stripe_checkout_session_id, :amount])
+    |> cast(attrs, [:reader_id, :book_id, :stripe_checkout_session_id, :status, :amount])
+    |> validate_required([:reader_id, :book_id, :stripe_checkout_session_id, :amount])
   end
 
   def line_items_changeset(order, line_items) do
@@ -39,7 +39,7 @@ defmodule IndiePaper.Orders.Order do
     |> Ecto.Changeset.put_assoc(:line_items, line_items)
   end
 
-  def scope(query, %IndiePaper.Authors.Author{id: customer_id}, _) do
-    from p in query, where: p.customer_id == ^customer_id
+  def scope(query, %IndiePaper.Authors.Author{id: reader_id}, _) do
+    from p in query, where: p.reader_id == ^reader_id
   end
 end

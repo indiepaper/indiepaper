@@ -73,14 +73,14 @@
                                             <td class="py-4 px-6 whitespace-nowrap">
                                                 <div class="flex items-center">
                                                     <div class="flex-shrink-0 w-8 h-8">
-                                                        <img class="w-8 h-8 rounded-full" src={ExternalAssetHandler.get_public_url(order.customer.profile_picture)} alt="">
+                                                        <img class="w-8 h-8 rounded-full" src={ExternalAssetHandler.get_public_url(order.reader.profile_picture)} alt="">
                                                     </div>
-                                                    <%= live_redirect to: Routes.author_page_path(@socket, :show, order.customer), class: "block ml-4" do %>
+                                                    <%= live_redirect to: Routes.author_page_path(@socket, :show, order.reader), class: "block ml-4" do %>
                                                         <div class="text-sm font-medium text-stone-900">
-                                                            <%= Authors.get_full_name(order.customer) %>
+                                                            <%= Authors.get_full_name(order.reader) %>
                                                         </div>
                                                         <div class="text-sm text-stone-500">
-                                                            <%= order.customer.email %>
+                                                            <%= order.reader.email %>
                                                         </div>
                                                     <% end %>
                                                 </div>

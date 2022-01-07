@@ -86,7 +86,7 @@ defmodule IndiePaper.Factory do
     %IndiePaper.Orders.Order{
       line_items: [build(:line_item), build(:line_item)],
       book: build(:book),
-      customer: build(:author),
+      reader: build(:author),
       status: :payment_completed,
       stripe_checkout_session_id: "checkout_session_id",
       amount: Money.new(420)
