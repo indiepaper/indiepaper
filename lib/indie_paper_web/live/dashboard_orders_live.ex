@@ -13,6 +13,6 @@ defmodule IndiePaperWeb.DashboardOrdersLive do
   def mount(_, _, socket) do
     orders = Orders.list_orders_of_author(socket.assigns.current_author)
 
-    {:ok, assign(socket, orders: orders)}
+    {:ok, assign(socket, orders: orders, page_title: "Orders")}
   end
 end

@@ -10,14 +10,14 @@
                 <%= for order <- @orders do %>
                     <div class="items-stretch p-0 primary-card" data-test={"book-#{order.book.id}"}>
                         <div class="flex flex-row justify-between items-center py-3 px-6 border-b border-secondary-border">
-                            <%= live_redirect to: Routes.author_page_path(@socket, :show, order.book.author), class: "py-1 px-2 rounded-full flex flex-row space-x-1.5 border border-secondary-border"  do %>
-                                <img class="w-5 h-5 rounded-full" src={IndiePaper.ExternalAssetHandler.get_public_url(order.book.author.profile_picture)} alt="" />
-                                <p class="text-sm"><%= IndiePaper.Authors.get_full_name(order.book.author) %></p>
+                            <%= live_redirect to: Routes.author_page_path(@socket, :show, order.book.author), class: "py-1 px-2 rounded-full flex flex-row space-x-2 items-center"  do %>
+                                <img class="w-6 h-6 rounded-full border" src={IndiePaper.ExternalAssetHandler.get_public_url(order.book.author.profile_picture)} alt="" />
+                                <p class="text-sm font-medium"><%= IndiePaper.Authors.get_full_name(order.book.author) %></p>
                             <% end %>
                             <p class="font-medium" data-test="order-amount"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(order.amount) %></p>
                         </div>
                         <div class="p-6">
-                            <%= link to: Routes.book_show_path(@socket, :show, order.book) do %>
+                            <%= live_redirect to: Routes.book_show_path(@socket, :show, order.book) do %>
                                 <h2 data-test="order-book-title" class="text-lg font-bold"><%= order.book.title %></h2>
                                 <h2 data-test="book-title" class="mt-1 text-sm secondary-text"><%= order.book.short_description %></h2>
                             <% end %>
@@ -27,7 +27,7 @@
                             <div>
                                 <div>
                                     <%= for line_item <- order.line_items do %>
-                                        <%= link to: Routes.book_read_path(@socket, :index, order.book), id: "read-online-link" do %>
+                                        <%= live_redirect to: Routes.book_read_path(@socket, :index, order.book), id: "read-online-link" do %>
                                             <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-light-border">
                                                 <div>
                                                     <p class="font-medium" data-test="order-product-title"><%= line_item.product.title %></p>
