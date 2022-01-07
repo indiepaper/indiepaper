@@ -7,8 +7,8 @@ defmodule IndiePaper.MarketplaceTest do
     test "checks if author has bought book" do
       [order1, order2] = insert_pair(:order)
 
-      assert Marketplace.has_reader_bought_book?(order1.customer, order1.book)
-      refute Marketplace.has_reader_bought_book?(order1.customer, order2.book)
+      assert Marketplace.has_reader_bought_book?(order1.reader, order1.book)
+      refute Marketplace.has_reader_bought_book?(order1.reader, order2.book)
     end
   end
 end

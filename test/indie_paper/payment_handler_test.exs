@@ -33,9 +33,9 @@ defmodule IndiePaper.PaymentHandlerTest do
   describe "get_checkout_session_url/1" do
     test "returns the stripe checkout session url" do
       book = insert(:book)
-      customer = insert(:author)
+      reader = insert(:author)
 
-      {:ok, checkout_session_url} = PaymentHandler.get_checkout_session_url(customer, book)
+      {:ok, checkout_session_url} = PaymentHandler.get_checkout_session_url(reader, book)
 
       assert checkout_session_url == nil
     end
@@ -53,7 +53,7 @@ defmodule IndiePaper.PaymentHandlerTest do
 
       assert Orders.is_payment_completed?(updated_order)
 
-      assert_email_sent(to: order.customer.email, from: {"IndiePaper", "support@example.com"})
+      assert_email_sent(to: order.reader.email, from: {"IndiePaper", "support@example.com"})
     end
   end
 
@@ -62,7 +62,7 @@ defmodule IndiePaper.PaymentHandlerTest do
       price = Money.new(400)
 
       platform_fees = PaymentHandler.get_platform_fees(price)
-      assert platform_fees.amount == 36
+      assert platform_fees.amount == 28
     end
   end
 

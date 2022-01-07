@@ -86,7 +86,7 @@ defmodule IndiePaper.Factory do
     %IndiePaper.Orders.Order{
       line_items: [build(:line_item), build(:line_item)],
       book: build(:book),
-      customer: build(:author),
+      reader: build(:author),
       status: :payment_completed,
       stripe_checkout_session_id: "checkout_session_id",
       amount: Money.new(420)
@@ -106,13 +106,6 @@ defmodule IndiePaper.Factory do
     %IndiePaper.ChapterProducts.ChapterProduct{
       chapter: build(:chapter),
       product: build(:product)
-    }
-  end
-
-  def reader_book_subscription_factory do
-    %IndiePaper.ReaderBookSubscriptions.ReaderBookSubscription{
-      reader: build(:author),
-      book: build(:book, publishing_type: :serial)
     }
   end
 end

@@ -5,16 +5,16 @@ defmodule IndiePaperWeb.Feature.ReaderCanVisitAndBuyBookTest do
 
   test "reader can visit book page and buy book", %{session: session} do
     book = insert(:book)
-    customer = insert(:author)
+    reader = insert(:author)
 
     session
     |> LoginPage.visit_page()
-    |> LoginPage.login(email: customer.email, password: customer.password)
+    |> LoginPage.login(email: reader.email, password: reader.password)
     |> BookPage.Show.visit_page(book)
     |> BookPage.Show.has_buy_button?()
 
     # There is an issue with Stripe Mock, so for the time being we are going call the payment handler function by ourselves
-    {:ok, _} = IndiePaper.PaymentHandler.get_checkout_session_url(customer, book)
+    {:ok, _} = IndiePaper.PaymentHandler.get_checkout_session_url(reader, book)
 
     # Verify that an order is created
     session
@@ -29,7 +29,7 @@ defmodule IndiePaperWeb.Feature.ReaderCanVisitAndBuyBookTest do
 
     session
     |> LoginPage.visit_page()
-    |> LoginPage.login(email: order.customer.email, password: order.customer.password)
+    |> LoginPage.login(email: order.reader.email, password: order.reader.password)
     |> DashboardLibraryPage.visit_page()
     |> DashboardLibraryPage.click_read_online()
     |> BookPage.Read.has_book_title?(order.book.title)
@@ -49,11 +49,11 @@ defmodule IndiePaperWeb.Feature.ReaderCanVisitAndBuyBookTest do
 
   test "reader can see more books by the author", %{session: session} do
     book = insert(:book)
-    customer = insert(:author)
+    reader = insert(:author)
 
     session
     |> LoginPage.visit_page()
-    |> LoginPage.login(email: customer.email, password: customer.password)
+    |> LoginPage.login(email: reader.email, password: reader.password)
     |> BookPage.Show.visit_page(book)
     |> BookPage.Show.click_author_name?(book.author.first_name)
     |> AuthorPage.Show.has_book_title?(book.title)

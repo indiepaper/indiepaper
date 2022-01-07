@@ -6,7 +6,9 @@ defmodule IndiePaper.PaymentHandler do
   alias IndiePaper.PaymentHandler.MoneyHandler
   alias IndiePaper.PaymentHandler.StripeHandler
 
-  def get_stripe_connect_url(%Authors.Author{stripe_connect_id: nil} = author, country_code) do
+  def get_stripe_connect_url(%Authors.Author{id: author_id, stripe_connect_id: nil}, country_code) do
+    author = Authors.get_author!(author_id)
+
     with {:ok, stripe_connect_id} <- StripeHandler.create_connect_account(country_code),
          {:ok, author_with_stripe_connect_id} <-
            Authors.set_stripe_connect_id(author, stripe_connect_id) do
@@ -33,7 +35,7 @@ defmodule IndiePaper.PaymentHandler do
     Authors.set_payment_connected(author)
   end
 
-  def get_checkout_session_url(customer, book) do
+  def get_checkout_session_url(reader, book) do
     book_with_products = Books.with_assoc(book, :products)
     read_online_product = Books.get_read_online_product(book)
     author = Books.get_author(book)
@@ -51,7 +53,7 @@ defmodule IndiePaper.PaymentHandler do
              stripe_connect_id: author.stripe_connect_id
            ),
          {:ok, _order} <-
-           Orders.create_order(customer, %{
+           Orders.create_order(reader, %{
              amount: order_amount,
              book_id: book.id,
              stripe_checkout_session_id: stripe_checkout_session.id,
@@ -65,10 +67,10 @@ defmodule IndiePaper.PaymentHandler do
     with order <- Orders.get_by_stripe_checkout_session_id!(stripe_checkout_session_id),
          {:ok, updated_order} <-
            Orders.set_payment_completed(order),
-         order_with_books <- Orders.with_assoc(updated_order, [:customer, book: :author]),
+         order_with_books <- Orders.with_assoc(updated_order, [:reader, book: :author]),
          {:ok, _email} <-
            OrderNotifier.deliver_order_payment_completed_email(
-             reader: order_with_books.customer,
+             reader: order_with_books.reader,
              author: order_with_books.book.author,
              book: order_with_books.book
            ) do
@@ -76,13 +78,13 @@ defmodule IndiePaper.PaymentHandler do
     end
   end
 
-  def create_customer(%Authors.Author{stripe_customer_id: nil, email: email}) do
-    case StripeHandler.create_customer(email) do
-      {:ok, customer} ->
-        {:ok, customer}
+  def create_reader(%Authors.Author{stripe_customer_id: nil, email: email}) do
+    case StripeHandler.create_reader(email) do
+      {:ok, reader} ->
+        {:ok, reader}
 
       {:error, error} ->
-        {:error, error_message(error, "There was an error while creating Stripe Customer.")}
+        {:error, error_message(error, "There was an error while creating Stripe Reader.")}
     end
   end
 

@@ -14,7 +14,7 @@ defmodule IndiePaperWeb.DashboardLibraryLiveTest do
   end
 
   test "shows books that reader has purchased", %{conn: conn, author: author} do
-    [order1, order2] = insert_pair(:order, customer: author)
+    [order1, order2] = insert_pair(:order, reader: author)
     order3 = insert(:order)
     {:ok, view, _html} = live(conn, dashboard_library_path(conn))
 
@@ -32,7 +32,7 @@ defmodule IndiePaperWeb.DashboardLibraryLiveTest do
   end
 
   test "show payment completed orders only", %{conn: conn, author: author} do
-    payment_pending_order = insert(:order, customer: author, status: :payment_pending)
+    payment_pending_order = insert(:order, reader: author, status: :payment_pending)
 
     {:ok, view, _html} = live(conn, dashboard_library_path(conn))
 

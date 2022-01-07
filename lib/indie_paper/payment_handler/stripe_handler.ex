@@ -102,7 +102,7 @@ defmodule IndiePaper.PaymentHandler.StripeHandler do
     })
   end
 
-  def create_customer(email) do
+  def create_reader(email) do
     Stripe.Customer.create(%{email: email})
   end
 end

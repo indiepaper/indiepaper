@@ -13,14 +13,14 @@ defmodule IndiePaper.Orders do
   def get_by_stripe_checkout_session_id!(stripe_checkout_session_id),
     do: Repo.get_by!(Order, stripe_checkout_session_id: stripe_checkout_session_id)
 
-  defp list_orders_query(%IndiePaper.Authors.Author{} = customer) do
+  defp list_orders_query(%IndiePaper.Authors.Author{} = reader) do
     Order
-    |> Bodyguard.scope(customer)
+    |> Bodyguard.scope(reader)
     |> order_by(desc: :updated_at)
   end
 
-  def list_orders(%IndiePaper.Authors.Author{} = customer) do
-    list_orders_query(customer)
+  def list_orders(%IndiePaper.Authors.Author{} = reader) do
+    list_orders_query(reader)
     |> Repo.all()
   end
 
@@ -29,20 +29,20 @@ defmodule IndiePaper.Orders do
       join: b in Book,
       on: b.id == o.book_id,
       where: b.author_id == ^author.id,
-      preload: [:book, :customer],
+      preload: [:book, :reader],
       order_by: [desc: o.inserted_at]
     )
     |> Repo.all()
   end
 
-  def list_payment_completed_orders(customer) do
-    list_orders_query(customer)
+  def list_payment_completed_orders(reader) do
+    list_orders_query(reader)
     |> where(status: :payment_completed)
     |> Repo.all()
   end
 
-  def create_order(customer, attrs \\ %{}) do
-    Ecto.build_assoc(customer, :orders)
+  def create_order(reader, attrs \\ %{}) do
+    Ecto.build_assoc(reader, :orders)
     |> Order.changeset(attrs)
     |> Order.line_items_changeset(line_items_changeset(attrs[:products]))
     |> Repo.insert()
