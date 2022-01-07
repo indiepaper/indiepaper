@@ -1,7 +1,7 @@
 <section class="bg-background">
     <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
     <div class="container-box page-box">
-        <div class="max-w-lg">
+        <div class="max-w-2lg">
             <%= if IndiePaper.Authors.has_stripe_connect_id?(@current_author) do %>
                 <h1 class="page-heading">Finish Setting up Stripe Connect</h1>
             <% else %>
@@ -9,7 +9,7 @@
             <% end %>
             <p class="page-description">Payments are secured by Stripe, connect your Stripe account to start recieving payments</p>
         </div>
-        <div class="mt-4 max-w-lg">
+        <div class="mt-12 max-w-md">
             <.form
             let={f}
             id="stripe-connect-form"
@@ -17,7 +17,7 @@
             data-test="stripe-connect-form"
             phx-submit="connect_stripe">
             <div class="form-tight-container">
-                <div class={"mt-4 input-container #{if IndiePaper.Authors.has_stripe_connect_id?(@current_author), do: 'hidden' }"}>
+                <div class={"input-container #{if IndiePaper.Authors.has_stripe_connect_id?(@current_author), do: 'hidden' }"}>
                     <%= label f, :country_code, "Country", class: "input-label" %>
                     <span class="input-label-info">Select the country of your bank account to recieve payouts.</span>
                     <%= select f, :country_code, IndiePaper.PaymentHandler.StripeHandler.stripe_connect_enabled_countries(), class: "form-input" %>
