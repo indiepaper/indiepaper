@@ -2,6 +2,7 @@ defmodule IndiePaperWeb.StripeWebhookHandler do
   @behaviour Stripe.WebhookHandler
 
   alias IndiePaper.PaymentHandler
+  alias IndiePaper.WebhookHandler
 
   @impl true
   def handle_event(
@@ -22,10 +23,8 @@ defmodule IndiePaperWeb.StripeWebhookHandler do
           data: %{object: %{id: stripe_checkout_session_id}}
         } = event
       ) do
-    case PaymentHandler.set_payment_completed_order(
-           stripe_checkout_session_id: stripe_checkout_session_id
-         ) do
-      {:ok, _order} ->
+    case WebhookHandler.handle_checkout_session_completed(stripe_checkout_session_id) do
+      {:ok, _} ->
         {:ok, event}
     end
   end
