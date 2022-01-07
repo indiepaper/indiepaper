@@ -13,12 +13,18 @@ export function sendPersistSuccess(context) {
   window.isDraftEditorPendingRequest = false;
   let event = new CustomEvent("persist-success");
   context.el.dispatchEvent(event);
+
+  window.onbeforeunload = null;
 }
 
 export function sendPersistError(context) {
   window.isDraftEditorPendingRequest = false;
   let event = new CustomEvent("persist-error");
   context.el.dispatchEvent(event);
+
+  window.onbeforeunload = function() {
+    return "Caution, there are unsaved changes. Do you really want to leave ?"
+  }
 }
 
 export function getEnabledExtensions() {

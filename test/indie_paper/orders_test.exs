@@ -51,4 +51,20 @@ defmodule IndiePaper.OrdersTest do
       assert order.status == :payment_completed
     end
   end
+
+  describe "list_orders_of_author/1" do
+    test "shows all orders from authors books" do
+      author = insert(:author)
+      author_book = insert(:book, author: author)
+      book = insert(:book)
+
+      insert(:order, book: author_book)
+      insert(:order, book: book)
+
+      orders = Orders.list_orders_of_author(author)
+
+      assert Enum.any?(orders, fn order -> order.book_id == author_book.id end)
+      refute Enum.any?(orders, fn order -> order.book_id == book.id end)
+    end
+  end
 end

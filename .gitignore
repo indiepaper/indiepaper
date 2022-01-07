@@ -43,3 +43,6 @@ dev.secret.exs
 # Ignore production secrets for fly
 .prod.env
 .dev.env
+
+# Ignore random elixir format files
+*-elixir-format.exs

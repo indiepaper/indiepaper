@@ -86,7 +86,7 @@ defmodule IndiePaper.PaymentHandler do
     end
   end
 
-  def get_platform_percentage(), do: 9
+  def get_platform_percentage(), do: 7
 
   def get_platform_fees(price) do
     MoneyHandler.calculate_percentage(price, get_platform_percentage())

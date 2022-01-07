@@ -1,0 +1,118 @@
+<section class="bg-background">
+    <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
+    <div class="container-box page-box">
+        <div class="max-w-2xl">
+            <h1 class="page-heading">Your Orders</h1>
+            <p class="page-description">
+                shows the orders for your books until now.
+            </p>
+        </div>
+        <div class="flex flex-col mt-12">
+            <div class="overflow-x-auto -my-2 sm:-mx-6 lg:-mx-8">
+                <div class="inline-block py-2 min-w-full align-middle sm:px-6 lg:px-8">
+                    <div class="items-stretch p-0 primary-card">
+                        <table class="min-w-full divide-y divide-stone-200">
+                            <thead class="bg-stone-100">
+                                <tr>
+                                    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left uppercase text-stone-500">
+                                        Name
+                                    </th>
+                                    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left uppercase text-stone-500">
+                                        Book
+                                    </th>
+                                    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left uppercase text-stone-500">
+                                        Status
+                                    </th>
+                                    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left uppercase text-stone-500">
+                                        Amount
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-stone-200">
+                                <%= if Enum.empty?(@orders) do %>
+                                    <tr>
+                                        <td colspan="4" class="py-16 text-center">
+                                            <h3 class="font-bold">You don't have any orders yet.</h3>
+                                            <p class="mx-auto mt-1 max-w-lg secondary-text">Share your published books with your readers. Purchases for your book will show up here.</p>
+                                        </td>
+                                    </tr>
+                                    <%= for _order <- 1..6 do %>
+                                        <tr>
+                                            <td class="py-4 px-6 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 w-8 h-8">
+                                                        <div class="w-8 h-8 rounded-full bg-stone-200" />
+                                                    </div>
+                                                    <div class="ml-4">
+                                                        <div class="w-48 h-3 placeholder-text">
+                                                        </div>
+                                                        <div class="mt-2 placeholder-text">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-6 whitespace-nowrap">
+                                                <div class="w-48 placeholder-text">
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-6 whitespace-nowrap">
+                                                <span class="inline-flex py-1 px-3 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                                <div class="w-16 bg-green-200 placeholder-text">
+                                                </div>
+                                                </span>
+                                            </td>
+                                            <td class="py-4 px-6 text-sm font-medium whitespace-nowrap">
+                                                <div class="w-16 h-3 placeholder-text">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <% end %>
+                                <% else %>
+                                    <%= for order <- @orders do %>
+                                        <tr>
+                                            <td class="py-4 px-6 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 w-8 h-8">
+                                                        <img class="w-8 h-8 rounded-full" src={ExternalAssetHandler.get_public_url(order.customer.profile_picture)} alt="">
+                                                    </div>
+                                                    <%= live_redirect to: Routes.author_page_path(@socket, :show, order.customer), class: "block ml-4" do %>
+                                                        <div class="text-sm font-medium text-stone-900">
+                                                            <%= Authors.get_full_name(order.customer) %>
+                                                        </div>
+                                                        <div class="text-sm text-stone-500">
+                                                            <%= order.customer.email %>
+                                                        </div>
+                                                    <% end %>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-6 whitespace-nowrap">
+                                                <div class="text-sm font-medium text-stone-900">
+                                                    <%= live_redirect order.book.title, to: Routes.book_show_path(@socket, :show, order.book) %>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-6 whitespace-nowrap">
+                                                <%= if Orders.is_payment_completed?(order) do %>
+                                                    <span class="inline-flex px-3 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                                        <%= Phoenix.Naming.humanize(order.status) %>
+                                                    </span>
+                                                <% else %>
+                                                    <span class="inline-flex px-3 text-xs font-medium leading-5 rounded-full border text-stone-600 bg-stone-100 border-secondary-border">
+                                                        <%= Phoenix.Naming.humanize(order.status) %>
+                                                    </span>
+                                                <% end %>
+                                            </td>
+                                            <td class="py-4 px-6 text-sm font-medium whitespace-nowrap">
+                                                <%= MoneyHandler.humanize(order.amount) %>
+                                            </td>
+                                        </tr>
+                                    <% end %>
+                                <% end %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

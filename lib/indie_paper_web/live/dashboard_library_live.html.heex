@@ -7,17 +7,60 @@
                 books you have purchased and subscribed to will show up here.
             </p>
             <div class="mt-12 space-y-12">
+                <%= if Enum.empty?(@orders) do %>
+                    <div class="items-stretch p-0 primary-card">
+                        <div class="py-4 px-6">
+                            <h2 class="font-bold">You don't have any books in your library.</h2>
+                            <p class="mt-1 text-sm secondary-text">Explore and add books to your library.</p>
+                        </div>
+                    </div>
+                    <%= for _order <- 1..4 do %>
+                        <div class="opacity-60">
+                            <div class="items-stretch p-0 primary-card">
+                                <div class="flex flex-row justify-between items-center py-3 px-6 border-b border-secondary-border">
+                                    <div class="flex flex-row items-center py-1 px-2 space-x-2 rounded-full" >
+                                        <div class="w-6 h-6 rounded-full border bg-stone-100" src={} alt="" />
+                                        <div class="w-32 h-3 rounded-full bg-stone-200">
+                                        </div>
+                                    </div>
+                                    <p class="font-medium"></p>
+                                </div>
+                                <div class="p-6">
+                                    <div>
+                                        <div class="w-56 h-4 rounded-full bg-stone-200">
+                                        </div>
+                                        <div class="mt-2 w-32 h-2 rounded-full bg-stone-200">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-light-border">
+                                        <div>
+                                            <div class="w-32 h-3 rounded-full bg-stone-200">
+                                            </div>
+                                            <div class="mt-2 w-40 h-2 rounded-full bg-stone-200">
+                                            </div>
+                                        </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% end %>
+                <% end %>
                 <%= for order <- @orders do %>
                     <div class="items-stretch p-0 primary-card" data-test={"book-#{order.book.id}"}>
                         <div class="flex flex-row justify-between items-center py-3 px-6 border-b border-secondary-border">
-                            <%= live_redirect to: Routes.author_page_path(@socket, :show, order.book.author), class: "py-1 px-2 rounded-full flex flex-row space-x-1.5 border border-secondary-border"  do %>
-                                <img class="w-5 h-5 rounded-full" src={IndiePaper.ExternalAssetHandler.get_public_url(order.book.author.profile_picture)} alt="" />
-                                <p class="text-sm"><%= IndiePaper.Authors.get_full_name(order.book.author) %></p>
+                            <%= live_redirect to: Routes.author_page_path(@socket, :show, order.book.author), class: "py-1 px-2 rounded-full flex flex-row space-x-2 items-center"  do %>
+                                <img class="w-6 h-6 rounded-full border" src={IndiePaper.ExternalAssetHandler.get_public_url(order.book.author.profile_picture)} alt="" />
+                                <p class="text-sm font-medium"><%= IndiePaper.Authors.get_full_name(order.book.author) %></p>
                             <% end %>
                             <p class="font-medium" data-test="order-amount"><%= IndiePaper.PaymentHandler.MoneyHandler.humanize(order.amount) %></p>
                         </div>
                         <div class="p-6">
-                            <%= link to: Routes.book_show_path(@socket, :show, order.book) do %>
+                            <%= live_redirect to: Routes.book_show_path(@socket, :show, order.book) do %>
                                 <h2 data-test="order-book-title" class="text-lg font-bold"><%= order.book.title %></h2>
                                 <h2 data-test="book-title" class="mt-1 text-sm secondary-text"><%= order.book.short_description %></h2>
                             <% end %>
@@ -27,7 +70,7 @@
                             <div>
                                 <div>
                                     <%= for line_item <- order.line_items do %>
-                                        <%= link to: Routes.book_read_path(@socket, :index, order.book), id: "read-online-link" do %>
+                                        <%= live_redirect to: Routes.book_read_path(@socket, :index, order.book), id: "read-online-link" do %>
                                             <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-light-border">
                                                 <div>
                                                     <p class="font-medium" data-test="order-product-title"><%= line_item.product.title %></p>

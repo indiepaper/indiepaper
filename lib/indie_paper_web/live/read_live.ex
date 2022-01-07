@@ -8,7 +8,7 @@ defmodule IndiePaperWeb.ReadLive do
   alias IndiePaper.Products
   alias IndiePaper.ChapterProducts
 
-  on_mount {IndiePaperWeb.AuthorLiveAuth, :fetch_current_author}
+  on_mount {IndiePaperWeb.AuthorAuthLive, :fetch_current_author}
 
   @impl true
   def mount(%{"book_slug" => book_slug}, _session, socket) do
