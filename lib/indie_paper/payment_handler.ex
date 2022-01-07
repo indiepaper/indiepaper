@@ -6,7 +6,9 @@ defmodule IndiePaper.PaymentHandler do
   alias IndiePaper.PaymentHandler.MoneyHandler
   alias IndiePaper.PaymentHandler.StripeHandler
 
-  def get_stripe_connect_url(%Authors.Author{stripe_connect_id: nil} = author, country_code) do
+  def get_stripe_connect_url(%Authors.Author{id: author_id, stripe_connect_id: nil}, country_code) do
+    author = Authors.get_author!(author_id)
+
     with {:ok, stripe_connect_id} <- StripeHandler.create_connect_account(country_code),
          {:ok, author_with_stripe_connect_id} <-
            Authors.set_stripe_connect_id(author, stripe_connect_id) do

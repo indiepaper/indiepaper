@@ -3,7 +3,6 @@ defmodule IndiePaper.BookLibrary do
   alias IndiePaper.Repo
 
   alias IndiePaper.Orders
-  alias IndiePaper.Books
 
   def get_orders(reader) do
     Orders.list_orders(reader)
