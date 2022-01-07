@@ -92,7 +92,7 @@
                                             </td>
                                             <td class="py-4 px-6 whitespace-nowrap">
                                                 <%= if Orders.is_payment_completed?(order) do %>
-                                                    <span class="inline-flex px-3 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                                    <span class="inline-flex px-3 text-xs font-medium leading-5 text-green-800 bg-green-100 rounded-full">
                                                         <%= Phoenix.Naming.humanize(order.status) %>
                                                     </span>
                                                 <% else %>
