@@ -29,6 +29,45 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-stone-200">
+                                <%= if Enum.empty?(@orders) do %>
+                                    <%= for _placeholder_order <- 1..7 do %>
+                                        <tr>
+                                            <td class="py-4 px-6 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="relative flex-shrink-0 w-8 h-8">
+                                                        <div class="absolute inset-0 rounded-full bg-stone-100"></div>
+                                                    </div>
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-stone-900">
+                                                            <div class="w-32 h-3 rounded-full bg-stone-200">
+                                                            </div>
+                                                        </div>
+                                                        <div class="mt-2 text-sm text-stone-500">
+                                                            <div class="w-16 h-2 rounded-full bg-stone-200">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-6 whitespace-nowrap">
+                                                <div class="text-sm font-medium text-stone-900">
+                                                    <div class="w-40 h-2 rounded-full bg-stone-200">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-6 whitespace-nowrap">
+                                                <span class="inline-flex py-1 px-3 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full border border-green-400">
+                                                    <div class="w-16 h-2 bg-green-200 rounded-full">
+                                                    </div>
+                                                </span>
+                                            </td>
+                                            <td class="py-4 px-6 text-sm font-medium whitespace-nowrap">
+                                                <div class="w-16 h-2 rounded-full bg-stone-200">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <% end %>
+                                <% end %>
                                 <%= for order <- @orders do %>
                                     <tr>
                                         <td class="py-4 px-6 whitespace-nowrap">
