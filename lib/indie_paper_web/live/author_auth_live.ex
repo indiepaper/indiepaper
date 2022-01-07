@@ -13,7 +13,7 @@ defmodule IndiePaperWeb.AuthorAuthLive do
       {:halt,
        socket
        |> put_flash(:info, "Create an account or Sign in to continue.")
-       |> redirect(to: Routes.author_registration_path(socket, :new, return_to: "/hello"))}
+       |> push_redirect(to: Routes.author_registration_path(socket, :new, return_to: "/hello"))}
     end
   end
 
@@ -41,7 +41,7 @@ defmodule IndiePaperWeb.AuthorAuthLive do
          :info,
          "Confirm your account to continue."
        )
-       |> redirect(to: Routes.dashboard_path(socket, :index))}
+       |> push_redirect(to: Routes.dashboard_path(socket, :index))}
     end
   end
 
@@ -60,7 +60,7 @@ defmodule IndiePaperWeb.AuthorAuthLive do
          :info,
          "Connect with your Stripe Account to Publish and start recieving payments"
        )
-       |> redirect(to: Routes.profile_stripe_connect_path(socket, :new))}
+       |> push_redirect(to: Routes.profile_stripe_connect_path(socket, :new))}
     end
   end
 
