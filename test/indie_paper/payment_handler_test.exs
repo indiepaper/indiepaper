@@ -62,7 +62,7 @@ defmodule IndiePaper.PaymentHandlerTest do
       price = Money.new(400)
 
       platform_fees = PaymentHandler.get_platform_fees(price)
-      assert platform_fees.amount == 36
+      assert platform_fees.amount == 28
     end
   end
 
