@@ -28,10 +28,10 @@ defmodule IndiePaper.Orders do
     from(o in Order,
       join: b in Book,
       on: b.id == o.book_id,
-      where: b.author_id == ^author.id and o.status == :payment_completed
+      where: b.author_id == ^author.id and o.status == :payment_completed,
+      preload: [:book, :customer]
     )
     |> Repo.all()
-    |> Repo.preload([:book, :customer])
   end
 
   def list_payment_completed_orders(customer) do
