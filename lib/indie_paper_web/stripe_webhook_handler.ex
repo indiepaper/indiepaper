@@ -11,7 +11,7 @@ defmodule IndiePaperWeb.StripeWebhookHandler do
           data: %{object: %{charges_enabled: true, id: stripe_connect_id}}
         } = event
       ) do
-    case PaymentHandler.set_payment_connected(stripe_connect_id) do
+    case WebhookHandler.handle_account_updated(stripe_connect_id) do
       {:ok, _author} -> {:ok, event}
     end
   end
