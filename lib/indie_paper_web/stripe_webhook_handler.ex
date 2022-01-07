@@ -1,7 +1,6 @@
 defmodule IndiePaperWeb.StripeWebhookHandler do
   @behaviour Stripe.WebhookHandler
 
-  alias IndiePaper.PaymentHandler
   alias IndiePaper.WebhookHandler
 
   @impl true

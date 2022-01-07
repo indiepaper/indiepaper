@@ -108,11 +108,4 @@ defmodule IndiePaper.Factory do
       product: build(:product)
     }
   end
-
-  def reader_book_subscription_factory do
-    %IndiePaper.ReaderBookSubscriptions.ReaderBookSubscription{
-      reader: build(:author),
-      book: build(:book, publishing_type: :serial)
-    }
-  end
 end

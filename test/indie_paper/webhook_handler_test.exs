@@ -3,7 +3,6 @@ defmodule IndiePaper.WebhookHandlerTest do
 
   alias IndiePaper.WebhookHandler
   alias IndiePaper.Orders
-  alias IndiePaper.ReaderBookSubscriptions
 
   describe "checkout_session_completed/1" do
     test "creates a reader book subscription" do
