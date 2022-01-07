@@ -6,6 +6,18 @@ defmodule IndiePaperWeb.StripeWebhookHandler do
   @impl true
   def handle_event(
         %Stripe.Event{
+          type: "account.updated",
+          data: %{object: %{charges_enabled: true, id: stripe_connect_id}}
+        } = event
+      ) do
+    case PaymentHandler.set_payment_connected(stripe_connect_id) do
+      {:ok, _author} -> {:ok, event}
+    end
+  end
+
+  @impl true
+  def handle_event(
+        %Stripe.Event{
           type: "checkout.session.completed",
           data: %{object: %{id: stripe_checkout_session_id}}
         } = event

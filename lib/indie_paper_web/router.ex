@@ -48,10 +48,6 @@ defmodule IndiePaperWeb.Router do
       interval_seconds: 60 * 60 * 24
   end
 
-  scope "/stripe/webhooks", IndiePaperWeb do
-    post "/connect", StripeWebhookController, :connect
-  end
-
   ## Authentication routes
   scope "/", IndiePaperWeb do
     pipe_through [:browser, :redirect_if_author_is_authenticated, :generic_rate_limit_with_ip]

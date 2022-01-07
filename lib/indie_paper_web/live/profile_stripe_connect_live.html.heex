@@ -1,7 +1,7 @@
 <section class="bg-background">
     <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
     <div class="container-box page-box">
-        <div class="max-w-2lg">
+        <div class="max-w-2xl">
             <%= if IndiePaper.Authors.has_stripe_connect_id?(@current_author) do %>
                 <h1 class="page-heading">Finish Setting up Stripe Connect</h1>
             <% else %>

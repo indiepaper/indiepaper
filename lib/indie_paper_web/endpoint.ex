@@ -42,13 +42,15 @@ defmodule IndiePaperWeb.Endpoint do
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
-  # Stripe Webhook Plugs
-  plug IndiePaperWeb.Plugs.StripeWebhookPlug
-
   plug Stripe.WebhookPlug,
     at: "/stripe/webhooks/account",
     handler: IndiePaperWeb.StripeWebhookHandler,
     secret: {Application, :get_env, [:stripity_stripe, :account_webhook_signing_secret]}
+
+  plug Stripe.WebhookPlug,
+    at: "/stripe/webhooks/connect",
+    handler: IndiePaperWeb.StripeWebhookHandler,
+    secret: {Application, :get_env, [:stripity_stripe, :connect_webhook_signing_secret]}
 
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
