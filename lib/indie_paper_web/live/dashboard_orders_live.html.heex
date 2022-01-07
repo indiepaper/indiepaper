@@ -52,9 +52,15 @@
                                             </div>
                                         </td>
                                         <td class="py-4 px-6 whitespace-nowrap">
-                                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                                <%= Phoenix.Naming.humanize(order.status) %>
-                                            </span>
+                                            <%= if Orders.is_payment_completed?(order) do %>
+                                                <span class="inline-flex px-3 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                                    <%= Phoenix.Naming.humanize(order.status) %>
+                                                </span>
+                                            <% else %>
+                                                <span class="inline-flex px-3 text-xs font-medium leading-5 rounded-full border text-stone-600 bg-stone-100 border-secondary-border">
+                                                    <%= Phoenix.Naming.humanize(order.status) %>
+                                                </span>
+                                            <% end %>
                                         </td>
                                         <td class="py-4 px-6 text-sm font-medium whitespace-nowrap">
                                             <%= MoneyHandler.humanize(order.amount) %>
