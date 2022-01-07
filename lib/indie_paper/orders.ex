@@ -31,7 +31,7 @@ defmodule IndiePaper.Orders do
       where: b.author_id == ^author.id and o.status == :payment_completed
     )
     |> Repo.all()
-    |> Repo.preload(:book)
+    |> Repo.preload([:book, :customer])
   end
 
   def list_payment_completed_orders(customer) do

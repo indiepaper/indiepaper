@@ -11,5 +11,64 @@
                 <% end %>
             </div>
         </div>
+        <div class="flex flex-col">
+            <div class="overflow-x-auto -my-2 sm:-mx-6 lg:-mx-8">
+                <div class="inline-block py-2 min-w-full align-middle sm:px-6 lg:px-8">
+                    <div class="p-0 primary-card">
+                        <table class="min-w-full divide-y divide-stone-200">
+                            <thead class="bg-stone-100">
+                                <tr>
+                                    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left uppercase text-stone-500">
+                                        Name
+                                    </th>
+                                    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left uppercase text-stone-500">
+                                        Book
+                                    </th>
+                                    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left uppercase text-stone-500">
+                                        Status
+                                    </th>
+                                    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left uppercase text-stone-500">
+                                        Amount
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-stone-200">
+                                <%= for order <- @orders do %>
+                                    <tr>
+                                        <td class="py-4 px-6 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 w-8 h-8">
+                                                    <img class="w-8 h-8 rounded-full" src={ExternalAssetHandler.get_public_url(order.customer.profile_picture)} alt="">
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-stone-900">
+                                                        <%= Authors.get_full_name(order.customer) %>
+                                                    </div>
+                                                    <div class="text-sm text-stone-500">
+                                                        <%= order.customer.email %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="py-4 px-6 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-stone-900"><%= order.book.title %></div>
+                                        </td>
+                                        <td class="py-4 px-6 whitespace-nowrap">
+                                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                                <%= Phoenix.Naming.humanize(order.status) %>
+                                            </span>
+                                        </td>
+                                        <td class="py-4 px-6 text-sm font-medium whitespace-nowrap">
+                                            <%= MoneyHandler.humanize(order.amount) %>
+                                        </td>
+                                    </tr>
+                                <% end %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
