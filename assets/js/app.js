@@ -153,7 +153,7 @@ Uploaders.S3 = function (entries, onViewError) {
   });
 };
 
-let liveSocket = new LiveSocket("/live", Socket, {
+let liveSocket = new LiveSocket("wss://dev.indiepaper.co/live", Socket, {
   params: { _csrf_token: csrfToken },
   hooks: Hooks,
   uploaders: Uploaders,
