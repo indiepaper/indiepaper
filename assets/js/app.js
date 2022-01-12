@@ -157,7 +157,7 @@ const host = window.location.host;
 let liveHost = "";
 
 if (host === "dev.indiepaper.co") {
-  liveHost = "wss://app.indiepaper.co";
+  liveHost = "wss://app.dev.indiepaper.co";
 } else if (host === "indiepaper.me") {
   liveHost = "wss://app.indiepaper.me";
 }
