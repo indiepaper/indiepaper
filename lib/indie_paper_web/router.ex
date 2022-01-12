@@ -112,8 +112,6 @@ defmodule IndiePaperWeb.Router do
       resources "/books", BookController, only: [], param: "slug" do
         resources "/publication", PublicationController, only: [:create]
       end
-
-      live "/dashboard/orders", DashboardOrdersLive, :index
     end
 
     scope "/", IndiePaperWeb do
@@ -137,6 +135,7 @@ defmodule IndiePaperWeb.Router do
 
       live "/dashboard", DashboardLive, :index
       live "/dashboard/library", DashboardLibraryLive, :index
+      live "/dashboard/orders", DashboardOrdersLive, :index
       live "/settings/profile", SettingsProfileLive, :edit
     end
 
