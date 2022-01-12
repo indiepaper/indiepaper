@@ -157,12 +157,12 @@ const host = window.location.host;
 let liveHost = "";
 
 if (host === "dev.indiepaper.co") {
-  liveHost = "app.indiepaper.co";
+  liveHost = "wss://app.indiepaper.co";
 } else if (host === "indiepaper.me") {
-  liveHost = "app.indiepaper.me";
+  liveHost = "wss://app.indiepaper.me";
 }
+const socketHost = `${liveHost}/live`
 
-const socketHost = `wss://${liveHost}/live`
 
 let liveSocket = new LiveSocket(socketHost, Socket, {
   params: { _csrf_token: csrfToken },
