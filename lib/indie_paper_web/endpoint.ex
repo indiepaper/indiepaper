@@ -11,8 +11,7 @@ defmodule IndiePaperWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_indie_paper_key",
-    signing_salt: "eNoZacmO",
-    domain: "indiepaper.co"
+    signing_salt: "eNoZacmO"
   ]
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]

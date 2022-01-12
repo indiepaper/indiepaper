@@ -46,7 +46,8 @@ if config_env() == :prod do
   config :indie_paper, IndiePaperWeb.Endpoint,
     url: [host: host, port: 443],
     check_origin: [
-      "https://indiepaper.co"
+      "https://#{host}",
+      "https://app.#{host}"
     ],
     http: [
       # Enable IPv6 and bind on all interfaces.

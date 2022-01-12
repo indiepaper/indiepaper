@@ -128,7 +128,7 @@ Hooks.BookReaderHook = {
 };
 
 let Uploaders = {};
-Uploaders.S3 = function (entries, onViewError) {
+Uploaders.S3 = function(entries, onViewError) {
   entries.forEach((entry) => {
     let formData = new FormData();
     let { url, fields } = entry.meta;
@@ -153,7 +153,18 @@ Uploaders.S3 = function (entries, onViewError) {
   });
 };
 
-let liveSocket = new LiveSocket("wss://dev.indiepaper.co/live", Socket, {
+const host = window.location.host;
+let liveHost = "";
+
+if (host === "dev.indiepaper.co") {
+  liveHost = "app.indiepaper.co";
+} else if (host === "indiepaper.me") {
+  liveHost = "app.indiepaper.me";
+}
+
+const socketHost = `wss://${liveHost}/live`
+
+let liveSocket = new LiveSocket(socketHost, Socket, {
   params: { _csrf_token: csrfToken },
   hooks: Hooks,
   uploaders: Uploaders,
