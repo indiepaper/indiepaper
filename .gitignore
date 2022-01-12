@@ -33,6 +33,7 @@ npm-debug.log
 /assets/node_modules/
 .elixir_ls
 .DS_Store
+.log
 
 # Screenshots from integration tests
 screenshots/
