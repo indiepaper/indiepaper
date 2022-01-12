@@ -156,8 +156,8 @@ Uploaders.S3 = function(entries, onViewError) {
 const host = window.location.host;
 let liveHost = "";
 
-if (host === "dev.indiepaper.co") {
-  liveHost = "wss://app.dev.indiepaper.co";
+if (host === "indiepaper.co") {
+  liveHost = "wss://app.indiepaper.co";
 } else if (host === "indiepaper.me") {
   liveHost = "wss://app.indiepaper.me";
 }
