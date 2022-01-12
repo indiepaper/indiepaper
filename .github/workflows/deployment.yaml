@@ -8,11 +8,11 @@ jobs:
     if: ${{ (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master') && github.event_name == 'push'}}
     steps:
       - name: Setup Development Fly App
-        run: echo "FLY_APP_NAME=indiepaper-development PHX_HOST=indiepaper.co" >> $GITHUB_ENV
+        run: echo "FLY_APP_NAME=indiepaper-development,PHX_HOST=indiepaper.co" >> $GITHUB_ENV
         if: github.ref == 'refs/heads/develop'
 
       - name: Setup Production Fly App
-        run: echo "FLY_APP_NAME=indiepaper-production PHX_HOST=indiepaper.me" >> $GITHUB_ENV
+        run: echo "FLY_APP_NAME=indiepaper-production,PHX_HOST=indiepaper.me" >> $GITHUB_ENV
         if: github.ref == 'refs/heads/master'
 
       - name: 🛑 Cancel Previous Runs
