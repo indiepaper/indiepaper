@@ -28,47 +28,6 @@ defmodule IndiePaperWeb.ReadLive do
   end
 
   @impl true
-  def handle_event("add_to_library", _, socket) do
-    case socket.assigns.current_author do
-      nil ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "Sign up or Sign in to add this book to your Library.")
-         |> redirect(
-           to:
-             Routes.author_registration_path(socket, :new,
-               return_to: Routes.book_read_path(socket, :index, socket.assigns.book)
-             )
-         )}
-
-      current_author ->
-        {:ok, _saved_book} =
-          Books.add_pre_order_book_to_library(current_author, socket.assigns.book)
-
-        {:noreply,
-         socket
-         |> put_flash(
-           :info,
-           "The book has been added to your library. You will be notified when new chapters are published."
-         )
-         |> assign(book_added_to_library?: true)}
-    end
-  end
-
-  @impl true
-  def handle_event("remove_from_library", _, socket) do
-    Books.remove_pre_order_book_from_library!(socket.assigns.current_author, socket.assigns.book)
-
-    {:noreply,
-     socket
-     |> put_flash(
-       :info,
-       "The book has been removed from your library, you will no longer be notified of new chapter releases."
-     )
-     |> assign(book_added_to_library?: false)}
-  end
-
-  @impl true
   def handle_params(%{"book_slug" => _book_slug, "chapter_id" => chapter_id}, _uri, socket) do
     selected_chapter = Chapters.get_chapter!(chapter_id)
 
