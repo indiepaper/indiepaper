@@ -11,7 +11,7 @@ defmodule IndiePaperWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_indie_paper_key",
-    signing_salt: "eNoZacmO",
+    signing_salt: "eNoZacmOdudu",
     domain: System.get_env("PHX_HOST")
   ]
 
