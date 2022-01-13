@@ -54,6 +54,10 @@ COPY priv priv
 # step down so that `lib` is available.
 COPY assets assets
 
+# Setup Compile time PHX_HOST
+ARG PHX_HOST
+ENV PHX_HOST=$PHX_HOST
+
 # Compile the release
 COPY lib lib
 

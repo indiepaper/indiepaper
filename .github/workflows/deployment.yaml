@@ -30,6 +30,15 @@ jobs:
       - name: 🐳 Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
+      # Setup cache
+      - name: ⚡️ Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: "/tmp/.indiepaper/.${{ env.FLY_APP_NAME }}/.buildx-cache"
+          key: ${{ runner.os }}-${{ env.FLY_APP_NAME }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.FLY_APP_NAME }}-buildx-
+
       - name: 🔑 Fly Registry Auth
         uses: docker/login-action@v1
         with:
@@ -45,7 +54,7 @@ jobs:
           tags: "registry.fly.io/${{ env.FLY_APP_NAME }}:${{ github.sha }}"
           build-args: |
             COMMIT_SHA=${{ github.sha }}
-          secrets: "PHX_HOST=${{ env.PHX_HOST }}"
+            "PHX_HOST=${{ env.PHX_HOST }}"
           cache-from: "type=local,src=/tmp/.indiepaper/.${{ env.FLY_APP_NAME }}/.buildx-cache"
           cache-to: "type=local,mode=max,dest=/tmp/.indiepaper/.${{ env.FLY_APP_NAME }}/.buildx-cache-new"
 
