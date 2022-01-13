@@ -7,7 +7,6 @@ defmodule IndiePaperWeb.DashboardOrdersLive do
   alias IndiePaper.PaymentHandler.MoneyHandler
 
   on_mount IndiePaperWeb.AuthorAuthLive
-  on_mount {IndiePaperWeb.AuthorAuthLive, :require_account_status_payment_connected}
 
   @impl true
   def mount(_, _, socket) do
