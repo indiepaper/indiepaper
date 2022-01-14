@@ -7,6 +7,6 @@ defmodule IndiePaperWeb.FallbackController do
       :error,
       "You are not authorized to perform that action. Contact Support if you think it's an error."
     )
-    |> redirect(to: "/")
+    |> redirect(to: "/secure/sign-in")
   end
 end

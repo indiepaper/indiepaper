@@ -28,7 +28,7 @@ defmodule IndiePaperWeb.ProductControllerTest do
         |> get(Routes.book_product_path(conn, :edit, book2, product2))
         |> redirected_to(302)
 
-      assert response =~ "/"
+      assert response =~ "/secure/sign-in"
     end
   end
 

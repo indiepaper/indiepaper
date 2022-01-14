@@ -3,7 +3,7 @@ defmodule IndiePaperWeb.Pages.HomePage do
 
   def visit(session) do
     session
-    |> visit(Routes.page_path(@endpoint, :index))
+    |> visit(Routes.author_session_path(@endpoint, :new))
   end
 
   def has_title(session) do

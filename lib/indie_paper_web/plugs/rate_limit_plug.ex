@@ -53,7 +53,7 @@ defmodule IndiePaperWeb.Plugs.RateLimitPlug do
       :error,
       "You have exceeded the maximum number of allowed requests to this endpoint. Please try again after #{round(interval_seconds / (60 * 60))} hour(s)."
     )
-    |> Phoenix.Controller.redirect(to: Routes.page_path(conn, :index))
+    |> Phoenix.Controller.redirect(to: Routes.author_session_path(conn, :new))
     # Stop execution of further plugs, return response now
     |> halt()
   end

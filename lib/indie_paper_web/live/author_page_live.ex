@@ -13,7 +13,7 @@ defmodule IndiePaperWeb.AuthorPageLive do
         {:ok,
          socket
          |> put_flash(:info, "The Author was not found, check the profile url.")
-         |> redirect(to: "/")}
+         |> redirect(to: "/secure/sign-in")}
 
       author ->
         published_books = Books.get_published_books(author)

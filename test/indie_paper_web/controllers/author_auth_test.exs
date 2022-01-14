@@ -62,7 +62,7 @@ defmodule IndiePaperWeb.AuthorAuthTest do
       refute get_session(conn, :author_token)
       refute conn.cookies[@remember_me_cookie]
       assert %{max_age: 0} = conn.resp_cookies[@remember_me_cookie]
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/secure/sign-in"
       refute Authors.get_author_by_session_token(author_token)
     end
 
@@ -84,7 +84,7 @@ defmodule IndiePaperWeb.AuthorAuthTest do
       conn = conn |> fetch_cookies() |> AuthorAuth.log_out_author()
       refute get_session(conn, :author_token)
       assert %{max_age: 0} = conn.resp_cookies[@remember_me_cookie]
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/secure/sign-in"
     end
   end
 

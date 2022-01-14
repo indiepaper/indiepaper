@@ -148,10 +148,6 @@ defmodule IndiePaperWeb.Router do
         resources "/products", ProductController, only: [:create, :edit, :update]
       end
 
-      get "/", PageController, :index
-      get "/privacy-policy", PageController, :privacy_policy
-      get "/terms-of-service", PageController, :terms_of_service
-
       live "/books/:slug", BookLive.Show, :show
     end
 
