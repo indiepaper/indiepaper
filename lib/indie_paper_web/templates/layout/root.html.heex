@@ -19,7 +19,7 @@
     <body class="flex flex-col h-screen antialiased text-gray-800 item-stretch md:text-primary-text">
         <header class="border-b-2 border-orange-400">
             <div class="flex flex-row justify-between items-center pt-6 pb-4 container-box">
-                <%= link to: Routes.author_session_path(@conn, :new), class: "flex flex-row items-center space-x-2 text-lg font-black text-gray-800", "data-test": "title" do %>
+                <%= link to: "/", class: "flex flex-row items-center space-x-2 text-lg font-black text-gray-800", "data-test": "title" do %>
                     <img src={Routes.static_path(@conn, "/images/logo.png")} alt="" class="w-[26px] h-[26px]" />
                     <span>IndiePaper</span>
                 <% end %>
