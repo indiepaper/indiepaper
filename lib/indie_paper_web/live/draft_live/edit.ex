@@ -26,7 +26,7 @@ defmodule IndiePaperWeb.DraftLive.Edit do
         {:ok,
          socket
          |> put_flash(:error, "You do not have access to that resource.")
-         |> redirect(to: Routes.page_path(socket, :index))}
+         |> redirect(to: Routes.author_session_path(socket, :new))}
     end
   end
 

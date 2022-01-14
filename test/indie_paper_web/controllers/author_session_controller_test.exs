@@ -28,10 +28,10 @@ defmodule IndiePaperWeb.AuthorSessionControllerTest do
         })
 
       assert get_session(conn, :author_token)
-      assert redirected_to(conn) =~ "/"
+      assert redirected_to(conn) =~ "/dashboard"
 
       # Now do a logged in request and assert on the menu
-      conn = get(conn, "/")
+      conn = get(conn, "/dashboard")
       response = html_response(conn, 200)
 
       assert response =~ "Dashboard"
