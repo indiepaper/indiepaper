@@ -40,7 +40,7 @@ defmodule IndiePaperWeb.AuthorOauthController do
       _ ->
         conn
         |> put_flash(:error, "Authentication Error")
-        |> redirect(to: "/")
+        |> redirect(to: "/secure/sign-in")
     end
   end
 

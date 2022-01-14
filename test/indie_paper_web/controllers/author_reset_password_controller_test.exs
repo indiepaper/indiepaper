@@ -25,7 +25,7 @@ defmodule IndiePaperWeb.AuthorResetPasswordControllerTest do
           "author" => %{"email" => author.email}
         })
 
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/secure/sign-in"
       assert get_flash(conn, :info) =~ "If your email is in our system"
       assert Repo.get_by!(Authors.AuthorToken, author_id: author.id).context == "reset_password"
     end
@@ -36,7 +36,7 @@ defmodule IndiePaperWeb.AuthorResetPasswordControllerTest do
           "author" => %{"email" => "unknown@example.com"}
         })
 
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/secure/sign-in"
       assert get_flash(conn, :info) =~ "If your email is in our system"
       assert Repo.all(Authors.AuthorToken) == []
     end
@@ -59,7 +59,7 @@ defmodule IndiePaperWeb.AuthorResetPasswordControllerTest do
 
     test "does not render reset password with invalid token", %{conn: conn} do
       conn = get(conn, Routes.author_reset_password_path(conn, :edit, "oops"))
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/secure/sign-in"
       assert get_flash(conn, :error) =~ "Reset password link is invalid or it has expired"
     end
   end
@@ -106,7 +106,7 @@ defmodule IndiePaperWeb.AuthorResetPasswordControllerTest do
 
     test "does not reset password with invalid token", %{conn: conn} do
       conn = put(conn, Routes.author_reset_password_path(conn, :update, "oops"))
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/secure/sign-in"
       assert get_flash(conn, :error) =~ "Reset password link is invalid or it has expired"
     end
   end

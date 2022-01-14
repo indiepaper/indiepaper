@@ -26,7 +26,7 @@ defmodule IndiePaperWeb.AuthorConfirmationController do
       "Confirmation Email has been sent, check for instructions"
     )
     |> redirect(
-      to: if(conn.assigns.current_author, do: Routes.dashboard_path(conn, :index), else: "/")
+      to: if(conn.assigns.current_author, do: Routes.dashboard_path(conn, :index), else: "/secure/sign-in")
     )
   end
 
@@ -46,7 +46,7 @@ defmodule IndiePaperWeb.AuthorConfirmationController do
         conn
         |> put_flash(:info, "Your account has been confirmed successfully.")
         |> redirect(
-          to: if(conn.assigns.current_author, do: Routes.dashboard_path(conn, :index), else: "/")
+          to: if(conn.assigns.current_author, do: Routes.dashboard_path(conn, :index), else: "/secure/sign-in")
         )
 
       :error ->
@@ -61,7 +61,7 @@ defmodule IndiePaperWeb.AuthorConfirmationController do
           %{} ->
             conn
             |> put_flash(:error, "Author confirmation link is invalid or it has expired.")
-            |> redirect(to: "/")
+            |> redirect(to: "/secure/sign-in")
         end
     end
   end

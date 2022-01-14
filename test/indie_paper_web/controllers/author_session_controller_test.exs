@@ -49,7 +49,7 @@ defmodule IndiePaperWeb.AuthorSessionControllerTest do
         })
 
       assert conn.resp_cookies["_indie_paper_web_author_remember_me"]
-      assert redirected_to(conn) =~ "/"
+      assert redirected_to(conn) =~ "/dashboard"
     end
 
     test "logs the author in with return_to on params", %{conn: conn, author: author} do
@@ -96,14 +96,14 @@ defmodule IndiePaperWeb.AuthorSessionControllerTest do
   describe "DELETE /authors/log_out" do
     test "logs the author out", %{conn: conn, author: author} do
       conn = conn |> log_in_author(author) |> delete(Routes.author_session_path(conn, :delete))
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/secure/sign-in"
       refute get_session(conn, :author_token)
       assert get_flash(conn, :info) =~ "logged out"
     end
 
     test "succeeds even if the author is not logged in", %{conn: conn} do
       conn = delete(conn, Routes.author_session_path(conn, :delete))
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/secure/sign-in"
       refute get_session(conn, :author_token)
       assert get_flash(conn, :info) =~ "logged out"
     end

@@ -25,7 +25,7 @@ defmodule IndiePaperWeb.AuthorConfirmationControllerTest do
           "author" => %{"email" => author.email}
         })
 
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/secure/sign-in"
       assert get_flash(conn, :info) =~ "Confirmation Email has been sent, check for instructions"
       assert Repo.get_by!(Authors.AuthorToken, author_id: author.id).context == "confirm"
     end
@@ -38,7 +38,7 @@ defmodule IndiePaperWeb.AuthorConfirmationControllerTest do
           "author" => %{"email" => author.email}
         })
 
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/secure/sign-in"
       assert get_flash(conn, :info) =~ "Confirmation Email has been sent, check for instructions"
       refute Repo.get_by(Authors.AuthorToken, author_id: author.id)
     end
@@ -49,7 +49,7 @@ defmodule IndiePaperWeb.AuthorConfirmationControllerTest do
           "author" => %{"email" => "unknown@example.com"}
         })
 
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/secure/sign-in"
       assert get_flash(conn, :info) =~ "Confirmation Email has been sent, check for instructions"
       assert Repo.all(Authors.AuthorToken) == []
     end
@@ -74,7 +74,7 @@ defmodule IndiePaperWeb.AuthorConfirmationControllerTest do
         end)
 
       conn = post(conn, Routes.author_confirmation_path(conn, :update, token))
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/secure/sign-in"
       assert get_flash(conn, :info) =~ "confirmed"
       assert Authors.get_author!(author.id).confirmed_at
       refute get_session(conn, :author_token)
@@ -82,7 +82,7 @@ defmodule IndiePaperWeb.AuthorConfirmationControllerTest do
 
       # When not logged in
       conn = post(conn, Routes.author_confirmation_path(conn, :update, token))
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/secure/sign-in"
       assert get_flash(conn, :error) =~ "Author confirmation link is invalid or it has expired"
 
       # When logged in
@@ -97,7 +97,7 @@ defmodule IndiePaperWeb.AuthorConfirmationControllerTest do
 
     test "does not confirm email with invalid token", %{conn: conn, author: author} do
       conn = post(conn, Routes.author_confirmation_path(conn, :update, "oops"))
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/secure/sign-in"
       assert get_flash(conn, :error) =~ "Author confirmation link is invalid or it has expired"
       refute Authors.get_author!(author.id).confirmed_at
     end
