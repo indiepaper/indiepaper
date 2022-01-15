@@ -1,4 +1,3 @@
-import StarterKit from "@tiptap/starter-kit";
 import { generateHTML } from "@tiptap/html";
 import { getEnabledExtensions } from "./draft_editor";
 
