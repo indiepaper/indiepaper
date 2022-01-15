@@ -1,7 +1,8 @@
 defmodule IndiePaper.RenderingEngine do
   alias IndiePaper.RenderingEngine.Latex
 
-  def to_latex!(content_json) do
-    Latex.to_latex!(content_json)
+  alias IndiePaper.Books
+
+  def to_pdf!(%Books.Book{} = book) do
   end
 end
