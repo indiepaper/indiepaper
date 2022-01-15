@@ -2,51 +2,51 @@ defmodule IndiePaper.TipTap.Latex do
   def to_latex(content_json) do
     """
     Test Latex things
-    #{parse(content_json)}
+    #{convert(content_json)}
     """
     |> IO.puts()
   end
 
-  def parse([head | []]) do
+  def convert([head | []]) do
     """
-    #{parse(head)}
-    """
-  end
-
-  def parse([head | rest]) do
-    """
-    #{parse(head)}
-
-    #{parse(rest)}
+    #{convert(head)}
     """
   end
 
-  def parse([]), do: ""
+  def convert([head | rest]) do
+    """
+    #{convert(head)}
 
-  def parse(%{"content" => content, "type" => "doc"}) do
+    #{convert(rest)}
+    """
+  end
+
+  def convert([]), do: ""
+
+  def convert(%{"content" => content, "type" => "doc"}) do
     """
     doc start
-    #{parse(content)}
+    #{convert(content)}
     doc end
     """
   end
 
-  def parse(%{"content" => content, "type" => "paragraph"}) do
+  def convert(%{"content" => content, "type" => "paragraph"}) do
     """
     p start
-    #{parse(content)}
+    #{convert(content)}
     p end
     """
   end
 
-  def parse(%{"type" => "text", "text" => text}) do
+  def convert(%{"type" => "text", "text" => text}) do
     text
   end
 
-  def parse(%{"type" => "heading", "content" => content, "attrs" => %{"level" => level}}) do
+  def convert(%{"type" => "heading", "content" => content, "attrs" => %{"level" => level}}) do
     """
     heading #{level} start
-    #{parse(content)}
+    #{convert(content)}
     heading #{level} end
     """
   end
