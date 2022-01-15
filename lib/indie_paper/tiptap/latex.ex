@@ -1,10 +1,9 @@
 defmodule IndiePaper.TipTap.Latex do
-  def to_latex(content_json) do
+  def to_latex!(content_json) do
     """
     Test Latex things
     #{convert(content_json)}
     """
-    |> IO.puts()
   end
 
   def convert([head | []]) do
@@ -25,7 +24,7 @@ defmodule IndiePaper.TipTap.Latex do
 
   def convert(%{"content" => content, "type" => "doc"}) do
     """
-    doc start
+    /begin
     #{convert(content)}
     doc end
     """

@@ -7,7 +7,7 @@ defmodule IndiePaper.TipTapTest do
     test "converts the given content_json to latex file" do
       chapter = insert(:chapter)
 
-      {:ok, latex} = TipTap.to_latex(chapter.content_json)
+      latex = TipTap.to_latex!(chapter.content_json)
 
       assert latex =~ "/begin"
     end
