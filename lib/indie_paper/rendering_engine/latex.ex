@@ -1,4 +1,4 @@
-defmodule IndiePaper.TipTap.Latex do
+defmodule IndiePaper.RenderingEngine.Latex do
   def to_latex!(content_json) do
     """
     Test Latex things
