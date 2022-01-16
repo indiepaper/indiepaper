@@ -89,6 +89,10 @@ defmodule IndiePaper.RenderingEngine.Latex do
     ""
   end
 
+  def convert(%{"type" => "hardBreak"}) do
+    "\n"
+  end
+
   def convert(%{"type" => "text", "text" => text}) do
     text
   end
