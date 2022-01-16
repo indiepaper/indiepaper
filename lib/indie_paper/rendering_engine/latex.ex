@@ -78,6 +78,20 @@ defmodule IndiePaper.RenderingEngine.Latex do
     """
   end
 
+  def convert(%{"type" => "bulletList", "content" => content}) do
+    """
+    \\begin{itemize}
+    #{convert(content)}
+    \\end{itemize}
+    """
+  end
+
+  def convert(%{"type" => "listItem", "content" => content}) do
+    """
+    \\item #{convert(content)}
+    """
+  end
+
   def convert(%{"type" => "paragraph", "content" => content}) do
     """
     \\par
@@ -91,6 +105,10 @@ defmodule IndiePaper.RenderingEngine.Latex do
 
   def convert(%{"type" => "hardBreak"}) do
     "\n"
+  end
+
+  def convert(%{"type" => "horizontalRule"}) do
+    "\\par\\noindent\\rule{\\textwidth}{0.4pt}"
   end
 
   def convert(%{"type" => "text", "text" => text}) do
