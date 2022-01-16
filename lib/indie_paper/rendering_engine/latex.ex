@@ -94,9 +94,11 @@ defmodule IndiePaper.RenderingEngine.Latex do
   end
 
   def convert(%{"type" => "heading", "content" => content, "attrs" => %{"level" => level}}) do
-    level = min(3, level - 1)
-    subsections = String.duplicate("sub", level)
-    "\\#{subsections}section*{#{convert(content)}}"
+    case level do
+      1 -> "\\section*{#{convert(content)}}"
+      2 -> "\\subsection*{#{convert(content)}}"
+      _ -> "\\subsubsection*{#{convert(content)}}"
+    end
   end
 
   def parse_mark(%{"type" => "link", "attrs" => %{"href" => href}}, text) do
