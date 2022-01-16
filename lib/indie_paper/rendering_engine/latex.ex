@@ -68,11 +68,15 @@ defmodule IndiePaper.RenderingEngine.Latex do
     """
   end
 
+  def convert(%{"type" => "paragraph"}) do
+    "\n"
+  end
+
   def convert(%{"type" => "text", "text" => text}) do
     text
   end
 
-  def convert(%{"type" => "heading", "content" => content, "attrs" => %{"level" => 1}}) do
+  def convert(%{"type" => "heading", "content" => content, "attrs" => %{"level" => _level}}) do
     """
     \\section*{#{convert(content)}}
     """
