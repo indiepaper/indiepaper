@@ -10,6 +10,5 @@ defmodule IndiePaper.RenderingEngine do
       book_with_author_chapters.author,
       book_with_author_chapters.draft.chapters
     )
-    |> IO.puts()
   end
 end
