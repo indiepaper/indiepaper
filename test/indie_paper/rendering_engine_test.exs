@@ -1,4 +1,4 @@
-defmodule IndiePaper.TipTapTest do
+defmodule IndiePaper.RenderingEngineTest do
   use IndiePaper.DataCase, async: true
 
   alias IndiePaper.RenderingEngine

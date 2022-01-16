@@ -32,7 +32,6 @@ defmodule IndiePaper.RenderingEngine.Latex do
     """
     #{convert_chapters(chapter)}
 
-
     #{convert_chapters(rest)}
     """
   end
@@ -40,28 +39,24 @@ defmodule IndiePaper.RenderingEngine.Latex do
   def convert_chapters([]), do: ""
 
   def convert([head | []]) do
-    """
-    #{convert(head)}
-    """
+    "#{convert(head)}"
   end
 
   def convert([head | rest]) do
     """
-    #{convert(head)}
-
-    #{convert(rest)}
+    #{convert(head)}#{convert(rest)}
     """
   end
 
   def convert([]), do: ""
 
-  def convert(%{"content" => content, "type" => "doc"}) do
+  def convert(%{"type" => "doc", "content" => content}) do
     """
     #{convert(content)}
     """
   end
 
-  def convert(%{"content" => content, "type" => "paragraph"}) do
+  def convert(%{"type" => "paragraph", "content" => content}) do
     """
     \\par
     #{convert(content)}
@@ -69,7 +64,7 @@ defmodule IndiePaper.RenderingEngine.Latex do
   end
 
   def convert(%{"type" => "paragraph"}) do
-    "\n"
+    ""
   end
 
   def convert(%{"type" => "text", "text" => text}) do

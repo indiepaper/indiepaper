@@ -47,3 +47,5 @@ dev.secret.exs
 
 # Ignore random elixir format files
 *-elixir-format.exs
+
+latex_book/
