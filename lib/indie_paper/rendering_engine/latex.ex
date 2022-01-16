@@ -15,8 +15,22 @@ defmodule IndiePaper.RenderingEngine.Latex do
         published_content_json: published_content_json,
         title: title
       }) do
+    chapter_title =
+      cond do
+        title in ["Introduction", "Preface"] ->
+          """
+          \\chapter*{#{title}}
+          \\addcontentsline{toc}{chapter}{\\protect\\numberline{~}#{title}}
+          """
+
+        true ->
+          """
+          \\chapter{#{title}}
+          """
+      end
+
     """
-    \\chapter{#{title}}
+    #{chapter_title}
 
     #{convert(published_content_json)}
     """

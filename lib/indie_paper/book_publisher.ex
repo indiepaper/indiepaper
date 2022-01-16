@@ -32,8 +32,7 @@ defmodule IndiePaper.BookPublisher do
     |> case do
       {:ok, %{book: published_book}} ->
         latex = RenderingEngine.to_latex!(published_book)
-        tmp_file = Path.join(__DIR__, "latex_book/book.tex")
-        File.write!(tmp_file, latex)
+        File.write!(Path.join(__DIR__, "latex_book/book.tex"), latex)
 
         {:ok, published_book}
     end
