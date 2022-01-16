@@ -58,11 +58,19 @@ defmodule IndiePaper.RenderingEngine.Latex do
 
   def convert([head | rest]) do
     """
-    #{convert(head)}#{convert(rest)}
+    #{convert(head)} #{convert(rest)}
     """
   end
 
   def convert([]), do: ""
+
+  def convert(%{"marks" => [mark | []]} = content) do
+    parse_mark(mark, convert(Map.delete(content, "marks")))
+  end
+
+  def convert(%{"marks" => [mark | rest]} = content) do
+    parse_mark(mark, convert(Map.put(content, "marks", rest)))
+  end
 
   def convert(%{"type" => "doc", "content" => content}) do
     """
@@ -85,9 +93,21 @@ defmodule IndiePaper.RenderingEngine.Latex do
     text
   end
 
-  def convert(%{"type" => "heading", "content" => content, "attrs" => %{"level" => _level}}) do
-    """
-    \\section*{#{convert(content)}}
-    """
+  def convert(%{"type" => "heading", "content" => content, "attrs" => %{"level" => level}}) do
+    level = min(3, level - 1)
+    subsections = String.duplicate("sub", level)
+    "\\#{subsections}section*{#{convert(content)}}"
+  end
+
+  def parse_mark(%{"type" => "link", "attrs" => %{"href" => href}}, text) do
+    "\\href{#{href}}{#{text}}"
+  end
+
+  def parse_mark(%{"type" => "bold"}, text) do
+    "\\textbf{#{text}}"
+  end
+
+  def parse_mark(%{"type" => "italic"}, text) do
+    "\\emph{#{text}}"
   end
 end
