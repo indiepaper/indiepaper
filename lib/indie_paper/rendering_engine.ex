@@ -3,7 +3,13 @@ defmodule IndiePaper.RenderingEngine do
   alias IndiePaper.Books
 
   def to_latex!(%Books.Book{} = book) do
-    book_with_author = Books.with_assoc(book, :author)
-    Latex.render_latex(book_with_author)
+    book_with_author_chapters = Books.with_assoc(book, [:author, draft: :chapters])
+
+    Latex.render_latex(
+      book,
+      book_with_author_chapters.author,
+      book_with_author_chapters.draft.chapters
+    )
+    |> IO.puts()
   end
 end

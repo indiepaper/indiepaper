@@ -2,20 +2,42 @@ defmodule IndiePaper.RenderingEngine.Latex do
   require EEx
 
   alias IndiePaper.Authors
+  alias IndiePaper.Chapters
 
   EEx.function_from_file(
     :def,
     :render_latex,
     Path.expand("./latex_template.tex.eex", __DIR__),
-    [:book]
+    [:book, :author, :chapters]
   )
 
-  def to_latex!(content_json) do
+  def convert_chapters(%Chapters.Chapter{
+        published_content_json: published_content_json,
+        title: title
+      }) do
     """
-    Test Latex things
-    #{convert(content_json)}
+    \\chapter{#{title}}
+
+    #{convert(published_content_json)}
     """
   end
+
+  def convert_chapters([chapter | []]) do
+    """
+    #{convert_chapters(chapter)}
+    """
+  end
+
+  def convert_chapters([chapter | rest]) do
+    """
+    #{convert_chapters(chapter)}
+
+
+    #{convert_chapters(rest)}
+    """
+  end
+
+  def convert_chapters([]), do: ""
 
   def convert([head | []]) do
     """
@@ -35,17 +57,14 @@ defmodule IndiePaper.RenderingEngine.Latex do
 
   def convert(%{"content" => content, "type" => "doc"}) do
     """
-    /begin
     #{convert(content)}
-    doc end
     """
   end
 
   def convert(%{"content" => content, "type" => "paragraph"}) do
     """
-    p start
+    \\par
     #{convert(content)}
-    p end
     """
   end
 
@@ -53,11 +72,9 @@ defmodule IndiePaper.RenderingEngine.Latex do
     text
   end
 
-  def convert(%{"type" => "heading", "content" => content, "attrs" => %{"level" => level}}) do
+  def convert(%{"type" => "heading", "content" => content, "attrs" => %{"level" => 1}}) do
     """
-    heading #{level} start
-    #{convert(content)}
-    heading #{level} end
+    \\section*{#{convert(content)}}
     """
   end
 end
