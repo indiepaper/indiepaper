@@ -1,4 +1,15 @@
 defmodule IndiePaper.RenderingEngine.Latex do
+  require EEx
+
+  alias IndiePaper.Authors
+
+  EEx.function_from_file(
+    :def,
+    :render_latex,
+    Path.expand("./latex_template.tex.eex", __DIR__),
+    [:book]
+  )
+
   def to_latex!(content_json) do
     """
     Test Latex things
