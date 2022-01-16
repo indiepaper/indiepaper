@@ -113,6 +113,16 @@ defmodule IndiePaper.RenderingEngine.Latex do
 
   def convert(%{"type" => "text", "text" => text}) do
     text
+    |> String.replace("\\", "\\textbackslash")
+    |> String.replace("\&", "\\&")
+    |> String.replace("\%", "\\%")
+    |> String.replace("\$", "\\$")
+    |> String.replace("\#", "\\#")
+    |> String.replace("\_", "\\_")
+    |> String.replace("\{", "\\{")
+    |> String.replace("\}", "\\}")
+    |> String.replace("\~", "\\textasciitilde")
+    |> String.replace("\^", "\\textasciicircum")
   end
 
   def convert(%{"type" => "heading", "content" => content, "attrs" => %{"level" => level}}) do
