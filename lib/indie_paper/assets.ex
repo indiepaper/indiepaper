@@ -12,4 +12,7 @@ defmodule IndiePaper.Assets do
     Ecto.build_assoc(book, :assets)
     |> Asset.changeset(%{type: :readable, title: title})
   end
+
+  def pdf?(%Asset{type: :pdf}), do: true
+  def pdf?(_), do: false
 end

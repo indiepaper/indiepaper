@@ -156,4 +156,9 @@ defmodule IndiePaper.Books do
   def is_vanilla_book?(%Book{} = book) do
     book.publishing_type == :vanilla
   end
+
+  def get_assets(book) do
+    book_with_assets = book |> Repo.preload(:assets)
+    book_with_assets.assets
+  end
 end
