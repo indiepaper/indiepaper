@@ -20,6 +20,9 @@ defmodule IndiePaper.BookPublisher do
       &maybe_insert_default_product(&1, &2, book)
     )
     |> Multi.update(:book, Books.publish_book_changeset(book))
+    |> Oban.insert(:typeset_book, fn %{book: published_book} ->
+      IndiePaper.Workers.TypesetWorker.new(%{id: published_book.id})
+    end)
   end
 
   def publish_book(%Books.Book{} = book) do
@@ -31,8 +34,8 @@ defmodule IndiePaper.BookPublisher do
     |> Repo.transaction()
     |> case do
       {:ok, %{book: published_book}} ->
-        latex = TypesettingEngine.to_latex!(published_book)
-        File.write!(Path.join(__DIR__, "latex_book/book.tex"), latex)
+        # latex = TypesettingEngine.to_latex!(published_book)
+        # File.write!(Path.join(__DIR__, "latex_book/book.tex"), latex)
 
         {:ok, published_book}
     end
