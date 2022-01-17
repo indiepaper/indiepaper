@@ -7,7 +7,6 @@ defmodule IndiePaper.BookPublisher do
   alias IndiePaper.Chapters
   alias IndiePaper.Products
   alias IndiePaper.ChapterProducts
-  alias IndiePaper.TypesettingEngine
 
   def maybe_create_default_product_and_publish_multi(multi, book) do
     multi

@@ -3,7 +3,7 @@ defmodule IndiePaper.Workers.TypesetWorker do
 
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{"id" => book_id}}) do
-    IO.inspect(book_id)
+    IO.inspect("Worker Working, #{book_id}")
     :ok
   end
 end

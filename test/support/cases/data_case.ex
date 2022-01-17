@@ -18,7 +18,7 @@ defmodule IndiePaper.DataCase do
 
   using do
     quote do
-      alias IndiePaper.Repo
+      use Oban.Testing, repo: IndiePaper.Repo
 
       import Ecto
       import Ecto.Changeset
@@ -26,6 +26,8 @@ defmodule IndiePaper.DataCase do
       import IndiePaper.DataCase
       import IndiePaper.Factory
       import Swoosh.TestAssertions
+
+      alias IndiePaper.Repo
     end
   end
 
