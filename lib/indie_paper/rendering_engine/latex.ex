@@ -15,6 +15,9 @@ defmodule IndiePaper.RenderingEngine.Latex do
         published_content_json: published_content_json,
         title: title
       }) do
+    [_first | rest] = Map.get(published_content_json, "content")
+    published_content_json = Map.put(published_content_json, "content", rest)
+
     chapter_title =
       cond do
         title in ["Introduction", "Preface"] ->
