@@ -1,5 +1,5 @@
 \documentclass[11pt, twoside, openright]{book}
-\usepackage[size=novel, bleed=true, paper=cream, color=false]{createspace}
+\usepackage[size=novel, bleed=true, paper=cream, color=false, noicc=true]{createspace}
 
 \title{<%= book.title %>}
 \author{<%= Authors.get_full_name(author) %>}
