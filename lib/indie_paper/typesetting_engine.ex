@@ -1,5 +1,5 @@
-defmodule IndiePaper.RenderingEngine do
-  alias IndiePaper.RenderingEngine.Latex
+defmodule IndiePaper.TypesettingEngine do
+  alias IndiePaper.TypesettingEngine.Latex
   alias IndiePaper.Books
 
   def to_latex!(%Books.Book{} = book) do

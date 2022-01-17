@@ -1,4 +1,4 @@
-defmodule IndiePaper.RenderingEngine.Latex do
+defmodule IndiePaper.TypesettingEngine.Latex do
   require EEx
 
   alias IndiePaper.Authors

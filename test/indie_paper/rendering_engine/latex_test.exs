@@ -1,7 +1,7 @@
-defmodule IndiePaper.RenderingEngine.LatexTest do
+defmodule IndiePaper.TypesettingEngine.LatexTest do
   use IndiePaper.DataCase, async: true
 
-  alias IndiePaper.RenderingEngine.Latex
+  alias IndiePaper.TypesettingEngine.Latex
 
   describe "convert/1" do
     test "correctly parses link" do

@@ -45,6 +45,9 @@ config :stripity_stripe,
 config :indie_paper,
   rate_limit_plug_enabled: false
 
+# OBAN
+config :indie_paper, Oban, queues: false, plugins: false
+
 # Mock S3 testing
 config :ex_aws,
   access_key_id: "AccessKey",

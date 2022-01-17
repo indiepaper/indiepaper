@@ -7,7 +7,7 @@ defmodule IndiePaper.BookPublisher do
   alias IndiePaper.Chapters
   alias IndiePaper.Products
   alias IndiePaper.ChapterProducts
-  alias IndiePaper.RenderingEngine
+  alias IndiePaper.TypesettingEngine
 
   def maybe_create_default_product_and_publish_multi(multi, book) do
     multi
@@ -31,7 +31,7 @@ defmodule IndiePaper.BookPublisher do
     |> Repo.transaction()
     |> case do
       {:ok, %{book: published_book}} ->
-        latex = RenderingEngine.to_latex!(published_book)
+        latex = TypesettingEngine.to_latex!(published_book)
         File.write!(Path.join(__DIR__, "latex_book/book.tex"), latex)
 
         {:ok, published_book}

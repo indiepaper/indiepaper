@@ -1,4 +1,4 @@
-alias IndiePaper.{Repo, Authors, Books, Drafts, Chapters, RenderingEngine}
+alias IndiePaper.{Repo, Authors, Books, Drafts, Chapters, TypesettingEngine}
 
 defmodule IEXHelpers do
   def copy(term) do

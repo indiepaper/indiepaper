@@ -64,22 +64,22 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-# Setup Default currency for Money
+# MONEY
 config :money,
   default_currency: :USD
 
-# Setup UeberAuth
+# UEBERAUTH
 config :ueberauth, Ueberauth,
   providers: [
     google: {Ueberauth.Strategy.Google, []},
     twitter: {Ueberauth.Strategy.Twitter, []}
   ]
 
-# Setup Stripe API Level
+# STRIPE_API
 config :stripity_stripe,
   api_version: "2020-08-27"
 
-# Setup EX_AWS
+# EX_AWS
 config :ex_aws,
   debug_requests: true,
   json_codec: Jason
@@ -89,6 +89,12 @@ config :ex_aws, :s3,
   host: "nyc3.digitaloceanspaces.com",
   cdn_host: "nyc3.cdn.digitaloceanspaces.com",
   region: "nyc3"
+
+# OBAN
+config :indie_paper, Oban,
+  repo: IndiePaper.Repo,
+  plugins: [Oban.Plugins.Pruner],
+  queues: [default: 10, typeset: 20]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
