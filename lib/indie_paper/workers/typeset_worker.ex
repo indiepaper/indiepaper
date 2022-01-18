@@ -4,6 +4,7 @@ defmodule IndiePaper.Workers.TypesetWorker do
   alias IndiePaper.Books
   alias IndiePaper.Assets
   alias IndiePaper.TypesettingEngine
+  alias IndiePaper.ExternalAssetHandler
 
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{"id" => book_id}}) do
@@ -16,10 +17,14 @@ defmodule IndiePaper.Workers.TypesetWorker do
     Path.join(:code.priv_dir(:indie_paper), "/typeset/latex/createspace")
     |> File.cp_r!(latex_file_dir)
 
-    System.cmd("latexmk", ["book.tex", "-pdf"], cd: latex_file_dir, into: "")
+    System.cmd("latexmk", ["book.tex", "-pdf"], cd: latex_file_dir, stderr_to_stdout: true)
 
     {:ok, published_book} = Books.publish_book(book)
-    pdf_asset = Assets.create_or_get_pdf_asset(published_book)
+    pdf_asset = Assets.create_or_get_pdf_asset!(published_book)
+
+    pdf_file = File.read!(Path.join(latex_file_dir, "book.pdf"))
+
+    {:ok, _} = ExternalAssetHandler.upload_file(pdf_asset.url, pdf_file, "application/pdf")
 
     :ok
   end
