@@ -20,7 +20,7 @@ defmodule IndiePaperWeb.BookLive.New do
         book_with_draft = Books.with_assoc(book, :draft)
 
         {:noreply,
-         socket |> redirect(to: Routes.draft_edit_path(socket, :edit, book_with_draft.draft))}
+         socket |> push_redirect(to: Routes.draft_edit_path(socket, :edit, book_with_draft.draft))}
 
       {:error, changeset} ->
         {:noreply, assign(socket, changeset: changeset, form_submit_error: true)}
