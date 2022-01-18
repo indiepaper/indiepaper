@@ -21,7 +21,7 @@ defmodule IndiePaper.Workers.TypesetWorker do
     Path.join(:code.priv_dir(:indie_paper), "/typeset/latex/createspace")
     |> File.cp_r!(latex_file_dir)
 
-    System.cmd("latexmk", ["book.tex", "-pdf"], cd: latex_file_dir)
+    System.cmd("latexmk", ["book.tex", "-pdf"], cd: latex_file_dir, stderr_to_stdout: true)
 
     {:ok, published_book} = Books.publish_book(book)
     pdf_asset = Assets.create_or_get_pdf_asset!(published_book)
