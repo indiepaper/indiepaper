@@ -40,6 +40,13 @@ defmodule IndiePaper.Services.S3Handler do
     "https://#{bucket_name()}.#{@cdn_host}/#{file}"
   end
 
+  def get_signed_read_url(file) do
+    {:ok, url} =
+      ExAws.S3.presigned_url(ExAws.Config.new(:s3), :get, bucket_name(), file, expires_in: 7200)
+
+    url
+  end
+
   def delete_objects(objects) do
     ExAws.S3.delete_all_objects(bucket_name(), objects) |> ExAws.request()
   end

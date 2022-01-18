@@ -14,4 +14,18 @@ defmodule IndiePaperWeb.DashboardLiveTest do
 
     refute response =~ "Connect Stripe</a>"
   end
+
+  test "show assets on Dashboard", %{conn: conn} do
+    author = insert(:author)
+    insert(:book, author: author, assets: [build(:asset, type: :pdf, title: "PDF")])
+
+    html =
+      conn
+      |> log_in_author(author)
+      |> get(Routes.dashboard_path(conn, :index))
+      |> html_response(200)
+
+    assert html =~ "Assets"
+    assert html =~ "PDF"
+  end
 end

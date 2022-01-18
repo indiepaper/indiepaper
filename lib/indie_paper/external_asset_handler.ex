@@ -17,6 +17,10 @@ defmodule IndiePaper.ExternalAssetHandler do
     S3Handler.get_public_read_url(asset)
   end
 
+  def get_private_url(asset) do
+    S3Handler.get_signed_read_url(asset)
+  end
+
   def delete_assets(assets_list) do
     S3Handler.delete_objects(assets_list)
   end

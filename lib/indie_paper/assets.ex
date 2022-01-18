@@ -2,8 +2,11 @@ defmodule IndiePaper.Assets do
   import Ecto.Query
 
   alias IndiePaper.Repo
+  alias IndiePaperWeb.Router.Helpers, as: Routes
+  alias IndiePaperWeb.Endpoint
 
   alias IndiePaper.Assets.Asset
+  alias IndiePaper.ExternalAssetHandler
 
   def get_asset_of_book_query(book), do: from(a in Asset, where: a.book_id == ^book.id)
 
@@ -35,6 +38,17 @@ defmodule IndiePaper.Assets do
       pdf_asset ->
         pdf_asset
     end
+  end
+
+  def get_url_or_path(%{type: :readable} = asset) do
+    book = get_book(asset)
+    Routes.book_read_path(Endpoint, :index, book)
+  end
+
+  def get_url_or_path(%{type: _, url: url}), do: ExternalAssetHandler.get_private_url(url)
+
+  def get_book(asset) do
+    asset |> Repo.preload(:book) |> Map.get(:book)
   end
 
   def pdf?(%Asset{type: :pdf}), do: true
