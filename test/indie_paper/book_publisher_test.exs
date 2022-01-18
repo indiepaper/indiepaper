@@ -12,6 +12,7 @@ defmodule IndiePaper.BookPublisherTest do
 
       {:ok, book} = BookPublisher.publish_book(book)
       assert Books.is_published?(book)
+      assert_enqueued(worker: IndiePaper.Workers.TypesetWorker, args: %{id: book.id})
 
       book = book |> Books.with_assoc(:draft)
       chapters = Chapters.list_chapters(book.draft)

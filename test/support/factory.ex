@@ -71,7 +71,8 @@ defmodule IndiePaper.Factory do
   def asset_factory do
     %IndiePaper.Assets.Asset{
       type: :readable,
-      title: sequence("Asset Title")
+      title: sequence("Asset Title"),
+      url: sequence("/private/assets/asset")
     }
   end
 

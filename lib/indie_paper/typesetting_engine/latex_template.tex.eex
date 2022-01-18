@@ -1,0 +1,15 @@
+\documentclass[11pt, twoside, openright]{book}
+\usepackage[size=novel, bleed=true, paper=cream, color=false, noicc=true]{createspace}
+
+\title{<%= book.title %>}
+\author{<%= Authors.get_full_name(author) %>}
+
+\begin{document}
+
+\newpage
+\tableofcontents
+\newpage
+
+<%= convert_chapters(chapters) %>
+
+\end{document}

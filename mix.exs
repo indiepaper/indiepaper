@@ -71,7 +71,8 @@ defmodule IndiePaper.MixProject do
       {:sweet_xml, "~> 0.6"},
       {:mogrify, "~> 0.9.1"},
       {:slugify, "~> 1.3"},
-      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev}
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
+      {:oban, "~> 2.10"}
     ]
   end
 
