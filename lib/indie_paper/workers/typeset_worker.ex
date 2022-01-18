@@ -10,13 +10,9 @@ defmodule IndiePaper.Workers.TypesetWorker do
   def perform(%Oban.Job{args: %{"id" => book_id}}) do
     book = Books.get_book!(book_id)
 
-    IO.inspect("JOB START")
-
     latex_file_dir =
       TypesettingEngine.to_latex!(book)
       |> write_latex_file!(book.id)
-
-    IO.inspect(latex_file_dir)
 
     Path.join(:code.priv_dir(:indie_paper), "/typeset/latex/createspace")
     |> File.cp_r!(latex_file_dir)
@@ -30,7 +26,6 @@ defmodule IndiePaper.Workers.TypesetWorker do
 
     {:ok, _} = ExternalAssetHandler.upload_file(pdf_asset.url, pdf_file, "application/pdf")
 
-    IO.inspect("JOB COMPLETED")
     :ok
   end
 
