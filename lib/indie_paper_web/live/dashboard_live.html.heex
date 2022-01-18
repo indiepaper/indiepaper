@@ -152,14 +152,14 @@
                         </div>
 
                         <%= if IndiePaper.Books.is_published?(book) or Books.is_pre_order_book?(book)  do %>
-                            <div class="">
-                                <div class="flex flex-row justify-between items-center py-3 px-6 border-y border-secondary-border">
+                            <div class="pt-4 border-t border-secondary-border">
+                                <div class="flex flex-row justify-between items-center py-3 px-6">
                                     <p class="text-sm font-bold">Assets</p>
                                 </div>
-                                <div class="flex flex-col items-stretch">
+                                <div class="flex flex-col items-stretch divide-y border-y border-lightest-border divide-lightest-border" >
                                     <%= for asset <- book.assets do %>
                                         <button phx-click="goto_asset_url" phx-value-asset_id={asset.id}>
-                                            <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-lightest-border">
+                                            <div class="flex flex-row justify-between items-center py-3 px-6">
                                                 <div class="flex flex-col items-start">
                                                     <p class="font-medium text-gray-600" data-test="product-title"><%= asset.title %></p>
                                                     <p class="text-sm secondary-text"><%= asset.url %></p>
@@ -174,14 +174,14 @@
                                     <% end %>
                                 </div>
                             </div>
-                            <div class="">
-                                <div class="flex flex-row justify-between items-center py-3 px-6 border-y border-secondary-border">
+                            <div class="pt-6">
+                                <div class="flex flex-row justify-between items-center py-3 px-6">
                                     <p class="text-sm font-bold">Products</p>
                                 </div>
-                                <div>
+                                <div class="divide-y border-y border-lightest-border divide-lightest-border">
                                     <%= for product <- book.products do %>
                                         <%= link to: Routes.book_product_path(@socket, :edit, book, product), "data-test": "product-edit" do %>
-                                            <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-lightest-border">
+                                            <div class="flex flex-row justify-between items-center py-3 px-6">
                                                 <div>
                                                     <p class="font-medium text-gray-600" data-test="product-title"><%= product.title %></p>
                                                     <p class="text-sm secondary-text"><%= product.description %></p>
