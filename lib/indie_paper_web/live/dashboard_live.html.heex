@@ -153,15 +153,15 @@
 
                         <%= if IndiePaper.Books.is_published?(book) or Books.is_pre_order_book?(book)  do %>
                             <div class="">
-                                <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-primary-border">
-                                    <p class="text-sm font-medium">Assets</p>
+                                <div class="flex flex-row justify-between items-center py-3 px-6 border-y border-secondary-border">
+                                    <p class="text-sm font-bold">Assets</p>
                                 </div>
-                                <div>
+                                <div class="flex flex-col items-stretch">
                                     <%= for asset <- book.assets do %>
-                                        <%= link to: Assets.get_url_or_path(asset), "data-test": "product-edit" do %>
+                                        <button phx-click="goto_asset_url" phx-value-asset_id={asset.id}>
                                             <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-lightest-border">
-                                                <div>
-                                                    <p class="font-medium" data-test="product-title"><%= asset.title %></p>
+                                                <div class="flex flex-col items-start">
+                                                    <p class="font-medium text-gray-600" data-test="product-title"><%= asset.title %></p>
                                                     <p class="text-sm secondary-text"><%= asset.url %></p>
                                                 </div>
                                                 <div class="flex flex-row items-center space-x-1.5">
@@ -170,20 +170,20 @@
                                                     </svg>
                                                 </div>
                                             </div>
-                                        <% end %>
+                                        </button>
                                     <% end %>
                                 </div>
                             </div>
                             <div class="">
-                                <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-primary-border">
-                                    <p class="text-sm font-medium">Products</p>
+                                <div class="flex flex-row justify-between items-center py-3 px-6 border-y border-secondary-border">
+                                    <p class="text-sm font-bold">Products</p>
                                 </div>
                                 <div>
                                     <%= for product <- book.products do %>
                                         <%= link to: Routes.book_product_path(@socket, :edit, book, product), "data-test": "product-edit" do %>
                                             <div class="flex flex-row justify-between items-center py-3 px-6 border-t border-lightest-border">
                                                 <div>
-                                                    <p class="font-medium" data-test="product-title"><%= product.title %></p>
+                                                    <p class="font-medium text-gray-600" data-test="product-title"><%= product.title %></p>
                                                     <p class="text-sm secondary-text"><%= product.description %></p>
                                                 </div>
                                                 <div class="flex flex-row items-center space-x-1.5">

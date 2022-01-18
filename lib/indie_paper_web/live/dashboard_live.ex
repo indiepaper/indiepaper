@@ -14,4 +14,11 @@ defmodule IndiePaperWeb.DashboardLive do
 
     {:ok, assign(socket, books: books, page_title: "Dashboard")}
   end
+
+  @impl true
+  def handle_event("goto_asset_url", %{"asset_id" => asset_id}, socket) do
+    asset = Assets.get_asset!(asset_id)
+
+    {:noreply, socket |> redirect(external: Assets.get_asset_url(asset))}
+  end
 end
