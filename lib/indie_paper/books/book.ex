@@ -34,7 +34,7 @@ defmodule IndiePaper.Books.Book do
     field :promo_images, {:array, :string}, null: false, default: []
 
     has_one :draft, IndiePaper.Drafts.Draft
-    has_many :products, IndiePaper.Products.Product
+    has_many :products, IndiePaper.Products.Product, preload_order: [desc: :updated_at]
     has_many :assets, IndiePaper.Assets.Asset
     belongs_to :author, IndiePaper.Authors.Author
 
