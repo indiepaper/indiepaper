@@ -17,10 +17,26 @@ defmodule IndiePaperWeb.Features.AuthorCanCreateProductsForSaleTest do
 
     {:ok, _view, html} =
       product_view
-      |> form("[data-test=product-form]", %{product: product_params})
+      |> form("#product-form", %{product: product_params})
       |> render_submit()
       |> follow_redirect(conn, Routes.dashboard_path(conn, :index))
 
     assert html =~ product_params[:title]
+  end
+
+  test "author can update products", %{conn: conn} do
+    book = insert(:book, products: [])
+    product = insert(:product, book: book)
+    conn = log_in_author(conn, book.author)
+
+    {:ok, view, _html} = live(conn, Routes.book_product_edit_path(conn, :edit, book, product))
+
+    {:ok, _view, html} =
+      view
+      |> form("#product-form", %{product: %{title: "Updated title"}})
+      |> render_submit()
+      |> follow_redirect(conn, Routes.dashboard_path(conn, :index))
+
+    assert html =~ "Updated title"
   end
 end

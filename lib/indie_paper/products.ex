@@ -11,7 +11,9 @@ defmodule IndiePaper.Products do
   alias IndiePaper.Repo
   alias IndiePaper.Products.Product
 
-  def change_product(%Product{} = product \\ %Product{}, attrs \\ %{}) do
+  def new_product(), do: %Product{}
+
+  def change_product(%Product{} = product, attrs \\ %{}) do
     product
     |> Product.changeset(attrs)
   end

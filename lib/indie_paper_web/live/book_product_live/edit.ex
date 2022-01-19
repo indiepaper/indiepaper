@@ -11,13 +11,12 @@ defmodule IndiePaperWeb.BookProductLive.Edit do
   def mount(%{"book_slug" => book_slug, "id" => product_id}, _session, socket) do
     book = Books.get_book_from_slug!(book_slug)
     product = Products.get_product!(product_id)
-    changeset = Products.change_product(product)
 
     with :ok <-
            Bodyguard.permit(Products, :update_product, socket.assigns.current_author, product) do
       {:ok,
        socket
-       |> assign(book: book, product: product, changeset: changeset, form_submit_error: false)}
+       |> assign(book: book, product: product)}
     end
   end
 end

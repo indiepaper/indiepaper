@@ -5,44 +5,13 @@
             <h1 class="page-heading">Create new Product</h1>
             <p class="page-description">Products are what your readers can purchase. Bundle your book assets, or upload custom assets to sell here.</p>
             <div class="mt-16">
-                <.form let={f} for={@changeset} data-test="product-form" phx-submit="create_product">
-                <%= if @form_submit_error do %>
-                    <div class="form-error-box">
-                        <p>Oops, Something went wrong. Please check errors below</p>
-                    </div>
-                <% end %>
-
-                <div class="form-container">
-                    <div class="w-full md:flex-row md:items-start md:space-y-0 md:space-x-4 form-container">
-                        <div class="flex-1 input-container">
-                            <%= label f, :title, class: "input-label"  %>
-                            <%= text_input f, :title, class: "form-input"  %>
-                            <p class="input-error">
-                                <%= error_tag f, :title %>
-                            </p>
-                        </div>
-
-                        <div class="md:w-56 input-container">
-                            <%= label f, :price, class: "input-label"  %>
-                            <%= text_input f, :price, class: "form-input", placeholder: "$15.00"  %>
-                            <p class="input-error">
-                                <%= error_tag f, :price %>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="input-container">
-                        <%= label f, :description, class: "input-label"  %>
-                        <%= text_input f, :description, class: "form-input"  %>
-                        <p class="input-error">
-                            <%= error_tag f, :description %>
-                        </p>
-                    </div>
-
-                    <%= submit "Save Product", class: "primary-button" %>
-                </div>
-                </.form>
-
+                <.live_component
+                module={IndiePaperWeb.BookProductLive.FormComponent}
+                id={@product.id || :new}
+                action={@live_action}
+                product={@product}
+                book={@book}
+                />
             </div>
         </div>
     </div>
