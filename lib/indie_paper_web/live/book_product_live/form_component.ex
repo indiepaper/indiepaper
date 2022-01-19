@@ -41,4 +41,7 @@ defmodule IndiePaperWeb.BookProductLive.FormComponent do
         {:noreply, socket |> assign(changeset: changeset, form_submit_error: true)}
     end
   end
+
+  def submit_text(:new), do: "Create product"
+  def submit_text(:edit), do: "Update product"
 end

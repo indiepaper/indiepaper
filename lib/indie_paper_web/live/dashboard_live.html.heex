@@ -117,7 +117,7 @@
                                 <% end %>
                             <% end %>
                         </div>
-                        <div class="p-6">
+                        <div class="py-8 px-6">
                             <%= live_redirect to: (if IndiePaper.Books.is_published?(book), do: Routes.book_show_path(@socket, :show, book), else: Routes.draft_edit_path(@socket, :edit, book.draft)) , class: "block" do %>
                                 <%= if IndiePaper.Books.has_promo_images?(book) do %>
                                     <div class="mb-6 aspect-h-1 aspect-w-1 sm:aspect-w-3">
@@ -144,29 +144,8 @@
                         </div>
 
                         <%= if IndiePaper.Books.is_published?(book) do %>
-                            <div class="pt-4 border-t border-secondary-border">
-                                <div class="flex flex-row justify-between items-center py-3 px-6">
-                                    <p class="text-sm font-bold">Assets</p>
-                                </div>
-                                <div class="flex flex-col items-stretch divide-y border-y border-lightest-border divide-lightest-border" >
-                                    <%= for asset <- book.assets do %>
-                                        <button phx-click="goto_asset_url" phx-value-asset_id={asset.id}>
-                                            <div class="flex flex-row justify-between items-center py-3 px-6">
-                                                <div class="flex flex-col items-start">
-                                                    <p class="font-medium text-gray-600" data-test="product-title"><%= asset.title %></p>
-                                                </div>
-                                                <div class="flex flex-row items-center space-x-1.5">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </button>
-                                    <% end %>
-                                </div>
-                            </div>
-                            <div class="pt-6">
-                                <div class="flex flex-row justify-between items-center py-3 px-6">
+                            <div class="">
+                                <div class="flex flex-row justify-between items-center py-3 px-6 border-y border-secondary-border">
                                     <p class="text-sm font-bold">Products</p>
                                     <%= live_redirect to: Routes.book_product_new_path(@socket, :new, book), class: "secondary-link", data: [test: "add-new-product"] do %>
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -175,7 +154,7 @@
                                         <span>Add new</span>
                                     <% end %>
                                 </div>
-                                <div class="divide-y border-y border-lightest-border divide-lightest-border">
+                                <div class="flex flex-col items-stretch divide-y divide-lightest-border">
                                     <%= for product <- book.products do %>
                                         <%= live_redirect to: Routes.book_product_edit_path(@socket, :edit, book, product), "data-test": "product-edit" do %>
                                             <div class="flex flex-row justify-between items-center py-3 px-6">
@@ -191,6 +170,21 @@
                                                 </div>
                                             </div>
                                         <% end %>
+                                    <% end %>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="flex flex-row justify-between items-center py-3 px-6 border-y border-secondary-border">
+                                    <p class="text-sm font-bold">Assets</p>
+                                </div>
+                                <div class="flex flex-row items-center py-3 px-6 space-x-4" >
+                                    <%= for asset <- book.assets do %>
+                                        <button phx-click="goto_asset_url" phx-value-asset_id={asset.id} class="py-2 text-sm secondary-button">
+                                            <span><%= asset.title %></span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </button>
                                     <% end %>
                                 </div>
                             </div>
