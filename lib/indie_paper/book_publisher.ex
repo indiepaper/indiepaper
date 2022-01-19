@@ -33,9 +33,6 @@ defmodule IndiePaper.BookPublisher do
     |> Repo.transaction()
     |> case do
       {:ok, %{book: published_book}} ->
-        # latex = TypesettingEngine.to_latex!(published_book)
-        # File.write!(Path.join(__DIR__, "latex_book/book.tex"), latex)
-
         {:ok, published_book}
     end
   end

@@ -112,6 +112,9 @@ defmodule IndiePaperWeb.Router do
       resources "/books", BookController, only: [], param: "slug" do
         resources "/publication", PublicationController, only: [:create]
       end
+
+      live "/books/:book_slug/products/new", BookProductLive.New, :new
+      live "/books/:book_slug/products/:id/edit", BookProductLive.Edit, :edit
     end
 
     scope "/", IndiePaperWeb do
@@ -145,7 +148,6 @@ defmodule IndiePaperWeb.Router do
 
       resources "/books", BookController, only: [], param: "slug" do
         live "/read", ReadLive, :index
-        resources "/products", ProductController, only: [:create, :edit, :update]
       end
 
       live "/books/:slug", BookLive.Show, :show

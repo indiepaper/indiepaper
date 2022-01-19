@@ -179,7 +179,7 @@
                                 </div>
                                 <div class="divide-y border-y border-lightest-border divide-lightest-border">
                                     <%= for product <- book.products do %>
-                                        <%= link to: Routes.book_product_path(@socket, :edit, book, product), "data-test": "product-edit" do %>
+                                        <%= live_redirect to: Routes.book_product_edit_path(@socket, :edit, book, product), "data-test": "product-edit" do %>
                                             <div class="flex flex-row justify-between items-center py-3 px-6">
                                                 <div>
                                                     <p class="font-medium text-gray-600" data-test="product-title"><%= product.title %></p>
