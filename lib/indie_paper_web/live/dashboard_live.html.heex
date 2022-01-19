@@ -143,7 +143,7 @@
                             </div>
                         </div>
 
-                        <%= if IndiePaper.Books.is_published?(book) or Books.is_pre_order_book?(book)  do %>
+                        <%= if IndiePaper.Books.is_published?(book) do %>
                             <div class="pt-4 border-t border-secondary-border">
                                 <div class="flex flex-row justify-between items-center py-3 px-6">
                                     <p class="text-sm font-bold">Assets</p>
