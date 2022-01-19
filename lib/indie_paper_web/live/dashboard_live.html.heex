@@ -99,15 +99,12 @@
                 <%= for book <- @books do %>
                     <div class="items-stretch p-0 primary-card">
                         <div class="flex flex-row justify-between items-center py-3 px-6 border-b border-secondary-border">
-                            <%= if IndiePaper.Books.is_pending_publication?(book)  do %>
-                                <span data-test="book-status" class="py-1 px-2 text-xs font-medium rounded-lg border text-stone-700 bg-stone-100 border-stone-200">Pending publication</span>
+                            <%= if IndiePaper.Books.is_published?(book)  do %>
+                                <span data-test="book-status" class="py-1 px-2 text-xs font-medium text-green-800 bg-green-100 rounded-lg border border-green-200"><%= Phoenix.Naming.humanize(book.status) %></span>
+                            <% else %>
+                                <span data-test="book-status" class="py-1 px-2 text-xs font-medium rounded-lg border text-stone-700 bg-stone-100 border-stone-200"><%= Phoenix.Naming.humanize(book.status) %></span>
                             <% end %>
                             <%= if IndiePaper.Books.is_published?(book)  do %>
-                                <%= if Books.is_pre_order_book?(book) do %>
-                                    <span class="py-1 px-2 text-xs font-medium text-green-800 bg-green-100 rounded-lg border border-green-200">Pre-order Published</span>
-                                <% else %>
-                                    <span class="py-1 px-2 text-xs font-medium text-green-800 bg-green-100 rounded-lg border border-green-200" data-test="book-status">Published</span>
-                                <% end %>
                                 <%= live_redirect to: Routes.book_show_path(@socket, :show, book), class: "secondary-link" do %>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />

@@ -18,7 +18,7 @@ defmodule IndiePaper.BookPublisher do
       :default_product,
       &maybe_insert_default_product(&1, &2, book)
     )
-    |> Multi.update(:book, Books.publish_book_changeset(book))
+    |> Multi.update(:book, Books.publication_in_progress_changeset(book))
     |> Oban.insert(:typeset_book, fn %{book: published_book} ->
       IndiePaper.Workers.TypesetWorker.new(%{id: published_book.id})
     end)

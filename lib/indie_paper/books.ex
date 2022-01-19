@@ -106,6 +106,11 @@ defmodule IndiePaper.Books do
     |> Book.status_changeset(%{status: :published})
   end
 
+  def publication_in_progress_changeset(%Book{} = book) do
+    book
+    |> Book.status_changeset(%{status: :publication_in_progress})
+  end
+
   def publish_book(%Book{} = book) do
     book
     |> publish_book_changeset()
