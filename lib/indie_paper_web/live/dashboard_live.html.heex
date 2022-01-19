@@ -146,7 +146,7 @@
                         <%= if IndiePaper.Books.is_published?(book) do %>
                             <div class="">
                                 <div class="flex flex-row justify-between items-center py-3 px-6 border-y border-secondary-border">
-                                    <p class="text-sm font-bold">Products</p>
+                                    <p class="text-sm font-bold text-gray-600">Products</p>
                                     <%= live_redirect to: Routes.book_product_new_path(@socket, :new, book), class: "secondary-link", data: [test: "add-new-product"] do %>
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -159,7 +159,7 @@
                                         <%= live_redirect to: Routes.book_product_edit_path(@socket, :edit, book, product), "data-test": "product-edit" do %>
                                             <div class="flex flex-row justify-between items-center py-3 px-6">
                                                 <div>
-                                                    <p class="font-medium text-gray-600" data-test="product-title"><%= product.title %></p>
+                                                    <p class="font-medium" data-test="product-title"><%= product.title %></p>
                                                     <p class="text-sm secondary-text"><%= product.description %></p>
                                                 </div>
                                                 <div class="flex flex-row items-center space-x-1.5">
@@ -175,12 +175,12 @@
                             </div>
                             <div class="">
                                 <div class="flex flex-row justify-between items-center py-3 px-6 border-y border-secondary-border">
-                                    <p class="text-sm font-bold">Assets</p>
+                                    <p class="text-sm font-bold text-gray-600">Assets</p>
                                 </div>
-                                <div class="flex flex-row items-center py-3 px-6 space-x-4" >
+                                <div class="flex flex-row items-center py-3 px-6 space-x-3" >
                                     <%= for asset <- book.assets do %>
-                                        <button phx-click="goto_asset_url" phx-value-asset_id={asset.id} class="py-2 text-sm secondary-button">
-                                            <span><%= asset.title %></span>
+                                        <button phx-click="goto_asset_url" phx-value-asset_id={asset.id} class="py-2 px-3 text-sm secondary-link">
+                                            <span class="text-gray-600"><%= asset.title %></span>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                                             </svg>
