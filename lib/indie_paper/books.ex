@@ -166,4 +166,7 @@ defmodule IndiePaper.Books do
     book_with_assets = book |> Repo.preload(:assets)
     book_with_assets.assets
   end
+
+  def publication_in_progress?(%{status: :publication_in_progress}), do: true
+  def publication_in_progress?(_), do: false
 end
