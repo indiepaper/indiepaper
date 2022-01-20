@@ -10,7 +10,10 @@ defmodule IndiePaper.Products.Product do
     field :price, Money.Ecto.Amount.Type
 
     belongs_to :book, IndiePaper.Books.Book
-    many_to_many :assets, IndiePaper.Assets.Asset, join_through: "product_assets"
+
+    many_to_many :assets, IndiePaper.Assets.Asset,
+      join_through: "product_assets",
+      on_replace: :delete
 
     timestamps()
   end
