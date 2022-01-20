@@ -2,6 +2,7 @@ defmodule IndiePaperWeb.BookProductLive.FormComponent do
   use IndiePaperWeb, :live_component
 
   alias IndiePaper.Products
+  alias IndiePaper.Books
 
   @impl true
   def update(%{product: product} = assigns, socket) do
@@ -40,6 +41,16 @@ defmodule IndiePaperWeb.BookProductLive.FormComponent do
       {:error, changeset} ->
         {:noreply, socket |> assign(changeset: changeset, form_submit_error: true)}
     end
+  end
+
+  def assets_select(f, changeset, book) do
+    existing_ids = changeset |> Ecto.Changeset.get_change(:assets, []) |> Enum.map(& &1.data.id)
+
+    asset_opts =
+      for asset <- Books.get_assets(book),
+          do: [key: asset.title, value: asset.id, selected: asset.id in existing_ids]
+
+    multiple_select(f, :asset_ids, asset_opts)
   end
 
   def submit_text(:new), do: "Create product"
