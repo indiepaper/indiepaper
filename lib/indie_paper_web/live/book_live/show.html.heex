@@ -90,15 +90,48 @@
 
 <section class="bg-white container-box page-box">
     <div class="flex flex-col items-start">
-        <%= live_redirect to: Routes.author_page_path(@socket, :show, @book.author),  class: "flex items-center space-x-2"  do %>
+        <div class="aspect-[3/2] rounded-lg overflow-hidden">
+            <img src={IndiePaper.ExternalAssetHandler.get_public_url(Books.first_promo_image(@book))} alt="Promo Image" class="object-cover" />
+        </div>
+        <h1 class="mt-10 text-3xl font-bold leading-tight"><%= @book.title %></h1>
+        <%= live_redirect to: Routes.author_page_path(@socket, :show, @book.author),  class: "flex items-center space-x-2 mt-4"  do %>
             <div class="w-6 h-6">
                 <img src={ExternalAssetHandler.get_public_url(@book.author.profile_picture)} alt="Author Profile Picture" class="object-cover rounded-full border border-secondary-border" />
             </div>
             <span class="text-sm font-medium"><%= Authors.get_full_name(@book.author) %></span>
         <% end %>
-        <div class="aspect-[3/2] mt-4">
-            <img src={IndiePaper.ExternalAssetHandler.get_public_url(Books.first_promo_image(@book))} alt="Promo Image" class="object-cover rounded-lg" />
+        <div class="flex flex-col items-stretch mt-12 space-y-6 w-full"
+             id="products-container"
+             x-data={"
+                {
+                    selectedId: '#{List.first(@book.products).id}',
+                    setSelectedId(id) {
+                      this.selectedId = id;
+                    }
+                }
+             "}
+             phx-update="ignore">
+            <%= for product <- @book.products do %>
+                <button @click.prevent={"setSelectedId('#{product.id}')"} class="block py-4 px-8 rounded-xl border-2 border-secondary-border" :class={"{'border-orange-400 bg-orange-50': selectedId === '#{product.id}'}"}>
+                    <div class="flex flex-row items-center">
+                        <div class="flex flex-col flex-1 items-start">
+                            <h4 class="font-bold"><%= product.title %></h4>
+                            <p class="mt-1 text-sm secondary-text"><%= product.description %></p>
+                        </div>
+                        <div>
+                            <p class="text-lg font-bold"><%= MoneyHandler.humanize(product.price) %></p>
+                        </div>
+                    </div>
+                </button>
+            <% end %>
+            <button class="py-4 font-bold rounded-xl primary-button">
+                <span class="flex-1">
+                    Buy Now
+                </span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
+                </svg>
+            </button>
         </div>
-        <h1 class="mt-8 text-3xl font-bold leading-tight"><%= @book.title %></h1>
     </div>
 </section>
