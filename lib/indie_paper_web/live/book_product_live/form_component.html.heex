@@ -35,7 +35,7 @@
 
         <div class="input-container">
             <%= label f, :assets, class: "input-label"  %>
-            <%= assets_select f, @changeset, @book %>
+            <.assets_select changeset={@changeset}, book={@book} />
         </div>
 
         <%= submit class: "primary-button" do %>

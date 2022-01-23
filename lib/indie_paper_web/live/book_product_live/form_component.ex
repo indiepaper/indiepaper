@@ -5,7 +5,7 @@ defmodule IndiePaperWeb.BookProductLive.FormComponent do
   alias IndiePaper.Books
 
   @impl true
-  def update(%{product: product} = assigns, socket) do
+  def update(%{product: product, book: book} = assigns, socket) do
     changeset = Products.change_product(product)
 
     {:ok,
@@ -30,6 +30,8 @@ defmodule IndiePaperWeb.BookProductLive.FormComponent do
   end
 
   def save_product(socket, :edit, product_params) do
+    IO.inspect(product_params)
+
     case Products.update_product(
            socket.assigns.current_author,
            socket.assigns.product,
@@ -43,14 +45,22 @@ defmodule IndiePaperWeb.BookProductLive.FormComponent do
     end
   end
 
-  def assets_select(f, changeset, book) do
-    existing_ids = changeset |> Ecto.Changeset.get_change(:assets, []) |> Enum.map(& &1.data.id)
+  def assets_select(assigns) do
+    existing_ids =
+      assigns.changeset |> Ecto.Changeset.get_change(:assets, []) |> Enum.map(& &1.data.id)
 
-    asset_opts =
-      for asset <- Books.get_assets(book),
-          do: [key: asset.title, value: asset.id, selected: asset.id in existing_ids]
+    assets = Books.get_assets(assigns.book)
 
-    multiple_select(f, :asset_ids, asset_opts)
+    ~H"""
+    <div class="flex flex-row items-center mt-2 space-x-4">
+        <%= for asset <- assets do %>
+            <label>
+                <input id={asset.id} type="checkbox" name="product[asset_ids][]" value={asset.id} checked={asset.id in existing_ids} />
+                <%= asset.title %>
+            </label>
+        <% end %>
+    </div>
+    """
   end
 
   def submit_text(:new), do: "Create product"
