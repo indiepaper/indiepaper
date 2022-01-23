@@ -121,8 +121,8 @@
                                         <img src={IndiePaper.ExternalAssetHandler.get_public_url(IndiePaper.Books.first_promo_image(book))} alt="Book Promo Image" class="object-cover rounded-lg" />
                                     </div>
                                 <% end %>
-                                <h2 data-test="book-title" class="text-lg font-semibold"><%= book.title %></h2>
-                                <p data-test="book-title" class="mt-1 text-sm secondary-text"><%= book.short_description %></p>
+                                <h2 data-test="book-title" class="text-xl font-semibold"><%= book.title %></h2>
+                                <p data-test="book-title" class="mt-1 text-sm leading-relaxed secondary-text"><%= book.short_description %></p>
                             <% end %>
                             <div class="flex flex-col mt-8 space-y-4 md:flex-row md:space-y-0 md:space-x-3 text-secondary-text">
                                 <%= live_redirect to: Routes.draft_edit_path(@socket, :edit, book.draft), class: "secondary-link"  do %>
