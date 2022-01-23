@@ -52,11 +52,11 @@ defmodule IndiePaperWeb.BookProductLive.FormComponent do
     assets = Books.get_assets(assigns.book)
 
     ~H"""
-    <div class="flex flex-row items-center mt-2 space-x-4">
+    <div class="flex flex-col items-start space-y-4">
         <%= for asset <- assets do %>
-            <label>
-                <input id={asset.id} type="checkbox" name="product[asset_ids][]" value={asset.id} checked={asset.id in existing_ids} />
-                <%= asset.title %>
+            <label class="secondary-button space-x-2 hover:cursor-pointer">
+                <input id={asset.id} type="checkbox" name="product[asset_ids][]" value={asset.id} checked={asset.id in existing_ids} class="rounded-md text-accent focus:outline-none focus:ring-accent" />
+                <span><%= asset.title %></span>
             </label>
         <% end %>
     </div>

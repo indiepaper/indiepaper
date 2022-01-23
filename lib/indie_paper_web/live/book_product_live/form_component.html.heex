@@ -35,7 +35,10 @@
 
         <div class="input-container">
             <%= label f, :assets, class: "input-label"  %>
-            <.assets_select changeset={@changeset}, book={@book} />
+            <span class="input-label-info">select the assets you want to bundle</span>
+            <div class="mt-4">
+                <.assets_select changeset={@changeset}, book={@book} />
+            </div>
         </div>
 
         <%= submit class: "primary-button" do %>
