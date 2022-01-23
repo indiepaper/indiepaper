@@ -3,6 +3,7 @@ defmodule IndiePaperWeb.BookLive.Show do
 
   alias IndiePaper.Books
   alias IndiePaper.ExternalAssetHandler
+  alias IndiePaper.Authors
 
   on_mount {IndiePaperWeb.AuthorAuthLive, :fetch_current_author}
 

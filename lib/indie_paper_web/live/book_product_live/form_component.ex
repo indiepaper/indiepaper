@@ -55,7 +55,7 @@ defmodule IndiePaperWeb.BookProductLive.FormComponent do
     <div class="flex flex-row items-center space-x-4">
         <%= for asset <- assets do %>
             <label class="secondary-button space-x-2 hover:cursor-pointer hover:border-accent">
-                <input id={asset.id} type="checkbox" name="product[asset_ids][]" value={asset.id} checked={asset.id in existing_ids} class="rounded-md text-accent focus:outline-none focus:ring-accent" />
+                <input id={asset.id} type="checkbox" name="product[asset_ids][]" value={asset.id} checked={asset.id in existing_ids} class="rounded-md text-accent focus:outline-none focus:ring-accent h-4 w-4" />
                 <span><%= asset.title %></span>
             </label>
         <% end %>
