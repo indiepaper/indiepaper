@@ -27,7 +27,7 @@ defmodule IndiePaperWeb.BookLive.Edit do
   end
 
   def cover_image_file_key(book, entry),
-    do: "public/cover_images/#{book.id}/cover_image.#{file_ext(entry)}"
+    do: "public/cover_images/#{book.id}/#{entry.uuid}.#{file_ext(entry)}"
 
   def presign_cover_image_upload(entry, socket) do
     book = socket.assigns.book
