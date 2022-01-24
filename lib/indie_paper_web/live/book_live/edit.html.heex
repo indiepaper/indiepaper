@@ -38,7 +38,7 @@
                         <%= live_file_input @uploads.cover_image, class: "file:rounded-lg text-sm file:text-sm file:border-dark-border file:secondary-button file:mr-3" %>
                     </div>
                     <div phx-drop-target={@uploads.cover_image.ref}>
-                        <%= for entry <-@uploads.cover_image.entries do %>
+                        <%= if entry = List.first(@uploads.cover_image.entries) do %>
                             <div class="mt-4 max-w-sm">
                                 <%= live_img_preview entry, class: "cover-image" %>
                                 <div class="flex flex-row justify-between items-center mt-2">
@@ -55,6 +55,10 @@
                                 <%= for err <- upload_errors(@uploads.cover_image, entry) do %>
                                     <p class="input-error"><%= error_to_string(err) %></p>
                                 <% end %>
+                            </div>
+                        <% else %>
+                            <div class="mt-4 max-w-sm">
+                                <img src={ExternalAssetHandler.get_public_url(@book.cover_image)} class="cover-image" alt="" />
                             </div>
                         <% end %>
                     </div>

@@ -117,9 +117,7 @@
                         <div class="py-8 px-6">
                             <%= live_redirect to: (if IndiePaper.Books.is_published?(book), do: Routes.book_show_path(@socket, :show, book), else: Routes.draft_edit_path(@socket, :edit, book.draft)) ,
                             class: "flex flex-col space-y-8 sm:space-y-0 sm:flex-row sm:items-top sm:space-x-8" do %>
-                                <%= if IndiePaper.Books.has_promo_images?(book) do %>
-                                    <img src={IndiePaper.ExternalAssetHandler.get_public_url(IndiePaper.Books.first_promo_image(book))} alt="Book Promo Image" class="sm:h-64 cover-image" />
-                                <% end %>
+                                <img src={IndiePaper.ExternalAssetHandler.get_public_url(book.cover_image)} alt="Book Promo Image" class="sm:h-64 cover-image" />
                                 <div>
                                     <h2 data-test="book-title" class="text-xl font-semibold"><%= book.title %></h2>
                                     <p data-test="book-title" class="mt-2 text-sm leading-relaxed secondary-text"><%= book.short_description %></p>
