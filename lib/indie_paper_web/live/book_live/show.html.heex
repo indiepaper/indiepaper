@@ -1,4 +1,4 @@
-<section class="bg-background">
+<section>
     <%= if IndiePaper.Authors.is_same?(@current_author, @book.author) do %>
         <div class="secondary-nav">
             <div class="secondary-nav-content">
@@ -24,35 +24,66 @@
             </div>
         </div>
     <% end %>
-    <div class="py-24 md:py-32 container-box page-box">
-        <div class="mx-auto max-w-3xl">
-            <div class="flex flex-col items-start md:px-8">
-                <div class="flex flex-col space-y-8 w-full">
-                    <%= for promo_image <- @book.promo_images do %>
-                        <div class="aspect-w-3 aspect-h-2">
-                            <img src={IndiePaper.ExternalAssetHandler.get_public_url(promo_image)} alt="Promo Image" class="object-cover rounded-lg" />
+</section>
+
+
+<section class="bg-white">
+    <div class="container-box page-box">
+        <div class="flex flex-col items-stretch lg:flex-row lg:items-stretch lg:space-x-16 lg:items-top">
+            <div class="aspect-[1/1] flex flex-1 items-center justify-center bg-gradient-to-b from-orange-200 to-orange-300 rounded-2xl p-8 lg:p-16">
+                <img src={ExternalAssetHandler.get_public_url(@book.cover_image)} alt="Cover Image" class="h-full rounded-3xl border-orange-300 cover-image" />
+            </div>
+            <div class="flex flex-col flex-1 items-stretch">
+                <h1 class="mt-10 text-3xl font-bold leading-tight lg:mt-0" data-test="title"><%= @book.title %></h1>
+                <div>
+                    <%= live_redirect to: Routes.author_page_path(@socket, :show, @book.author),  class: "mt-3 primary-link inline-flex"  do %>
+                        <div class="w-6 h-6">
+                            <img src={ExternalAssetHandler.get_public_url(@book.author.profile_picture)} alt="Author Profile Picture" class="object-cover rounded-full border border-secondary-border" />
                         </div>
+                        <span class="text-sm font-medium"><%= Authors.get_full_name(@book.author) %></span>
                     <% end %>
                 </div>
-                <h1 class="mt-12 text-2xl font-black text-gray-800 md:text-4xl" data-test="title"><%= @book.title %></h1>
-                <p class="mt-2 secondary-text">written by<%= live_redirect IndiePaper.Authors.get_full_name(@book.author), to: Routes.author_page_path(@socket, :show, @book.author), class: "primary-link inline-block" %></p>
-                <%= live_redirect to: (if Books.is_pre_order_book?(@book), do: Routes.book_read_path(@socket, :index, @book), else: Routes.book_checkout_path(@socket, :new, @book)), class: "flex flex-row justify-center items-center py-4 px-12 mt-8 space-x-3 bg-gradient-to-br from-gray-700 via-gray-900 to-black rounded-4xl border-none shadow-sm md:mt-12 border-dark-border primary-button", "data-no-instant": "" do %>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
-                    <%= if Books.is_pre_order_book?(@book) do %>
-                        <p class="font-black">Start Reading</p>
-                    <% else %>
-                        <p class="font-black">Buy Now</p>
+                <div class="flex flex-col items-stretch mt-12 space-y-6 w-full"
+                     id="products-container"
+                     x-data={"
+                            {
+                            selectedId: '#{List.first(@book.products).id}',
+                            setSelectedId(id) {
+                            this.selectedId = id;
+                            }
+                            }
+                            "}
+                     phx-update="ignore">
+                    <%= for product <- @book.products do %>
+                        <button @click.prevent={"setSelectedId('#{product.id}')"} class="block py-4 px-8 text-left bg-white rounded-xl border-2 md:py-3 md:px-6 border-secondary-border" :class={"{'border-orange-400 bg-orange-100': selectedId === '#{product.id}'}"}>
+                            <div class="flex flex-row items-center">
+                                <div class="flex flex-col flex-1 items-start">
+                                    <h4 class="font-bold text-gray-800"><%= product.title %></h4>
+                                    <p class="mt-1 text-sm font-medium text-gray-600"><%= product.description %></p>
+                                </div>
+                                <div>
+                                    <p class="text-lg font-bold"><%= MoneyHandler.humanize(product.price) %></p>
+                                </div>
+                            </div>
+                        </button>
                     <% end %>
-                <% end %>
-                <div class="mt-8 text-justify text-gray-600 secondary-text prose">
-                    <p><%= @book.short_description %></p>
+                    <button class="py-4 space-x-3 font-bold rounded-xl primary-button group">
+                        <span class="">
+                            Buy Now
+                        </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-orange-400 transition-all group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
                 </div>
             </div>
-            <div class="py-12 mt-16 w-full max-w-none text-justify text-gray-700 border-t md:px-8 md:mt-20 md:text-gray-600 secondary-text prose border-primary-border">
-                <%= raw(@book.long_description_html) %>
-            </div>
+        </div>
+    </div>
+</section>
+<section class="border-t bg-background border-primary-border">
+    <div class="page-box container-box">
+        <div class="max-w-3xl text-justify text-gray-700 md:mt-8 prose">
+            <%= raw(@book.long_description_html) %>
         </div>
     </div>
 </section>

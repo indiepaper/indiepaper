@@ -137,6 +137,10 @@
     @apply w-32 h-2 bg-stone-200 rounded-full;
   }
 
+  .cover-image {
+    @apply aspect-[1/1.6]  rounded-lg object-cover shadow-sm border border-lightest-border;
+  }
+
   @font-face {
     font-family: Good Sans;
     font-weight: 400;

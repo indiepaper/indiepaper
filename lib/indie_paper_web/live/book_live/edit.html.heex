@@ -15,7 +15,7 @@
 
         <div class="mt-12 max-w-2xl">
             <.form let={f} for={@changeset} phx-change="validate" phx-submit="update_book_listing" id="book-edit-form">
-            <div class="space-y-10 form-container">
+            <div class="space-y-12 form-container">
                 <div class="input-container">
                     <%= label f, :title, class: "input-label"  %>
                     <%= text_input f, :title, class: "form-input mt-1"  %>
@@ -23,72 +23,45 @@
                         <%= error_tag f, :title %>
                     </p>
                 </div>
-
-                <div class="input-container" x-data="{}">
-                    <p class="input-label">Promo Image</p>
-                    <div>
-                        <label class="mt-2 rounded-xl cursor-pointer secondary-button">
-                            <%= live_file_input @uploads.promo_image, class: "hidden" %>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-4" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                            </svg>
-                            <span class="text-sm">Upload Image</span>
-                        </label>
-                    </div>
-                    <%= for promo_image <- @promo_images do %>
-                        <div class="my-4">
-                            <div class="flex flex-row justify-end items-center">
-                                <a href="#" phx-click="remove-promo-image" phx-value-promo-image={promo_image} aria-label="remove" class="text-sm rounded-full secondary-link">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    <span>Remove</span>
-                                </a>
-                            </div>
-                            <div class="mt-2 w-full aspect-w-3 aspect-h-2">
-                                <img src={IndiePaper.ExternalAssetHandler.get_public_url(promo_image)} alt="Promo Image" class="object-cover rounded-lg" />
-                            </div>
-                        </div>
-                    <% end %>
-
-                    <%= if not Enum.empty?(@uploads.promo_image.entries) do %>
-                        <div class="flex flex-col mt-4 mb-4 space-y-8">
-                            <%= for entry <- @uploads.promo_image.entries do  %>
-                                <div>
-                                    <div class="flex flex-row items-center jusitfy-between">
-                                        <p><%= entry.client_name %>, <%= entry.progress %>%</p>
-                                        <div class="flex-1">
-                                        </div>
-                                        <a href="#" phx-click="cancel-upload" phx-value-ref={entry.ref} aria-label="cancel" class="text-sm rounded-full secondary-link">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                            <span>Cancel</span>
-                                        </a>
-                                    </div>
-                                    <div class="w-full aspect-w-3 aspect-h-2">
-                                        <%= live_img_preview entry, class: "object-cover rounded-lg mt-2" %>
-                                    </div>
-                                    <%= if upload_errors(@uploads.promo_image, entry) do%>
-                                        <div class="flex flex-col pt-4 space-y-4">
-                                            <%= for err <- upload_errors(@uploads.promo_image, entry) do %>
-                                                <div class="error-box">
-                                                    <p class=""><%= error_to_string(err) %></p>
-                                                </div>
-                                            <% end %>
-                                        </div>
-                                    <% end %>
-                                </div>
-                            <% end %>
-                        </div>
-                    <% end %>
-                </div>
                 <div class="input-container">
                     <%= label f, :short_description, class: "input-label"  %>
                     <%= textarea f, :short_description, class: "form-input min-h-[240px] mt-1 prose p-4"  %>
                     <p class="input-error">
                         <%= error_tag f, :short_description %>
                     </p>
+                </div>
+
+                <div class="input-container">
+                    <span class="input-label">Cover Image</span>
+                    <span class="input-label-info">Upload a 1280 x 800px image as cover.</span>
+                    <div class="mt-3">
+                        <%= live_file_input @uploads.cover_image, class: "file:rounded-lg text-sm file:text-sm file:border-dark-border file:secondary-button file:mr-3" %>
+                    </div>
+                    <div phx-drop-target={@uploads.cover_image.ref}>
+                        <%= if entry = List.first(@uploads.cover_image.entries) do %>
+                            <div class="mt-4 max-w-sm">
+                                <%= live_img_preview entry, class: "cover-image" %>
+                                <div class="flex flex-row justify-between items-center mt-2">
+                                    <span class="text-sm font-medium"><%= entry.progress %>% uploaded</span>
+                                    <button class="secondary-link" phx-click="cancel-cover-image-upload" phx-value-ref={entry.ref}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span>
+                                            Cancel
+                                        </span>
+                                    </button>
+                                </div>
+                                <%= for err <- upload_errors(@uploads.cover_image, entry) do %>
+                                    <p class="input-error"><%= error_to_string(err) %></p>
+                                <% end %>
+                            </div>
+                        <% else %>
+                            <div class="mt-4 max-w-sm">
+                                <img src={ExternalAssetHandler.get_public_url(@book.cover_image)} class="cover-image" alt="" />
+                            </div>
+                        <% end %>
+                    </div>
                 </div>
 
                 <div class="input-container"
@@ -145,7 +118,6 @@
                         <%= error_tag f, :long_description_html %>
                     </p>
                 </div>
-
 
                 <%= submit class: "submit-button", phx_disable_with: "Updating Listing..." do %>
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

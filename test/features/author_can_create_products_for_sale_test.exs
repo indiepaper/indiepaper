@@ -1,29 +1,42 @@
 defmodule IndiePaperWeb.Features.AuthorCanCreateProductsForSaleTest do
-  use IndiePaperWeb.FeatureCase, async: false
+  use IndiePaperWeb.ConnCase, async: false
 
-  alias IndiePaperWeb.Pages.{LoginPage, DashboardPage, BookPage, ProductPage}
+  import Phoenix.LiveViewTest
 
-  @tag :skip
-  test "author can create and edit products for sale", %{session: session} do
+  test "author can create products", %{conn: conn} do
     book = insert(:book, products: [])
-    product_params = params_for(:product)
-    update_product_params = params_for(:product)
+    product_params = params_for(:product, assets: nil)
+    conn = log_in_author(conn, book.author)
+    {:ok, view, _html} = live(conn, Routes.dashboard_path(conn, :index))
 
-    session
-    |> DashboardPage.visit_page()
-    |> LoginPage.login(email: book.author.email, password: book.author.password)
-    |> DashboardPage.click_add_product()
-    |> ProductPage.fill_form(product_params)
-    |> ProductPage.click_save_product()
-    |> DashboardPage.has_product_title?(product_params[:title])
-    |> DashboardPage.has_product_price?(product_params[:price])
-    |> DashboardPage.click_edit_product(product_params[:title])
-    |> ProductPage.fill_form(update_product_params)
-    |> ProductPage.click_read_online_asset()
-    |> ProductPage.click_save_product()
-    |> DashboardPage.has_product_title?(update_product_params[:title])
-    |> DashboardPage.has_product_price?(update_product_params[:price])
-    |> BookPage.Show.visit_page(book)
-    |> BookPage.Show.select_product(update_product_params[:title])
+    {:ok, product_view, _html} =
+      view
+      |> element("[data-test=add-new-product")
+      |> render_click()
+      |> follow_redirect(conn, Routes.book_product_new_path(conn, :new, book))
+
+    {:ok, _view, html} =
+      product_view
+      |> form("#product-form", %{product: product_params})
+      |> render_submit()
+      |> follow_redirect(conn, Routes.dashboard_path(conn, :index))
+
+    assert html =~ product_params[:title]
+  end
+
+  test "author can update products", %{conn: conn} do
+    book = insert(:book, products: [])
+    product = insert(:product, book: book)
+    conn = log_in_author(conn, book.author)
+
+    {:ok, view, _html} = live(conn, Routes.book_product_edit_path(conn, :edit, book, product))
+
+    {:ok, _view, html} =
+      view
+      |> form("#product-form", %{product: %{title: "Updated title"}})
+      |> render_submit()
+      |> follow_redirect(conn, Routes.dashboard_path(conn, :index))
+
+    assert html =~ "Updated title"
   end
 end

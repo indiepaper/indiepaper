@@ -1,4 +1,8 @@
 defmodule IndiePaper.Products do
+  import Ecto.Query
+
+  alias IndiePaper.Assets
+
   @behaviour Bodyguard.Policy
 
   def authorize(:update_product, %{id: author_id}, product) do
@@ -11,9 +15,17 @@ defmodule IndiePaper.Products do
   alias IndiePaper.Repo
   alias IndiePaper.Products.Product
 
+  def get_product!(id), do: Repo.get!(Product, id) |> Repo.preload(:assets)
+
+  def new_product(), do: %Product{}
+
   def change_product(%Product{} = product, attrs \\ %{}) do
+    assets = list_assets_by_id(attrs["asset_ids"])
+
     product
+    |> with_assoc(:assets)
     |> Product.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:assets, assets)
   end
 
   def default_read_online_product_changeset(book, asset, title) do
@@ -28,19 +40,23 @@ defmodule IndiePaper.Products do
 
   def create_product(book, params) do
     Ecto.build_assoc(book, :products)
-    |> Product.changeset(params)
+    |> change_product(params)
     |> Repo.insert()
   end
 
   def update_product(current_author, product, params) do
     with :ok <- Bodyguard.permit(__MODULE__, :update_product, current_author, product) do
       product
-      |> Product.changeset(params)
+      |> change_product(params)
       |> Repo.update()
     end
   end
 
-  def get_product!(id), do: Repo.get!(Product, id)
-
   def with_assoc(product, assoc), do: Repo.preload(product, assoc)
+
+  def list_assets_by_id(nil), do: []
+
+  def list_assets_by_id(asset_ids) do
+    Repo.all(from a in Assets.Asset, where: a.id in ^asset_ids)
+  end
 end

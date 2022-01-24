@@ -11,15 +11,13 @@ defmodule IndiePaperWeb.Feature.AuthorCanCreatePreOrderBooksTest do
 
     assert html =~ "Pre-order Book"
 
-    {:ok, conn} =
+    {:ok, _view, html} =
       view
       |> form("[data-test=new-book-form]",
         book: %{title: "Preorder Book"}
       )
       |> render_submit(%{book: %{"publishing_type" => "pre_order"}})
       |> follow_redirect(conn)
-
-    html = html_response(conn, 200)
 
     assert html =~ "Preorder Book"
     assert html =~ "Publish Chapter"

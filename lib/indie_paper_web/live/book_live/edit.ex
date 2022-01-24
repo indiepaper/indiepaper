@@ -6,6 +6,7 @@ defmodule IndiePaperWeb.BookLive.Edit do
   alias IndiePaper.Books
   alias IndiePaper.Authors
   alias IndiePaper.ExternalAssetHandler
+  import IndiePaperWeb.UploadHelpers
 
   @impl Phoenix.LiveView
   def mount(%{"slug" => book_slug}, %{"author_token" => author_token}, socket) do
@@ -18,47 +19,28 @@ defmodule IndiePaperWeb.BookLive.Edit do
      |> assign(:current_author, current_author)
      |> assign(:book, book)
      |> assign(:changeset, changeset)
-     |> assign(:promo_images, book.promo_images)
-     |> allow_upload(:promo_image,
-       accept: ~w(.png .jpeg .jpg),
+     |> allow_upload(:cover_image,
+       accept: ~w(.jpg .jpeg .png),
        max_entries: 1,
-       external: &presign_upload/2
+       external: &presign_cover_image_upload/2
      )}
   end
 
-  defp file_key(book, entry) do
-    "public/promo_images/#{book.id}/#{entry.uuid}.#{file_ext(entry)}"
-  end
+  def cover_image_file_key(book, entry),
+    do: "public/cover_images/#{book.id}/#{entry.uuid}.#{file_ext(entry)}"
 
-  defp presign_upload(entry, socket) do
+  def presign_cover_image_upload(entry, socket) do
     book = socket.assigns.book
 
     {:ok, url, fields} =
       ExternalAssetHandler.presigned_post(
-        key: file_key(book, entry),
+        key: cover_image_file_key(book, entry),
         content_type: entry.client_type,
-        max_file_size: socket.assigns.uploads.promo_image.max_file_size
+        max_file_size: socket.assigns.uploads.cover_image.max_file_size
       )
 
-    meta = %{uploader: "S3", key: file_key(book, entry), url: url, fields: fields}
+    meta = %{uploader: "S3", key: cover_image_file_key(book, entry), url: url, fields: fields}
     {:ok, meta, socket}
-  end
-
-  defp put_promo_images(socket, book, params) do
-    {completed, []} = uploaded_entries(socket, :promo_image)
-
-    urls =
-      for entry <- completed do
-        file_key(book, entry)
-      end
-
-    Map.put(params, "promo_images", urls ++ socket.assigns.promo_images)
-  end
-
-  @impl Phoenix.LiveView
-  def handle_event("remove-promo-image", %{"promo-image" => promo_image}, socket) do
-    promo_images = Enum.reject(socket.assigns.promo_images, fn p -> p === promo_image end)
-    {:noreply, socket |> assign(:promo_images, promo_images)}
   end
 
   @impl Phoenix.LiveView
@@ -73,20 +55,15 @@ defmodule IndiePaperWeb.BookLive.Edit do
 
   @impl Phoenix.LiveView
   def handle_event("update_book_listing", %{"book" => book_params}, socket) do
-    book_params_with_promo_images = put_promo_images(socket, socket.assigns.book, book_params)
+    book_params_with_cover_image = maybe_put_cover_image(socket, socket.assigns.book, book_params)
 
-    deleted_promo_images =
-      Enum.reject(socket.assigns.book.promo_images, fn p ->
-        Enum.member?(socket.assigns.promo_images, p)
-      end)
-
-    with {:ok, _} <- ExternalAssetHandler.delete_assets(deleted_promo_images),
-         {:ok, updated_book} <-
+    with {:ok, updated_book} <-
            Books.update_book(
              socket.assigns.current_author,
              socket.assigns.book,
-             book_params_with_promo_images
-           ) do
+             book_params_with_cover_image
+           ),
+         {:ok, _} <- maybe_remove_cover_image(socket.assigns.book, updated_book) do
       updated_book_with_draft = Books.with_assoc(updated_book, :draft)
 
       socket =
@@ -111,7 +88,40 @@ defmodule IndiePaperWeb.BookLive.Edit do
   end
 
   @impl Phoenix.LiveView
-  def handle_event("cancel-upload", %{"ref" => ref}, socket) do
-    {:noreply, cancel_upload(socket, :promo_image, ref)}
+  def handle_event("cancel-cover-image-upload", %{"ref" => ref}, socket) do
+    {:noreply, cancel_upload(socket, :cover_image, ref)}
+  end
+
+  defp maybe_remove_cover_image(
+         %{cover_image: "public/cover_images/placeholder.png"},
+         updated_book
+       ),
+       do: {:ok, updated_book}
+
+  defp maybe_remove_cover_image(
+         %{cover_image: cover_image},
+         %{cover_image: cover_image} = updated_book
+       ),
+       do: {:ok, updated_book}
+
+  defp maybe_remove_cover_image(
+         %{cover_image: old_cover_image} = old_book,
+         updated_book
+       ) do
+    case ExternalAssetHandler.delete_asset(old_cover_image) do
+      {:ok, _} -> {:ok, updated_book}
+      {:error, _} -> {:error, old_book}
+    end
+  end
+
+  defp maybe_put_cover_image(socket, book, params) do
+    {completed, []} = uploaded_entries(socket, :cover_image)
+    entry = List.first(completed)
+
+    if entry do
+      Map.put(params, "cover_image", cover_image_file_key(book, entry))
+    else
+      params
+    end
   end
 end

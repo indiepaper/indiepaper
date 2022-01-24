@@ -28,12 +28,15 @@ defmodule IndiePaper.ProductsTest do
   describe "create_product/2" do
     test "creates product associated with book" do
       book = insert(:book)
-      product_params = params_for(:product)
+      asset = insert(:asset, book: book)
+      product_params = string_params_for(:product) |> Map.put_new("asset_ids", [asset.id])
 
       {:ok, product} = Products.create_product(book, product_params)
+      product_with_assets = product |> Products.with_assoc(:assets)
 
       assert product.book_id == book.id
-      assert product.title == product_params[:title]
+      assert product.title == product_params["title"]
+      assert Enum.find(product_with_assets.assets, fn as -> as.id == asset.id end)
     end
   end
 

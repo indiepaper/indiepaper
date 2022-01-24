@@ -31,10 +31,10 @@ defmodule IndiePaper.Books.Book do
 
     field :short_description, :string
     field :long_description_html, :string
-    field :promo_images, {:array, :string}, null: false, default: []
+    field :cover_image, :string, nil: false, default: "public/cover_images/placeholder.png"
 
     has_one :draft, IndiePaper.Drafts.Draft
-    has_many :products, IndiePaper.Products.Product
+    has_many :products, IndiePaper.Products.Product, preload_order: [desc: :updated_at]
     has_many :assets, IndiePaper.Assets.Asset
     belongs_to :author, IndiePaper.Authors.Author
 
@@ -44,11 +44,11 @@ defmodule IndiePaper.Books.Book do
   @doc false
   def changeset(book, attrs) do
     book
-    |> cast(attrs, [:title, :short_description, :long_description_html, :promo_images])
+    |> cast(attrs, [:title, :short_description, :long_description_html, :cover_image])
     |> sanitized_long_description_html()
     |> validate_required([:title, :short_description, :long_description_html])
     |> validate_length(:title, max: 100)
-    |> validate_length(:short_description, max: 1200)
+    |> validate_length(:short_description, max: 240)
     |> validate_length(:long_description_html, max: 1200 * 6)
   end
 

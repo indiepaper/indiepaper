@@ -106,6 +106,11 @@ defmodule IndiePaper.Books do
     |> Book.status_changeset(%{status: :published})
   end
 
+  def publication_in_progress_changeset(%Book{} = book) do
+    book
+    |> Book.status_changeset(%{status: :publication_in_progress})
+  end
+
   def publish_book(%Book{} = book) do
     book
     |> publish_book_changeset()
@@ -141,14 +146,6 @@ defmodule IndiePaper.Books do
     |> Repo.all()
   end
 
-  def has_promo_images?(%Book{} = book) do
-    not Enum.empty?(book.promo_images)
-  end
-
-  def first_promo_image(%Book{} = book) do
-    Enum.at(book.promo_images, 0)
-  end
-
   def is_pre_order_book?(%Book{} = book) do
     book.publishing_type == :pre_order
   end
@@ -161,4 +158,7 @@ defmodule IndiePaper.Books do
     book_with_assets = book |> Repo.preload(:assets)
     book_with_assets.assets
   end
+
+  def publication_in_progress?(%{status: :publication_in_progress}), do: true
+  def publication_in_progress?(_), do: false
 end

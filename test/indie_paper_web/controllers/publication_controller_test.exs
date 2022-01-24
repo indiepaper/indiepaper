@@ -12,7 +12,7 @@ defmodule IndiePaperWeb.PublicationControllerTest do
       post(conn, Routes.book_publication_path(conn, :create, book))
 
       published_book = Books.get_book!(book.id)
-      assert published_book.status == :published
+      assert Books.publication_in_progress?(published_book)
     end
   end
 end

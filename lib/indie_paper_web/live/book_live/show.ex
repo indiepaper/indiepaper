@@ -3,18 +3,17 @@ defmodule IndiePaperWeb.BookLive.Show do
 
   alias IndiePaper.Books
   alias IndiePaper.ExternalAssetHandler
+  alias IndiePaper.PaymentHandler.MoneyHandler
+  alias IndiePaper.Authors
 
   on_mount {IndiePaperWeb.AuthorAuthLive, :fetch_current_author}
 
   def mount(%{"slug" => book_slug}, _session, socket) do
-    book = Books.get_book_from_slug!(book_slug) |> Books.with_assoc([:author, :draft])
+    book =
+      Books.get_book_from_slug!(book_slug)
+      |> Books.with_assoc([:author, :draft, [products: :assets]])
 
-    book_image_url =
-      if Books.has_promo_images?(book) do
-        ExternalAssetHandler.get_public_url(Books.first_promo_image(book))
-      else
-        Routes.book_show_url(socket, :show, book)
-      end
+    book_image_url = ExternalAssetHandler.get_public_url(book.cover_image)
 
     meta_attrs = [
       %{name: "title", content: book.title},

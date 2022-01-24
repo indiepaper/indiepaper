@@ -11,7 +11,7 @@ defmodule IndiePaper.BookPublisherTest do
       book = insert(:book, status: :pending_publication)
 
       {:ok, book} = BookPublisher.publish_book(book)
-      assert Books.is_published?(book)
+      assert Books.publication_in_progress?(book)
       assert_enqueued(worker: IndiePaper.Workers.TypesetWorker, args: %{id: book.id})
 
       book = book |> Books.with_assoc(:draft)

@@ -82,7 +82,7 @@
                      x-on:editor-loaded="isEditorLoading = false"
                      data-chapter-content-json={Jason.encode!(@selected_chapter.content_json)}
                      data-editor-element-id="draft-editor-element">
-                    <div phx-update="ignore" class="flex flex-col items-stretch" >
+                    <div phx-update="ignore" class="flex flex-col items-stretch" id="draft-editor-container">
                         <div class="flex sticky top-0 z-40 flex-row items-center py-4 px-8 space-x-1 bg-white border-b shadow-sm border-primary-border">
                             <button
                                 class="py-1 px-2 rounded-md hover:text-white hover:bg-gray-800"
