@@ -5,6 +5,7 @@ defmodule IndiePaper.Workers.TypesetWorkerTest do
   alias IndiePaper.Books
   alias IndiePaper.Assets
 
+  @tag :skip
   test "typesets books to different formats and uploads to S3" do
     book = insert(:book, status: :publication_in_progress)
 

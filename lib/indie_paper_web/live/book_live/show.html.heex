@@ -34,7 +34,7 @@
                 <img src={ExternalAssetHandler.get_public_url(@book.cover_image)} alt="Cover Image" class="h-full rounded-3xl border-orange-300 cover-image" />
             </div>
             <div class="flex flex-col flex-1 items-stretch">
-                <h1 class="mt-10 text-3xl font-bold leading-tight lg:mt-0"><%= @book.title %></h1>
+                <h1 class="mt-10 text-3xl font-bold leading-tight lg:mt-0" data-test="title"><%= @book.title %></h1>
                 <div>
                     <%= live_redirect to: Routes.author_page_path(@socket, :show, @book.author),  class: "mt-3 primary-link inline-flex"  do %>
                         <div class="w-6 h-6">
