@@ -146,14 +146,6 @@ defmodule IndiePaper.Books do
     |> Repo.all()
   end
 
-  def has_promo_images?(%Book{} = book) do
-    not Enum.empty?(book.promo_images)
-  end
-
-  def first_promo_image(%Book{} = book) do
-    Enum.at(book.promo_images, 0)
-  end
-
   def is_pre_order_book?(%Book{} = book) do
     book.publishing_type == :pre_order
   end

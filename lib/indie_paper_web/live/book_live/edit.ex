@@ -19,7 +19,6 @@ defmodule IndiePaperWeb.BookLive.Edit do
      |> assign(:current_author, current_author)
      |> assign(:book, book)
      |> assign(:changeset, changeset)
-     |> assign(:promo_images, book.promo_images)
      |> allow_upload(:cover_image,
        accept: ~w(.jpg .jpeg .png),
        max_entries: 1,
