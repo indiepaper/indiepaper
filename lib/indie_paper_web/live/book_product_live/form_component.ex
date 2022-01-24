@@ -5,7 +5,7 @@ defmodule IndiePaperWeb.BookProductLive.FormComponent do
   alias IndiePaper.Books
 
   @impl true
-  def update(%{product: product, book: book} = assigns, socket) do
+  def update(%{product: product} = assigns, socket) do
     changeset = Products.change_product(product)
 
     {:ok,
@@ -30,8 +30,6 @@ defmodule IndiePaperWeb.BookProductLive.FormComponent do
   end
 
   def save_product(socket, :edit, product_params) do
-    IO.inspect(product_params)
-
     case Products.update_product(
            socket.assigns.current_author,
            socket.assigns.product,
