@@ -118,13 +118,11 @@
                             <%= live_redirect to: (if IndiePaper.Books.is_published?(book), do: Routes.book_show_path(@socket, :show, book), else: Routes.draft_edit_path(@socket, :edit, book.draft)) ,
                             class: "flex flex-col space-y-8 sm:space-y-0 sm:flex-row sm:items-top sm:space-x-8" do %>
                                 <%= if IndiePaper.Books.has_promo_images?(book) do %>
-                                    <div class="aspect-[1/1.6] sm:h-64">
-                                        <img src={IndiePaper.ExternalAssetHandler.get_public_url(IndiePaper.Books.first_promo_image(book))} alt="Book Promo Image" class="object-cover w-full h-full rounded-lg" />
-                                    </div>
+                                    <img src={IndiePaper.ExternalAssetHandler.get_public_url(IndiePaper.Books.first_promo_image(book))} alt="Book Promo Image" class="aspect-[1/1.6] sm:h-64 rounded-lg object-cover shadow-sm border border-light-border" />
                                 <% end %>
                                 <div>
                                     <h2 data-test="book-title" class="text-xl font-semibold"><%= book.title %></h2>
-                                    <p data-test="book-title" class="mt-1 text-sm leading-relaxed secondary-text"><%= book.short_description %></p>
+                                    <p data-test="book-title" class="mt-2 text-sm leading-relaxed secondary-text"><%= book.short_description %></p>
                                 </div>
                             <% end %>
                             <div class="flex flex-col mt-8 space-y-4 md:flex-row md:space-y-0 md:space-x-3 text-secondary-text">
