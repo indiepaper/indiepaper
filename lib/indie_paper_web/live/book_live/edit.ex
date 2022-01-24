@@ -20,12 +20,33 @@ defmodule IndiePaperWeb.BookLive.Edit do
      |> assign(:book, book)
      |> assign(:changeset, changeset)
      |> assign(:promo_images, book.promo_images)
-     |> allow_upload(:cover_image, accept: ~w(.jpg .jpeg .png))
+     |> allow_upload(:cover_image,
+       accept: ~w(.jpg .jpeg .png),
+       max_entries: 1,
+       external: &presign_cover_image_upload/2
+     )
      |> allow_upload(:promo_image,
        accept: ~w(.png .jpeg .jpg),
        max_entries: 1,
        external: &presign_upload/2
      )}
+  end
+
+  def cover_image_file_key(book, entry),
+    do: "public/cover_images/#{book.id}/cover_image.#{file_ext(entry)}"
+
+  def presign_cover_image_upload(entry, socket) do
+    book = socket.assigns.book
+
+    {:ok, url, fields} =
+      ExternalAssetHandler.presigned_post(
+        key: cover_image_file_key(book, entry),
+        content_type: entry.client_type,
+        max_file_size: socket.assigns.uploads.cover_image.max_file_size
+      )
+
+    meta = %{uploader: "S3", key: file_key(book, entry), url: url, fields: fields}
+    {:ok, meta, socket}
   end
 
   defp file_key(book, entry) do
