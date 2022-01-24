@@ -92,9 +92,7 @@
     <div class="container-box page-box">
         <div class="flex flex-col items-stretch lg:flex-row lg:items-stretch lg:space-x-16 lg:items-top">
             <div class="aspect-[1/1] flex flex-1 items-center justify-center bg-gradient-to-b from-orange-200 to-orange-300 rounded-2xl p-8 lg:p-16">
-                <div class="aspect-[1/1.6] h-full max-w-full">
-                    <img src={IndiePaper.ExternalAssetHandler.get_public_url(Books.first_promo_image(@book))} alt="Promo Image" class="object-cover w-full h-full rounded-3xl" />
-                </div>
+                <img src={IndiePaper.ExternalAssetHandler.get_public_url(Books.first_promo_image(@book))} alt="Promo Image" class="object-cover rounded-3xl aspect-[1/1.6] h-full border border-orange-300 shadow-sm" />
             </div>
             <div class="flex flex-col flex-1 items-stretch">
                 <h1 class="mt-10 text-3xl font-bold leading-tight lg:mt-0"><%= @book.title %></h1>

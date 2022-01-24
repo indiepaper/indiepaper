@@ -15,7 +15,7 @@
 
         <div class="mt-12 max-w-2xl">
             <.form let={f} for={@changeset} phx-change="validate" phx-submit="update_book_listing" id="book-edit-form">
-            <div class="space-y-10 form-container">
+            <div class="space-y-12 form-container">
                 <div class="input-container">
                     <%= label f, :title, class: "input-label"  %>
                     <%= text_input f, :title, class: "form-input mt-1"  %>
@@ -93,6 +93,35 @@
                     </p>
                 </div>
 
+                <div class="input-container">
+                    <span class="input-label">Cover Image</span>
+                    <span class="input-label-info">Upload a 1280 x 800px image as cover.</span>
+                    <div class="mt-3">
+                        <%= live_file_input @uploads.cover_image, class: "file:rounded-lg text-sm file:text-sm file:border-dark-border file:secondary-button file:mr-3" %>
+                    </div>
+                    <div phx-drop-target={@uploads.cover_image.ref}>
+                        <%= for entry <-@uploads.cover_image.entries do %>
+                            <div class="mt-4 max-w-sm">
+                                <%= live_img_preview entry, class: "cover-image" %>
+                                <div class="flex flex-row justify-between items-center mt-2">
+                                    <span class="text-sm font-medium"><%= entry.progress %>% uploaded</span>
+                                    <button class="secondary-link" phx-click="cancel-upload" phx-value-ref={entry.ref}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span>
+                                            Cancel
+                                        </span>
+                                    </button>
+                                </div>
+                                <%= for err <- upload_errors(@uploads.cover_image, entry) do %>
+                                    <p class="input-error"><%= error_to_string(err) %></p>
+                                <% end %>
+                            </div>
+                        <% end %>
+                    </div>
+                </div>
+
                 <div class="input-container"
                      x-data="{
                                 updatedAt: Date.now(),
@@ -147,7 +176,6 @@
                         <%= error_tag f, :long_description_html %>
                     </p>
                 </div>
-
 
                 <%= submit class: "submit-button", phx_disable_with: "Updating Listing..." do %>
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

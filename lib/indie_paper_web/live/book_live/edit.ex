@@ -6,6 +6,7 @@ defmodule IndiePaperWeb.BookLive.Edit do
   alias IndiePaper.Books
   alias IndiePaper.Authors
   alias IndiePaper.ExternalAssetHandler
+  alias IndiePaperWeb.UploadHelpers
 
   @impl Phoenix.LiveView
   def mount(%{"slug" => book_slug}, %{"author_token" => author_token}, socket) do
