@@ -33,9 +33,10 @@ defmodule IndiePaper.PaymentHandlerTest do
   describe "get_checkout_session_url/1" do
     test "returns the stripe checkout session url" do
       book = insert(:book)
+      product = insert(:product, book: book)
       reader = insert(:author)
 
-      {:ok, checkout_session_url} = PaymentHandler.get_checkout_session_url(reader, book)
+      {:ok, checkout_session_url} = PaymentHandler.get_checkout_session_url(reader, book, product)
 
       assert checkout_session_url == nil
     end

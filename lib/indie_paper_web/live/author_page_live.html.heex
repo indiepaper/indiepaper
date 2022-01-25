@@ -23,11 +23,9 @@
                     <%= for book <- @books do %>
                         <div class="primary-card">
                             <%= live_redirect to: Routes.book_show_path(@socket, :show, book), class: "w-full" do %>
-                                <%= if IndiePaper.Books.has_promo_images?(book) do %>
-                                    <div class="mb-6 aspect-h-1 aspect-w-1 sm:aspect-w-3">
-                                        <img src={IndiePaper.ExternalAssetHandler.get_public_url(IndiePaper.Books.first_promo_image(book))} alt="Book Promo Image" class="object-cover rounded-lg" />
-                                    </div>
-                                <% end %>
+                                <div class="mb-6 aspect-h-1 aspect-w-1 sm:aspect-w-3">
+                                    <img src={IndiePaper.ExternalAssetHandler.get_public_url(book.cover_image)} alt="Book Promo Image" class="object-cover rounded-lg" />
+                                </div>
                                 <p class="text-lg font-semibold"><%= book.title %></p>
                                 <p class="mt-2 secondary-text"><%= book.short_description %></p>
                             <% end %>

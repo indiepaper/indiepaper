@@ -35,26 +35,20 @@ defmodule IndiePaper.PaymentHandler do
     Authors.set_payment_connected(author)
   end
 
-  def get_checkout_session_url(reader, book) do
+  def get_checkout_session_url(reader, book, product) do
     book_with_products = Books.with_assoc(book, :products)
-    read_online_product = Books.get_read_online_product(book)
     author = Books.get_author(book)
-
-    order_amount =
-      Enum.reduce(book_with_products.products, Money.new(0), fn product, acc ->
-        MoneyHandler.add(product.price, acc)
-      end)
 
     with {:ok, stripe_checkout_session} <-
            StripeHandler.get_checkout_session(
-             item_title: "#{book.title} - #{read_online_product.title}",
-             item_amount: read_online_product.price.amount,
-             platform_fees: get_platform_fees(read_online_product.price).amount,
+             item_title: "#{book.title} - #{product.title}",
+             item_amount: product.price.amount,
+             platform_fees: get_platform_fees(product.price).amount,
              stripe_connect_id: author.stripe_connect_id
            ),
          {:ok, _order} <-
            Orders.create_order(reader, %{
-             amount: order_amount,
+             amount: product.price.amount,
              book_id: book.id,
              stripe_checkout_session_id: stripe_checkout_session.id,
              products: book_with_products.products
