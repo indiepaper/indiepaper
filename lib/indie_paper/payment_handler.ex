@@ -51,7 +51,7 @@ defmodule IndiePaper.PaymentHandler do
              amount: product.price.amount,
              book_id: book.id,
              stripe_checkout_session_id: stripe_checkout_session.id,
-             products: book_with_products.products
+             products: [product]
            }) do
       {:ok, stripe_checkout_session.url}
     end
