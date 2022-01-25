@@ -13,6 +13,7 @@ defmodule IndiePaperWeb.DashboardLibraryLiveTest do
     assert has_element?(library_link)
   end
 
+  @tag :skip
   test "shows books that reader has purchased", %{conn: conn, author: author} do
     [order1, order2] = insert_pair(:order, reader: author)
     order3 = insert(:order)

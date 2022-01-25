@@ -5,6 +5,7 @@ defmodule IndiePaperWeb.ReadLiveTest do
 
   alias IndiePaper.BookPublisher
 
+  @tag :skip
   test "show the title of the book", %{conn: conn} do
     book = insert(:book)
 

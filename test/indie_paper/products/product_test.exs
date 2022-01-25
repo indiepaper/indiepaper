@@ -7,7 +7,7 @@ defmodule IndiePaper.Products.ProductTest do
     test "error when price is less than 0" do
       changeset = Product.changeset(%Product{}, %{price: -90})
 
-      assert errors_on(changeset).price == ["must be greater than 0"]
+      assert errors_on(changeset).price == ["must be greater than $0.99"]
     end
   end
 end
