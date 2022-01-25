@@ -16,8 +16,24 @@ defmodule IndiePaper.BookLibraryTest do
     end
   end
 
-  describe "has_purchased_product?/2" do
-    test "returns true if the author has purchased product" do
+  describe "has_purchased_read_online_asset?/2" do
+    test "returns true if the author has purchased read online asset" do
+      author = insert(:author)
+      reader = insert(:author)
+      book = insert(:book)
+
+      _order =
+        insert(:order,
+          reader: reader,
+          line_items: [
+            build(:line_item,
+              product: build(:product, assets: [build(:asset, type: :readable, book: book)])
+            )
+          ]
+        )
+
+      assert BookLibrary.has_purchased_read_online_asset?(reader, book)
+      refute BookLibrary.has_purchased_read_online_asset?(author, book)
     end
   end
 end

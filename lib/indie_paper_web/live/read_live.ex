@@ -33,7 +33,14 @@ defmodule IndiePaperWeb.ReadLive do
 
     cond do
       Books.is_vanilla_book?(socket.assigns.book) ->
-        {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: false)}
+        if BookLibrary.has_purchased_read_online_asset?(
+             socket.assigns.current_author,
+             socket.assigns.book
+           ) do
+          {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: false)}
+        else
+          {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: true)}
+        end
 
       Chapters.is_free?(selected_chapter) ->
         {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: false)}

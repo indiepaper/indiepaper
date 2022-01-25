@@ -61,8 +61,13 @@
                         </div>
                         <div class="p-6">
                             <%= live_redirect to: Routes.book_show_path(@socket, :show, order.book) do %>
-                                <h2 data-test="order-book-title" class="text-lg font-bold"><%= order.book.title %></h2>
-                                <h2 data-test="book-title" class="mt-1 text-sm secondary-text"><%= order.book.short_description %></h2>
+                                <div class="flex flex-col space-y-6 sm:flex-row sm:space-y-0 sm:space-x-4 sm:items-top">
+                                    <img src={ExternalAssetHandler.get_public_url(order.book.cover_image)} class="sm:h-64 cover-image" alt="" />
+                                    <div>
+                                        <h2 data-test="order-book-title" class="text-lg font-bold"><%= order.book.title %></h2>
+                                        <p data-test="book-title" class="mt-1 text-sm secondary-text"><%= order.book.short_description %></p>
+                                    </div>
+                                </div>
                             <% end %>
                         </div>
 
@@ -75,7 +80,7 @@
                                                 <p class="font-medium" data-test="order-product-title"><%= line_item.product.title %></p>
                                                 <p class="text-sm secondary-text"><%= line_item.product.description %></p>
                                             </div>
-                                            <div class="flex flex-row items-center py-3 space-x-4">
+                                            <div class="flex flex-row items-center py-3 -ml-2 space-x-4">
                                                 <%= for asset <- line_item.product.assets do %>
                                                     <%= live_redirect to: Assets.get_asset_url(asset), class: "secondary-link" do %>
                                                         <span><%= asset.title %></span>

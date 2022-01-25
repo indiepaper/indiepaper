@@ -129,7 +129,7 @@ defmodule IndiePaperWeb.Router do
       live "/books/new", BookLive.New, :new
 
       resources "/books", BookController, only: [], param: "slug" do
-        resources "/checkout", CheckoutController, only: [:new]
+        resources "/checkout/:product_id", CheckoutController, only: [:new]
       end
 
       live "/books/:slug/edit", BookLive.Edit, :edit

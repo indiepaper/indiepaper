@@ -29,9 +29,9 @@
 
 <section class="bg-white">
     <div class="container-box page-box">
-        <div class="flex flex-col items-stretch lg:flex-row lg:items-stretch lg:space-x-16 lg:items-top">
+        <div class="flex flex-col items-stretch lg:flex-row lg:space-x-16 lg:items-top">
             <div class="aspect-[1/1] flex flex-1 items-center justify-center bg-gradient-to-b from-orange-200 to-orange-300 rounded-2xl p-8 lg:p-16">
-                <img src={ExternalAssetHandler.get_public_url(@book.cover_image)} alt="Cover Image" class="h-full rounded-3xl border-orange-300 cover-image" />
+                <img src={ExternalAssetHandler.get_public_url(@book.cover_image)} alt="Cover Image" class="max-w-full max-h-full rounded-3xl border-orange-300 cover-image" />
             </div>
             <div class="flex flex-col flex-1 items-stretch">
                 <h1 class="mt-10 text-3xl font-bold leading-tight lg:mt-0" data-test="title"><%= @book.title %></h1>
@@ -43,16 +43,30 @@
                         <span class="text-sm font-medium"><%= Authors.get_full_name(@book.author) %></span>
                     <% end %>
                 </div>
+                <p class="mt-12"><%= @book.short_description %></p>
+                <%= if Books.is_pre_order_book?(@book) do %>
+                    <%= live_redirect to: Routes.book_read_path(@socket, :index, @book), class: "secondary-button font-bold mt-6 py-3 rounded-xl" do %>
+                        <span>Start Reading</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    <% end %>
+                    <div class="flex items-center mt-8 -mb-4 space-x-2 w-full">
+                        <div class="flex-1 border-t">
+                        </div>
+                        <span class="text-sm font-bold">OR</span>
+                        <div class="flex-1 border-t">
+                        </div>
+                    </div>
+                <% end %>
                 <div class="flex flex-col items-stretch mt-12 space-y-6 w-full"
                      id="products-container"
-                     x-data={"
-                            {
-                            selectedId: '#{List.first(@book.products).id}',
-                            setSelectedId(id) {
+                     x-data={"{
+                        selectedId: '#{List.first(@book.products).id}',
+                        setSelectedId(id) {
                             this.selectedId = id;
-                            }
-                            }
-                            "}
+                        }
+                     }"}
                      phx-update="ignore">
                     <%= for product <- @book.products do %>
                         <button @click.prevent={"setSelectedId('#{product.id}')"} class="block py-4 px-8 text-left bg-white rounded-xl border-2 md:py-3 md:px-6 border-secondary-border" :class={"{'border-orange-400 bg-orange-100': selectedId === '#{product.id}'}"}>
@@ -67,14 +81,14 @@
                             </div>
                         </button>
                     <% end %>
-                    <button class="py-4 space-x-3 font-bold rounded-xl primary-button group">
+                    <a :href={'"/books/#{@book.id}/checkout/" + selectedId + "/new"'} class="py-4 space-x-3 font-bold rounded-xl primary-button group">
                         <span class="">
                             Buy Now
                         </span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-orange-400 transition-all group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
                         </svg>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

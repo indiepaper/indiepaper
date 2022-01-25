@@ -4,9 +4,10 @@ defmodule IndiePaperWeb.CheckoutControllerTest do
   test "Cannot checkout your own book", %{conn: conn} do
     author = insert(:author)
     book = insert(:book, author: author)
+    product = insert(:product, book: book)
     conn = log_in_author(conn, author)
 
-    conn = conn |> get(Routes.book_checkout_path(conn, :new, book))
+    conn = conn |> get(Routes.book_checkout_path(conn, :new, book, product))
     redir_path = redirected_to(conn, 302)
 
     assert Routes.book_show_path(conn, :show, book) =~ redir_path

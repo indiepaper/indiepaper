@@ -173,7 +173,7 @@
                                 <div class="flex flex-row justify-between items-center py-3 px-6 border-y border-secondary-border">
                                     <p class="text-sm font-bold text-gray-600">Assets</p>
                                 </div>
-                                <div class="flex flex-row items-center py-3 px-6 space-x-3" >
+                                <div class="flex flex-row items-center py-3 px-6 -ml-3 space-x-3" >
                                     <%= for asset <- book.assets do %>
                                         <button phx-click="goto_asset_url" phx-value-asset_id={asset.id} class="py-2 px-3 text-sm secondary-link">
                                             <span class="text-gray-600"><%= asset.title %></span>

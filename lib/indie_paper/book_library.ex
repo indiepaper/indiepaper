@@ -20,7 +20,19 @@ defmodule IndiePaper.BookLibrary do
     from(l in Orders.LineItem,
       join: o in Orders.Order,
       on: o.id == l.order_id,
-      where: l.product_id == ^product.id and o.reader_id == ^reader.id
+      where:
+        l.product_id == ^product.id and o.reader_id == ^reader.id and
+          o.status == :payment_completed
+    )
+    |> Repo.exists?()
+  end
+
+  def has_purchased_read_online_asset?(reader, book) do
+    from(o in Orders.Order,
+      join: l in assoc(o, :line_items),
+      join: p in assoc(l, :product),
+      join: a in assoc(p, :assets),
+      where: a.type == ^:readable and o.reader_id == ^reader.id and a.book_id == ^book.id
     )
     |> Repo.exists?()
   end
