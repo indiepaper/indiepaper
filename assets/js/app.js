@@ -159,7 +159,6 @@ let liveHost = "";
 if (host === "indiepaper.me") {
   liveHost = "wss://app.indiepaper.me";
 }
-
 const socketHost = `${liveHost}/live`
 
 

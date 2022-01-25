@@ -47,7 +47,8 @@ if config_env() == :prod do
     url: [host: host, port: 443],
     check_origin: [
       "https://#{host}",
-      "https://app.#{host}"
+      "https://app.#{host}",
+      "https://dev.#{host}"
     ],
     http: [
       # Enable IPv6 and bind on all interfaces.
