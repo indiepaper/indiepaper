@@ -44,6 +44,21 @@
                     <% end %>
                 </div>
                 <p class="mt-12"><%= @book.short_description %></p>
+                <%= if Books.is_pre_order_book?(@book) do %>
+                    <%= live_redirect to: Routes.book_read_path(@socket, :index, @book), class: "secondary-button font-bold mt-6 py-3 rounded-xl" do %>
+                        <span>Start Reading</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    <% end %>
+                    <div class="flex items-center mt-8 -mb-4 space-x-2 w-full">
+                        <div class="flex-1 border-t">
+                        </div>
+                        <span class="text-sm font-bold">OR</span>
+                        <div class="flex-1 border-t">
+                        </div>
+                    </div>
+                <% end %>
                 <div class="flex flex-col items-stretch mt-12 space-y-6 w-full"
                      id="products-container"
                      x-data={"{
