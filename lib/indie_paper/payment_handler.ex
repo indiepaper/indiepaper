@@ -36,7 +36,6 @@ defmodule IndiePaper.PaymentHandler do
   end
 
   def get_checkout_session_url(reader, book, product) do
-    book_with_products = Books.with_assoc(book, :products)
     author = Books.get_author(book)
 
     with {:ok, stripe_checkout_session} <-
