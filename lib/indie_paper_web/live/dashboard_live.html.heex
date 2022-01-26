@@ -32,7 +32,7 @@
 
         <div class="max-w-2xl">
             <h1 data-test="title" class="page-heading">Your Drafts and Books</h1>
-            <p class="page-description">your current drafts and published books appear here.</p>
+            <p class="page-description">Current drafts and published books appear here.</p>
 
             <%= if not IndiePaper.Books.has_one_published_book?(@current_author) do %>
                 <div class="mt-8 mb-12">
