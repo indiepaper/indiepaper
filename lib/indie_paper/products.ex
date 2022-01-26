@@ -32,7 +32,7 @@ defmodule IndiePaper.Products do
     Ecto.build_assoc(book, :products)
     |> Product.changeset(%{
       title: title,
-      description: "Read the book in our web version",
+      description: "Read the book in our web reader.",
       price: 1500
     })
     |> Product.asset_changeset(asset)

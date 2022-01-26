@@ -2,7 +2,7 @@
     <%= render IndiePaperWeb.DashboardView, "_nav_bar.html", assigns %>
     <div class="container-box page-box">
         <h1 class="page-heading" data-test="title">Create a new Book</h1>
-        <p class="max-w-2xl page-description">Create a book, setup the title. Don't fret these settings can be changed afterwards.</p>
+        <p class="max-w-2xl page-description">Start with a title, select the book type and start publishing.</p>
 
         <div class="mt-12 max-w-2xl">
             <.form for={@changeset} let={f} data-test="new-book-form" phx-submit="create_book" phx-change="validate">
