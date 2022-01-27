@@ -156,6 +156,7 @@ defmodule IndiePaperWeb.Router do
     scope "/", IndiePaperWeb do
       pipe_through :browser
 
+      get "/", HomePageController, :index
       live "/:username", AuthorPageLive, :show
     end
   end
