@@ -44,7 +44,7 @@ if config_env() == :prod do
   port = String.to_integer(System.get_env("PORT") || "4000")
 
   config :indie_paper, IndiePaperWeb.Endpoint,
-    url: [host: host, port: 443],
+    url: [host: host, scheme: "https", port: 443],
     check_origin: [
       "https://#{host}",
       "https://app.#{host}"
