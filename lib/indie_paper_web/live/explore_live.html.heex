@@ -10,7 +10,7 @@
             <%= for book <- @books do %>
                 <%= live_redirect to: Routes.book_show_path(@socket, :show, book), class: "block p-6 bg-white rounded-lg" do %>
                     <div class="aspect-[1/1] w-full to-orange-500 bg-gradient-to-br from-orange-300 rounded-lg flex items-center justify-center p-4">
-                        <img src={Books.get_cover_image_url(book)} alt="Book Cover Image" class="h-full cover-image" />
+                        <img src={Books.get_cover_image_url(book)} alt="Book Cover Image" class="h-full border-orange-400 cover-image" />
                     </div>
                     <div class="inline-flex items-center mt-6 space-x-2">
                         <img src={Authors.get_profile_picture_url(book.author)} alt="Profile Picture" class="w-8 h-8 rounded-full border border-secondary-border" />
