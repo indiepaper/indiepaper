@@ -6,9 +6,9 @@
 </section>
 <section>
     <div class="pt-16 container-box page-box">
-        <div class="grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 md:grid-cols-3">
+        <div class="grid grid-cols-1 gap-16 sm:grid-cols-2 md:grid-cols-3 md:gap-24">
             <%= for book <- @books do %>
-                <%= live_redirect to: Routes.book_show_path(@socket, :show, book), class: "block p-6 bg-white rounded-lg" do %>
+                <%= live_redirect to: Routes.book_show_path(@socket, :show, book), class: "block bg-white rounded-lg" do %>
                     <div class="aspect-[1/1] w-full to-orange-500 bg-gradient-to-br from-orange-300 rounded-lg flex items-center justify-center p-4">
                         <img src={Books.get_cover_image_url(book)} alt="Book Cover Image" class="h-full border-orange-400 cover-image" />
                     </div>
