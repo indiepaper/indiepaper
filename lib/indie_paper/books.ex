@@ -12,6 +12,7 @@ defmodule IndiePaper.Books do
   alias IndiePaper.Chapters
   alias IndiePaper.Drafts
   alias IndiePaper.Products
+  alias IndiePaper.ExternalAssetHandler
 
   def list_books(author) do
     Book
@@ -161,4 +162,12 @@ defmodule IndiePaper.Books do
 
   def publication_in_progress?(%{status: :publication_in_progress}), do: true
   def publication_in_progress?(_), do: false
+
+  def list_published_books() do
+    from(b in Book, where: b.status == :published, preload: :author) |> Repo.all()
+  end
+
+  def get_cover_image_url(book) do
+    ExternalAssetHandler.get_public_url(book.cover_image)
+  end
 end

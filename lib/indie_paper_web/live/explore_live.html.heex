@@ -1,0 +1,25 @@
+<section class="bg-background">
+    <div class="pt-32 pb-0 pb-16 container-box page-box">
+        <h1 class="text-2xl md:text-3xl page-heading">Explore Books</h1>
+        <p class="page-description">Explore and read books published with IndiePaper.</p>
+    </div>
+</section>
+<section>
+    <div class="pt-16 container-box page-box">
+        <div class="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 md:grid-cols-3">
+            <%= for book <- @books do %>
+                <%= live_redirect to: Routes.book_show_path(@socket, :show, book), class: "block p-6 bg-white rounded-lg border-primary-border" do %>
+                    <div class="aspect-[1/1] w-full to-orange-500 bg-gradient-to-br from-orange-300 rounded-lg flex items-center justify-center p-4">
+                        <img src={Books.get_cover_image_url(book)} alt="Book Cover Image" class="h-full cover-image" />
+                    </div>
+                    <div class="inline-flex items-center mt-6 space-x-2">
+                        <img src={Authors.get_profile_picture_url(book.author)} alt="Profile Picture" class="w-8 h-8 rounded-full border border-secondary-border" />
+                        <p class="text-sm font-bold"><%= Authors.get_full_name(book.author) %></p>
+                    </div>
+                    <h3 class="mt-4 font-bold md:text-lg"><%= book.title %></h3>
+                    <p class="mt-1 text-gray-600"><%= book.short_description %></p>
+                <% end %>
+            <% end %>
+        </div>
+    </div>
+</section>

@@ -8,6 +8,7 @@ defmodule IndiePaper.Authors do
 
   alias IndiePaper.Authors.{Author, AuthorToken, AuthorNotifier}
   alias IndiePaper.AuthorProfile
+  alias IndiePaper.ExternalAssetHandler
 
   ## Database getters
 
@@ -425,4 +426,8 @@ defmodule IndiePaper.Authors do
 
   def is_same?(%{id: id}, %{id: id}), do: true
   def is_same?(_, _), do: false
+
+  def get_profile_picture_url(author) do
+    ExternalAssetHandler.get_public_url(author.profile_picture)
+  end
 end
