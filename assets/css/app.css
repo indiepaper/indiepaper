@@ -138,7 +138,7 @@
   }
 
   .cover-image {
-    @apply aspect-[1/1.6]  rounded-lg object-cover shadow-sm border border-lightest-border;
+    @apply aspect-[1/1.6] rounded-lg object-cover shadow-sm border border-orange-400;
   }
 
   @font-face {
