@@ -20,7 +20,7 @@
                     <%= for book <- @books do %>
                         <div class="primary-card">
                             <%= live_redirect to: Routes.book_show_path(@socket, :show, book), class: "w-full" do %>
-                                <div class="aspect-[1/1] w-full flex items-center justify-center p-4 bg-orange-300 rounded-lg">
+                                <div class="cover-image-container">
                                     <img src={IndiePaper.ExternalAssetHandler.get_public_url(book.cover_image)} alt="Book Cover Image" class="max-w-full max-h-full border-orange-300 cover-image" />
                                 </div>
                                 <p class="mt-6 text-xl font-bold"><%= book.title %></p>

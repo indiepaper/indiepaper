@@ -141,6 +141,10 @@
     @apply aspect-[1/1.6] rounded-lg object-cover shadow-sm border border-lightest-border;
   }
 
+  .cover-image-container {
+    @apply aspect-[1/1] w-full to-orange-500 bg-gradient-to-br from-orange-300 rounded-lg flex items-center justify-center p-4;
+  }
+
   @font-face {
     font-family: Good Sans;
     font-weight: 400;

@@ -164,7 +164,8 @@ defmodule IndiePaper.Books do
   def publication_in_progress?(_), do: false
 
   def list_published_books() do
-    from(b in Book, where: b.status == :published, preload: :author) |> Repo.all()
+    from(b in Book, where: b.status == :published, preload: :author, order_by: [desc: :updated_at])
+    |> Repo.all()
   end
 
   def get_cover_image_url(book) do
