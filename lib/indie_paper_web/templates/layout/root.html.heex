@@ -95,41 +95,63 @@
             </div>
         </header>
         <%= @inner_content %>
-        <footer class="font-normal bg-white border-t border-b border-primary-border">
-            <div class="flex flex-col justify-between items-start py-8 space-y-8 md:flex-row md:items-center md:space-y-0 container-box">
-                <div class="flex flex-col items-start -ml-2 space-y-4">
-                    <div class="flex flex-row space-x-2">
-                        <a target="_blank" href="https://twitter.com/indiepaperme" class="secondary-link">
-                            <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path>
-                            </svg>
-                            <span>
-                                twitter
-                            </span>
-                        </a>
-                        <a class="secondary-link" href="mailto:support@indiepaper.me">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M2.94 6.412A2 2 0 002 8.108V16a2 2 0 002 2h12a2 2 0 002-2V8.108a2 2 0 00-.94-1.696l-6-3.75a2 2 0 00-2.12 0l-6 3.75zm2.615 2.423a1 1 0 10-1.11 1.664l5 3.333a1 1 0 001.11 0l5-3.333a1 1 0 00-1.11-1.664L10 11.798 5.555 8.835z" clip-rule="evenodd" />
-                            </svg>
-                            <span>
-                                support@indiepaper.me
-                            </span>
-                        </a>
+        <footer class="py-8 border-t border-b bg-background border-primary-border">
+            <div class="container-box">
+                <div class="md:flex md:flex-row md:justify-between md:items-center">
+                    <div>
+                        <div>
+                            <h4 class="font-semibold">IndiePaper, Inc.</h4>
+                            <p class="mt-1 text-secondary-text">the future of publishing.</p>
+                        </div>
+                        <div class="flex flex-row items-center mt-4 -ml-2 space-x-3">
+                            <a href="https://twitter.com/indiepaperme" class="secondary-link">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    class="w-4 h-4 fill-current"
+                                >
+                                    <path fill="none" d="M0 0h24v24H0z" />
+                                    <path d="M22.162 5.656a8.384 8.384 0 0 1-2.402.658A4.196 4.196 0 0 0 21.6 4c-.82.488-1.719.83-2.656 1.015a4.182 4.182 0 0 0-7.126 3.814 11.874 11.874 0 0 1-8.62-4.37 4.168 4.168 0 0 0-.566 2.103c0 1.45.738 2.731 1.86 3.481a4.168 4.168 0 0 1-1.894-.523v.052a4.185 4.185 0 0 0 3.355 4.101 4.21 4.21 0 0 1-1.89.072A4.185 4.185 0 0 0 7.97 16.65a8.394 8.394 0 0 1-6.191 1.732 11.83 11.83 0 0 0 6.41 1.88c7.693 0 11.9-6.373 11.9-11.9 0-.18-.005-.362-.013-.54a8.496 8.496 0 0 0 2.087-2.165z" />
+                                </svg>
+                                <span class="text-sm font-medium">indiepaperme</span>
+                            </a>
+                            <a href="mailto:support@indiepaper.me" class="secondary-link">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    class="w-4 h-4 fill-current"
+                                >
+                                    <path fill="none" d="M0 0h24v24H0z" />
+                                    <path d="M18.803 8.493A5.023 5.023 0 0 0 22 8.9V20a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h13.1c-.066.323-.1.658-.1 1a4.98 4.98 0 0 0 1.193 3.241l-5.132 4.442-6.414-5.445-1.294 1.524 7.72 6.555 6.73-5.824zM21 7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+                                </svg>
+                                <span class="text-sm font-medium">support@indiepaper.me</span>
+                            </a>
+                        </div>
                     </div>
-                    <div class="flex flex-row items-center space-x-1">
-                        <a target="_blank" class="inline-block secondary-link" href="/privacy-policy">
-                            Privacy Policy
-                        </a>
-                        <a target="_blank" class="inline-block secondary-link" href="/terms-of-service">
-                            Terms of Service
-                        </a>
+                    <div class="flex flex-row items-start mt-12 space-x-16 md:mt-0">
+                        <div class="font-medium">
+                            <h4 class="block font-bold">Resources</h4>
+                            <div class="flex flex-col mt-3 -ml-2 space-y-3">
+                                <a href="/explore" class="inline-block secondary-link">
+                                    Explore
+                                </a>
+                                <a href="/blog" class="inline-block secondary-link">
+                                    IndiePaper Blog
+                                </a>
+                            </div>
+                        </div>
+                        <div class="font-medium">
+                            <h4 class="block font-bold">Company</h4>
+                            <div class="flex flex-col items-start mt-3 -ml-2 space-y-3">
+                                <a class="inline-block secondary-link" href="/privacy-policy">
+                                    Privacy Policy
+                                </a>
+                                <a class="inline-block secondary-link" href="/terms-of-service">
+                                    Terms of Service
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="text-sm font-medium">
-                    <p class="md:text-right">IndiePaper, Inc. © 2022</p>
-                    <p class="mt-1 text-xs leading-relaxed md:text-right secondary-text">
-                        Delaware, United States
-                    </p>
                 </div>
             </div>
         </footer>
