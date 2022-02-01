@@ -32,6 +32,15 @@ defmodule IndiePaperWeb.ReadLive do
     selected_chapter = Chapters.get_chapter!(chapter_id)
 
     cond do
+      Chapters.is_free?(selected_chapter) ->
+        {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: false)}
+
+      is_nil(socket.assigns.current_author) ->
+        {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: true)}
+
+      Authors.is_same?(socket.assigns.current_author, socket.assigns.book.author) ->
+        {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: false)}
+
       Books.is_vanilla_book?(socket.assigns.book) ->
         if BookLibrary.has_purchased_read_online_asset?(
              socket.assigns.current_author,
@@ -41,15 +50,6 @@ defmodule IndiePaperWeb.ReadLive do
         else
           {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: true)}
         end
-
-      Chapters.is_free?(selected_chapter) ->
-        {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: false)}
-
-      is_nil(socket.assigns.current_author) ->
-        {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: true)}
-
-      Authors.is_same?(socket.assigns.current_author, socket.assigns.book.author) ->
-        {:noreply, assign(socket, selected_chapter: selected_chapter, not_pre_ordered: false)}
 
       true ->
         chapter_products = ChapterProducts.list_chapter_products(selected_chapter)
