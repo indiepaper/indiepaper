@@ -35,7 +35,7 @@ defmodule IndiePaper.Books.Book do
 
     has_one :draft, IndiePaper.Drafts.Draft
     has_many :products, IndiePaper.Products.Product, preload_order: [desc: :updated_at]
-    has_many :assets, IndiePaper.Assets.Asset
+    has_many :assets, IndiePaper.Assets.Asset, preload_order: [desc: :type]
     belongs_to :author, IndiePaper.Authors.Author
 
     timestamps()
