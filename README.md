@@ -1,3 +1,3 @@
 # IndiePaper
 
-The future of publishing.
+The future of publishing, currently on hold.
